@@ -647,7 +647,7 @@ body{
 .mini-cal-title{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary);}
 .mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem;}
 .mini-cal-day-hdr{text-align:center;font-size:10px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;padding:4px 0;}
-.mini-cal-cell{min-height:70px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
+.mini-cal-cell{min-height:80px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
 .mini-cal-cell:hover{border-color:var(--gold);}
 .mini-cal-cell.today{border-color:var(--gold);background:#C4983B08;}
 .mini-cal-cell.selected{background:#C4983B12;border-color:var(--gold);}
@@ -662,7 +662,7 @@ body{
 .mini-cal-pill.green{background:#22C55E20;color:#22C55E;}
 .mini-cal-pill.pillar{background:#D4A84320;color:#D4A843;}
 /* Day detail panel */
-.day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;overflow:visible;margin-bottom:2rem;}
+.day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;}
 @media(max-width:700px){.day-detail-panel{grid-template-columns:1fr;}}
 .day-detail-title{font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--charcoal-border);grid-column:1/-1;}
 .day-detail-section{margin-bottom:8px;}
@@ -2172,7 +2172,7 @@ function moveEventToPillar(dateStr, id) {
 // ── MINI CALENDAR ──
 let miniCalYear = new Date().getFullYear();
 let miniCalMonth = new Date().getMonth();
-let miniSelectedDate = fmt(new Date()); // today
+let miniSelectedDate = fmt(new Date());
 
 function changeMiniMonth(dir) {
   miniCalMonth += dir;
@@ -2631,8 +2631,8 @@ function initPlanningData() {
 // ── INIT ──
 load();
 initPlanningData();
-try { renderHeader(); } catch(e) { console.log('header err',e); }
-try { renderAffirmationBar(); } catch(e) { console.log('aff err',e); }
+try { renderHeader(); } catch(e) {}
+try { renderAffirmationBar(); } catch(e) {}
 
 // ── SUPABASE + ENCRYPTION CONFIG ──
 const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
