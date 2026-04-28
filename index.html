@@ -863,7 +863,7 @@ body{
       <div class="mini-cal-day-hdr">Sun</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px" id="mini-cal-cells"></div>
-    <div class="day-detail-panel" id="day-detail-panel" style="margin-top:12px;display:none"></div>
+    <div class="day-detail-panel" id="day-detail-panel" style="margin-top:12px"></div>
   </div>
 </div>
 
@@ -2172,7 +2172,7 @@ function moveEventToPillar(dateStr, id) {
 // ── MINI CALENDAR ──
 let miniCalYear = new Date().getFullYear();
 let miniCalMonth = new Date().getMonth();
-let miniSelectedDate = fmt(new Date());
+let miniSelectedDate = fmt(new Date()); // today
 
 function changeMiniMonth(dir) {
   miniCalMonth += dir;
@@ -2191,6 +2191,7 @@ function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
   panel.style.display = 'grid';
+  panel.style.marginBottom = '2rem';
   const parts = dateStr.split('-'); const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const dd = data[dateStr] || {};
@@ -2400,10 +2401,8 @@ function renderMiniCalendar() {
     cells.appendChild(cell);
   }
   
-  // Show today's detail by default
-  if (document.getElementById('day-detail-panel').style.display === 'none') {
-    renderDayDetail(miniSelectedDate);
-  }
+  // Always show today's detail
+  renderDayDetail(miniSelectedDate);
 }
 
 // ── CALENDAR ──
