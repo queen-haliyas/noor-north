@@ -2326,7 +2326,7 @@ window.save = function() {
 
 // ── LOGIN ──
 async function attemptLogin() {
-  const userId = document.getElementById('login-userid').value.trim().toLowerCase();
+  const userId = document.getElementById('login-userid').value.trim();
   const password = document.getElementById('login-password').value;
   if (!userId || !password) { showLoginError('Please enter both fields.'); return; }
   
