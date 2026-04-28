@@ -2302,15 +2302,20 @@ async function syncToSupabase() {
 
 async function loadFromSupabase() {
   if (!MASTER_PASSWORD || !USER_ID) return false;
-  showSync();
-  const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
-  hideSync();
-  if (rows && rows.length > 0) {
-    const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
-    if (decrypted) { data = decrypted; return true; }
-    return false;
+  try {
+    showSync();
+    const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
+    hideSync();
+    if (rows && rows.length > 0) {
+      const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
+      if (decrypted) { data = decrypted; return true; }
+      return false; // wrong password
+    }
+    return true; // new user, no data yet - let them in
+  } catch(e) {
+    hideSync();
+    return true; // network error - let them in anyway, will save when possible
   }
-  return true; // new user, no data yet
 }
 
 function showSync() { document.getElementById('sync-indicator').classList.add('show'); }
@@ -2339,6 +2344,8 @@ async function attemptLogin() {
   
   const success = await loadFromSupabase();
   
+  // success = true means either new user (no data) or correct password
+  // success = false means decryption failed (wrong password for existing data)
   if (success) {
     sessionStorage.setItem('nn_uid', userId);
     sessionStorage.setItem('nn_pw', password);
@@ -2346,6 +2353,8 @@ async function attemptLogin() {
     renderHeader();
     renderAffirmationBar();
     renderDaily();
+    renderMiniCalendar();
+    renderDayDetail(fmt(new Date()));
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
     showLoginError('Incorrect password. Try again.');
