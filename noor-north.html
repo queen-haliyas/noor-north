@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor North — Personal OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --emerald: #1A9E8F;
+  --emerald-dim: #1A9E8F22;
+  --emerald-mid: #1A9E8F44;
+  --gold: #C4983B;
+  --gold-dim: #C4983B22;
+  --ivory: #FBF8F1;
+  --charcoal: #0E0E1A;
+  --charcoal-mid: #16162A;
+  --charcoal-light: #1E1E32;
+  --charcoal-border: #2A2A42;
+  --text-primary: #F0EDE8;
+  --text-secondary: #9090A8;
+  --text-tertiary: #50506A;
+  --purple: #7F77DD;
+  --coral: #D85A30;
+  --blue: #3B8FC4;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--charcoal);
+  color:var(--text-primary);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── AFFIRMATION BANNER ── */
+.affirmation-bar{
+  background:linear-gradient(135deg,#0A1A18,#0E1E2A);
+  border-bottom:1px solid var(--emerald-mid);
+  padding:10px 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  position:sticky;
+  top:0;
+  z-index:200;
+}
+.affirmation-text{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:15px;
+  color:var(--emerald);
+  flex:1;
+  text-align:center;
+  letter-spacing:.02em;
+  cursor:pointer;
+  transition:opacity .2s;
+}
+.affirmation-text:hover{opacity:.7;}
+.affirmation-nav{display:flex;gap:6px;align-items:center;}
+.affirmation-nav button{
+  background:none;border:none;cursor:pointer;
+  color:var(--text-tertiary);font-size:14px;padding:2px 6px;
+  transition:color .15s;
+}
+.affirmation-nav button:hover{color:var(--emerald);}
+.affirmation-edit-btn{
+  background:none;border:0.5px solid var(--charcoal-border);
+  border-radius:6px;padding:3px 8px;font-size:11px;
+  color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);
+  transition:all .15s;white-space:nowrap;
+}
+.affirmation-edit-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+
+/* ── HEADER ── */
+.site-header{
+  background:var(--charcoal-mid);
+  border-bottom:1px solid var(--charcoal-border);
+  padding:1rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.logo{display:flex;align-items:baseline;gap:10px;}
+.logo-noor{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--emerald);letter-spacing:.05em;}
+.logo-north{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--text-secondary);letter-spacing:.05em;}
+.logo-sub{font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.12em;margin-left:2px;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.date-badge{
+  font-size:12px;color:var(--text-secondary);
+  background:var(--charcoal-light);
+  border:0.5px solid var(--charcoal-border);
+  border-radius:20px;padding:5px 12px;
+}
+.week-badge-sm{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
+.wk{background:var(--emerald-dim);color:var(--emerald);}
+.qt{background:var(--gold-dim);color:var(--gold);}
+
+/* ── NAV ── */
+.main-nav{
+  background:var(--charcoal-mid);
+  border-bottom:1px solid var(--charcoal-border);
+  display:flex;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.main-nav::-webkit-scrollbar{display:none;}
+.nav-tab{
+  padding:12px 20px;font-size:12px;font-weight:500;
+  color:var(--text-tertiary);cursor:pointer;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;background:none;border-top:none;
+  border-left:none;border-right:none;
+  text-transform:uppercase;letter-spacing:.07em;
+  transition:all .15s;font-family:var(--font-body);
+}
+.nav-tab:hover{color:var(--text-secondary);}
+.nav-tab.active{color:var(--emerald);border-bottom-color:var(--emerald);}
+
+/* ── PAGES ── */
+.page{display:none;padding:1.5rem 2rem;max-width:1400px;margin:0 auto;}
+.page.active{display:block;}
+
+/* ── DAILY FLOW ── */
+.daily-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.daily-header h2{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary);}
+.daily-header-right{display:flex;align-items:center;gap:10px;}
+.day-nav-btn{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius-sm);padding:6px 14px;font-size:13px;
+  cursor:pointer;color:var(--text-primary);font-family:var(--font-body);
+  transition:all .15s;
+}
+.day-nav-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.day-label{font-size:14px;color:var(--text-secondary);min-width:180px;text-align:center;}
+
+/* Three column layout */
+.flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:start;}
+@media(max-width:900px){.flow-grid{grid-template-columns:1fr;}}
+
+.flow-col{
+  background:var(--charcoal-light);
+  border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.flow-col-header{
+  padding:14px 16px 12px;
+  border-bottom:0.5px solid var(--charcoal-border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.flow-col-title{
+  font-family:var(--font-display);
+  font-size:17px;font-weight:400;
+  display:flex;align-items:center;gap:8px;
+}
+.flow-col-icon{
+  width:26px;height:26px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;
+}
+.flow-col-badge{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:500;}
+.flow-col-body{padding:14px 16px;}
+
+/* Ritual steps */
+.ritual-step{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;border-bottom:0.5px solid var(--charcoal-border);
+}
+.ritual-step:last-of-type{border-bottom:none;}
+.ritual-check{
+  width:22px;height:22px;border-radius:50%;
+  border:1.5px solid var(--charcoal-border);
+  cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;background:transparent;margin-top:1px;
+}
+.ritual-check.done{border-color:transparent;}
+.ritual-check svg{display:none;}
+.ritual-check.done svg{display:block;}
+.ritual-step-content{flex:1;}
+.ritual-step-title{font-size:13px;color:var(--text-primary);line-height:1.4;font-weight:500;}
+.ritual-step-title.done{color:var(--text-tertiary);text-decoration:line-through;}
+.ritual-step-time{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.ritual-flow-label{
+  margin-top:12px;padding-top:10px;border-top:0.5px solid var(--charcoal-border);
+  font-size:10px;color:var(--text-tertiary);font-style:italic;letter-spacing:.03em;
+}
+.ritual-progress{
+  display:flex;gap:4px;margin-bottom:12px;
+}
+.ritual-prog-dot{
+  flex:1;height:3px;border-radius:2px;background:var(--charcoal-border);
+  transition:background .3s;
+}
+
+/* Pillars */
+.pillar-item{
+  border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius-sm);
+  margin-bottom:8px;overflow:hidden;
+}
+.pillar-item-header{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 12px;cursor:pointer;
+  transition:background .15s;
+}
+.pillar-item-header:hover{background:var(--charcoal-mid);}
+.pillar-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.pillar-name{font-size:13px;font-weight:500;flex:1;color:var(--text-primary);}
+.pillar-count{font-size:11px;color:var(--text-tertiary);}
+.pillar-chevron{font-size:11px;color:var(--text-tertiary);transition:transform .2s;}
+.pillar-item.open .pillar-chevron{transform:rotate(180deg);}
+.pillar-item-body{display:none;padding:0 12px 10px;}
+.pillar-item.open .pillar-item-body{display:block;}
+.pillar-task{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 0;border-bottom:0.5px solid var(--charcoal-border);
+}
+.pillar-task:last-of-type{border-bottom:none;}
+.pillar-task-check{
+  width:16px;height:16px;border-radius:4px;
+  border:1.5px solid var(--charcoal-border);
+  cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.pillar-task-check.done{border-color:transparent;}
+.pillar-task-text{
+  flex:1;font-size:12px;color:var(--text-primary);
+  background:none;border:none;outline:none;
+  font-family:var(--font-body);cursor:text;
+}
+.pillar-task-text.done{color:var(--text-tertiary);text-decoration:line-through;}
+.pillar-task-del{background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:12px;opacity:0;transition:opacity .15s;}
+.pillar-task:hover .pillar-task-del{opacity:1;}
+.pillar-add-row{display:flex;align-items:center;gap:6px;margin-top:8px;}
+.pillar-add-input{
+  flex:1;background:none;border:none;outline:none;
+  font-size:12px;color:var(--text-primary);
+  font-family:var(--font-body);padding:4px 0;
+}
+.pillar-add-input::placeholder{color:var(--text-tertiary);}
+.pillar-add-btn{
+  background:none;border:0.5px solid var(--charcoal-border);
+  border-radius:6px;padding:3px 8px;font-size:11px;
+  cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);
+  transition:all .15s;
+}
+.pillar-add-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.pillars-overall{
+  display:flex;gap:4px;margin-bottom:14px;
+}
+.pillar-bar-seg{
+  flex:1;height:4px;border-radius:2px;
+  background:var(--charcoal-border);transition:background .3s;
+}
+
+/* ── PLANNING LAYERS ── */
+.planning-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+.plan-card{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);overflow:hidden;
+}
+.plan-card-header{
+  padding:14px 16px 12px;border-bottom:0.5px solid var(--charcoal-border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.plan-card-title{font-family:var(--font-display);font-size:18px;font-weight:400;}
+.plan-card-sub{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.plan-card-body{padding:14px 16px;}
+.plan-goal-item{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:8px 0;border-bottom:0.5px solid var(--charcoal-border);
+}
+.plan-goal-item:last-of-type{border-bottom:none;}
+.plan-goal-status{
+  width:8px;height:8px;border-radius:50%;
+  flex-shrink:0;margin-top:5px;cursor:pointer;
+  transition:all .15s;
+}
+.plan-goal-text{
+  flex:1;font-size:13px;color:var(--text-primary);
+  background:none;border:none;outline:none;
+  font-family:var(--font-body);line-height:1.5;
+  resize:none;
+}
+.plan-goal-text::placeholder{color:var(--text-tertiary);}
+.plan-add-btn{
+  width:100%;margin-top:10px;
+  background:none;border:0.5px dashed var(--charcoal-border);
+  border-radius:var(--radius-sm);padding:8px;
+  font-size:12px;color:var(--text-tertiary);
+  cursor:pointer;font-family:var(--font-body);
+  transition:all .15s;
+}
+.plan-add-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.plan-letter-btn{
+  width:100%;margin-top:8px;
+  background:none;border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius-sm);padding:8px;
+  font-size:11px;color:var(--text-tertiary);
+  cursor:pointer;font-family:var(--font-display);font-style:italic;
+  transition:all .15s;text-align:left;
+}
+.plan-letter-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Status colours */
+.status-green{background:#22C55E;}
+.status-amber{background:#F59E0B;}
+.status-red{background:#EF4444;}
+.status-grey{background:var(--text-tertiary);}
+
+/* ── EMPIRE DASHBOARD ── */
+.empire-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:1.5rem;}
+@media(max-width:800px){.empire-grid{grid-template-columns:repeat(3,1fr);}}
+.empire-card{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:16px;text-align:center;
+  transition:border-color .2s;cursor:pointer;
+}
+.empire-card:hover{border-color:var(--charcoal-border);}
+.empire-icon{font-size:20px;margin-bottom:8px;}
+.empire-name{font-size:11px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;line-height:1.4;}
+.empire-score{font-family:var(--font-display);font-size:28px;font-weight:300;}
+.empire-label{font-size:10px;color:var(--text-tertiary);margin-top:2px;}
+.empire-bar{height:3px;border-radius:2px;background:var(--charcoal-border);margin-top:10px;overflow:hidden;}
+.empire-bar-fill{height:100%;border-radius:2px;transition:width .5s;}
+.empire-streak-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;}
+.empire-stat{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:14px;text-align:center;
+}
+.empire-stat-num{font-family:var(--font-display);font-size:32px;font-weight:300;color:var(--text-primary);}
+.empire-stat-lbl{font-size:11px;color:var(--text-tertiary);margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
+
+/* ── NOTES ── */
+.notes-layout{display:grid;grid-template-columns:260px 1fr;gap:16px;min-height:60vh;}
+@media(max-width:700px){.notes-layout{grid-template-columns:1fr;}}
+.notes-sidebar{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:14px;
+}
+.notes-sidebar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.notes-sidebar-title{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);}
+.new-note-btn{
+  background:var(--emerald);color:#fff;border:none;
+  border-radius:6px;padding:4px 10px;font-size:11px;
+  cursor:pointer;font-family:var(--font-body);
+}
+.note-item{
+  padding:10px;border-radius:var(--radius-sm);cursor:pointer;
+  margin-bottom:4px;transition:background .15s;border:0.5px solid transparent;
+}
+.note-item:hover{background:var(--charcoal-mid);}
+.note-item.active{background:var(--charcoal-mid);border-color:var(--charcoal-border);}
+.note-item-title{font-size:13px;color:var(--text-primary);font-weight:500;margin-bottom:2px;}
+.note-item-preview{font-size:11px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.note-item-date{font-size:10px;color:var(--text-tertiary);margin-top:4px;}
+.notes-editor{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;
+}
+.note-title-input{
+  font-family:var(--font-display);font-size:28px;font-weight:300;
+  color:var(--text-primary);background:none;border:none;outline:none;
+  width:100%;margin-bottom:16px;
+}
+.note-title-input::placeholder{color:var(--text-tertiary);}
+.note-body-input{
+  flex:1;font-family:var(--font-body);font-size:14px;line-height:1.8;
+  color:var(--text-primary);background:none;border:none;outline:none;
+  width:100%;resize:none;min-height:400px;
+}
+.note-body-input::placeholder{color:var(--text-tertiary);}
+
+/* ── AFFIRMATIONS EDITOR ── */
+.affirmations-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:700px){.affirmations-grid{grid-template-columns:1fr;}}
+.affirmation-card{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:16px;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.affirmation-num{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--emerald-dim);color:var(--emerald);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:500;flex-shrink:0;
+}
+.affirmation-input{
+  flex:1;background:none;border:none;outline:none;
+  font-family:var(--font-display);font-style:italic;font-size:15px;
+  color:var(--text-primary);line-height:1.6;resize:none;
+  font-weight:300;
+}
+.affirmation-input::placeholder{color:var(--text-tertiary);}
+.affirmation-del{background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:13px;opacity:0;transition:opacity .15s;}
+.affirmation-card:hover .affirmation-del{opacity:1;}
+.add-affirmation-btn{
+  width:100%;padding:14px;
+  background:none;border:0.5px dashed var(--charcoal-border);
+  border-radius:var(--radius);font-size:13px;
+  color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);
+  transition:all .15s;margin-top:4px;
+}
+.add-affirmation-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:#00000088;
+  display:none;align-items:center;justify-content:center;
+  z-index:500;padding:1rem;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:24px;width:100%;max-width:520px;
+}
+.modal h3{font-family:var(--font-display);font-size:22px;font-weight:300;margin-bottom:16px;}
+.modal textarea{
+  width:100%;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius-sm);padding:12px;font-size:14px;
+  color:var(--text-primary);font-family:var(--font-display);font-style:italic;
+  line-height:1.7;resize:vertical;min-height:120px;outline:none;
+}
+.modal-actions{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;}
+.btn-primary{
+  background:var(--emerald);color:#fff;border:none;
+  border-radius:var(--radius-sm);padding:8px 20px;font-size:13px;
+  cursor:pointer;font-family:var(--font-body);
+}
+.btn-secondary{
+  background:none;color:var(--text-secondary);
+  border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius-sm);padding:8px 20px;font-size:13px;
+  cursor:pointer;font-family:var(--font-body);
+}
+
+/* page title */
+.page-title{font-family:var(--font-display);font-size:32px;font-weight:300;margin-bottom:1.5rem;color:var(--text-primary);}
+.page-title span{color:var(--text-tertiary);font-size:18px;margin-left:10px;}
+
+/* section label */
+.section-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-tertiary);margin-bottom:12px;display:block;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--charcoal-border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- AFFIRMATION BAR -->
+<div class="affirmation-bar">
+  <div class="affirmation-nav">
+    <button onclick="prevAffirmation()">←</button>
+  </div>
+  <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
+    Loading your affirmation...
+  </div>
+  <div class="affirmation-nav">
+    <button onclick="nextAffirmation()">→</button>
+    <button class="affirmation-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">Edit</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">
+    <div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span class="logo-noor">Noor</span>
+        <span class="logo-north">North</span>
+      </div>
+      <div class="logo-sub">Personal Operating System</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="week-badge-sm wk" id="hdr-week"></span>
+    <span class="week-badge-sm qt" id="hdr-qt"></span>
+    <span class="date-badge" id="hdr-date"></span>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <button class="nav-tab active" onclick="showPage('daily',this)">Daily Flow</button>
+  <button class="nav-tab" onclick="showPage('planning',this)">Planning</button>
+  <button class="nav-tab" onclick="showPage('empire',this)">Empire</button>
+  <button class="nav-tab" onclick="showPage('notes',this)">Notes</button>
+  <button class="nav-tab" onclick="showPage('affirmations',this)">Affirmations</button>
+</nav>
+
+<!-- ══════════════════════════════════════
+     DAILY FLOW PAGE
+══════════════════════════════════════ -->
+<div class="page active" id="page-daily">
+  <div class="daily-header">
+    <h2 id="daily-title">Daily Flow</h2>
+    <div class="daily-header-right">
+      <button class="day-nav-btn" onclick="changeDay(-1)">← prev</button>
+      <span class="day-label" id="daily-day-label"></span>
+      <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
+    </div>
+  </div>
+
+  <div class="flow-grid">
+    <!-- MORNING -->
+    <div class="flow-col">
+      <div class="flow-col-header">
+        <div class="flow-col-title">
+          <div class="flow-col-icon" style="background:#1A9E8F18;color:#1A9E8F">☽</div>
+          <span style="font-family:var(--font-display)">Morning Ritual</span>
+        </div>
+        <span class="flow-col-badge" style="background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/5</span>
+      </div>
+      <div class="flow-col-body">
+        <div class="ritual-progress" id="am-progress"></div>
+        <div id="am-steps"></div>
+        <div class="ritual-flow-label">Surrender → Stillness → Process → Declare → Activate</div>
+      </div>
+    </div>
+
+    <!-- FIVE PILLARS -->
+    <div class="flow-col">
+      <div class="flow-col-header">
+        <div class="flow-col-title">
+          <div class="flow-col-icon" style="background:#C4983B18;color:#C4983B">✦</div>
+          <span style="font-family:var(--font-display)">Five Pillars</span>
+        </div>
+        <span class="flow-col-badge" style="background:#C4983B18;color:#C4983B" id="pillars-badge">0/0</span>
+      </div>
+      <div class="flow-col-body">
+        <div class="pillars-overall" id="pillars-overall-bar"></div>
+        <div id="pillars-list"></div>
+      </div>
+    </div>
+
+    <!-- EVENING -->
+    <div class="flow-col">
+      <div class="flow-col-header">
+        <div class="flow-col-title">
+          <div class="flow-col-icon" style="background:#7F77DD18;color:#7F77DD">◑</div>
+          <span style="font-family:var(--font-display)">Evening Ritual</span>
+        </div>
+        <span class="flow-col-badge" style="background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
+      </div>
+      <div class="flow-col-body">
+        <div class="ritual-progress" id="pm-progress"></div>
+        <div id="pm-steps"></div>
+        <div class="ritual-flow-label">Process → Reflect → Surrender → Release → Sleep</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PLANNING PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-planning">
+  <div class="page-title">Planning Layers <span>from lifetime to this week</span></div>
+  <div class="planning-grid" id="planning-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMPIRE DASHBOARD
+══════════════════════════════════════ -->
+<div class="page" id="page-empire">
+  <div class="page-title">Empire Dashboard</div>
+  <div class="empire-streak-row">
+    <div class="empire-stat"><div class="empire-stat-num" id="emp-streak">0</div><div class="empire-stat-lbl">Day Streak</div></div>
+    <div class="empire-stat"><div class="empire-stat-num" id="emp-tasks">0</div><div class="empire-stat-lbl">Tasks Today</div></div>
+    <div class="empire-stat"><div class="empire-stat-num" id="emp-rituals">0%</div><div class="empire-stat-lbl">Ritual Rate</div></div>
+    <div class="empire-stat"><div class="empire-stat-num" id="emp-goals">0</div><div class="empire-stat-lbl">Active Goals</div></div>
+  </div>
+  <span class="section-lbl">Pillar Health</span>
+  <div class="empire-grid" id="empire-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     NOTES PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-notes">
+  <div class="page-title">Notes & Vault</div>
+  <div class="notes-layout">
+    <div class="notes-sidebar">
+      <div class="notes-sidebar-header">
+        <span class="notes-sidebar-title">All Notes</span>
+        <button class="new-note-btn" onclick="newNote()">+ New</button>
+      </div>
+      <div id="notes-list"></div>
+    </div>
+    <div class="notes-editor">
+      <input class="note-title-input" id="note-title" placeholder="Note title..." oninput="saveCurrentNote()"/>
+      <textarea class="note-body-input" id="note-body" placeholder="Start writing... your thoughts are safe here." oninput="saveCurrentNote()"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     AFFIRMATIONS PAGE
+══════════════════════════════════════ -->
+<div class="page" id="page-affirmations">
+  <div class="page-title">Daily Affirmations</div>
+  <div class="affirmations-grid" id="affirmations-grid"></div>
+  <button class="add-affirmation-btn" onclick="addAffirmation()">+ Add Affirmation</button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Letter from your future self</h3>
+    <textarea id="modal-body" placeholder="Write as your future self who achieved this goal..."></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveModal()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const PILLARS=[
+  {id:'life',name:'Me Life',icon:'✦',color:'#1A9E8F'},
+  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#7F77DD'},
+  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#C4983B'},
+  {id:'td',name:'Tiger + Dragon',icon:'◉',color:'#D85A30'},
+  {id:'myc',name:'Mycelink',icon:'⬡',color:'#3B8FC4'}
+];
+const AM_STEPS=[
+  {title:'Cold wudu + pray',time:'10 min'},
+  {title:'Meditation',time:'10 min'},
+  {title:'Journal — donate £1, gratitude, manifest, do',time:'10 min'},
+  {title:'Read morning ritual',time:'10 min'},
+  {title:'Walk outside, cold air',time:'10 min'}
+];
+const PM_STEPS=[
+  {title:'Journal — wins, systems, evidence, RAM clear',time:'20 min'},
+  {title:'Read night ritual',time:'10 min'},
+  {title:'Pray 2 rakats',time:'10 min'},
+  {title:'Healing light body scan',time:'10 min'},
+  {title:'Phone across the room + sleep meditation',time:'—'}
+];
+const PLAN_LAYERS=[
+  {id:'lifetime',title:'Lifetime Goals',sub:'Your legacy',color:'#C4983B'},
+  {id:'ten',title:'10 Year Vision',sub:'2026 → 2036',color:'#D85A30'},
+  {id:'five',title:'5 Year Goals',sub:'2026 → 2031',color:'#7F77DD'},
+  {id:'two',title:'2 Year Milestones',sub:'2026 → 2028',color:'#3B8FC4'},
+  {id:'one',title:'1 Year Targets',sub:'2026',color:'#1A9E8F'},
+  {id:'quarterly',title:'Q2 2026',sub:'Apr → Jun 2026',color:'#C4983B'},
+  {id:'monthly',title:'April 2026',sub:'This month',color:'#D85A30'},
+  {id:'weekly',title:'Week 18',sub:'This week',color:'#1A9E8F'}
+];
+const DEFAULT_AFFIRMATIONS=[
+  'I build with faith, lead with love, and create with conviction.',
+  'I am Halima Yasmin 3.0 — principled, purposeful, and powerful.',
+  'My empire is built on foundations of faith and serves the greater good.',
+  'I attract abundance, opportunity, and divine guidance in all that I do.',
+  'I am deserving of every success Allah has written for me.',
+  'TigerFlow AI is transforming the UK property market through my vision.',
+  'I lead with elegance, act with boldness, and rest in divine trust.',
+];
+
+let dayOffset=0;
+let data={};
+let currentNoteId=null;
+let currentAffIdx=0;
+let modalContext=null;
+
+// ── UTILS ──
+function fmt(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function getDateStr(offset){const d=new Date();d.setDate(d.getDate()+offset);return fmt(d);}
+function fmtLabel(offset){
+  const d=new Date();d.setDate(d.getDate()+offset);
+  const s=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  return offset===0?'Today — '+s:offset===-1?'Yesterday — '+s:offset===1?'Tomorrow — '+s:s;
+}
+function getWeekNum(d){
+  const date=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  const day=date.getUTCDay()||7;
+  date.setUTCDate(date.getUTCDate()+4-day);
+  const y=new Date(Date.UTC(date.getUTCFullYear(),0,1));
+  return Math.ceil((((date-y)/86400000)+1)/7);
+}
+function getQ(d){return Math.ceil((d.getMonth()+1)/3);}
+function save(){try{localStorage.setItem('noornorth',JSON.stringify(data));}catch(e){}}
+function load(){try{const s=localStorage.getItem('noornorth');if(s)data=JSON.parse(s);}catch(e){data={};}}
+function ensureDay(ds){
+  if(!data[ds])data[ds]={am:{},pm:{},pillars:{}};
+  if(!data.affirmations)data.affirmations=[...DEFAULT_AFFIRMATIONS];
+  if(!data.notes)data.notes=[];
+  if(!data.planning)data.planning={};
+  PILLARS.forEach(p=>{if(!data[ds].pillars[p.id])data[ds].pillars[p.id]=[];});
+}
+
+// ── HEADER ──
+function renderHeader(){
+  const now=new Date();
+  document.getElementById('hdr-date').textContent=now.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  document.getElementById('hdr-week').textContent='Week '+getWeekNum(now);
+  document.getElementById('hdr-qt').textContent='Q'+getQ(now)+' '+now.getFullYear();
+}
+
+// ── PAGES ──
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(id==='daily')renderDaily();
+  if(id==='planning')renderPlanning();
+  if(id==='empire')renderEmpire();
+  if(id==='notes')renderNotes();
+  if(id==='affirmations')renderAffirmations();
+}
+
+// ── AFFIRMATIONS ──
+function renderAffirmationBar(){
+  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
+  if(!affs.length)return;
+  if(currentAffIdx>=affs.length)currentAffIdx=0;
+  document.getElementById('affirmation-display').textContent='"'+affs[currentAffIdx]+'"';
+}
+function prevAffirmation(){
+  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
+  currentAffIdx=(currentAffIdx-1+affs.length)%affs.length;
+  renderAffirmationBar();
+}
+function nextAffirmation(){
+  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
+  currentAffIdx=(currentAffIdx+1)%affs.length;
+  renderAffirmationBar();
+}
+function renderAffirmations(){
+  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
+  const grid=document.getElementById('affirmations-grid');
+  grid.innerHTML=affs.map((a,i)=>`
+    <div class="affirmation-card">
+      <div class="affirmation-num">${i+1}</div>
+      <textarea class="affirmation-input" rows="2" onblur="updateAffirmation(${i},this.value)" placeholder="Write your affirmation...">${a}</textarea>
+      <button class="affirmation-del" onclick="deleteAffirmation(${i})">✕</button>
+    </div>
+  `).join('');
+}
+function updateAffirmation(idx,val){
+  if(!data.affirmations)data.affirmations=[...DEFAULT_AFFIRMATIONS];
+  data.affirmations[idx]=val;save();renderAffirmationBar();
+}
+function addAffirmation(){
+  if(!data.affirmations)data.affirmations=[...DEFAULT_AFFIRMATIONS];
+  data.affirmations.push('');save();renderAffirmations();
+}
+function deleteAffirmation(idx){
+  data.affirmations.splice(idx,1);save();renderAffirmations();renderAffirmationBar();
+}
+
+// ── DAILY FLOW ──
+function changeDay(d){dayOffset+=d;renderDaily();}
+function renderDaily(){
+  const ds=getDateStr(dayOffset);
+  ensureDay(ds);
+  document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
+  renderRitual('am',ds);
+  renderRitual('pm',ds);
+  renderPillarsDaily(ds);
+}
+function renderRitual(session,ds){
+  const steps=session==='am'?AM_STEPS:PM_STEPS;
+  const color=session==='am'?'#1A9E8F':'#7F77DD';
+  const done=steps.filter((_,i)=>data[ds][session][i]).length;
+  document.getElementById(session+'-badge').textContent=done+'/'+steps.length;
+  // progress dots
+  const prog=document.getElementById(session+'-progress');
+  prog.innerHTML=steps.map((_,i)=>`<div class="ritual-prog-dot" style="${data[ds][session][i]?'background:'+color:''}"></div>`).join('');
+  // steps
+  const cont=document.getElementById(session+'-steps');
+  cont.innerHTML=steps.map((s,i)=>`
+    <div class="ritual-step">
+      <div class="ritual-check${data[ds][session][i]?' done':''}" onclick="toggleRitual('${ds}','${session}',${i})" style="${data[ds][session][i]?'background:'+color+';border-color:'+color:'border-color:var(--charcoal-border)'}">
+        <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="ritual-step-content">
+        <div class="ritual-step-title${data[ds][session][i]?' done':''}">${s.title}</div>
+        <div class="ritual-step-time">${s.time}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function toggleRitual(ds,session,idx){
+  data[ds][session][idx]=!data[ds][session][idx];
+  save();renderDaily();
+}
+function renderPillarsDaily(ds){
+  let totalDone=0,totalAll=0;
+  // overall bar
+  const barCont=document.getElementById('pillars-overall-bar');
+  barCont.innerHTML=PILLARS.map(p=>{
+    const tasks=data[ds].pillars[p.id]||[];
+    const d=tasks.filter(t=>t.done).length;
+    const a=tasks.length;
+    totalDone+=d;totalAll+=a;
+    const pct=a?Math.round(d/a*100):0;
+    return `<div class="pillar-bar-seg" style="${a?'background:'+p.color+Math.round(pct/100*99+1).toString(16).padStart(2,'0'):''}"></div>`;
+  }).join('');
+  document.getElementById('pillars-badge').textContent=totalDone+'/'+totalAll;
+  const cont=document.getElementById('pillars-list');
+  cont.innerHTML=PILLARS.map(p=>{
+    const tasks=data[ds].pillars[p.id]||[];
+    const done=tasks.filter(t=>t.done).length;
+    const isOpen=p._open;
+    return `
+    <div class="pillar-item${isOpen?' open':''}" id="pi-${p.id}">
+      <div class="pillar-item-header" onclick="togglePillar('${p.id}','${ds}')">
+        <div class="pillar-dot" style="background:${p.color}"></div>
+        <span class="pillar-name">${p.name}</span>
+        <span class="pillar-count">${done}/${tasks.length}</span>
+        <span class="pillar-chevron">▾</span>
+      </div>
+      <div class="pillar-item-body">
+        ${tasks.map((t,i)=>`
+          <div class="pillar-task">
+            <div class="pillar-task-check${t.done?' done':''}" onclick="togglePillarTask('${ds}','${p.id}',${i})" style="${t.done?'background:'+p.color+';border-color:'+p.color:'border-color:var(--charcoal-border)'}">
+              <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3L3 5L7 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="pillar-task-text${t.done?' done':''}" contenteditable="true" onblur="editPillarTask('${ds}','${p.id}',${i},this.textContent)">${t.text}</div>
+            <button class="pillar-task-del" onclick="deletePillarTask('${ds}','${p.id}',${i})">✕</button>
+          </div>
+        `).join('')}
+        <div class="pillar-add-row">
+          <input class="pillar-add-input" id="padd-${p.id}" placeholder="Add task..." onkeydown="if(event.key==='Enter')addPillarTask('${ds}','${p.id}')"/>
+          <button class="pillar-add-btn" onclick="addPillarTask('${ds}','${p.id}')">+ Add</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+const pillarOpen={};
+function togglePillar(pid,ds){
+  pillarOpen[pid]=!pillarOpen[pid];
+  const el=document.getElementById('pi-'+pid);
+  if(el)el.classList.toggle('open',pillarOpen[pid]);
+}
+function addPillarTask(ds,pid){
+  const inp=document.getElementById('padd-'+pid);
+  const text=inp?inp.value.trim():'';if(!text)return;
+  data[ds].pillars[pid].push({text,done:false});
+  inp.value='';save();renderPillarsDaily(ds);
+}
+function togglePillarTask(ds,pid,idx){
+  data[ds].pillars[pid][idx].done=!data[ds].pillars[pid][idx].done;
+  save();renderPillarsDaily(ds);
+}
+function editPillarTask(ds,pid,idx,text){
+  data[ds].pillars[pid][idx].text=text;save();
+}
+function deletePillarTask(ds,pid,idx){
+  data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);
+}
+
+// ── PLANNING ──
+function renderPlanning(){
+  const grid=document.getElementById('planning-grid');
+  grid.innerHTML=PLAN_LAYERS.map(layer=>{
+    const goals=data.planning&&data.planning[layer.id]?data.planning[layer.id]:[];
+    return `
+    <div class="plan-card">
+      <div class="plan-card-header">
+        <div>
+          <div class="plan-card-title" style="color:${layer.color}">${layer.title}</div>
+          <div class="plan-card-sub">${layer.sub}</div>
+        </div>
+      </div>
+      <div class="plan-card-body">
+        ${goals.map((g,i)=>`
+          <div class="plan-goal-item">
+            <div class="plan-goal-status ${g.status||'status-grey'}" onclick="cycleGoalStatus('${layer.id}',${i})" title="Click to cycle status"></div>
+            <textarea class="plan-goal-text" rows="1" onblur="updateGoal('${layer.id}',${i},this.value)" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'">${g.text}</textarea>
+          </div>
+        `).join('')}
+        <button class="plan-add-btn" onclick="addGoal('${layer.id}')">+ Add goal</button>
+        <button class="plan-letter-btn" onclick="openLetterModal('${layer.id}','${layer.title}')">✦ Letter from future self${data.planning&&data.planning[layer.id+'_letter']?' (written)':''}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function addGoal(layerId){
+  if(!data.planning)data.planning={};
+  if(!data.planning[layerId])data.planning[layerId]=[];
+  data.planning[layerId].push({text:'',status:'status-grey'});
+  save();renderPlanning();
+}
+function updateGoal(layerId,idx,text){
+  data.planning[layerId][idx].text=text;save();
+}
+function cycleGoalStatus(layerId,idx){
+  const statuses=['status-grey','status-green','status-amber','status-red'];
+  const g=data.planning[layerId][idx];
+  const cur=statuses.indexOf(g.status||'status-grey');
+  g.status=statuses[(cur+1)%statuses.length];
+  save();renderPlanning();
+}
+function openLetterModal(layerId,title){
+  modalContext={layerId};
+  document.getElementById('modal-title').textContent='Letter from future self — '+title;
+  document.getElementById('modal-body').value=(data.planning&&data.planning[layerId+'_letter'])||'';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function saveModal(){
+  if(modalContext){
+    if(!data.planning)data.planning={};
+    data.planning[modalContext.layerId+'_letter']=document.getElementById('modal-body').value;
+    save();renderPlanning();
+  }
+  closeModal();
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');modalContext=null;}
+
+// ── EMPIRE ──
+function renderEmpire(){
+  const today=fmt(new Date());
+  ensureDay(today);
+  // streak
+  let streak=0;
+  for(let d=0;d<90;d++){
+    const dd=new Date();dd.setDate(dd.getDate()-d);
+    const ds=fmt(dd);
+    if(!data[ds])break;
+    const amDone=AM_STEPS.filter((_,i)=>data[ds].am[i]).length;
+    const pmDone=PM_STEPS.filter((_,i)=>data[ds].pm[i]).length;
+    if(amDone===AM_STEPS.length&&pmDone===PM_STEPS.length)streak++;else break;
+  }
+  document.getElementById('emp-streak').textContent=streak;
+  // tasks today
+  let tasks=0;
+  PILLARS.forEach(p=>{tasks+=(data[today].pillars[p.id]||[]).filter(t=>t.done).length;});
+  document.getElementById('emp-tasks').textContent=tasks;
+  // ritual rate this week
+  const now=new Date();const day=now.getDay();
+  const monday=new Date(now);monday.setDate(now.getDate()-((day+6)%7));
+  let amTotal=0,pmTotal=0,days=0;
+  for(let i=0;i<7;i++){
+    const d=new Date(monday);d.setDate(monday.getDate()+i);
+    if(d>now)break;days++;
+    const ds=fmt(d);
+    if(data[ds]){
+      if(AM_STEPS.filter((_,j)=>data[ds].am&&data[ds].am[j]).length===AM_STEPS.length)amTotal++;
+      if(PM_STEPS.filter((_,j)=>data[ds].pm&&data[ds].pm[j]).length===PM_STEPS.length)pmTotal++;
+    }
+  }
+  const rate=days?Math.round((amTotal+pmTotal)/(days*2)*100):0;
+  document.getElementById('emp-rituals').textContent=rate+'%';
+  // active goals
+  let goals=0;
+  if(data.planning)PLAN_LAYERS.forEach(l=>{goals+=(data.planning[l.id]||[]).filter(g=>g.text).length;});
+  document.getElementById('emp-goals').textContent=goals;
+  // pillar cards
+  const grid=document.getElementById('empire-grid');
+  grid.innerHTML=PILLARS.map(p=>{
+    const tasks=(data[today].pillars[p.id]||[]);
+    const done=tasks.filter(t=>t.done).length;
+    const all=tasks.length;
+    const pct=all?Math.round(done/all*100):0;
+    return `
+    <div class="empire-card" style="border-color:${p.color}22">
+      <div class="empire-icon">${p.icon}</div>
+      <div class="empire-name" style="color:${p.color}">${p.name}</div>
+      <div class="empire-score" style="color:${p.color}">${pct}%</div>
+      <div class="empire-label">${done}/${all} tasks today</div>
+      <div class="empire-bar"><div class="empire-bar-fill" style="width:${pct}%;background:${p.color}"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ── NOTES ──
+function renderNotes(){
+  if(!data.notes)data.notes=[];
+  const list=document.getElementById('notes-list');
+  list.innerHTML=data.notes.length?data.notes.map((n,i)=>`
+    <div class="note-item${currentNoteId===i?' active':''}" onclick="openNote(${i})">
+      <div class="note-item-title">${n.title||'Untitled'}</div>
+      <div class="note-item-preview">${n.body||'Empty note'}</div>
+      <div class="note-item-date">${n.date||''}</div>
+    </div>
+  `).join(''):'<div style="font-size:12px;color:var(--text-tertiary);padding:8px">No notes yet. Click + New to start.</div>';
+  if(currentNoteId!==null&&data.notes[currentNoteId]){
+    document.getElementById('note-title').value=data.notes[currentNoteId].title||'';
+    document.getElementById('note-body').value=data.notes[currentNoteId].body||'';
+  }
+}
+function newNote(){
+  if(!data.notes)data.notes=[];
+  data.notes.unshift({title:'',body:'',date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})});
+  currentNoteId=0;save();renderNotes();
+  document.getElementById('note-title').focus();
+}
+function openNote(idx){currentNoteId=idx;renderNotes();}
+function saveCurrentNote(){
+  if(currentNoteId===null||!data.notes[currentNoteId])return;
+  data.notes[currentNoteId].title=document.getElementById('note-title').value;
+  data.notes[currentNoteId].body=document.getElementById('note-body').value;
+  save();
+  // update sidebar preview without full re-render
+  const items=document.querySelectorAll('.note-item');
+  if(items[currentNoteId]){
+    items[currentNoteId].querySelector('.note-item-title').textContent=data.notes[currentNoteId].title||'Untitled';
+    items[currentNoteId].querySelector('.note-item-preview').textContent=data.notes[currentNoteId].body||'Empty note';
+  }
+}
+
+// ── AUTO-ROTATE AFFIRMATIONS ──
+setInterval(()=>{nextAffirmation();},30000);
+
+// ── INIT ──
+load();
+renderHeader();
+renderAffirmationBar();
+renderDaily();
+</script>
+</body>
+</html>
