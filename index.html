@@ -4,27 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Noor North — Personal OS</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --emerald: #1A9E8F;
-  --emerald-dim: #1A9E8F22;
-  --emerald-mid: #1A9E8F44;
-  --gold: #C4983B;
-  --gold-dim: #C4983B22;
-  --ivory: #FBF8F1;
-  --charcoal: #0E0E1A;
-  --charcoal-mid: #16162A;
-  --charcoal-light: #1E1E32;
-  --charcoal-border: #2A2A42;
-  --text-primary: #F0EDE8;
-  --text-secondary: #9090A8;
-  --text-tertiary: #50506A;
-  --purple: #7F77DD;
-  --coral: #D85A30;
-  --blue: #3B8FC4;
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'DM Sans', sans-serif;
+  --emerald: #C4983B;
+  --emerald-dim: #C4983B20;
+  --emerald-mid: #C4983B44;
+  --gold: #E8B84B;
+  --gold-dim: #E8B84B20;
+  --ivory: #FFFDF7;
+  --charcoal: #1A1508;
+  --charcoal-mid: #231C0A;
+  --charcoal-light: #2E2510;
+  --charcoal-border: #3D3118;
+  --text-primary: #FDF6E3;
+  --text-secondary: #B8A878;
+  --text-tertiary: #6B5A38;
+  --purple: #D4A843;
+  --coral: #E8733A;
+  --blue: #C4983B;
+  --font-display: 'Figtree', sans-serif;
+  --font-body: 'Figtree', sans-serif;
   --radius: 12px;
   --radius-sm: 8px;
 }
@@ -40,8 +41,8 @@ body{
 
 /* ── AFFIRMATION BANNER ── */
 .affirmation-bar{
-  background:linear-gradient(135deg,#0A1A18,#0E1E2A);
-  border-bottom:1px solid var(--emerald-mid);
+  background:linear-gradient(135deg,#1A1205,#251A08);
+  border-bottom:1px solid #C4983B44;
   padding:10px 2rem;
   display:flex;
   align-items:center;
@@ -55,7 +56,7 @@ body{
   font-family:var(--font-display);
   font-style:italic;
   font-size:15px;
-  color:var(--emerald);
+  color:var(--gold);
   flex:1;
   text-align:center;
   letter-spacing:.02em;
@@ -100,7 +101,7 @@ body{
   border-radius:20px;padding:5px 12px;
 }
 .week-badge-sm{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
-.wk{background:var(--emerald-dim);color:var(--emerald);}
+.wk{background:var(--gold-dim);color:var(--gold);}
 .qt{background:var(--gold-dim);color:var(--gold);}
 
 /* ── NAV ── */
@@ -122,7 +123,7 @@ body{
   transition:all .15s;font-family:var(--font-body);
 }
 .nav-tab:hover{color:var(--text-secondary);}
-.nav-tab.active{color:var(--emerald);border-bottom-color:var(--emerald);}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* ── PAGES ── */
 .page{display:none;padding:1.5rem 2rem;max-width:1400px;margin:0 auto;}
@@ -138,7 +139,7 @@ body{
   cursor:pointer;color:var(--text-primary);font-family:var(--font-body);
   transition:all .15s;
 }
-.day-nav-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.day-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
 .day-label{font-size:14px;color:var(--text-secondary);min-width:180px;text-align:center;}
 
 /* Three column layout */
@@ -254,7 +255,7 @@ body{
   cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);
   transition:all .15s;
 }
-.pillar-add-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.pillar-add-btn:hover{border-color:var(--gold);color:var(--gold);}
 .pillars-overall{
   display:flex;gap:4px;margin-bottom:14px;
 }
@@ -301,7 +302,7 @@ body{
   cursor:pointer;font-family:var(--font-body);
   transition:all .15s;
 }
-.plan-add-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.plan-add-btn:hover{border-color:var(--gold);color:var(--gold);}
 .plan-letter-btn{
   width:100%;margin-top:8px;
   background:none;border:0.5px solid var(--charcoal-border);
@@ -351,7 +352,7 @@ body{
 .notes-sidebar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .notes-sidebar-title{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);}
 .new-note-btn{
-  background:var(--emerald);color:#fff;border:none;
+  background:var(--gold);color:#1A1508;border:none;
   border-radius:6px;padding:4px 10px;font-size:11px;
   cursor:pointer;font-family:var(--font-body);
 }
@@ -391,7 +392,7 @@ body{
 }
 .affirmation-num{
   width:24px;height:24px;border-radius:50%;
-  background:var(--emerald-dim);color:var(--emerald);
+  background:var(--gold-dim);color:var(--gold);
   display:flex;align-items:center;justify-content:center;
   font-size:11px;font-weight:500;flex-shrink:0;
 }
@@ -411,7 +412,7 @@ body{
   color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);
   transition:all .15s;margin-top:4px;
 }
-.add-affirmation-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.add-affirmation-btn:hover{border-color:var(--gold);color:var(--gold);}
 
 /* ── MODAL ── */
 .modal-overlay{
@@ -433,7 +434,7 @@ body{
 }
 .modal-actions{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;}
 .btn-primary{
-  background:var(--emerald);color:#fff;border:none;
+  background:var(--gold);color:#1A1508;border:none;
   border-radius:var(--radius-sm);padding:8px 20px;font-size:13px;
   cursor:pointer;font-family:var(--font-body);
 }
@@ -455,9 +456,91 @@ body{
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--charcoal-border);border-radius:2px;}
+
+/* ── LOGIN SCREEN ── */
+.login-overlay{
+  position:fixed;inset:0;background:var(--charcoal);
+  display:flex;align-items:center;justify-content:center;
+  z-index:1000;flex-direction:column;gap:0;
+}
+.login-overlay.hidden{display:none;}
+.login-box{
+  background:#000000;border:0.5px solid #C4983B44;
+  border-radius:var(--radius);padding:2.5rem;width:100%;max-width:380px;
+  text-align:center;
+}
+.login-logo{font-family:var(--font-display);font-size:36px;font-weight:300;margin-bottom:4px;}
+.login-logo span{color:var(--gold);}
+.login-sub{font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.12em;margin-bottom:2rem;}
+.login-label{font-size:12px;color:var(--text-secondary);text-align:left;display:block;margin-bottom:6px;}
+.login-input{
+  width:100%;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;
+  color:var(--text-primary);font-family:var(--font-body);outline:none;
+  margin-bottom:1rem;transition:border-color .15s;
+}
+.login-input:focus{border-color:var(--gold);}
+.login-btn{
+  width:100%;background:var(--gold);color:#1A1508;border:none;
+  border-radius:var(--radius-sm);padding:11px;font-size:14px;
+  cursor:pointer;font-family:var(--font-body);font-weight:500;
+  transition:opacity .15s;margin-bottom:.75rem;
+}
+.login-btn:hover{opacity:.85;}
+.login-error{font-size:12px;color:#EF4444;margin-top:-8px;margin-bottom:8px;display:none;}
+.login-hint{font-size:11px;color:var(--text-tertiary);margin-top:.5rem;line-height:1.5;}
+.login-new-btn{
+  background:none;border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius-sm);padding:8px;font-size:12px;
+  color:var(--text-secondary);cursor:pointer;font-family:var(--font-body);
+  width:100%;margin-top:.5rem;transition:all .15s;
+}
+.login-new-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.sync-indicator{
+  position:fixed;bottom:16px;right:16px;
+  background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);
+  border-radius:20px;padding:5px 12px;font-size:11px;
+  color:var(--text-tertiary);z-index:100;display:none;
+  align-items:center;gap:6px;
+}
+.sync-indicator.show{display:flex;}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.logout-btn{
+  background:none;border:0.5px solid var(--charcoal-border);
+  border-radius:6px;padding:4px 10px;font-size:11px;
+  color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);
+  transition:all .15s;
+}
+.logout-btn:hover{border-color:#EF4444;color:#EF4444;}
+
 </style>
 </head>
 <body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <div class="login-logo"><span>Noor</span> North</div>
+    <div class="login-sub">Personal Operating System</div>
+    <div id="login-form">
+      <label class="login-label">Your User ID (e.g. your name or email)</label>
+      <input class="login-input" id="login-userid" placeholder="e.g. halima" type="text"/>
+      <label class="login-label">Encryption Password</label>
+      <input class="login-input" id="login-password" placeholder="Your secret password" type="password" onkeydown="if(event.key==='Enter')attemptLogin()"/>
+      <div class="login-error" id="login-error">Incorrect password or no data found. Try again.</div>
+      <button class="login-btn" onclick="attemptLogin()">Enter Noor North</button>
+      <div class="login-hint">Your password encrypts all data before it leaves your device.<br>Supabase cannot read your information.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SYNC INDICATOR -->
+<div class="sync-indicator" id="sync-indicator">
+  <div class="sync-dot"></div>
+  <span>Syncing...</span>
+</div>
+
 
 <!-- AFFIRMATION BAR -->
 <div class="affirmation-bar">
@@ -478,7 +561,7 @@ body{
   <div class="logo">
     <div>
       <div style="display:flex;align-items:baseline;gap:6px">
-        <span class="logo-noor">Noor</span>
+        <span class="logo-noor" style="color:var(--gold)">Noor</span>
         <span class="logo-north">North</span>
       </div>
       <div class="logo-sub">Personal Operating System</div>
@@ -488,6 +571,7 @@ body{
     <span class="week-badge-sm wk" id="hdr-week"></span>
     <span class="week-badge-sm qt" id="hdr-qt"></span>
     <span class="date-badge" id="hdr-date"></span>
+    <button class="logout-btn" onclick="logout()">Lock</button>
   </div>
 </header>
 
@@ -630,11 +714,11 @@ body{
 <script>
 // ── DATA ──
 const PILLARS=[
-  {id:'life',name:'Me Life',icon:'✦',color:'#1A9E8F'},
-  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#7F77DD'},
-  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#C4983B'},
-  {id:'td',name:'Tiger + Dragon',icon:'◉',color:'#D85A30'},
-  {id:'myc',name:'Mycelink',icon:'⬡',color:'#3B8FC4'}
+  {id:'life',name:'Me Life',icon:'✦',color:'#E8B84B'},
+  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#C4983B'},
+  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#D4A843'},
+  {id:'td',name:'Tiger + Dragon',icon:'◉',color:'#E8733A'},
+  {id:'myc',name:'Mycelink',icon:'⬡',color:'#B8943A'}
 ];
 const AM_STEPS=[
   {title:'Cold wudu + pray',time:'10 min'},
@@ -651,14 +735,14 @@ const PM_STEPS=[
   {title:'Phone across the room + sleep meditation',time:'—'}
 ];
 const PLAN_LAYERS=[
-  {id:'lifetime',title:'Lifetime Goals',sub:'Your legacy',color:'#C4983B'},
+  {id:'lifetime',title:'Lifetime Goals',sub:'Your legacy',color:'#D4A843'},
   {id:'ten',title:'10 Year Vision',sub:'2026 → 2036',color:'#D85A30'},
-  {id:'five',title:'5 Year Goals',sub:'2026 → 2031',color:'#7F77DD'},
+  {id:'five',title:'5 Year Goals',sub:'2026 → 2031',color:'#C4983B'},
   {id:'two',title:'2 Year Milestones',sub:'2026 → 2028',color:'#3B8FC4'},
-  {id:'one',title:'1 Year Targets',sub:'2026',color:'#1A9E8F'},
-  {id:'quarterly',title:'Q2 2026',sub:'Apr → Jun 2026',color:'#C4983B'},
+  {id:'one',title:'1 Year Targets',sub:'2026',color:'#E8B84B'},
+  {id:'quarterly',title:'Q2 2026',sub:'Apr → Jun 2026',color:'#D4A843'},
   {id:'monthly',title:'April 2026',sub:'This month',color:'#D85A30'},
-  {id:'weekly',title:'Week 18',sub:'This week',color:'#1A9E8F'}
+  {id:'weekly',title:'Week 18',sub:'This week',color:'#E8B84B'}
 ];
 const DEFAULT_AFFIRMATIONS=[
   'I build with faith, lead with love, and create with conviction.',
@@ -1024,6 +1108,138 @@ load();
 renderHeader();
 renderAffirmationBar();
 renderDaily();
+
+// ── SUPABASE + ENCRYPTION CONFIG ──
+const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_5UykL0EgtprAnlbU9zjObQ_7FqgdmhZ';
+
+let MASTER_PASSWORD = null;
+let USER_ID = null;
+let syncTimeout = null;
+
+// ── ENCRYPTION ──
+function encrypt(text, password) {
+  return CryptoJS.AES.encrypt(JSON.stringify(text), password).toString();
+}
+function decrypt(ciphertext, password) {
+  try {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, password);
+    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  } catch(e) { return null; }
+}
+
+// ── SUPABASE API ──
+async function sbRequest(method, path, body) {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    method,
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'resolution=merge-duplicates' : ''
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (method === 'GET') return res.json();
+  return res;
+}
+
+async function syncToSupabase() {
+  if (!MASTER_PASSWORD || !USER_ID) return;
+  showSync();
+  const encrypted = encrypt(data, MASTER_PASSWORD);
+  await sbRequest('POST', 'noor_north_data', {
+    user_id: USER_ID,
+    data_key: 'main',
+    encrypted_value: encrypted,
+    updated_at: new Date().toISOString()
+  });
+  hideSync();
+}
+
+async function loadFromSupabase() {
+  if (!MASTER_PASSWORD || !USER_ID) return false;
+  showSync();
+  const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
+  hideSync();
+  if (rows && rows.length > 0) {
+    const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
+    if (decrypted) { data = decrypted; return true; }
+    return false;
+  }
+  return true; // new user, no data yet
+}
+
+function showSync() { document.getElementById('sync-indicator').classList.add('show'); }
+function hideSync() { document.getElementById('sync-indicator').classList.remove('show'); }
+
+// ── DEBOUNCED SAVE ──
+const originalSave = save;
+window.save = function() {
+  originalSave();
+  clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(syncToSupabase, 1500);
+};
+
+// ── LOGIN ──
+async function attemptLogin() {
+  const userId = document.getElementById('login-userid').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value;
+  if (!userId || !password) { showLoginError('Please enter both fields.'); return; }
+  
+  MASTER_PASSWORD = password;
+  USER_ID = userId;
+  
+  const btn = document.querySelector('.login-btn');
+  btn.textContent = 'Unlocking...';
+  btn.disabled = true;
+  
+  const success = await loadFromSupabase();
+  
+  if (success) {
+    sessionStorage.setItem('nn_uid', userId);
+    sessionStorage.setItem('nn_pw', password);
+    document.getElementById('login-overlay').classList.add('hidden');
+    renderHeader();
+    renderAffirmationBar();
+    renderDaily();
+  } else {
+    MASTER_PASSWORD = null; USER_ID = null;
+    showLoginError('Incorrect password. Try again.');
+    btn.textContent = 'Enter Noor North';
+    btn.disabled = false;
+  }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg; el.style.display = 'block';
+}
+
+function logout() {
+  sessionStorage.removeItem('nn_uid');
+  sessionStorage.removeItem('nn_pw');
+  MASTER_PASSWORD = null; USER_ID = null;
+  document.getElementById('login-overlay').classList.remove('hidden');
+  document.getElementById('login-password').value = '';
+}
+
+// ── AUTO LOGIN FROM SESSION ──
+(async function autoLogin() {
+  const uid = sessionStorage.getItem('nn_uid');
+  const pw = sessionStorage.getItem('nn_pw');
+  if (uid && pw) {
+    MASTER_PASSWORD = pw; USER_ID = uid;
+    const success = await loadFromSupabase();
+    if (success) {
+      document.getElementById('login-overlay').classList.add('hidden');
+      renderHeader(); renderAffirmationBar(); renderDaily();
+    } else {
+      MASTER_PASSWORD = null; USER_ID = null;
+    }
+  }
+})();
+
 </script>
 </body>
 </html>
