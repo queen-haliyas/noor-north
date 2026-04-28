@@ -887,46 +887,6 @@ body{
   <button class="add-affirmation-btn" onclick="addAffirmation()">+ Add Affirmation</button>
 </div>
 
-
-  <div class="cal-layout">
-    <div class="cal-main">
-      <div class="cal-header">
-        <button class="cal-nav-btn" onclick="changeMonth(-1)">← prev</button>
-        <div class="cal-month" id="cal-month-label"></div>
-        <button class="cal-nav-btn" onclick="changeMonth(1)">next →</button>
-      </div>
-      <div class="cal-grid">
-        <div class="cal-day-header">Mon</div>
-        <div class="cal-day-header">Tue</div>
-        <div class="cal-day-header">Wed</div>
-        <div class="cal-day-header">Thu</div>
-        <div class="cal-day-header">Fri</div>
-        <div class="cal-day-header">Sat</div>
-        <div class="cal-day-header">Sun</div>
-      </div>
-      <div class="cal-grid" id="cal-cells"></div>
-    </div>
-    <div class="cal-sidebar">
-      <div class="cal-selected-day">
-        <div class="cal-selected-title" id="cal-selected-title">Select a day</div>
-        <div id="cal-day-events"></div>
-      </div>
-      <div class="cal-add-form">
-        <div class="cal-add-title">Add event</div>
-        <input class="cal-input" id="cal-event-title" placeholder="Event title..." />
-        <input class="cal-input" id="cal-event-time" placeholder="Time (e.g. 9:00am)" />
-        <input class="cal-input" id="cal-event-notes" placeholder="Notes (optional)" />
-        <div class="cal-color-row" id="cal-color-row">
-          <div class="cal-color-opt selected" style="background:var(--gold)" data-color="gold" onclick="selectEventColor(this)"></div>
-          <div class="cal-color-opt" style="background:#E8733A" data-color="coral" onclick="selectEventColor(this)"></div>
-          <div class="cal-color-opt" style="background:#3B8FC4" data-color="blue" onclick="selectEventColor(this)"></div>
-          <div class="cal-color-opt" style="background:#7F77DD" data-color="purple" onclick="selectEventColor(this)"></div>
-          <div class="cal-color-opt" style="background:#22C55E" data-color="green" onclick="selectEventColor(this)"></div>
-        </div>
-        <button class="cal-add-event-btn" onclick="addCalEvent()">+ Add Event</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 
@@ -1904,7 +1864,7 @@ function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
   panel.style.display = 'grid';
-  const d = new Date(dateStr + 'T00:00:00');
+  const parts = dateStr.split('-'); const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const dd = data[dateStr] || {};
   const amSteps = ['Cold wudu + pray','Meditation','Journal','Read morning ritual','Walk outside'];
