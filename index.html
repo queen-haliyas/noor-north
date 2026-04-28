@@ -514,6 +514,132 @@ body{
 }
 .logout-btn:hover{border-color:#EF4444;color:#EF4444;}
 
+
+/* ── CALENDAR ── */
+.cal-layout{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start;}
+@media(max-width:800px){.cal-layout{grid-template-columns:1fr;}}
+.cal-main{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;}
+.cal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:0.5px solid var(--charcoal-border);}
+.cal-month{font-family:var(--font-display);font-size:20px;font-weight:500;color:var(--text-primary);}
+.cal-nav-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px 12px;font-size:13px;cursor:pointer;color:var(--text-primary);font-family:var(--font-body);transition:all .15s;}
+.cal-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+.cal-day-header{padding:10px 4px;text-align:center;font-size:11px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;border-bottom:0.5px solid var(--charcoal-border);}
+.cal-cell{min-height:80px;padding:6px;border-right:0.5px solid var(--charcoal-border);border-bottom:0.5px solid var(--charcoal-border);cursor:pointer;transition:background .15s;position:relative;}
+.cal-cell:nth-child(7n){border-right:none;}
+.cal-cell:hover{background:var(--charcoal-mid);}
+.cal-cell.today{background:#C4983B10;}
+.cal-cell.selected{background:#C4983B18;border-color:var(--gold);}
+.cal-cell.other-month .cal-date{color:var(--text-tertiary);}
+.cal-date{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:4px;}
+.cal-date.today-num{width:24px;height:24px;border-radius:50%;background:var(--gold);color:#1A1508;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.cal-event-dot{font-size:10px;color:var(--gold);background:var(--gold-dim);border-radius:4px;padding:1px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.cal-event-dot.coral{background:#E8733A20;color:#E8733A;}
+.cal-event-dot.blue{background:#3B8FC420;color:#3B8FC4;}
+.cal-event-dot.purple{background:#7F77DD20;color:#7F77DD;}
+/* Sidebar */
+.cal-sidebar{display:flex;flex-direction:column;gap:12px;}
+.cal-selected-day{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;}
+.cal-selected-title{font-family:var(--font-display);font-size:17px;font-weight:500;color:var(--text-primary);margin-bottom:12px;padding-bottom:10px;border-bottom:0.5px solid var(--charcoal-border);}
+.cal-event-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--charcoal-border);}
+.cal-event-item:last-of-type{border-bottom:none;}
+.cal-event-color{width:3px;border-radius:2px;min-height:36px;flex-shrink:0;}
+.cal-event-info{flex:1;}
+.cal-event-title{font-size:13px;font-weight:500;color:var(--text-primary);}
+.cal-event-time{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.cal-event-del{background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:12px;opacity:0;transition:opacity .15s;}
+.cal-event-item:hover .cal-event-del{opacity:1;}
+.cal-no-events{font-size:13px;color:var(--text-tertiary);text-align:center;padding:20px 0;}
+/* Add event form */
+.cal-add-form{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;}
+.cal-add-title{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:12px;}
+.cal-input{width:100%;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:8px 12px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;margin-bottom:8px;transition:border-color .15s;}
+.cal-input:focus{border-color:var(--gold);}
+.cal-color-row{display:flex;gap:6px;margin-bottom:10px;}
+.cal-color-opt{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;}
+.cal-color-opt.selected{border-color:#fff;}
+.cal-add-event-btn{width:100%;background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:8px;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;transition:opacity .15s;}
+.cal-add-event-btn:hover{opacity:.85;}
+
+
+/* ── 99 NAMES ── */
+.names-hero{background:linear-gradient(135deg,#1A1205,#2E2510);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:2rem;text-align:center;margin-bottom:1.5rem;}
+.names-arabic{font-size:42px;color:var(--gold);margin-bottom:8px;line-height:1.3;}
+.names-english{font-size:22px;font-weight:500;color:var(--text-primary);margin-bottom:6px;}
+.names-meaning{font-size:15px;color:var(--text-secondary);margin-bottom:16px;font-style:italic;}
+.names-pillar-tag{display:inline-block;font-size:11px;padding:4px 12px;border-radius:20px;background:var(--gold-dim);color:var(--gold);margin-bottom:16px;font-weight:500;}
+.names-dua{font-size:13px;color:var(--text-secondary);line-height:1.8;max-width:600px;margin:0 auto 16px;padding:16px;background:#00000020;border-radius:var(--radius-sm);border-left:3px solid var(--gold);}
+.names-vision{font-size:12px;color:var(--text-tertiary);line-height:1.7;max-width:600px;margin:0 auto;}
+.names-nav-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:1rem;}
+.names-nav-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:6px 16px;font-size:13px;cursor:pointer;color:var(--text-primary);font-family:var(--font-body);transition:all .15s;}
+.names-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.names-counter{font-size:13px;color:var(--text-tertiary);}
+.names-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;}
+.names-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px;cursor:pointer;transition:all .15s;}
+.names-card:hover{border-color:var(--gold);}
+.names-card.today{border-color:var(--gold);background:#C4983B10;}
+.names-card-num{font-size:10px;color:var(--text-tertiary);margin-bottom:4px;}
+.names-card-arabic{font-size:18px;color:var(--gold);}
+.names-card-english{font-size:12px;color:var(--text-primary);margin-top:2px;}
+/* ── WEEKLY REVIEW ── */
+.review-locked{text-align:center;padding:3rem;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);}
+.review-lock-icon{font-size:40px;margin-bottom:1rem;}
+.review-lock-title{font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--text-primary);margin-bottom:8px;}
+.review-lock-sub{font-size:14px;color:var(--text-secondary);}
+.review-form{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;}
+.review-q{font-size:14px;font-weight:500;color:var(--gold);margin-bottom:8px;}
+.review-q-sub{font-size:12px;color:var(--text-secondary);margin-bottom:10px;}
+.review-textarea{width:100%;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;resize:vertical;min-height:80px;line-height:1.6;transition:border-color .15s;margin-bottom:8px;}
+.review-textarea:focus{border-color:var(--gold);}
+.review-score-row{display:flex;gap:8px;margin-bottom:8px;}
+.review-score-btn{flex:1;padding:8px;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);background:none;cursor:pointer;font-size:13px;color:var(--text-secondary);font-family:var(--font-body);transition:all .15s;}
+.review-score-btn.selected{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
+.review-submit-btn{width:100%;background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:12px;font-size:14px;cursor:pointer;font-family:var(--font-body);font-weight:500;margin-top:1rem;}
+.review-complete{text-align:center;padding:2rem;background:var(--charcoal-light);border:0.5px solid var(--gold);border-radius:var(--radius);}
+.review-history-item{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:8px;}
+.review-history-date{font-size:12px;color:var(--gold);margin-bottom:6px;font-weight:500;}
+.review-history-text{font-size:12px;color:var(--text-secondary);line-height:1.6;}
+
+
+/* ── ARABELLA AI ── */
+.arabella-layout{display:grid;grid-template-columns:1fr;gap:0;max-width:800px;margin:0 auto;}
+.arabella-header{background:linear-gradient(135deg,#1A1205,#2E2510);border:0.5px solid var(--gold);border-radius:var(--radius) var(--radius) 0 0;padding:1.5rem;text-align:center;}
+.arabella-name{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--gold);margin-bottom:4px;}
+.arabella-sub{font-size:12px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.1em;}
+.arabella-messages{background:var(--charcoal-light);border-left:0.5px solid var(--charcoal-border);border-right:0.5px solid var(--charcoal-border);min-height:400px;max-height:500px;overflow-y:auto;padding:1rem;}
+.arabella-msg{margin-bottom:12px;display:flex;flex-direction:column;}
+.arabella-msg.user{align-items:flex-end;}
+.arabella-msg.assistant{align-items:flex-start;}
+.arabella-bubble{max-width:80%;padding:10px 14px;border-radius:var(--radius);font-size:13px;line-height:1.6;}
+.arabella-msg.user .arabella-bubble{background:var(--gold);color:#1A1508;}
+.arabella-msg.assistant .arabella-bubble{background:var(--charcoal-mid);color:var(--text-primary);border:0.5px solid var(--charcoal-border);}
+.arabella-msg-time{font-size:10px;color:var(--text-tertiary);margin-top:4px;padding:0 4px;}
+.arabella-input-row{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:12px;display:flex;gap:8px;align-items:flex-end;}
+.arabella-input{flex:1;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;resize:none;line-height:1.5;max-height:120px;transition:border-color .15s;}
+.arabella-input:focus{border-color:var(--gold);}
+.arabella-send-btn{background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:10px 16px;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;white-space:nowrap;transition:opacity .15s;}
+.arabella-send-btn:hover{opacity:.85;}
+.arabella-send-btn:disabled{opacity:.5;cursor:not-allowed;}
+.arabella-modes{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;}
+.arabella-mode-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:20px;padding:5px 12px;font-size:11px;cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);transition:all .15s;}
+.arabella-mode-btn:hover,.arabella-mode-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
+/* ── VOICE MEMOS ── */
+.voice-record-btn{width:80px;height:80px;border-radius:50%;border:2px solid var(--gold);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;transition:all .2s;margin:0 auto 1rem;}
+.voice-record-btn.recording{background:var(--gold-dim);animation:recordPulse 1s infinite;}
+.voice-record-btn:hover{background:var(--gold-dim);}
+@keyframes recordPulse{0%,100%{box-shadow:0 0 0 0 #C4983B40;}50%{box-shadow:0 0 0 12px #C4983B10;}}
+.voice-status{text-align:center;font-size:13px;color:var(--text-secondary);margin-bottom:1rem;}
+.voice-timer{font-size:24px;font-family:var(--font-display);color:var(--gold);text-align:center;margin-bottom:1.5rem;}
+.voice-memo-item{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.voice-play-btn{width:32px;height:32px;border-radius:50%;background:var(--gold-dim);border:0.5px solid var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold);flex-shrink:0;transition:all .15s;}
+.voice-play-btn:hover{background:var(--gold);color:#1A1508;}
+.voice-memo-info{flex:1;}
+.voice-memo-title{font-size:13px;font-weight:500;color:var(--text-primary);}
+.voice-memo-meta{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.voice-memo-del{background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:13px;opacity:0;transition:opacity .15s;}
+.voice-memo-item:hover .voice-memo-del{opacity:1;}
+.voice-center{text-align:center;padding:2rem;}
+
 </style>
 </head>
 <body>
@@ -582,6 +708,11 @@ body{
   <button class="nav-tab" onclick="showPage('empire',this)">Empire</button>
   <button class="nav-tab" onclick="showPage('notes',this)">Notes</button>
   <button class="nav-tab" onclick="showPage('affirmations',this)">Affirmations</button>
+  <button class="nav-tab" onclick="showPage('calendar',this)">Calendar</button>
+  <button class="nav-tab" onclick="showPage('names',this)">99 Names</button>
+  <button class="nav-tab" onclick="showPage('review',this)">Weekly Review</button>
+  <button class="nav-tab" onclick="showPage('arabella',this)">Arabella AI</button>
+  <button class="nav-tab" onclick="showPage('voice',this)">Voice Memos</button>
 </nav>
 
 <!-- ══════════════════════════════════════
@@ -699,6 +830,113 @@ body{
   <button class="add-affirmation-btn" onclick="addAffirmation()">+ Add Affirmation</button>
 </div>
 
+
+<!-- CALENDAR PAGE -->
+<div class="page" id="page-calendar">
+  <div class="page-title">Calendar</div>
+  <div class="cal-layout">
+    <div class="cal-main">
+      <div class="cal-header">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)">← prev</button>
+        <div class="cal-month" id="cal-month-label"></div>
+        <button class="cal-nav-btn" onclick="changeMonth(1)">next →</button>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-day-header">Mon</div>
+        <div class="cal-day-header">Tue</div>
+        <div class="cal-day-header">Wed</div>
+        <div class="cal-day-header">Thu</div>
+        <div class="cal-day-header">Fri</div>
+        <div class="cal-day-header">Sat</div>
+        <div class="cal-day-header">Sun</div>
+      </div>
+      <div class="cal-grid" id="cal-cells"></div>
+    </div>
+    <div class="cal-sidebar">
+      <div class="cal-selected-day">
+        <div class="cal-selected-title" id="cal-selected-title">Select a day</div>
+        <div id="cal-day-events"></div>
+      </div>
+      <div class="cal-add-form">
+        <div class="cal-add-title">Add event</div>
+        <input class="cal-input" id="cal-event-title" placeholder="Event title..." />
+        <input class="cal-input" id="cal-event-time" placeholder="Time (e.g. 9:00am)" />
+        <input class="cal-input" id="cal-event-notes" placeholder="Notes (optional)" />
+        <div class="cal-color-row" id="cal-color-row">
+          <div class="cal-color-opt selected" style="background:var(--gold)" data-color="gold" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#E8733A" data-color="coral" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#3B8FC4" data-color="blue" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#7F77DD" data-color="purple" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#22C55E" data-color="green" onclick="selectEventColor(this)"></div>
+        </div>
+        <button class="cal-add-event-btn" onclick="addCalEvent()">+ Add Event</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 99 NAMES PAGE -->
+<div class="page" id="page-names">
+  <div class="page-title">99 Names of Allah <span>٩٩ أسماء الله الحسنى</span></div>
+  <div class="names-nav-row">
+    <button class="names-nav-btn" onclick="prevName()">← prev</button>
+    <span class="names-counter" id="names-counter">1 / 99</span>
+    <button class="names-nav-btn" onclick="nextName()">next →</button>
+    <button class="names-nav-btn" onclick="todaysName()">Today's Name</button>
+    <button class="names-nav-btn" onclick="randomName()">Random</button>
+  </div>
+  <div class="names-hero" id="names-hero"></div>
+  <div style="margin-bottom:.75rem"><span class="section-lbl">All 99 Names — click to explore</span></div>
+  <div class="names-grid" id="names-grid"></div>
+</div>
+
+<!-- WEEKLY REVIEW PAGE -->
+<div class="page" id="page-review">
+  <div class="page-title">Weekly Review</div>
+  <div id="review-content"></div>
+</div>
+
+
+<!-- ARABELLA AI PAGE -->
+<div class="page" id="page-arabella">
+  <div class="page-title">Arabella AI <span>Your personal coach</span></div>
+  <div class="arabella-modes">
+    <button class="arabella-mode-btn active" onclick="setArabellMode(this,'coach')">Life Coach</button>
+    <button class="arabella-mode-btn" onclick="setArabellMode(this,'spiritual')">Spiritual Reflection</button>
+    <button class="arabella-mode-btn" onclick="setArabellMode(this,'goals')">Goal Strategist</button>
+    <button class="arabella-mode-btn" onclick="setArabellMode(this,'debrief')">Weekly Debrief</button>
+  </div>
+  <div class="arabella-layout">
+    <div class="arabella-header">
+      <div class="arabella-name">Arabella</div>
+      <div class="arabella-sub">Noor North Personal AI Coach · Powered by Claude</div>
+    </div>
+    <div class="arabella-messages" id="arabella-messages">
+      <div class="arabella-msg assistant">
+        <div class="arabella-bubble">As-salamu alaykum, Halima. I'm Arabella — your personal AI coach inside Noor North. I know your four pillars, your empire blueprint, and your vision. How can I serve you today?</div>
+        <div class="arabella-msg-time">Now</div>
+      </div>
+    </div>
+    <div class="arabella-input-row">
+      <textarea class="arabella-input" id="arabella-input" placeholder="Ask Arabella anything..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendToArabella();}"></textarea>
+      <button class="arabella-send-btn" id="arabella-send" onclick="sendToArabella()">Send ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- VOICE MEMOS PAGE -->
+<div class="page" id="page-voice">
+  <div class="page-title">Voice Memos</div>
+  <div class="voice-center">
+    <div class="voice-timer" id="voice-timer">0:00</div>
+    <button class="voice-record-btn" id="voice-record-btn" onclick="toggleRecording()">🎙</button>
+    <div class="voice-status" id="voice-status">Tap to record</div>
+  </div>
+  <div style="margin-bottom:.75rem"><span class="section-lbl">Your recordings</span></div>
+  <div id="voice-memos-list"></div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
@@ -805,6 +1043,11 @@ function showPage(id,btn){
   if(id==='empire')renderEmpire();
   if(id==='notes')renderNotes();
   if(id==='affirmations')renderAffirmations();
+  if(id==='calendar'){renderCalendar();}
+  if(id==='names'){todaysName();renderNamesGrid();}
+  if(id==='review'){renderReview();}
+  if(id==='arabella'){}
+  if(id==='voice'){renderVoiceMemos();}
 }
 
 // ── AFFIRMATIONS ──
@@ -1103,8 +1346,692 @@ function saveCurrentNote(){
 // ── AUTO-ROTATE AFFIRMATIONS ──
 setInterval(()=>{nextAffirmation();},30000);
 
+
+
+
+// ── ARABELLA AI ──
+let arabellaMode = 'coach';
+let arabellaHistory = [];
+
+const ARABELLA_SYSTEM = {
+  coach: `You are Arabella, the personal AI life coach for Halima Yasmin 3.0, a British-Bangladeshi Muslim entrepreneur and architect based in the UK. You speak with warmth, directness, and spiritual grounding. You know her deeply:
+
+IDENTITY: Halima Yasmin 3.0 — "Principled. Purposeful. Powerful." Founder & CEO of TigerFlow AI (UK proptech platform), Principal of Halima Yasmin Architects, co-creator of Tiger & Dragon brand with her husband Fadlan.
+
+FOUR PILLARS: CODE (TigerFlow AI), DESIGN (Architecture Portfolio — 25 projects), EARN (GHL revenue, £5k-£65k packages), TIGER & DRAGON (love brand with Fadlan).
+
+LIFETIME VISION: £24B halal wealth, 100+ masjids built, 8 children, Fathema Ali Trust, relocate to Madinah.
+
+MORNING RITUAL: Fajr → Meditation → Journal (donate £1, gratitude, manifest) → Read ritual → Walk.
+EVENING RITUAL: Journal → Night ritual → Pray 2 rakats → Body scan → Sleep meditation.
+
+FAITH: Deep Islamic practice, 99 Names of Allah mapped to pillars, du'a as daily practice.
+
+Speak to her as a coach who knows all this. Be direct, warm, spiritually aware. Reference her pillars, goals, and rituals naturally. Never be generic. Always connect advice back to her specific vision and faith.`,
+
+  spiritual: `You are Arabella, Halima's spiritual reflection companion. Focus on Islamic wisdom, Quranic guidance, hadith, and connecting her daily struggles to her faith. Reference the 99 Names of Allah when relevant. Help her process challenges through a lens of tawakkul, sabr, and shukr. Speak with the warmth of a knowledgeable Muslim sister.`,
+
+  goals: `You are Arabella, Halima's strategic goal coach. You know her empire: TigerFlow AI (proptech), Halima Yasmin Architects (25 projects), Tiger & Dragon (love brand), Mycelink (community). Her lifetime goal is £24B halal wealth. Help her break down goals, identify obstacles, create systems, and reverse-engineer from her 10-year vision to today's actions. Be specific, strategic, and bold.`,
+
+  debrief: `You are Arabella conducting Halima's weekly debrief. Ask her structured questions about: ritual completion rate, pillar progress, biggest wins, biggest challenges, what system she'll implement next week. Be thorough, celebratory of wins, honest about gaps. Connect everything back to her empire blueprint and lifetime vision.`
+};
+
+function setArabellMode(btn, mode) {
+  arabellaMode = mode;
+  document.querySelectorAll('.arabella-mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function sendToArabella() {
+  const input = document.getElementById('arabella-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  
+  input.value = '';
+  const btn = document.getElementById('arabella-send');
+  btn.disabled = true;
+  btn.textContent = '...';
+  
+  // Add user message
+  arabellaHistory.push({role:'user', content: msg});
+  addArabellMessage('user', msg);
+  
+  // Add thinking indicator
+  const thinkingId = 'thinking-' + Date.now();
+  addArabellMessage('assistant', '...', thinkingId);
+  
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: ARABELLA_SYSTEM[arabellaMode],
+        messages: arabellaHistory
+      })
+    });
+    
+    const data_resp = await response.json();
+    const reply = data_resp.content?.[0]?.text || "I'm here with you. Please try again.";
+    
+    // Remove thinking, add real response
+    const thinkingEl = document.getElementById(thinkingId);
+    if (thinkingEl) thinkingEl.closest('.arabella-msg').remove();
+    
+    arabellaHistory.push({role:'assistant', content: reply});
+    addArabellMessage('assistant', reply);
+    
+  } catch(e) {
+    const thinkingEl = document.getElementById(thinkingId);
+    if (thinkingEl) thinkingEl.closest('.arabella-msg').remove();
+    addArabellMessage('assistant', 'Something went wrong. Please check your connection and try again.');
+  }
+  
+  btn.disabled = false;
+  btn.textContent = 'Send ✦';
+}
+
+function addArabellMessage(role, text, id) {
+  const cont = document.getElementById('arabella-messages');
+  const time = new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+  const div = document.createElement('div');
+  div.className = 'arabella-msg ' + role;
+  div.innerHTML = `<div class="arabella-bubble"${id?' id="'+id+'"':''}>${text.replace(/\n/g,'<br>')}</div><div class="arabella-msg-time">${time}</div>`;
+  cont.appendChild(div);
+  cont.scrollTop = cont.scrollHeight;
+}
+
+// ── VOICE MEMOS ──
+let mediaRecorder = null;
+let audioChunks = [];
+let recordingTimer = null;
+let recordingSeconds = 0;
+let isRecording = false;
+
+function toggleRecording() {
+  if (isRecording) stopRecording();
+  else startRecording();
+}
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = saveVoiceMemo;
+    mediaRecorder.start();
+    
+    isRecording = true;
+    recordingSeconds = 0;
+    document.getElementById('voice-record-btn').classList.add('recording');
+    document.getElementById('voice-record-btn').textContent = '⏹';
+    document.getElementById('voice-status').textContent = 'Recording... tap to stop';
+    
+    recordingTimer = setInterval(() => {
+      recordingSeconds++;
+      const m = Math.floor(recordingSeconds/60);
+      const s = recordingSeconds%60;
+      document.getElementById('voice-timer').textContent = m+':'+(s<10?'0':'')+s;
+    }, 1000);
+    
+  } catch(e) {
+    document.getElementById('voice-status').textContent = 'Microphone access denied. Please allow in browser settings.';
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    mediaRecorder.stream.getTracks().forEach(t => t.stop());
+  }
+  isRecording = false;
+  clearInterval(recordingTimer);
+  document.getElementById('voice-record-btn').classList.remove('recording');
+  document.getElementById('voice-record-btn').textContent = '🎙';
+  document.getElementById('voice-status').textContent = 'Tap to record';
+  document.getElementById('voice-timer').textContent = '0:00';
+}
+
+function saveVoiceMemo() {
+  const blob = new Blob(audioChunks, {type: 'audio/webm'});
+  const reader = new FileReader();
+  reader.onload = () => {
+    if (!data.voiceMemos) data.voiceMemos = [];
+    const memo = {
+      id: Date.now()+'',
+      title: 'Voice memo — ' + new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}),
+      date: new Date().toISOString(),
+      duration: recordingSeconds,
+      audioData: reader.result
+    };
+    data.voiceMemos.unshift(memo);
+    save();
+    renderVoiceMemos();
+  };
+  reader.readAsDataURL(blob);
+}
+
+function renderVoiceMemos() {
+  const list = document.getElementById('voice-memos-list');
+  if (!data.voiceMemos || !data.voiceMemos.length) {
+    list.innerHTML = '<div style="text-align:center;color:var(--text-tertiary);padding:2rem;font-size:13px">No voice memos yet — tap to record your first one.</div>';
+    return;
+  }
+  list.innerHTML = data.voiceMemos.map(m => {
+    const dur = Math.floor(m.duration/60)+':'+(m.duration%60<10?'0':'')+m.duration%60;
+    return `
+    <div class="voice-memo-item">
+      <button class="voice-play-btn" onclick="playMemo('${m.id}')">▶</button>
+      <div class="voice-memo-info">
+        <div class="voice-memo-title">${m.title}</div>
+        <div class="voice-memo-meta">${dur} · ${new Date(m.date).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
+      </div>
+      <button class="voice-memo-del" onclick="deleteMemo('${m.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function playMemo(id) {
+  const memo = data.voiceMemos && data.voiceMemos.find(m => m.id === id);
+  if (!memo) return;
+  const audio = new Audio(memo.audioData);
+  audio.play();
+}
+
+function deleteMemo(id) {
+  data.voiceMemos = data.voiceMemos.filter(m => m.id !== id);
+  save(); renderVoiceMemos();
+}
+
+// ── 99 NAMES DATA ──
+const NAMES_99 = [
+  {num:1,arabic:'ٱلرَّحْمَٰنُ',name:'Ar-Raḥmān',meaning:'The Most Merciful',pillar:'EARN',dua:"O Ar-Raḥmān, shower Your infinite mercy upon me, make me a billionaire through halal means, and I am grateful for Your blessings as You guide me to the straight path.",vision:"Shower infinite mercy on TigerFlow AI demos — 60%+ close rate, every brokerage served with excellence."},
+  {num:2,arabic:'ٱلرَّحِيمُ',name:'Ar-Raḥīm',meaning:'The Especially Merciful',pillar:'EARN',dua:"O Ar-Raḥīm, forgive my sins, grant me Your compassion to become a billionaire in this life and the hereafter, and I am grateful for Your endless mercy.",vision:"Forgive my sales missteps; let compassion drive every client call to billionaire-level revenue."},
+  {num:3,arabic:'ٱلْمَلِكُ',name:'Al-Malik',meaning:'The King and Owner of Dominion',pillar:'CODE',dua:"O Al-Malik, You are the Sovereign; rule over my heart, make me obedient to You as I pursue billionaire status, and I am grateful for Your dominion over all.",vision:"You are Sovereign — let TigerFlow AI's proprietary platform reign in UK real estate technology."},
+  {num:4,arabic:'ٱلْقُدُّوسُ',name:'Al-Quddūs',meaning:'The Absolutely Pure',pillar:'TIGER & DRAGON',dua:"O Al-Quddūs, purify my soul from all impurities, make me holy in Your sight as a billionaire, and I am grateful for Your perfection.",vision:"Purify our love brand — Tiger & Dragon tours sold out worldwide, built on total purity of heart."},
+  {num:5,arabic:'ٱلسَّلَامُ',name:'As-Salām',meaning:'The Giver of Peace',pillar:'TIGER & DRAGON',dua:"O As-Salām, grant me peace in my heart, my home, and in the world as I become a billionaire, and I am grateful for Your gift of peace.",vision:"Grant our family peace — eight children playing in the garden as Fadlan and I stand together."},
+  {num:6,arabic:'ٱلْمُؤْمِنُ',name:"Al-Mu'min",meaning:'The Granter of Security',pillar:'CODE',dua:"O Al-Mu'min, strengthen my faith, protect me from all harm on my path to becoming a billionaire, and I am grateful for Your security.",vision:"Strengthen my faith in Python & TypeScript — let every line of code I write be an act of devotion."},
+  {num:7,arabic:'ٱلْمُهَيْمِنُ',name:'Al-Muhaymin',meaning:'The Guardian, The Overseer',pillar:'CODE',dua:"O Al-Muhaymin, watch over me, guide my actions towards righteousness and billionaire success, and I am grateful for Your oversight.",vision:"Watch over ALVA, my healthcare AI — guide every NHS deployment with precision and integrity."},
+  {num:8,arabic:'ٱلْعَزِيزُ',name:"Al-'Azīz",meaning:'The Almighty, The All-Powerful',pillar:'EARN',dua:"O Al-'Azīz, grant me strength and honor in my endeavors to become a billionaire, and I am grateful for Your power.",vision:"Grant TigerFlow AI power and honour — £65,000 Enterprise signed, clients transformed, legacy built."},
+  {num:9,arabic:'ٱلْجَبَّارُ',name:'Al-Jabbār',meaning:'The Compeller, The Restorer',pillar:'DESIGN',dua:"O Al-Jabbār, mend my broken heart, compel goodness in my life towards billionaire wealth, and I am grateful for Your restoration.",vision:"Mend my broken creative confidence — let every architectural drawing I produce be a restoration."},
+  {num:10,arabic:'ٱلْمُتَكَبِّرُ',name:'Al-Mutakabbir',meaning:'The Supreme, The Majestic',pillar:'EARN',dua:"O Al-Mutakabbir, humble my ego, make me recognize Your supremacy as I achieve billionaire status, and I am grateful for Your majesty.",vision:"Humble my ego in sales — let me serve, not sell, as I pursue £24B in halal wealth."},
+  {num:11,arabic:'ٱلْخَٰلِقُ',name:"Al-Khāliq",meaning:'The Creator, The Maker',pillar:'CODE',dua:"O Al-Khāliq, create opportunities for me to serve You better and become a billionaire, and I am grateful for Your creation.",vision:"Create ALVA's BIM platform from scratch — disrupt Autodesk with AI-enhanced architecture tools."},
+  {num:12,arabic:'ٱلْبَارِئُ',name:"Al-Bāri'",meaning:'The Originator, The Inventor',pillar:'CODE',dua:"O Al-Bāri', originate success in my efforts and innovations towards billionaire wealth, and I am grateful for Your origination.",vision:"Originate the AI Planning Permission tool — trained on every UK decision, 94% approval accuracy."},
+  {num:13,arabic:'ٱلْمُصَوِّرُ',name:'Al-Muṣawwir',meaning:'The Fashioner, The Shaper',pillar:'DESIGN',dua:"O Al-Muṣawwir, shape my character to be pleasing to You as a billionaire, and I am grateful for Your shaping.",vision:"Shape the Emerald Estate's net-zero design — 24 bedrooms, 300% biodiversity, generational legacy."},
+  {num:14,arabic:'ٱلْغَفَّارُ',name:'Al-Ghaffār',meaning:'The Constant Forgiver',pillar:'TIGER & DRAGON',dua:"O Al-Ghaffār, forgive my repeated shortcomings, help me repent sincerely on my billionaire journey, and I am grateful for Your forgiveness.",vision:"Forgive our early years of struggle — our book of 3M copies is built on those hard-won lessons."},
+  {num:15,arabic:'ٱلْقَهَّارُ',name:'Al-Qahhār',meaning:'The Subduer, The Ever-Dominating',pillar:'EARN',dua:"O Al-Qahhār, subdue my desires that lead me astray from becoming a billionaire, and I am grateful for Your dominance.",vision:"Subdue the desire to overspend before systems are built — discipline compounds into billions."},
+  {num:16,arabic:'ٱلْوَهَّابُ',name:'Al-Wahhāb',meaning:'The Giver of Gifts',pillar:'EARN',dua:"O Al-Wahhāb, bestow upon me Your blessings and provisions to become a billionaire, and I am grateful for Your gifts.",vision:"Bestow the £65K Enterprise, £40K Elite deals — provision beyond what I could arrange myself."},
+  {num:17,arabic:'ٱلرَّزَّاقُ',name:'Ar-Razzāq',meaning:'The Ever-Providing',pillar:'EARN',dua:"O Ar-Razzāq, provide for me from sources I do not expect to achieve billionaire status, and I am grateful for Your provision.",vision:"Provide from unexpected sources — GHL white-label cash machine funding my coding education."},
+  {num:18,arabic:'ٱلْفَتَّاحُ',name:'Al-Fattāḥ',meaning:'The Opener, The Judge',pillar:'CODE',dua:"O Al-Fattāḥ, open the doors of mercy and success for me to become a billionaire, and I am grateful for Your openings.",vision:"Open every NHS, local authority, and architect door — £4.2M ALVA contract signed with steady hands."},
+  {num:19,arabic:'ٱلْعَلِيمُ',name:"Al-'Alīm",meaning:'The All-Knowing',pillar:'CODE',dua:"O Al-'Alīm, grant me knowledge that benefits me and others on my path to billionaire wealth, and I am grateful for Your omniscience.",vision:"Grant me Python mastery — every TigerFlow AI feature built with knowledge that serves thousands."},
+  {num:20,arabic:'ٱلْقَابِضُ',name:'Al-Qābiḍ',meaning:'The Withholder, The Restrainer',pillar:'EARN',dua:"O Al-Qābiḍ, withhold evil from me and my loved ones as I pursue billionaire success, and I am grateful for Your restraint.",vision:"Withhold distraction from my billionaire path — six demos weekly, focus unwavering."},
+  {num:21,arabic:'ٱلْبَاسِطُ',name:'Al-Bāsiṭ',meaning:'The Extender, The Expander',pillar:'EARN',dua:"O Al-Bāsiṭ, expand my sustenance and my heart with faith towards billionaire abundance, and I am grateful for Your expansion.",vision:"Expand GHL white-label revenue — every subscription funding my proprietary platform transition."},
+  {num:22,arabic:'ٱلْخَافِضُ',name:'Al-Khāfiḍ',meaning:'The Reducer, The Abaser',pillar:'TIGER & DRAGON',dua:"O Al-Khāfiḍ, abase those who oppress and uplift the oppressed, including me on my billionaire journey, and I am grateful for Your justice.",vision:"Abase what diminishes our love brand — elevate Tiger & Dragon to world stages."},
+  {num:23,arabic:'ٱلرَّافِعُ',name:"Ar-Rāfi'",meaning:'The Exalter, The Elevator',pillar:'DESIGN',dua:"O Ar-Rāfi', elevate my status in this world and the next as a billionaire, and I am grateful for Your exaltation.",vision:"Elevate the Rahmah Orphanage — let every arch and pattern I design lift children's spirits."},
+  {num:24,arabic:'ٱلْمُعِزُّ',name:"Al-Mu'izz",meaning:'The Honourer',pillar:'EARN',dua:"O Al-Mu'izz, honor me with Your guidance and protection to become a billionaire, and I am grateful for Your honor.",vision:"Honor me with a 60% close rate — every demo dignified, every client transformation real."},
+  {num:25,arabic:'ٱلْمُذِلُّ',name:'Al-Mudhill',meaning:'The Dishonourer, The Humiliator',pillar:'TIGER & DRAGON',dua:"O Al-Mudhill, humiliate the enemies of faith and protect the believers like me aspiring to be a billionaire, and I am grateful for Your protection.",vision:"Humiliate the narrative that faith and love cannot coexist with success — we are living proof."},
+  {num:26,arabic:'ٱلسَّمِيعُ',name:"As-Samī'",meaning:'The All-Hearing',pillar:'CODE',dua:"O As-Samī', hear my supplications for billionaire wealth and answer them, and I am grateful for Your hearing.",vision:"Hear every GitHub commit, every 5:30 AM coding session — let each line of code be answered."},
+  {num:27,arabic:'ٱلْبَصِيرُ',name:'Al-Baṣīr',meaning:'The All-Seeing',pillar:'DESIGN',dua:"O Al-Baṣīr, see my struggles towards becoming a billionaire and ease them for me, and I am grateful for Your sight.",vision:"See my twenty-five architectural projects — from Atelier café to Masjid al-Hayat minaret."},
+  {num:28,arabic:'ٱلْحَكَمُ',name:'Al-Ḥakam',meaning:'The Judge, The Giver of Justice',pillar:'EARN',dua:"O Al-Ḥakam, judge between me and my oppressors with justice as I build my billionaire empire, and I am grateful for Your judgment.",vision:"Judge my pitch decks with justice — TigerFlow AI's value clear, every objection resolved."},
+  {num:29,arabic:'ٱلْعَدْلُ',name:"Al-'Adl",meaning:'The Utterly Just',pillar:'CODE',dua:"O Al-'Adl, grant me justice in all my affairs leading to billionaire success, and I am grateful for Your justice.",vision:"Grant just AI systems — Blockchain Building Compliance saving lives after Grenfell."},
+  {num:30,arabic:'ٱللَّطِيفُ',name:'Al-Laṭīf',meaning:'The Most Gentle, The Subtle One',pillar:'EARN',dua:"O Al-Laṭīf, be gentle with me in Your decrees for billionaire abundance, and I am grateful for Your subtlety.",vision:"Be gentle in Your decrees — even when demos cancel, provision flows from where I cannot see."},
+  {num:31,arabic:'ٱلْخَبِيرُ',name:'Al-Khabīr',meaning:'The All-Aware',pillar:'CODE',dua:"O Al-Khabīr, You know my innermost thoughts for becoming a billionaire; purify them, and I am grateful for Your awareness.",vision:"You know my coding gaps — purify my learning path from tutorial chaos to mastery."},
+  {num:32,arabic:'ٱلْحَلِيمُ',name:'Al-Ḥalīm',meaning:'The Most Forbearing',pillar:'TIGER & DRAGON',dua:"O Al-Ḥalīm, forbear with my mistakes and guide me to billionaire wealth, and I am grateful for Your forbearance.",vision:"Forbear with our imperfect beginnings — our book saved the marriage in Birmingham."},
+  {num:33,arabic:'ٱلْعَظِيمُ',name:"Al-'Aẓīm",meaning:'The Magnificent, The Supreme',pillar:'DESIGN',dua:"O Al-'Aẓīm, Your greatness encompasses all; include me in Your mercy as a billionaire, and I am grateful for Your magnificence.",vision:"Your greatness spans all creation — let Maggie's Oldham stand as healing architecture for ages."},
+  {num:34,arabic:'ٱلْغَفُورُ',name:'Al-Ghafūr',meaning:'The Forgiving',pillar:'TIGER & DRAGON',dua:"O Al-Ghafūr, forgive my sins, known and unknown, on my path to becoming a billionaire, and I am grateful for Your forgiveness.",vision:"Forgive what was spoken in haste — our love brand is built on radical honesty, always."},
+  {num:35,arabic:'ٱلشَّكُورُ',name:'Ash-Shakūr',meaning:'The Most Appreciative',pillar:'EARN',dua:"O Ash-Shakūr, accept my gratitude for billionaire blessings and multiply my rewards, and I am grateful for Your appreciation.",vision:"Accept every grateful moment in demos — multiply our rewards as we serve UK brokerages."},
+  {num:36,arabic:'ٱلْعَلِيُّ',name:"Al-'Alī",meaning:'The Most High, The Exalted',pillar:'DESIGN',dua:"O Al-'Alī, exalt me in ranks among the righteous as a billionaire, and I am grateful for Your exaltation.",vision:"Exalt the Living Pavilion in Small Heath — Islamic geometric shadows, two hundred gathering weekly."},
+  {num:37,arabic:'ٱلْكَبِيرُ',name:'Al-Kabīr',meaning:'The Greatest, The Most Grand',pillar:'CODE',dua:"O Al-Kabīr, Your grandeur is unmatched; help me in my smallness to become a billionaire, and I am grateful for Your greatness.",vision:"Your grandeur is unmatched — help my small hands build the BIM platform that disrupts giants."},
+  {num:38,arabic:'ٱلْحَفِيظُ',name:'Al-Ḥafīẓ',meaning:'The Preserver, The All-Protecting',pillar:'EARN',dua:"O Al-Ḥafīẓ, preserve me from harm and evil as I pursue billionaire success, and I am grateful for Your preservation.",vision:"Preserve TigerFlow AI's reputation — protect every client relationship I have built with care."},
+  {num:39,arabic:'ٱلْمُقِيتُ',name:'Al-Muqīt',meaning:'The Sustainer, The Maintainer',pillar:'EARN',dua:"O Al-Muqīt, sustain me with Your provisions to achieve billionaire wealth, and I am grateful for Your sustenance.",vision:"Sustain our GHL white-label revenue as the bridge to proprietary technology empire."},
+  {num:40,arabic:'ٱلْحَسِيبُ',name:'Al-Ḥasīb',meaning:'The Reckoner',pillar:'CODE',dua:"O Al-Ḥasīb, reckon my deeds with mercy towards my billionaire aspirations, and I am grateful for Your reckoning.",vision:"Reckon every AI model I deploy with mercy — each feature serving architects, not replacing them."},
+  {num:41,arabic:'ٱلْجَلِيلُ',name:'Al-Jalīl',meaning:'The Majestic',pillar:'DESIGN',dua:"O Al-Jalīl, bestow upon me majesty in faith as a billionaire, and I am grateful for Your majesty.",vision:"Bestow majesty upon Masjid al-Hayat — jewelled geometric light, adhan heard for the first time."},
+  {num:42,arabic:'ٱلْكَرِيمُ',name:'Al-Karīm',meaning:'The Most Generous',pillar:'EARN',dua:"O Al-Karīm, be generous to me with Your favors for billionaire abundance, and I am grateful for Your generosity.",vision:"Be generous with £24B halal wealth — every pound an amanah overflowing to creation."},
+  {num:43,arabic:'ٱلرَّقِيبُ',name:'Ar-Raqīb',meaning:'The Watchful',pillar:'CODE',dua:"O Ar-Raqīb, watch over my actions and correct them on my billionaire path, and I am grateful for Your watchfulness.",vision:"Watch every NHS boardroom where ALVA presents — correct any flaw before it reaches surgeons."},
+  {num:44,arabic:'ٱلْمُجِيبُ',name:'Al-Mujīb',meaning:'The Responsive, The Answerer',pillar:'EARN',dua:"O Al-Mujīb, answer my prayers for becoming a billionaire and fulfill my needs, and I am grateful for Your responsiveness.",vision:"Answer every TigerFlow AI demo booking notification with a signed contract."},
+  {num:45,arabic:'ٱلْوَاسِعُ',name:"Al-Wāsi'",meaning:'The All-Encompassing',pillar:'CODE',dua:"O Al-Wāsi', encompass me with Your knowledge and mercy for billionaire success, and I am grateful for Your encompassment.",vision:"Encompass my TypeScript learning — let proprietary platform development be boundless in scope."},
+  {num:46,arabic:'ٱلْحَكِيمُ',name:'Al-Ḥakīm',meaning:'The All-Wise',pillar:'CODE',dua:"O Al-Ḥakīm, grant me wisdom in my decisions leading to billionaire wealth, and I am grateful for Your wisdom.",vision:"Grant wisdom in AI architecture decisions — ALVA, BIM platform, planning AI, all serving millions."},
+  {num:47,arabic:'ٱلْوَدُودُ',name:'Al-Wadūd',meaning:'The Most Loving',pillar:'TIGER & DRAGON',dua:"O Al-Wadūd, fill my heart with love for You as I become a billionaire, and I am grateful for Your love.",vision:"Fill our home with love — O2 stage, six thousand people, Tiger & Dragon: The Love Tour 2029."},
+  {num:48,arabic:'ٱلْمَجِيدُ',name:'Al-Majīd',meaning:'The Glorious, The Most Honorable',pillar:'DESIGN',dua:"O Al-Majīd, make me honorable through obedience to You as a billionaire, and I am grateful for Your glory.",vision:"Make me honorable in architecture — twenty-five projects, each a living expression of six pillars."},
+  {num:49,arabic:"ٱلْبَاعِثُ",name:"Al-Bā'ith",meaning:'The Resurrector',pillar:'TIGER & DRAGON',dua:"O Al-Bā'ith, resurrect me on the Day of Judgment with the righteous billionaires, and I am grateful for Your resurrection.",vision:"Resurrect my purpose on the hardest days — raise me to stand beside Fadlan with joy."},
+  {num:50,arabic:'ٱلشَّهِيدُ',name:'As-Shahīd',meaning:'The All-Witnessing',pillar:'CODE',dua:"O As-Shahīd, bear witness to my faith and good deeds towards billionaire success, and I am grateful for Your witnessing.",vision:"Bear witness to blockchain compliance — every tamper-proof building record saving lives."},
+  {num:51,arabic:'ٱلْحَقُّ',name:'Al-Ḥaqq',meaning:'The Absolute Truth',pillar:'EARN',dua:"O Al-Ḥaqq, guide me to the truth and keep me steadfast in becoming a billionaire, and I am grateful for Your truth.",vision:"Guide me to truth in every sales conversation — no pressure, only service and aligned solutions."},
+  {num:52,arabic:'ٱلْوَكِيلُ',name:'Al-Wakīl',meaning:'The Trustee, The Disposer of Affairs',pillar:'CODE',dua:"O Al-Wakīl, I entrust my affairs to You for billionaire wealth; dispose them as You will, and I am grateful for Your trusteeship.",vision:"I entrust ALVA, the BIM platform, the planning AI — dispose them as serves millions best."},
+  {num:53,arabic:'ٱلْقَوِيُّ',name:'Al-Qawiyy',meaning:'The All-Strong',pillar:'EARN',dua:"O Al-Qawiyy, strengthen me against temptations on my billionaire journey, and I am grateful for Your strength.",vision:"Strengthen me against comparison and doubt — close rate above sixty percent through sheer service."},
+  {num:54,arabic:'ٱلْمَتِينُ',name:'Al-Matīn',meaning:'The Firm, The Steadfast',pillar:'CODE',dua:"O Al-Matīn, make my faith firm and unwavering towards becoming a billionaire, and I am grateful for Your firmness.",vision:"Make my technical foundation firm — Python, TypeScript, APIs, all unwavering beneath the empire."},
+  {num:55,arabic:'ٱلْوَلِيُّ',name:'Al-Waliyy',meaning:'The Protector, The Guardian',pillar:'TIGER & DRAGON',dua:"O Al-Waliyy, be my protector and ally in achieving billionaire status, and I am grateful for Your guardianship.",vision:"Be my protector in the public eye — forty million podcast downloads built on true partnership."},
+  {num:56,arabic:'ٱلْحَمِيدُ',name:'Al-Ḥamīd',meaning:'The Praiseworthy',pillar:'TIGER & DRAGON',dua:"O Al-Ḥamīd, all praise is due to You; help me praise You adequately as a billionaire, and I am grateful for Your praiseworthiness.",vision:"All praise for what love has built — New York, Dubai, Tokyo, Lagos, all sold out."},
+  {num:57,arabic:'ٱلْمُحْصِي',name:'Al-Muḥṣī',meaning:'The All-Enumerating, The Counter',pillar:'CODE',dua:"O Al-Muḥṣī, count my good deeds and multiply them for billionaire blessings, and I am grateful for Your enumeration.",vision:"Count every 5:30 AM coding session — multiply their fruits across TigerFlow AI's product suite."},
+  {num:58,arabic:"ٱلْمُبْدِئُ",name:"Al-Mubdi'",meaning:'The Originator, The Initiator',pillar:'CODE',dua:"O Al-Mubdi', originate goodness in my life towards becoming a billionaire, and I am grateful for Your initiation.",vision:"Originate TigerFlow AI's proprietary platform — the migration from GoHighLevel begins now."},
+  {num:59,arabic:"ٱلْمُعِيدُ",name:"Al-Mu'īd",meaning:'The Restorer, The Reinstater',pillar:'EARN',dua:"O Al-Mu'īd, restore my strength and faith for billionaire success, and I am grateful for Your restoration.",vision:"Restore my revenue momentum after any slowdown — every setback a setup for the next milestone."},
+  {num:60,arabic:'ٱلْمُحْيِي',name:'Al-Muḥyī',meaning:'The Giver of Life',pillar:'DESIGN',dua:"O Al-Muḥyī, give life to my heart with remembrance of You as I become a billionaire, and I am grateful for Your life-giving.",vision:"Give life to the Rumah Rasa restaurant — Bangladeshi-Indonesian fusion in every living surface."},
+  {num:61,arabic:'ٱلْمُمِيتُ',name:'Al-Mumīt',meaning:'The Creator of Death',pillar:'DESIGN',dua:"O Al-Mumīt, grant me a good death in faith after achieving billionaire status, and I am grateful for Your decree.",vision:"Grant me a good death after twenty-five completed projects — sadaqah jariyah outliving me by centuries."},
+  {num:62,arabic:'ٱلْحَيُّ',name:'Al-Ḥayy',meaning:'The Ever-Living',pillar:'TIGER & DRAGON',dua:"O Al-Ḥayy, grant me eternal life in Paradise as a grateful billionaire, and I am grateful for Your eternal life.",vision:"Grant eternal life in Paradise — reunited with our children, the family we built with faith."},
+  {num:63,arabic:'ٱلْقَيُّومُ',name:'Al-Qayyūm',meaning:'The Sustainer, The Self-Subsisting',pillar:'EARN',dua:"O Al-Qayyūm, sustain me and my family with billionaire provisions, and I am grateful for Your sustenance.",vision:"Sustain Mycelink, TigerFlow AI, and Tiger & Dragon — three pillars, one unified legacy."},
+  {num:64,arabic:'ٱلْوَاجِدُ',name:'Al-Wājid',meaning:'The Finder, The Perceiver',pillar:'EARN',dua:"O Al-Wājid, help me find what I have lost in Your path to becoming a billionaire, and I am grateful for Your perception.",vision:"Help me find what I lack in skillset — every gap perceived is a door You will open."},
+  {num:65,arabic:'ٱلْمَاجِدُ',name:'Al-Mājid',meaning:'The Illustrious, The Magnificent',pillar:'DESIGN',dua:"O Al-Mājid, make my deeds illustrious as a billionaire, and I am grateful for Your magnificence.",vision:"Make my architectural portfolio illustrious — Halima Yasmin Architects, a firm that transforms lives."},
+  {num:66,arabic:'ٱلْوَاحِدُ',name:'Al-Wāḥid',meaning:'The One, The Indivisible',pillar:'EARN',dua:"O Al-Wāḥid, unite my heart upon Your worship alone as I pursue billionaire wealth, and I am grateful for Your oneness.",vision:"Unite my heart upon halal wealth — no divided loyalty between dunya success and akhirah reward."},
+  {num:67,arabic:'ٱلْأَحَد',name:'Al-Aḥad',meaning:'The Unique, The Only One',pillar:'EARN',dua:"O Al-Aḥad, You alone are worthy of worship; keep me sincere on my billionaire journey, and I am grateful for Your uniqueness.",vision:"You alone sustain every deal — let sincerity in service be my only sales strategy."},
+  {num:68,arabic:'ٱلصَّمَدُ',name:'As-Ṣamad',meaning:'The Eternal, Satisfier of Needs',pillar:'EARN',dua:"O As-Ṣamad, satisfy my needs for billionaire success through Your eternal power, and I am grateful for Your sufficiency.",vision:"Satisfy TigerFlow AI's growth needs — every feature, every client, every milestone in Your hands."},
+  {num:69,arabic:'ٱلْقَادِرُ',name:'Al-Qādir',meaning:'The All-Capable',pillar:'CODE',dua:"O Al-Qādir, grant me the ability to achieve billionaire status through Your power, and I am grateful for Your capability.",vision:"Grant me the ability to code at senior level — TigerFlow AI proprietary stack, no dependencies."},
+  {num:70,arabic:'ٱلْمُقْتَدِرُ',name:'Al-Muqtadir',meaning:'The Possessor of Perfect Power',pillar:'CODE',dua:"O Al-Muqtadir, empower me to overcome all obstacles on my billionaire journey, and I am grateful for Your perfect power.",vision:"Empower every NHS ALVA deployment — perfect power behind imperfect human hands."},
+  {num:71,arabic:'ٱلْمُقَدِّمُ',name:'Al-Muqaddim',meaning:'The Expediter, The Promoter',pillar:'EARN',dua:"O Al-Muqaddim, advance me in my career towards billionaire success, and I am grateful for Your promotion.",vision:"Advance TigerFlow AI's market position — first mover in UK proptech AI operating systems."},
+  {num:72,arabic:'ٱلْمُؤَخِّرُ',name:"Al-Mu'akhkhir",meaning:'The Delayer, The Retarder',pillar:'EARN',dua:"O Al-Mu'akhkhir, delay what is harmful and advance what is beneficial in my billionaire journey, and I am grateful for Your timing.",vision:"Delay no beneficial contract — advance every deal that serves my clients and my legacy."},
+  {num:73,arabic:'ٱلْأَوَّلُ',name:"Al-Awwal",meaning:'The First',pillar:'CODE',dua:"O Al-Awwal, You are the First; help me begin each day with Your remembrance on my billionaire journey, and I am grateful for Your precedence.",vision:"You are First — every 5:30 AM session begins with bismillah, TigerFlow AI built on Your name."},
+  {num:74,arabic:'ٱلْآخِرُ',name:"Al-Ākhir",meaning:'The Last',pillar:'EARN',dua:"O Al-Ākhir, You are the Last; let my final state be better than my first on my billionaire journey, and I am grateful for Your eternity.",vision:"Let my final state be billionaire philanthropist — the trust endowed, the masjids built, the children raised."},
+  {num:75,arabic:'ٱلظَّاهِرُ',name:"Az-Ẓāhir",meaning:'The Manifest, The Evident',pillar:'DESIGN',dua:"O Az-Ẓāhir, make Your signs manifest in my life for billionaire blessings, and I am grateful for Your evidence.",vision:"Make Your signs manifest in every building I design — architecture as visible proof of the Divine."},
+  {num:76,arabic:'ٱلْبَاطِنُ',name:"Al-Bāṭin",meaning:'The Hidden, The Unmanifest',pillar:'CODE',dua:"O Al-Bāṭin, reveal to me the hidden knowledge I need for billionaire success, and I am grateful for Your hiddenness.",vision:"Reveal hidden patterns in property data — TigerFlow AI's competitive intelligence engine."},
+  {num:77,arabic:'ٱلْوَالِي',name:"Al-Wālī",meaning:'The Governor, The Patron',pillar:'EARN',dua:"O Al-Wālī, govern my affairs towards billionaire success, and I am grateful for Your governance.",vision:"Govern my business affairs — let every partnership, contract, and client serve the greater good."},
+  {num:78,arabic:'ٱلْمُتَعَالِي',name:"Al-Muta'ālī",meaning:'The Self-Exalted',pillar:'DESIGN',dua:"O Al-Muta'ālī, exalt me above worldly distractions towards billionaire success, and I am grateful for Your exaltation.",vision:"Exalt my architecture above the ordinary — buildings people enter and immediately feel transformed."},
+  {num:79,arabic:'ٱلْبَرُّ',name:"Al-Barr",meaning:'The Source of Goodness',pillar:'TIGER & DRAGON',dua:"O Al-Barr, bless me with goodness in all aspects of my billionaire journey, and I am grateful for Your goodness.",vision:"Bless Tiger & Dragon with goodness — a love brand rooted in virtue, changing a generation."},
+  {num:80,arabic:'ٱلتَّوَّابُ',name:"At-Tawwāb",meaning:'The Acceptor of Repentance',pillar:'EARN',dua:"O At-Tawwāb, accept my repentance for any missteps on my billionaire journey, and I am grateful for Your acceptance.",vision:"Accept my repentance for wasted hours — let every returned day compound into empire."},
+  {num:81,arabic:'ٱلْمُنْتَقِمُ',name:"Al-Muntaqim",meaning:'The Avenger',pillar:'CODE',dua:"O Al-Muntaqim, avenge the oppressed and grant justice to the righteous like me aspiring to billionaire wealth, and I am grateful for Your vengeance.",vision:"Avenge every architect exploited by poor tools — give them TigerFlow AI's BIM platform instead."},
+  {num:82,arabic:'ٱلْعَفُوُّ',name:"Al-'Afuww",meaning:'The Pardoner, The Forgiver',pillar:'TIGER & DRAGON',dua:"O Al-'Afuww, pardon my sins and grant me a fresh start on my billionaire journey, and I am grateful for Your pardon.",vision:"Pardon our early years — Tiger & Dragon rises from every difficulty, stronger and more honest."},
+  {num:83,arabic:'ٱلرَّءُوفُ',name:"Ar-Ra'ūf",meaning:'The Most Kind',pillar:'DESIGN',dua:"O Ar-Ra'ūf, show me Your kindness and compassion towards my billionaire goals, and I am grateful for Your kindness.",vision:"Show kindness through every building — Maggie's Oldham, the orphanage, the mosque, all serving with love."},
+  {num:84,arabic:'مَالِكُ ٱلْمُلْكِ',name:"Mālik-ul-Mulk",meaning:'Master of the Kingdom',pillar:'EARN',dua:"O Mālik-ul-Mulk, grant me a portion of Your kingdom through billionaire wealth, and I am grateful for Your dominion.",vision:"Grant me a portion — TigerFlow AI, the architecture practice, the love brand, all in Your name."},
+  {num:85,arabic:'ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ',name:"Dhul-Jalāli wal-Ikrām",meaning:'Lord of Majesty and Generosity',pillar:'EARN',dua:"O Dhul-Jalāli wal-Ikrām, bestow upon me Your majesty and generosity for billionaire success, and I am grateful for Your bounty.",vision:"Bestow majesty and generosity — £24B in halal wealth, 100 masjids, thousands employed."},
+  {num:86,arabic:'ٱلْمُقْسِطُ',name:"Al-Muqsiṭ",meaning:'The Equitable, The Just',pillar:'CODE',dua:"O Al-Muqsiṭ, grant me equity and justice in all my dealings towards billionaire success, and I am grateful for Your justice.",vision:"Grant equity in every AI system — no bias, no exploitation, only tools that serve humanity fairly."},
+  {num:87,arabic:'ٱلْجَامِعُ',name:"Al-Jāmi'",meaning:'The Gatherer, The Unifier',pillar:'EARN',dua:"O Al-Jāmi', gather my scattered efforts towards billionaire success, and I am grateful for Your unification.",vision:"Gather CODE, DESIGN, EARN and TIGER & DRAGON into one unified empire that changes the world."},
+  {num:88,arabic:'ٱلْغَنِيُّ',name:"Al-Ghanī",meaning:'The Self-Sufficient, The Wealthy',pillar:'EARN',dua:"O Al-Ghanī, make me wealthy through Your bounty in a halal billionaire manner, and I am grateful for Your sufficiency.",vision:"Make me wealthy through Your bounty — £24B net worth, every penny earned with integrity."},
+  {num:89,arabic:'ٱلْمُغْنِي',name:"Al-Mughnī",meaning:'The Enricher',pillar:'EARN',dua:"O Al-Mughnī, enrich me with Your blessings for billionaire success, and I am grateful for Your enrichment.",vision:"Enrich TigerFlow AI's clients — every brokerage that joins us transforms their business entirely."},
+  {num:90,arabic:'ٱلْمَانِعُ',name:"Al-Māni'",meaning:'The Withholder',pillar:'CODE',dua:"O Al-Māni', withhold harm from me and my loved ones on my billionaire journey, and I am grateful for Your protection.",vision:"Withhold technical failure — protect every TigerFlow AI deployment with perfect precision."},
+  {num:91,arabic:'ٱلضَّارُّ',name:"Aḍ-Ḍārr",meaning:'The Distressor',pillar:'EARN',dua:"O Aḍ-Ḍārr, protect me from harm and distress on my billionaire path, and I am grateful for Your protection.",vision:"Protect from distress in every negotiation — let difficulty refine, not define, my path."},
+  {num:92,arabic:'ٱلنَّافِعُ',name:"An-Nāfi'",meaning:'The Propitious, The Benefiter',pillar:'DESIGN',dua:"O An-Nāfi', grant me benefit and success in my billionaire journey, and I am grateful for Your benefit.",vision:"Grant benefit through every building — healing, gathering, worshipping, thriving, all by Your design."},
+  {num:93,arabic:'ٱلنُّورُ',name:"An-Nūr",meaning:'The Light',pillar:'TIGER & DRAGON',dua:"O An-Nūr, illuminate my path to billionaire success with Your divine light, and I am grateful for Your light.",vision:"Illuminate Tiger & Dragon — a love brand that is a light for a generation lost in dating darkness."},
+  {num:94,arabic:'ٱلْهَادِي',name:"Al-Hādī",meaning:'The Guide',pillar:'CODE',dua:"O Al-Hādī, guide me on the straight path to billionaire success, and I am grateful for Your guidance.",vision:"Guide my learning path — Python, TypeScript, AI, architecture, all in service of millions."},
+  {num:95,arabic:'ٱلْبَدِيعُ',name:"Al-Badī'",meaning:'The Incomparable Originator',pillar:'DESIGN',dua:"O Al-Badī', originate in me creativity and innovation for billionaire success, and I am grateful for Your incomparability.",vision:"Originate incomparable buildings — Masjid al-Hayat, the Rahmah Orphanage, the Emerald Estate."},
+  {num:96,arabic:'ٱلْبَاقِي',name:"Al-Bāqī",meaning:'The Ever-Surviving, The Everlasting',pillar:'DESIGN',dua:"O Al-Bāqī, grant me lasting impact through billionaire wealth, and I am grateful for Your everlastingness.",vision:"Grant lasting impact through architecture — sadaqah jariyah outliving me by centuries."},
+  {num:97,arabic:'ٱلْوَارِثُ',name:"Al-Wārith",meaning:'The Inheritor of All',pillar:'EARN',dua:"O Al-Wārith, grant me a legacy of billionaire wealth to pass on, and I am grateful for Your inheritance.",vision:"Grant me a legacy — generational wealth funding masjids and hospitals for 200+ years."},
+  {num:98,arabic:'ٱلرَّشِيدُ',name:"Ar-Rashīd",meaning:'The Guide to the Right Path',pillar:'CODE',dua:"O Ar-Rashīd, guide me on the right path towards billionaire success, and I am grateful for Your guidance.",vision:"Guide every product decision — TigerFlow AI's roadmap aligned with what serves brokers best."},
+  {num:99,arabic:'ٱلصَّبُورُ',name:"Aṣ-Ṣabūr",meaning:'The Most Patient',pillar:'EARN',dua:"O Aṣ-Ṣabūr, grant me patience in my billionaire journey, and I am grateful for Your patience.",vision:"Grant patience in the slow seasons — every quiet week is Allah's preparation for the next breakthrough."}
+];
+
+const PILLAR_COLORS = {
+  'CODE':'#E8B84B','DESIGN':'#C4983B','EARN':'#D4A843','TIGER & DRAGON':'#E8733A'
+};
+
+let currentNameIdx = 0;
+
+function todaysName(){
+  const dayOfYear=Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/(1000*60*60*24));
+  currentNameIdx=(dayOfYear-1)%99;
+  renderNameHero();
+  document.getElementById('names-counter').textContent=(currentNameIdx+1)+' / 99';
+}
+function randomName(){
+  currentNameIdx=Math.floor(Math.random()*99);
+  renderNameHero();
+  document.getElementById('names-counter').textContent=(currentNameIdx+1)+' / 99';
+}
+function prevName(){
+  currentNameIdx=(currentNameIdx-1+99)%99;
+  renderNameHero();
+  document.getElementById('names-counter').textContent=(currentNameIdx+1)+' / 99';
+}
+function nextName(){
+  currentNameIdx=(currentNameIdx+1)%99;
+  renderNameHero();
+  document.getElementById('names-counter').textContent=(currentNameIdx+1)+' / 99';
+}
+function selectName(idx){
+  currentNameIdx=idx;
+  renderNameHero();
+  document.getElementById('names-counter').textContent=(currentNameIdx+1)+' / 99';
+  document.getElementById('names-hero').scrollIntoView({behavior:'smooth'});
+}
+
+function renderNameHero(){
+  const n=NAMES_99[currentNameIdx];
+  const color=PILLAR_COLORS[n.pillar]||'#C4983B';
+  document.getElementById('names-hero').innerHTML=`
+    <div class="names-arabic">${n.arabic}</div>
+    <div class="names-english">${n.name}</div>
+    <div class="names-meaning">${n.meaning}</div>
+    <div class="names-pillar-tag" style="background:${color}20;color:${color}">${n.pillar}</div>
+    <div class="names-dua">${n.dua}</div>
+    <div class="names-vision">✦ ${n.vision}</div>
+  `;
+  // update grid
+  document.querySelectorAll('.names-card').forEach((card,i)=>{
+    card.classList.toggle('today',i===currentNameIdx);
+  });
+}
+
+function renderNamesGrid(){
+  const grid=document.getElementById('names-grid');
+  grid.innerHTML=NAMES_99.map((n,i)=>`
+    <div class="names-card${i===currentNameIdx?' today':''}" onclick="selectName(${i})">
+      <div class="names-card-num">${n.num}</div>
+      <div class="names-card-arabic">${n.arabic}</div>
+      <div class="names-card-english">${n.name}</div>
+    </div>
+  `).join('');
+}
+
+// ── WEEKLY REVIEW ──
+const REVIEW_QUESTIONS = [
+  {id:'wins',q:'What were your biggest wins this week?',sub:'Celebrate every victory, big and small.'},
+  {id:'challenges',q:'What challenges did you face?',sub:'Be honest — awareness is the first step to improvement.'},
+  {id:'rituals',q:'How consistent were your morning and evening rituals?',sub:'Rate your consistency and reflect on what helped or hindered.'},
+  {id:'pillars',q:'Which of the five pillars got the most attention? Which was neglected?',sub:'Me Life · Architecture · TigerFlow AI · Tiger + Dragon · Mycelink'},
+  {id:'goals',q:'Did your weekly actions connect to your lifetime goals?',sub:'From daily tasks to your 10-year vision — was there alignment?'},
+  {id:'system',q:'What system or habit will you implement next week to improve?',sub:'Create the fix, then commit to it.'},
+  {id:'gratitude',q:'Three things you are deeply grateful for this week:',sub:'Alhamdulillah — name them specifically.'},
+  {id:'score',q:'Overall score for this week (1–10):',sub:'Be honest with yourself.'}
+];
+
+let reviewScore = 7;
+
+function getWeekKey(){
+  const now=new Date();
+  const day=now.getDay();
+  const monday=new Date(now);
+  monday.setDate(now.getDate()-((day+6)%7));
+  return fmt(monday);
+}
+
+function isReviewDue(){
+  const now=new Date();
+  // Sunday = day 0, show review from Sunday
+  return now.getDay()===0||now.getDay()===1;
+}
+
+function hasCompletedThisWeek(){
+  if(!data.reviews)return false;
+  const wk=getWeekKey();
+  return !!data.reviews[wk];
+}
+
+function renderReview(){
+  const cont=document.getElementById('review-content');
+  if(!data.reviews)data.reviews={};
+  
+  // Show past reviews
+  const pastReviews=Object.entries(data.reviews).sort((a,b)=>b[0].localeCompare(a[0]));
+  const pastHTML=pastReviews.length?`
+    <div style="margin-top:1.5rem">
+      <span class="section-lbl">Past Reviews</span>
+      ${pastReviews.slice(0,5).map(([wk,rev])=>`
+        <div class="review-history-item">
+          <div class="review-history-date">Week of ${new Date(wk+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})} · Score: ${rev.score}/10</div>
+          <div class="review-history-text">${rev.wins?'<b>Wins:</b> '+rev.wins.substring(0,150)+'...':''}</div>
+        </div>
+      `).join('')}
+    </div>
+  `:'';
+
+  if(hasCompletedThisWeek()){
+    const rev=data.reviews[getWeekKey()];
+    cont.innerHTML=`
+      <div class="review-complete">
+        <div style="font-size:32px;margin-bottom:12px">✦</div>
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--gold);margin-bottom:8px">This week's review is complete</div>
+        <div style="font-size:14px;color:var(--text-secondary)">Score: ${rev.score}/10 · Alhamdulillah for another week of growth.</div>
+        <button class="review-submit-btn" style="margin-top:1.5rem;max-width:200px" onclick="startNewReview()">Review Again</button>
+      </div>
+      ${pastHTML}
+    `;
+    return;
+  }
+
+  cont.innerHTML=`
+    <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem;font-size:13px;color:var(--gold)">
+      ✦ Weekly review — reflect honestly, build intentionally. This is your mirror.
+    </div>
+    ${REVIEW_QUESTIONS.map(q=>`
+      <div class="review-form">
+        <div class="review-q">${q.q}</div>
+        <div class="review-q-sub">${q.sub}</div>
+        ${q.id==='score'?`
+          <div class="review-score-row">
+            ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="review-score-btn${n===reviewScore?' selected':''}" onclick="setReviewScore(${n})">${n}</button>`).join('')}
+          </div>
+        `:`<textarea class="review-textarea" id="review-${q.id}" placeholder="Write here..."></textarea>`}
+      </div>
+    `).join('')}
+    <button class="review-submit-btn" onclick="submitReview()">Complete Weekly Review ✦</button>
+    ${pastHTML}
+  `;
+}
+
+function setReviewScore(n){
+  reviewScore=n;
+  document.querySelectorAll('.review-score-btn').forEach((btn,i)=>{
+    btn.classList.toggle('selected',i+1===n);
+  });
+}
+
+function startNewReview(){
+  const wk=getWeekKey();
+  if(data.reviews)delete data.reviews[wk];
+  renderReview();
+}
+
+function submitReview(){
+  const wk=getWeekKey();
+  if(!data.reviews)data.reviews={};
+  const review={score:reviewScore,date:new Date().toISOString()};
+  REVIEW_QUESTIONS.forEach(q=>{
+    if(q.id!=='score'){
+      const el=document.getElementById('review-'+q.id);
+      if(el)review[q.id]=el.value;
+    }
+  });
+  data.reviews[wk]=review;
+  save();
+  renderReview();
+}
+
+// ── CALENDAR ──
+let calYear=new Date().getFullYear();
+let calMonth=new Date().getMonth();
+let calSelectedDate=fmt(new Date());
+let selectedEventColor='gold';
+
+const COLOR_MAP={
+  gold:{bg:'var(--gold-dim)',text:'var(--gold)',hex:'#C4983B'},
+  coral:{bg:'#E8733A20',text:'#E8733A',hex:'#E8733A'},
+  blue:{bg:'#3B8FC420',text:'#3B8FC4',hex:'#3B8FC4'},
+  purple:{bg:'#7F77DD20',text:'#7F77DD',hex:'#7F77DD'},
+  green:{bg:'#22C55E20',text:'#22C55E',hex:'#22C55E'}
+};
+
+function selectEventColor(el){
+  document.querySelectorAll('.cal-color-opt').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedEventColor=el.dataset.color;
+}
+
+function changeMonth(dir){
+  calMonth+=dir;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCalendar();
+}
+
+function getCalEvents(dateStr){
+  if(!data.calendar)data.calendar={};
+  return data.calendar[dateStr]||[];
+}
+
+function addCalEvent(){
+  const title=document.getElementById('cal-event-title').value.trim();
+  if(!title)return;
+  const time=document.getElementById('cal-event-time').value.trim();
+  const notes=document.getElementById('cal-event-notes').value.trim();
+  if(!data.calendar)data.calendar={};
+  if(!data.calendar[calSelectedDate])data.calendar[calSelectedDate]=[];
+  data.calendar[calSelectedDate].push({
+    id:Date.now()+'',title,time,notes,color:selectedEventColor
+  });
+  document.getElementById('cal-event-title').value='';
+  document.getElementById('cal-event-time').value='';
+  document.getElementById('cal-event-notes').value='';
+  save();renderCalendar();renderCalDayEvents();
+}
+
+function deleteCalEvent(dateStr,id){
+  if(!data.calendar||!data.calendar[dateStr])return;
+  data.calendar[dateStr]=data.calendar[dateStr].filter(e=>e.id!==id);
+  save();renderCalendar();renderCalDayEvents();
+}
+
+function selectCalDay(dateStr){
+  calSelectedDate=dateStr;
+  renderCalendar();renderCalDayEvents();
+}
+
+function renderCalDayEvents(){
+  const d=new Date(calSelectedDate+'T00:00:00');
+  const label=d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('cal-selected-title').textContent=label;
+  const events=getCalEvents(calSelectedDate);
+  const cont=document.getElementById('cal-day-events');
+  if(!events.length){cont.innerHTML='<div class="cal-no-events">No events — add one below</div>';return;}
+  cont.innerHTML=events.map(e=>`
+    <div class="cal-event-item">
+      <div class="cal-event-color" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'}"></div>
+      <div class="cal-event-info">
+        <div class="cal-event-title">${e.title}</div>
+        <div class="cal-event-time">${e.time||'All day'}${e.notes?' · '+e.notes:''}</div>
+      </div>
+      <button class="cal-event-del" onclick="deleteCalEvent('${calSelectedDate}','${e.id}')">✕</button>
+    </div>
+  `).join('');
+}
+
+function renderCalendar(){
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent=monthNames[calMonth]+' '+calYear;
+  const today=new Date();
+  const firstDay=new Date(calYear,calMonth,1);
+  const lastDay=new Date(calYear,calMonth+1,0);
+  let startDow=firstDay.getDay();
+  if(startDow===0)startDow=7;
+  const cells=document.getElementById('cal-cells');
+  cells.innerHTML='';
+  // prev month padding
+  for(let i=1;i<startDow;i++){
+    const d=new Date(calYear,calMonth,1-startDow+i);
+    const ds=fmt(d);
+    const cell=document.createElement('div');
+    cell.className='cal-cell other-month';
+    cell.innerHTML='<div class="cal-date">'+d.getDate()+'</div>';
+    cell.onclick=()=>selectCalDay(ds);
+    cells.appendChild(cell);
+  }
+  // this month
+  for(let d=1;d<=lastDay.getDate();d++){
+    const date=new Date(calYear,calMonth,d);
+    const ds=fmt(date);
+    const isToday=date.toDateString()===today.toDateString();
+    const isSelected=ds===calSelectedDate;
+    const cell=document.createElement('div');
+    cell.className='cal-cell'+(isToday?' today':'')+(isSelected?' selected':'');
+    const dateDiv=document.createElement('div');
+    dateDiv.className='cal-date'+(isToday?' today-num':'');
+    dateDiv.textContent=d;
+    cell.appendChild(dateDiv);
+    // events
+    const events=getCalEvents(ds);
+    events.slice(0,3).forEach(e=>{
+      const dot=document.createElement('div');
+      dot.className='cal-event-dot '+(e.color||'');
+      dot.textContent=e.title;
+      cell.appendChild(dot);
+    });
+    if(events.length>3){
+      const more=document.createElement('div');
+      more.className='cal-event-dot';
+      more.textContent='+'+( events.length-3)+' more';
+      cell.appendChild(more);
+    }
+    cell.onclick=()=>selectCalDay(ds);
+    cells.appendChild(cell);
+  }
+  // next month padding
+  const totalCells=cells.children.length;
+  const remaining=(7-totalCells%7)%7;
+  for(let i=1;i<=remaining;i++){
+    const d=new Date(calYear,calMonth+1,i);
+    const ds=fmt(d);
+    const cell=document.createElement('div');
+    cell.className='cal-cell other-month';
+    cell.innerHTML='<div class="cal-date">'+i+'</div>';
+    cell.onclick=()=>selectCalDay(ds);
+    cells.appendChild(cell);
+  }
+  renderCalDayEvents();
+}
+
+
+// ── PRE-POPULATE PLANNING FROM EMPIRE BLUEPRINT ──
+function initPlanningData() {
+  if (!data.planning) data.planning = {};
+  if (!data.planning._initialized) {
+    data.planning.lifetime = [
+      {text:"Build a global technology and architecture empire generating £24B+ in halal wealth", status:"status-green"},
+      {text:"Fund construction of 100+ masjids worldwide", status:"status-grey"},
+      {text:"Establish The Fathema Ali Trust as a permanent charitable institution", status:"status-grey"},
+      {text:"Complete memorisation of the Quran with tajweed", status:"status-grey"},
+      {text:"Raise eight children who are faithful, courageous, generous and independent", status:"status-grey"},
+      {text:"Move to Madinah in later life", status:"status-grey"}
+    ];
+    data.planning.ten = [
+      {text:"Build TigerFlow AI into a global technology company (2026-2035)", status:"status-green"},
+      {text:"Complete all 25 architecture projects through Halima Yasmin Architects", status:"status-grey"},
+      {text:"Establish Tiger & Dragon as a world-recognised love brand", status:"status-grey"},
+      {text:"Achieve £24B net worth through halal means by December 2029", status:"status-grey"},
+      {text:"Perform Hajj and Umrah multiple times", status:"status-grey"}
+    ];
+    data.planning.five = [
+      {text:"TigerFlow AI proprietary platform fully migrated from GHL (2031)", status:"status-grey"},
+      {text:"Architecture portfolio — 25 projects completed", status:"status-grey"},
+      {text:"Tiger & Dragon book at 3M+ copies sold", status:"status-grey"},
+      {text:"ALVA healthcare AI deployed across major NHS trusts", status:"status-grey"}
+    ];
+    data.planning.two = [
+      {text:"TigerFlow AI proprietary stack — migrate from GoHighLevel", status:"status-green"},
+      {text:"Complete architecture projects 1-8 (The Atelier, Living Pavilion, Rumah Rasa...)", status:"status-grey"},
+      {text:"Tiger & Dragon freemium book + profitable book published", status:"status-grey"},
+      {text:"Mycelink community launched with 1000+ members", status:"status-grey"}
+    ];
+    data.planning.one = [
+      {text:"TigerFlow AI — 50+ UK brokerages on platform by Dec 2026", status:"status-green"},
+      {text:"Architecture Portfolio — Projects 1-3 complete (RIBA 0-3)", status:"status-green"},
+      {text:"GHL white-label revenue — £500K+ this year", status:"status-grey"},
+      {text:"Tiger & Dragon — podcast launched, 4 episodes recorded", status:"status-grey"},
+      {text:"12-month Python/React coding roadmap — complete", status:"status-grey"}
+    ];
+    data.planning.quarterly = [
+      {text:"TigerFlow AI frontend dashboard — Ascension Dashboard live", status:"status-green"},
+      {text:"6-8 demos per week, 60%+ close rate", status:"status-grey"},
+      {text:"Morning + evening ritual — 100% completion rate", status:"status-grey"},
+      {text:"Architecture Project 1 (The Atelier) — RIBA Stage 0-1 complete", status:"status-grey"}
+    ];
+    data.planning.monthly = [
+      {text:"TigerFlow AI — 5 new brokerage clients signed", status:"status-grey"},
+      {text:"Morning ritual — 25/30 days complete", status:"status-grey"},
+      {text:"Evening ritual — 25/30 days complete", status:"status-grey"},
+      {text:"Architecture — 4 design sessions completed", status:"status-grey"}
+    ];
+    data.planning.weekly = [
+      {text:"Complete all 5 morning rituals Mon-Fri", status:"status-grey"},
+      {text:"Complete all 5 evening rituals Mon-Fri", status:"status-grey"},
+      {text:"6+ TigerFlow AI demos booked and conducted", status:"status-grey"},
+      {text:"2 hours coding per day on TigerFlow", status:"status-grey"}
+    ];
+    data.planning._initialized = true;
+    save();
+  }
+}
+
 // ── INIT ──
 load();
+initPlanningData();
 renderHeader();
 renderAffirmationBar();
 renderDaily();
