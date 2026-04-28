@@ -1128,7 +1128,7 @@ function deleteAffirmation(idx){
 function changeDay(d){dayOffset+=d;renderDaily();}
 function renderDaily(){
   const ds=getDateStr(dayOffset);
-  setTimeout(()=>{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();},100);
+  setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},200);
   ensureDay(ds);
   document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
   renderRitual('am',ds);
@@ -2246,11 +2246,8 @@ function initPlanningData() {
 // ── INIT ──
 load();
 initPlanningData();
-renderHeader();
-renderAffirmationBar();
-renderDaily();
-renderMiniCalendar();
-renderDayDetail(fmt(new Date()));
+try { renderHeader(); } catch(e) { console.log('header err',e); }
+try { renderAffirmationBar(); } catch(e) { console.log('aff err',e); }
 
 // ── SUPABASE + ENCRYPTION CONFIG ──
 const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
@@ -2350,11 +2347,13 @@ async function attemptLogin() {
     sessionStorage.setItem('nn_uid', userId);
     sessionStorage.setItem('nn_pw', password);
     document.getElementById('login-overlay').classList.add('hidden');
-    renderHeader();
-    renderAffirmationBar();
-    renderDaily();
-    renderMiniCalendar();
-    renderDayDetail(fmt(new Date()));
+    try { renderHeader(); } catch(e) {}
+    try { renderAffirmationBar(); } catch(e) {}
+    try { renderDaily(); } catch(e) {}
+    setTimeout(() => {
+      try { renderMiniCalendar(); } catch(e) {}
+      try { renderDayDetail(fmt(new Date())); } catch(e) {}
+    }, 200);
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
     showLoginError('Incorrect password. Try again.');
@@ -2385,7 +2384,13 @@ function logout() {
     const success = await loadFromSupabase();
     if (success) {
       document.getElementById('login-overlay').classList.add('hidden');
-      renderHeader(); renderAffirmationBar(); renderDaily();
+      try { renderHeader(); } catch(e) {}
+      try { renderAffirmationBar(); } catch(e) {}
+      try { renderDaily(); } catch(e) {}
+      setTimeout(() => {
+        try { renderMiniCalendar(); } catch(e) {}
+        try { renderDayDetail(fmt(new Date())); } catch(e) {}
+      }, 200);
     } else {
       MASTER_PASSWORD = null; USER_ID = null;
     }
