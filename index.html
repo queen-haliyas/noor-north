@@ -2262,8 +2262,12 @@ function renderDayDetail(dateStr) {
           <button onclick="deleteCalEvent('${dateStr}','${e.id}')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:11px;opacity:.6">✕</button>
         </div>`).join('')}
         ${!events.length ? '<div style="font-size:12px;color:var(--text-tertiary)">No events yet</div>' : ''}
-        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap" id="event-color-picker">
-          ${Object.entries(COLOR_MAP).map(([k,v])=>`<div onclick="selectedEventColor='${k}';document.querySelectorAll('.ecp-dot').forEach(d=>d.style.outline='none');this.style.outline='2px solid #fff'" class="ecp-dot" style="width:16px;height:16px;border-radius:50%;background:${v.hex};cursor:pointer;flex-shrink:0;transition:all .15s${k===selectedEventColor?';outline:2px solid #fff':''}"></div>`).join('')}
+        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap" id="event-color-picker-${dateStr}">
+          ${Object.entries(COLOR_MAP).map(([k,v])=>`<div 
+            onclick="selectedEventColor='${k}';document.querySelectorAll('#event-color-picker-${dateStr} .ecp-dot').forEach(d=>{d.style.outline='none';d.style.transform='scale(1)'});this.style.outline='2.5px solid #fff';this.style.transform='scale(1.2)'" 
+            class="ecp-dot" 
+            data-color="${k}"
+            style="width:18px;height:18px;border-radius:50%;background:${v.hex};cursor:pointer;flex-shrink:0;transition:all .15s;${k==='rose'?'outline:2.5px solid #fff;transform:scale(1.2)':''}"></div>`).join('')}
         </div>
         <div class="mini-add-event" style="margin-top:8px">
           <input class="mini-add-input" id="mini-event-title" placeholder="Add event..." />
