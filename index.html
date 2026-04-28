@@ -813,6 +813,26 @@ body{
       </div>
     </div>
   </div>
+
+  <!-- MINI CALENDAR -->
+  <div style="margin-top:2rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+      <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary)" id="mini-cal-month">April 2026</div>
+      <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
+      <div class="mini-cal-day-hdr">Mon</div>
+      <div class="mini-cal-day-hdr">Tue</div>
+      <div class="mini-cal-day-hdr">Wed</div>
+      <div class="mini-cal-day-hdr">Thu</div>
+      <div class="mini-cal-day-hdr">Fri</div>
+      <div class="mini-cal-day-hdr">Sat</div>
+      <div class="mini-cal-day-hdr">Sun</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px" id="mini-cal-cells"></div>
+    <div class="day-detail-panel" id="day-detail-panel" style="margin-top:12px;display:none"></div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -2394,9 +2414,9 @@ async function attemptLogin() {
     try { renderAffirmationBar(); } catch(e) {}
     try { renderDaily(); } catch(e) {}
     setTimeout(() => {
-      try { renderMiniCalendar(); } catch(e) {}
-      try { renderDayDetail(fmt(new Date())); } catch(e) {}
-    }, 200);
+      try { renderMiniCalendar(); } catch(e) {console.log('cal err',e);}
+      try { miniSelectedDate=fmt(new Date()); renderDayDetail(fmt(new Date())); } catch(e) {console.log('detail err',e);}
+    }, 300);
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
     showLoginError('Incorrect password. Try again.');
