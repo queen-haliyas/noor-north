@@ -2109,6 +2109,66 @@ function renderDailyNameBanner() {
   if (pillar) { pillar.textContent = n.pillar; pillar.style.background = color + '20'; pillar.style.color = color; }
 }
 
+
+// ── EVENT MANAGEMENT ──
+let evtDragIdx = null;
+
+function evtDragStart(e, idx, dateStr) {
+  evtDragIdx = {idx, dateStr};
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function evtDrop(e, targetIdx, dateStr) {
+  e.preventDefault();
+  if (!evtDragIdx || evtDragIdx.dateStr !== dateStr) return;
+  const events = data.calendar && data.calendar[dateStr];
+  if (!events) return;
+  const moved = events.splice(evtDragIdx.idx, 1)[0];
+  events.splice(targetIdx, 0, moved);
+  evtDragIdx = null;
+  save(); renderMiniCalendar(); renderDayDetail(dateStr);
+}
+
+function updateEventTitle(dateStr, id, title) {
+  if (!data.calendar || !data.calendar[dateStr]) return;
+  const e = data.calendar[dateStr].find(x => x.id === id);
+  if (e) { e.title = title; save(); renderMiniCalendar(); }
+}
+
+function updateEventTime(dateStr, id, time) {
+  if (!data.calendar || !data.calendar[dateStr]) return;
+  const e = data.calendar[dateStr].find(x => x.id === id);
+  if (e) { e.time = time; save(); }
+}
+
+function cycleEventColor(dateStr, id) {
+  if (!data.calendar || !data.calendar[dateStr]) return;
+  const e = data.calendar[dateStr].find(x => x.id === id);
+  if (!e) return;
+  const colors = Object.keys(COLOR_MAP);
+  const idx = colors.indexOf(e.color || 'gold');
+  e.color = colors[(idx + 1) % colors.length];
+  save(); renderDayDetail(dateStr); renderMiniCalendar();
+}
+
+function moveEventToPillar(dateStr, id) {
+  if (!data.calendar || !data.calendar[dateStr]) return;
+  const e = data.calendar[dateStr].find(x => x.id === id);
+  if (!e) return;
+  // Ask which pillar
+  const pillarNames = PILLARS.map((p,i) => i+1+'. '+p.name).join('\n');
+  const choice = prompt('Move "'+e.title+'" to which pillar?\n\n'+pillarNames+'\n\nEnter number (1-5):');
+  const idx = parseInt(choice) - 1;
+  if (idx >= 0 && idx < PILLARS.length) {
+    const pid = PILLARS[idx].id;
+    if (!data[dateStr]) ensureDay(dateStr);
+    data[dateStr].pillars[pid].push({text: (e.time ? e.time + ' — ' : '') + e.title, done: false});
+    // Remove from events
+    data.calendar[dateStr] = data.calendar[dateStr].filter(x => x.id !== id);
+    save(); renderPillarsDaily(dateStr); renderMiniCalendar(); renderDayDetail(dateStr);
+  }
+}
+
 // ── MINI CALENDAR ──
 let miniCalYear = new Date().getFullYear();
 let miniCalMonth = new Date().getMonth();
@@ -2186,9 +2246,19 @@ function renderDayDetail(dateStr) {
       </div>
       <div class="day-detail-section" style="margin-top:12px">
         <div class="day-detail-section-title">Events & Appointments</div>
-        ${events.map(e => `<div class="day-detail-item">
-          <div class="day-detail-dot" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'}"></div>
-          <span style="font-size:12px;flex:1">${e.time?'<b>'+e.time+'</b> · ':''}${e.title}</span>
+        ${events.map((e,ei) => `<div class="day-detail-item" draggable="true"
+          ondragstart="evtDragStart(event,${ei},'${dateStr}')" 
+          ondragover="calDragOver(event)" 
+          ondrop="evtDrop(event,${ei},'${dateStr}')"
+          style="cursor:grab">
+          <div class="day-detail-dot" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'};cursor:pointer" onclick="cycleEventColor('${dateStr}','${e.id}')" title="Click to change colour"></div>
+          <input value="${e.time||''}" placeholder="Time" 
+            style="width:55px;background:none;border:none;font-size:11px;color:var(--text-tertiary);font-family:var(--font-body);outline:none;padding:0"
+            onblur="updateEventTime('${dateStr}','${e.id}',this.value)"/>
+          <input value="${e.title}" 
+            style="flex:1;background:none;border:none;font-size:12px;color:var(--text-primary);font-family:var(--font-body);outline:none;padding:0 4px"
+            onblur="updateEventTitle('${dateStr}','${e.id}',this.value)"/>
+          <button onclick="moveEventToPillar('${dateStr}','${e.id}')" style="background:none;border:0.5px solid var(--charcoal-border);border-radius:4px;cursor:pointer;color:var(--text-tertiary);font-size:10px;padding:2px 5px;margin-right:4px" title="Move to Five Pillars">↑ Pillar</button>
           <button onclick="deleteCalEvent('${dateStr}','${e.id}')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:11px;opacity:.6">✕</button>
         </div>`).join('')}
         ${!events.length ? '<div style="font-size:12px;color:var(--text-tertiary)">No events yet</div>' : ''}
