@@ -126,7 +126,7 @@ body{
 .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* ── PAGES ── */
-.page{display:none;padding:1.5rem 2rem;max-width:1400px;margin:0 auto;}
+.page{display:none;padding:1.5rem 2rem 4rem;max-width:1400px;margin:0 auto;}
 .page.active{display:block;}
 
 /* ── DAILY FLOW ── */
@@ -662,7 +662,7 @@ body{
 .mini-cal-pill.green{background:#22C55E20;color:#22C55E;}
 .mini-cal-pill.pillar{background:#D4A84320;color:#D4A843;}
 /* Day detail panel */
-.day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;overflow:visible;margin-bottom:2rem;}
 @media(max-width:700px){.day-detail-panel{grid-template-columns:1fr;}}
 .day-detail-title{font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--charcoal-border);grid-column:1/-1;}
 .day-detail-section{margin-bottom:8px;}
@@ -847,7 +847,7 @@ body{
   </div>
 
   <!-- MINI CALENDAR -->
-  <div style="margin-top:2rem">
+  <div style="margin-top:2rem;margin-bottom:3rem">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
       <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
       <div style="font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary)" id="mini-cal-month">April 2026</div>
