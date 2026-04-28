@@ -678,6 +678,28 @@ body{
 .mini-add-time{width:90px;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:6px 10px;font-size:12px;color:var(--text-primary);font-family:var(--font-body);outline:none;}
 .mini-add-btn-sm{background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--font-body);font-weight:500;white-space:nowrap;}
 
+
+/* ── DAILY NAME BANNER ── */
+.daily-name-banner{
+  background:linear-gradient(135deg,#1A1205,#2E2510);
+  border:0.5px solid var(--gold-dim);
+  border-radius:var(--radius);
+  padding:14px 20px;
+  margin-bottom:1.25rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  transition:border-color .2s;
+}
+.daily-name-banner:hover{border-color:var(--gold);}
+.daily-name-arabic-sm{font-size:22px;color:var(--gold);margin-right:12px;line-height:1;}
+.daily-name-info{flex:1;}
+.daily-name-en{font-size:14px;font-weight:500;color:var(--text-primary);}
+.daily-name-meaning{font-size:12px;color:var(--text-secondary);margin-top:1px;font-style:italic;}
+.daily-name-dua-preview{font-size:11px;color:var(--text-tertiary);margin-top:4px;line-height:1.5;}
+.daily-name-badge{font-size:10px;padding:3px 8px;border-radius:20px;background:var(--gold-dim);color:var(--gold);white-space:nowrap;margin-left:10px;}
+
 </style>
 </head>
 <body>
@@ -763,6 +785,16 @@ body{
       <span class="day-label" id="daily-day-label"></span>
       <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
     </div>
+  </div>
+  <!-- Daily Name of Allah -->
+  <div class="daily-name-banner" id="daily-name-banner" onclick="showPage('names',document.querySelectorAll('.nav-tab')[6])">
+    <div class="daily-name-arabic-sm" id="dnb-arabic"></div>
+    <div class="daily-name-info">
+      <div class="daily-name-en" id="dnb-name"></div>
+      <div class="daily-name-meaning" id="dnb-meaning"></div>
+      <div class="daily-name-dua-preview" id="dnb-dua"></div>
+    </div>
+    <div class="daily-name-badge" id="dnb-pillar"></div>
   </div>
 
   <div class="flow-grid">
@@ -1122,6 +1154,7 @@ function deleteAffirmation(idx){
 function changeDay(d){dayOffset+=d;renderDaily();}
 function renderDaily(){
   const ds=getDateStr(dayOffset);
+  try{renderDailyNameBanner();}catch(e){}
   setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},200);
   ensureDay(ds);
   document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
@@ -2051,6 +2084,31 @@ function toggleReviewSection(key){
 }
 
 
+
+// ── DAILY NAME BANNER ──
+function renderDailyNameBanner() {
+  if (!NAMES_99 || !NAMES_99.length) return;
+  // Pick a random name that changes each day
+  const today = new Date();
+  const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+  const idx = seed % 99;
+  const n = NAMES_99[idx];
+  if (!n) return;
+  const color = PILLAR_COLORS[n.pillar] || '#C4983B';
+  const el = document.getElementById('daily-name-banner');
+  const arabic = document.getElementById('dnb-arabic');
+  const name = document.getElementById('dnb-name');
+  const meaning = document.getElementById('dnb-meaning');
+  const dua = document.getElementById('dnb-dua');
+  const pillar = document.getElementById('dnb-pillar');
+  if (!el) return;
+  if (arabic) arabic.textContent = n.arabic;
+  if (name) name.textContent = n.name;
+  if (meaning) meaning.textContent = n.meaning;
+  if (dua) dua.textContent = n.dua.substring(0, 100) + '...';
+  if (pillar) { pillar.textContent = n.pillar; pillar.style.background = color + '20'; pillar.style.color = color; }
+}
+
 // ── MINI CALENDAR ──
 let miniCalYear = new Date().getFullYear();
 let miniCalMonth = new Date().getMonth();
@@ -2134,6 +2192,9 @@ function renderDayDetail(dateStr) {
           <button onclick="deleteCalEvent('${dateStr}','${e.id}')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:11px;opacity:.6">✕</button>
         </div>`).join('')}
         ${!events.length ? '<div style="font-size:12px;color:var(--text-tertiary)">No events yet</div>' : ''}
+        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap" id="event-color-picker">
+          ${Object.entries(COLOR_MAP).map(([k,v])=>`<div onclick="selectedEventColor='${k}';document.querySelectorAll('.ecp-dot').forEach(d=>d.style.outline='none');this.style.outline='2px solid #fff'" class="ecp-dot" style="width:16px;height:16px;border-radius:50%;background:${v.hex};cursor:pointer;flex-shrink:0;transition:all .15s${k===selectedEventColor?';outline:2px solid #fff':''}"></div>`).join('')}
+        </div>
         <div class="mini-add-event" style="margin-top:8px">
           <input class="mini-add-input" id="mini-event-title" placeholder="Add event..." />
           <input class="mini-add-time" id="mini-event-time" placeholder="Time e.g. 9am" />
@@ -2275,14 +2336,21 @@ function renderMiniCalendar() {
 let calYear=new Date().getFullYear();
 let calMonth=new Date().getMonth();
 let calSelectedDate=fmt(new Date());
-let selectedEventColor='gold';
+let selectedEventColor='rose';
 
 const COLOR_MAP={
-  gold:{bg:'var(--gold-dim)',text:'var(--gold)',hex:'#C4983B'},
-  coral:{bg:'#E8733A20',text:'#E8733A',hex:'#E8733A'},
-  blue:{bg:'#3B8FC420',text:'#3B8FC4',hex:'#3B8FC4'},
-  purple:{bg:'#7F77DD20',text:'#7F77DD',hex:'#7F77DD'},
-  green:{bg:'#22C55E20',text:'#22C55E',hex:'#22C55E'}
+  gold:{bg:'#C4983B20',text:'#C4983B',hex:'#C4983B'},
+  rose:{bg:'#F43F5E20',text:'#F43F5E',hex:'#F43F5E'},
+  violet:{bg:'#8B5CF620',text:'#8B5CF6',hex:'#8B5CF6'},
+  sky:{bg:'#0EA5E920',text:'#0EA5E9',hex:'#0EA5E9'},
+  lime:{bg:'#84CC1620',text:'#84CC16',hex:'#84CC16'},
+  pink:{bg:'#EC489920',text:'#EC4899',hex:'#EC4899'},
+  amber:{bg:'#F59E0B20',text:'#F59E0B',hex:'#F59E0B'},
+  indigo:{bg:'#6366F120',text:'#6366F1',hex:'#6366F1'},
+  red:{bg:'#EF444420',text:'#EF4444',hex:'#EF4444'},
+  cyan:{bg:'#06B6D420',text:'#06B6D4',hex:'#06B6D4'},
+  fuchsia:{bg:'#D946EF20',text:'#D946EF',hex:'#D946EF'},
+  white:{bg:'#ffffff15',text:'#ffffff',hex:'#ffffff'}
 };
 
 function selectEventColor(el){
@@ -2593,7 +2661,7 @@ async function attemptLogin() {
     document.getElementById('login-overlay').classList.add('hidden');
     try { renderHeader(); } catch(e) {}
     try { renderAffirmationBar(); } catch(e) {}
-    try { renderDaily(); } catch(e) {}
+    try { renderDaily(); renderDailyNameBanner(); } catch(e) {}
     setTimeout(() => {
       try { renderMiniCalendar(); } catch(e) {console.log('cal err',e);}
       try { miniSelectedDate=fmt(new Date()); renderDayDetail(fmt(new Date())); } catch(e) {console.log('detail err',e);}
@@ -2630,7 +2698,7 @@ function logout() {
       document.getElementById('login-overlay').classList.add('hidden');
       try { renderHeader(); } catch(e) {}
       try { renderAffirmationBar(); } catch(e) {}
-      try { renderDaily(); } catch(e) {}
+      try { renderDaily(); renderDailyNameBanner(); } catch(e) {}
       setTimeout(() => {
         try { renderMiniCalendar(); } catch(e) {}
         try { renderDayDetail(fmt(new Date())); } catch(e) {}
