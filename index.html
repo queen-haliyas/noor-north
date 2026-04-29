@@ -2423,7 +2423,7 @@ window.save = function() {
 
 // ── LOGIN ──
 async function attemptLogin() {
-  const userId = document.getElementById('login-userid').value.trim().toLowerCase();
+  const userId = document.getElementById('login-userid').value.trim();
   const password = document.getElementById('login-password').value;
   if (!userId || !password) { showLoginError('Please enter both fields.'); return; }
   
@@ -2440,9 +2440,13 @@ async function attemptLogin() {
     sessionStorage.setItem('nn_uid', userId);
     sessionStorage.setItem('nn_pw', password);
     document.getElementById('login-overlay').classList.add('hidden');
-    renderHeader();
-    renderAffirmationBar();
-    renderDaily();
+    try { renderHeader(); } catch(e) {}
+    try { renderAffirmationBar(); } catch(e) {}
+    try { renderDaily(); } catch(e) {}
+    setTimeout(() => {
+      try { renderMiniCalendar(); } catch(e) {}
+      try { renderDayDetail(fmt(new Date())); } catch(e) {}
+    }, 300);
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
     showLoginError('Incorrect password. Try again.');
@@ -2476,6 +2480,10 @@ function logout() {
       try{renderHeader();}catch(e){}
       try{renderAffirmationBar();}catch(e){}
       try{renderDaily();}catch(e){}
+      setTimeout(()=>{
+        try{renderMiniCalendar();}catch(e){}
+        try{renderDayDetail(fmt(new Date()));}catch(e){}
+      },300);
     } else {
       MASTER_PASSWORD = null; USER_ID = null;
     }
