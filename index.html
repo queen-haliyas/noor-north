@@ -1014,6 +1014,13 @@ body{
 </div>
 
 <script>
+// ── SUPABASE + ENCRYPTION CONFIG ──
+const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZGdxdmN4eHhwYXZ2bnpteGR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDI1MTksImV4cCI6MjA5MjkxODUxOX0.hzPaTALBGUY-g3yo8Dqm-0KvNssNZFdpczPYmn6BXkE';
+let MASTER_PASSWORD = null;
+let USER_ID = null;
+let syncTimeout = null;
+
 // ── DATA ──
 const PILLARS=[
   {id:'life',name:'Me Life',icon:'✦',color:'#E8B84B'},
@@ -2349,13 +2356,7 @@ renderDaily();
 renderMiniCalendar();
 renderDayDetail(fmt(new Date()));
 
-// ── SUPABASE + ENCRYPTION CONFIG ──
-const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZGdxdmN4eHhwYXZ2bnpteGR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDI1MTksImV4cCI6MjA5MjkxODUxOX0.hzPaTALBGUY-g3yo8Dqm-0KvNssNZFdpczPYmn6BXkE';
-
-let MASTER_PASSWORD = null;
-let USER_ID = null;
-let syncTimeout = null;
+// ── SUPABASE VARS MOVED TO TOP ──
 
 // ── ENCRYPTION ──
 function encrypt(text, password) {
