@@ -692,7 +692,7 @@ body{
       <input class="login-input" id="login-userid" placeholder="e.g. halima" type="text"/>
       <label class="login-label">Encryption Password</label>
       <input class="login-input" id="login-password" placeholder="Your secret password" type="password" onkeydown="if(event.key==='Enter')attemptLogin()"/>
-      <div class="login-error" id="login-error">Incorrect password or no data found. Try again.</div>
+      <div class="login-error" id="login-error" style="display:none"></div>
       <button class="login-btn" onclick="attemptLogin()">Enter Noor North</button>
       <div class="login-hint">Your password encrypts all data before it leaves your device.<br>Supabase cannot read your information.</div>
     </div>
@@ -2351,7 +2351,7 @@ renderDayDetail(fmt(new Date()));
 
 // ── SUPABASE + ENCRYPTION CONFIG ──
 const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_5UykL0EgtprAnlbU9zjObQ_7FqgdmhZ';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZGdxdmN4eHhwYXZ2bnpteGR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDI1MTksImV4cCI6MjA5MjkxODUxOX0.hzPaTALBGUY-g3yo8Dqm-0KvNssNZFdpczPYmn6BXkE';
 
 let MASTER_PASSWORD = null;
 let USER_ID = null;
@@ -2398,16 +2398,22 @@ async function syncToSupabase() {
 }
 
 async function loadFromSupabase() {
-  if (!MASTER_PASSWORD || !USER_ID) return false;
+  if (!MASTER_PASSWORD || !USER_ID) return { ok: false, reason: 'no-creds' };
   showSync();
-  const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
-  hideSync();
-  if (rows && rows.length > 0) {
-    const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
-    if (decrypted) { data = decrypted; return true; }
-    return false;
+  try {
+    const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
+    hideSync();
+    if (!Array.isArray(rows)) return { ok: false, reason: 'network' };
+    if (rows.length > 0) {
+      const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
+      if (decrypted) { data = decrypted; return { ok: true }; }
+      return { ok: false, reason: 'wrong-password' };
+    }
+    return { ok: true }; // new user, no data yet
+  } catch(e) {
+    hideSync();
+    return { ok: false, reason: 'network' };
   }
-  return true; // new user, no data yet
 }
 
 function showSync() { const el=document.getElementById('sync-indicator');if(el)el.classList.add('show'); }
@@ -2434,9 +2440,9 @@ async function attemptLogin() {
   btn.textContent = 'Unlocking...';
   btn.disabled = true;
   
-  const success = await loadFromSupabase();
+  const result = await loadFromSupabase();
   
-  if (success) {
+  if (result.ok) {
     sessionStorage.setItem('nn_uid', userId);
     sessionStorage.setItem('nn_pw', password);
     document.getElementById('login-overlay').classList.add('hidden');
@@ -2449,7 +2455,13 @@ async function attemptLogin() {
     }, 300);
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
-    showLoginError('Incorrect password. Try again.');
+    if (result.reason === 'wrong-password') {
+      showLoginError('Incorrect password. Please try again.');
+    } else if (result.reason === 'network') {
+      showLoginError('Connection error. Check your internet and try again.');
+    } else {
+      showLoginError('Login failed. Please try again.');
+    }
     btn.textContent = 'Enter Noor North';
     btn.disabled = false;
   }
@@ -2474,8 +2486,8 @@ function logout() {
   const pw = sessionStorage.getItem('nn_pw');
   if (uid && pw) {
     MASTER_PASSWORD = pw; USER_ID = uid;
-    const success = await loadFromSupabase();
-    if (success) {
+    const result = await loadFromSupabase();
+    if (result.ok) {
       document.getElementById('login-overlay').classList.add('hidden');
       try{renderHeader();}catch(e){}
       try{renderAffirmationBar();}catch(e){}
