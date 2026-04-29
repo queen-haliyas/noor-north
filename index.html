@@ -126,7 +126,7 @@ body{
 .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* ── PAGES ── */
-.page{display:none;padding:1.5rem 2rem 4rem;max-width:1400px;margin:0 auto;}
+.page{display:none;padding:1.5rem 2rem;max-width:1400px;margin:0 auto;}
 .page.active{display:block;}
 
 /* ── DAILY FLOW ── */
@@ -647,7 +647,7 @@ body{
 .mini-cal-title{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary);}
 .mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem;}
 .mini-cal-day-hdr{text-align:center;font-size:10px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;padding:4px 0;}
-.mini-cal-cell{min-height:80px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
+.mini-cal-cell{min-height:70px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
 .mini-cal-cell:hover{border-color:var(--gold);}
 .mini-cal-cell.today{border-color:var(--gold);background:#C4983B08;}
 .mini-cal-cell.selected{background:#C4983B12;border-color:var(--gold);}
@@ -662,7 +662,7 @@ body{
 .mini-cal-pill.green{background:#22C55E20;color:#22C55E;}
 .mini-cal-pill.pillar{background:#D4A84320;color:#D4A843;}
 /* Day detail panel */
-.day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;}
+.day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 @media(max-width:700px){.day-detail-panel{grid-template-columns:1fr;}}
 .day-detail-title{font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--charcoal-border);grid-column:1/-1;}
 .day-detail-section{margin-bottom:8px;}
@@ -677,28 +677,6 @@ body{
 .mini-add-input:focus{border-color:var(--gold);}
 .mini-add-time{width:90px;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:6px 10px;font-size:12px;color:var(--text-primary);font-family:var(--font-body);outline:none;}
 .mini-add-btn-sm{background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--font-body);font-weight:500;white-space:nowrap;}
-
-
-/* ── DAILY NAME BANNER ── */
-.daily-name-banner{
-  background:linear-gradient(135deg,#1A1205,#2E2510);
-  border:0.5px solid var(--gold-dim);
-  border-radius:var(--radius);
-  padding:14px 20px;
-  margin-bottom:1.25rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  cursor:pointer;
-  transition:border-color .2s;
-}
-.daily-name-banner:hover{border-color:var(--gold);}
-.daily-name-arabic-sm{font-size:22px;color:var(--gold);margin-right:12px;line-height:1;}
-.daily-name-info{flex:1;}
-.daily-name-en{font-size:14px;font-weight:500;color:var(--text-primary);}
-.daily-name-meaning{font-size:12px;color:var(--text-secondary);margin-top:1px;font-style:italic;}
-.daily-name-dua-preview{font-size:11px;color:var(--text-tertiary);margin-top:4px;line-height:1.5;}
-.daily-name-badge{font-size:10px;padding:3px 8px;border-radius:20px;background:var(--gold-dim);color:var(--gold);white-space:nowrap;margin-left:10px;}
 
 </style>
 </head>
@@ -769,7 +747,7 @@ body{
   <button class="nav-tab" onclick="showPage('notes',this)">Notes</button>
   <button class="nav-tab" onclick="showPage('affirmations',this)">Affirmations</button>
   <button class="nav-tab" onclick="showPage('names',this)">99 Names</button>
-  <button class="nav-tab" onclick="showPage('review',this)">Review</button>
+  <button class="nav-tab" onclick="showPage('review',this)">Weekly Review</button>
   <button class="nav-tab" onclick="showPage('arabella',this)">Arabella AI</button>
   <button class="nav-tab" onclick="showPage('voice',this)">Voice Memos</button>
 </nav>
@@ -785,16 +763,6 @@ body{
       <span class="day-label" id="daily-day-label"></span>
       <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
     </div>
-  </div>
-  <!-- Daily Name of Allah -->
-  <div class="daily-name-banner" id="daily-name-banner" onclick="showPage('names',document.querySelectorAll('.nav-tab')[6])">
-    <div class="daily-name-arabic-sm" id="dnb-arabic"></div>
-    <div class="daily-name-info">
-      <div class="daily-name-en" id="dnb-name"></div>
-      <div class="daily-name-meaning" id="dnb-meaning"></div>
-      <div class="daily-name-dua-preview" id="dnb-dua"></div>
-    </div>
-    <div class="daily-name-badge" id="dnb-pillar"></div>
   </div>
 
   <div class="flow-grid">
@@ -844,26 +812,6 @@ body{
         <div class="ritual-flow-label">Process → Reflect → Surrender → Release → Sleep</div>
       </div>
     </div>
-  </div>
-
-  <!-- MINI CALENDAR -->
-  <div style="margin-top:2rem;margin-bottom:3rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-      <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary)" id="mini-cal-month">April 2026</div>
-      <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
-      <div class="mini-cal-day-hdr">Mon</div>
-      <div class="mini-cal-day-hdr">Tue</div>
-      <div class="mini-cal-day-hdr">Wed</div>
-      <div class="mini-cal-day-hdr">Thu</div>
-      <div class="mini-cal-day-hdr">Fri</div>
-      <div class="mini-cal-day-hdr">Sat</div>
-      <div class="mini-cal-day-hdr">Sun</div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px" id="mini-cal-cells"></div>
-    <div class="day-detail-panel" id="day-detail-panel" style="margin-top:12px"></div>
   </div>
 </div>
 
@@ -919,6 +867,46 @@ body{
   <button class="add-affirmation-btn" onclick="addAffirmation()">+ Add Affirmation</button>
 </div>
 
+
+  <div class="cal-layout">
+    <div class="cal-main">
+      <div class="cal-header">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)">← prev</button>
+        <div class="cal-month" id="cal-month-label"></div>
+        <button class="cal-nav-btn" onclick="changeMonth(1)">next →</button>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-day-header">Mon</div>
+        <div class="cal-day-header">Tue</div>
+        <div class="cal-day-header">Wed</div>
+        <div class="cal-day-header">Thu</div>
+        <div class="cal-day-header">Fri</div>
+        <div class="cal-day-header">Sat</div>
+        <div class="cal-day-header">Sun</div>
+      </div>
+      <div class="cal-grid" id="cal-cells"></div>
+    </div>
+    <div class="cal-sidebar">
+      <div class="cal-selected-day">
+        <div class="cal-selected-title" id="cal-selected-title">Select a day</div>
+        <div id="cal-day-events"></div>
+      </div>
+      <div class="cal-add-form">
+        <div class="cal-add-title">Add event</div>
+        <input class="cal-input" id="cal-event-title" placeholder="Event title..." />
+        <input class="cal-input" id="cal-event-time" placeholder="Time (e.g. 9:00am)" />
+        <input class="cal-input" id="cal-event-notes" placeholder="Notes (optional)" />
+        <div class="cal-color-row" id="cal-color-row">
+          <div class="cal-color-opt selected" style="background:var(--gold)" data-color="gold" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#E8733A" data-color="coral" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#3B8FC4" data-color="blue" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#7F77DD" data-color="purple" onclick="selectEventColor(this)"></div>
+          <div class="cal-color-opt" style="background:#22C55E" data-color="green" onclick="selectEventColor(this)"></div>
+        </div>
+        <button class="cal-add-event-btn" onclick="addCalEvent()">+ Add Event</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -937,9 +925,9 @@ body{
   <div class="names-grid" id="names-grid"></div>
 </div>
 
-<!-- REVIEW PAGE -->
+<!-- WEEKLY REVIEW PAGE -->
 <div class="page" id="page-review">
-  <div class="page-title">Review & Reflect <span>year · quarter · month · week</span></div>
+  <div class="page-title">Weekly Review</div>
   <div id="review-content"></div>
 </div>
 
@@ -998,18 +986,20 @@ body{
 <script>
 // ── DATA ──
 const PILLARS=[
-  {id:'life',name:'Me Life',icon:'✦',color:'#1AA8B8'},
-  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#2E8B57'},
-  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#C4983B'},
-  {id:'td',name:'Tiger + Dragon',icon:'◉',color:'#D85A30'},
-  {id:'myc',name:'Mycelink',icon:'⬡',color:'#1B3A6B'}
+  {id:'life',name:'Me Life',icon:'✦',color:'#E8B84B'},
+  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#C4983B'},
+  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#D4A843'},
+  {id:'td',name:'Tiger + Dragon',icon:'◉',color:'#E8733A'},
+  {id:'myc',name:'Mycelink',icon:'⬡',color:'#B8943A'}
 ];
 const AM_STEPS=[
-  {title:'Cold wudu + pray',time:'10 min'},
-  {title:'Meditation',time:'10 min'},
-  {title:'Journal — donate £1, gratitude, manifest, do',time:'10 min'},
-  {title:'Read morning ritual',time:'10 min'},
-  {title:'Walk outside, cold air',time:'10 min'}
+  {title:'Cold wudu + pray Fajr',time:'10 min'},
+  {title:'Breathe — 4 in · 4 hold · 6 out × 3',time:'3 min'},
+  {title:'Read morning ritual — opening duas + Ya Allah names',time:'10 min'},
+  {title:'Meditation + affirmations + visualisation',time:'10 min'},
+  {title:'Journal — donate £1 · 3 gratitudes · 3 manifestations · MIT',time:'10 min'},
+  {title:'Walk outside — cold air, neurons firing',time:'45 min'},
+  {title:'Tahajjud + most important task',time:'—'}
 ];
 const PM_STEPS=[
   {title:'Journal — wins, systems, evidence, RAM clear',time:'20 min'},
@@ -1029,6 +1019,25 @@ const PLAN_LAYERS=[
   {id:'weekly',title:'Week 18',sub:'This week',color:'#E8B84B'}
 ];
 const DEFAULT_AFFIRMATIONS=[
+  'I am so deeply grateful that my relationship with Allah is the strongest it has ever been — my salah is consistent, my duas are answered, and my heart is at peace.',
+  'I am so thankful that my morning ritual of prayer, affirmation, and visualisation has become as natural as breathing, anchoring every day in purpose.',
+  'I am deeply grateful that I have built a life where Islamic principles and entrepreneurial ambition are not in conflict but in perfect harmony.',
+  'I am so grateful that my faith has become my most powerful business strategy — tawakkul has replaced anxiety, and shukr has replaced scarcity.',
+  'I am thankful that I give sadaqah with joy and ease, knowing that every pound I give returns to me multiplied in ways I could never predict.',
+  'I am so grateful that Fadlan and I have built a marriage that the world admires — a true partnership of equals, rooted in love, faith, and shared vision.',
+  'I am thankful beyond words that our Tiger and Dragon brand is thriving, and that our love story inspires thousands of couples to build together rather than apart.',
+  'I am so grateful that we have learned to navigate disagreements with grace, always choosing the relationship over being right.',
+  'I am so grateful that TigerFlow AI has grown from a bold idea to a category-defining AI platform serving hundreds of UK brokerages.',
+  'I am deeply thankful that I taught myself Python, built a technical team, and transformed TigerFlow from a white-label service into proprietary technology that I own.',
+  'I am so grateful that I proved every doubter wrong — a woman with an architecture degree built a technology company from scratch and made it extraordinary.',
+  'I am deeply grateful that TigerFlow generates seven-figure annual recurring revenue and that our retention rate is the envy of the industry.',
+  'I am so grateful that Halima Yasmin Architects has completed twenty-five extraordinary projects, each one a testament to the power of intentional design.',
+  'I am thankful that my architecture degree was never a detour — it taught me to see systems, to design with empathy, and to build what does not yet exist.',
+  'I am so grateful that the intersection of architecture and technology has become my superpower — I see patterns others miss because I think in both code and concrete.',
+  'I am deeply grateful that financial freedom has given me the most precious commodity of all: time. I choose how I spend every hour of every day.',
+  'I am so grateful that I understand money as a tool of impact, not a measure of worth — and that this mindset has made me wealthier than I ever imagined.',
+  'I am thankful that I can write a six-figure cheque to The Fathema Ali Trust every quarter without flinching — generosity at this scale is now my discipline.',
+  'I am resolving what needs resolution while building what demands creation. Allahs timing is perfect, and I am exactly where I need to be.',
   'I build with faith, lead with love, and create with conviction.',
   'I am Halima Yasmin 3.0 — principled, purposeful, and powerful.',
   'My empire is built on foundations of faith and serves the greater good.',
@@ -1040,13 +1049,11 @@ const DEFAULT_AFFIRMATIONS=[
   'I nourish my body with intention. Food is fuel for my mission, and I eat in a way that keeps my energy aligned with my ambitions.',
   'Other people are mirrors, not enemies. When I notice a negative thought, it is information about what I need to heal within myself.',
   'True wealth is built through discipline, not display. Every pound I steward wisely is a seed for the empire I am building.',
-  'My body communicates what my mind has not yet processed. I listen to its signals and respond with care, not compulsion.',
   'I have a capable mind that works best with strong systems. I do not need to remember everything — I need to capture everything.',
   'My word is my bond. I commit only to what I can deliver, and I deliver everything I commit to.',
   'I am intelligent, resourceful, and building something extraordinary. The voice that tells me otherwise is an echo of someone elses pain, not a reflection of my reality.',
   'I am the master of my attention, not a passenger. Every minute I reclaim from scrolling is a minute invested in my legacy.',
   'True wisdom is knowing what I do not know. My willingness to learn is my greatest competitive advantage.',
-  'I am resolving what needs resolution while building what demands creation. Allahs timing is perfect.',
   'Building legacies, not just leads. Where faith meets force.',
   'I am a billionaire in the making — guided by Allah, disciplined in action, unstoppable in vision.',
   'Ya Allah, You are Al-Noor — the Light. Guide every step of this empire towards Your pleasure.',
@@ -1087,6 +1094,7 @@ function ensureDay(ds){
 // ── HEADER ──
 function renderHeader(){
   const now=new Date();
+  if(!document.getElementById('hdr-date'))return;
   document.getElementById('hdr-date').textContent=now.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   document.getElementById('hdr-week').textContent='Week '+getWeekNum(now);
   document.getElementById('hdr-qt').textContent='Q'+getQ(now)+' '+now.getFullYear();
@@ -1115,6 +1123,7 @@ function renderAffirmationBar(){
   const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
   if(!affs.length)return;
   if(currentAffIdx>=affs.length)currentAffIdx=0;
+  if(!document.getElementById('affirmation-display'))return;
   document.getElementById('affirmation-display').textContent='"'+affs[currentAffIdx]+'"';
 }
 function prevAffirmation(){
@@ -1154,8 +1163,7 @@ function deleteAffirmation(idx){
 function changeDay(d){dayOffset+=d;renderDaily();}
 function renderDaily(){
   const ds=getDateStr(dayOffset);
-  try{renderDailyNameBanner();}catch(e){}
-  setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},200);
+  setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},100);
   ensureDay(ds);
   document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
   renderRitual('am',ds);
@@ -1417,42 +1425,20 @@ let arabellaMode = 'coach';
 let arabellaHistory = [];
 
 const ARABELLA_SYSTEM = {
-  coach: `You are Arabella, the personal AI life coach for Halima Yasmin 3.0. You speak with warmth, directness, and spiritual grounding. You know her completely:
+  coach: `You are Arabella, the personal AI life coach for Halima Yasmin 3.0, a British-Bangladeshi Muslim entrepreneur and architect based in the UK. You speak with warmth, directness, and spiritual grounding. You know her deeply:
 
-IDENTITY: Halima Yasmin 3.0 — "Principled. Purposeful. Powerful." British-Bangladeshi Muslim woman, married to Fadlan Effendi. Founder & CEO of TigerFlow AI (UK proptech AI platform), Principal of Halima Yasmin Architects, co-creator of Tiger & Dragon love brand.
+IDENTITY: Halima Yasmin 3.0 — "Principled. Purposeful. Powerful." Founder & CEO of TigerFlow AI (UK proptech platform), Principal of Halima Yasmin Architects, co-creator of Tiger & Dragon brand with her husband Fadlan.
 
-FIVE PILLARS: Me Life (personal growth, faith, health), Architecture Portfolio (25 projects), TigerFlow AI (proptech platform, £5k-£65k packages), Tiger + Dragon (love brand with Fadlan), Mycelink (crypto/wealth education community).
+FOUR PILLARS: CODE (TigerFlow AI), DESIGN (Architecture Portfolio — 25 projects), EARN (GHL revenue, £5k-£65k packages), TIGER & DRAGON (love brand with Fadlan).
 
-LIFETIME VISION: £24 billion halal wealth by December 2029. Path: £5-10M (2026) → £100-200M (2027) → £1-3B (2028) → £24B IPO (2029). Fund 7 masjids, 7 schools, 7 orphanages. Establish Fathema Ali Trust. Relocate to Madinah in later life.
+LIFETIME VISION: £24B halal wealth, 100+ masjids built, 8 children, Fathema Ali Trust, relocate to Madinah.
 
-BUSINESS TARGETS: £12,500/week revenue | 6-8 demos/week | 250+ DMs/week | 60-80% close rate | Packages: Solo £5k, Starter £14,997, Pro £24,997, Elite £39,997, Enterprise £64,997.
+MORNING RITUAL: Fajr → Meditation → Journal (donate £1, gratitude, manifest) → Read ritual → Walk.
+EVENING RITUAL: Journal → Night ritual → Pray 2 rakats → Body scan → Sleep meditation.
 
-MORNING RITUAL: 3am rise → Water + supplements → Meditation → Morning affirmations → Journal (£1 donation, 3 gratitudes, 3 manifestations) → Read ritual → Tahajjud 5:15am → Fajr → Most important task.
-EVENING RITUAL: Journal (wins, systems, evidence of intelligence, RAM clear) → Night ritual → Pray 2 rakats → Healing body scan → Phone across room → Sleep meditation.
+FAITH: Deep Islamic practice, 99 Names of Allah mapped to pillars, du'a as daily practice.
 
-FAITH: Deep Islamic practice. Tahajjud as lifestyle goal (not occasional). 5 daily prayers 100%. Spiritual anchors: Thursday Surah Al-Baqarah, Friday Surah Al-Kahf + Jumu'ah, Saturday Surah Al-Imran. Sadaqah jariyah through Fathema Ali Trust.
-
-CBT 10 HABITS (her known patterns to coach around):
-1. Chronic lateness — use 15-minute buffer rule, reverse scheduling
-2. Overeating → sleepiness — Prophetic thirds, emotional check-in before eating
-3. Negative thoughts about others — 70 excuses practice, thought audit
-4. Overspending — 72-hour rule, values-based budget, charity first
-5. Body itching (stress response) — competing response with tasbih, body scan
-6. Forgetfulness — single capture system, two-minute rule, evening brain dump
-7. Not following through — 24-hour yes rule, micro-commitments
-8. Negative self-belief (from childhood verbal abuse) — evidence journal (3 proofs of intelligence daily), reparenting script
-9. Mindless scrolling — two 15-min scroll windows only, environmental design
-10. Intellectual overconfidence — curious question first, beginner's mind
-
-RELATIONSHIPS: Marriage to Fadlan 20/10. Weekly sacred connection ritual (non-negotiable). Co-authoring relationship book. Key friends: Nhu, Ella, Kiara, Acha, Hannah. Family goals: improve relationships with Mum, Roheema, Aleema, Ommar, Diljan.
-
-HEALTH GOALS: 4x strength training/week (glutes focus — hip thrusts, squats, RDLs), 120-140g protein daily, slight calorie surplus for muscle growth, 12-15% body fat target. Lion's Mane + C8 MCT oil supplementation.
-
-WEALTH ALLOCATION: £0-100k: 60% business / 20% crypto / 10% charity / 10% lifestyle. Halal only. No riba.
-
-READING PRIORITIES: Challenger Sale, Gap Selling, Never Split the Difference → Positioning, Obviously Awesome → Innovator's Dilemma, Zero to One → Competing in Age of AI.
-
-Speak to her as a coach who knows ALL of this intimately. Be direct, warm, spiritually grounded. Reference her specific CBT habits, pillars, targets, and rituals naturally. Never be generic. Connect everything to her £24B vision and her faith. When she mentions struggling, reference the relevant CBT habit. When she wins, celebrate specifically. Ask ONE powerful question per response.`,
+Speak to her as a coach who knows all this. Be direct, warm, spiritually aware. Reference her pillars, goals, and rituals naturally. Never be generic. Always connect advice back to her specific vision and faith.`,
 
   spiritual: `You are Arabella, Halima's spiritual reflection companion. Focus on Islamic wisdom, Quranic guidance, hadith, and connecting her daily struggles to her faith. Reference the 99 Names of Allah when relevant. Help her process challenges through a lens of tawakkul, sabr, and shukr. Speak with the warmth of a knowledgeable Muslim sister.`,
 
@@ -1796,378 +1782,120 @@ function renderNamesGrid(){
   `).join('');
 }
 
-// ── REVIEW SYSTEM ──
+// ── WEEKLY REVIEW ──
+const REVIEW_QUESTIONS = [
+  {id:'wins',q:'What were your biggest wins this week?',sub:'Celebrate every victory, big and small.'},
+  {id:'challenges',q:'What challenges did you face?',sub:'Be honest — awareness is the first step to improvement.'},
+  {id:'rituals',q:'How consistent were your morning and evening rituals?',sub:'Rate your consistency and reflect on what helped or hindered.'},
+  {id:'pillars',q:'Which of the five pillars got the most attention? Which was neglected?',sub:'Me Life · Architecture · TigerFlow AI · Tiger + Dragon · Mycelink'},
+  {id:'goals',q:'Did your weekly actions connect to your lifetime goals?',sub:'From daily tasks to your 10-year vision — was there alignment?'},
+  {id:'system',q:'What system or habit will you implement next week to improve?',sub:'Create the fix, then commit to it.'},
+  {id:'gratitude',q:'Three things you are deeply grateful for this week:',sub:'Alhamdulillah — name them specifically.'},
+  {id:'score',q:'Overall score for this week (1–10):',sub:'Be honest with yourself.'}
+];
+
 let reviewScore = 7;
 
 function getWeekKey(){
-  const now=new Date();const day=now.getDay();const monday=new Date(now);
-  monday.setDate(now.getDate()-((day+6)%7));return fmt(monday);
-}
-function getMonthKey(){const n=new Date();return n.getFullYear()+'-'+(n.getMonth()+1);}
-function getQuarterKey(){const n=new Date();return n.getFullYear()+'-Q'+Math.ceil((n.getMonth()+1)/3);}
-function getYearKey(){return new Date().getFullYear()+'';}
-
-function setReviewScore(n,prefix){
-  reviewScore=n;
-  document.querySelectorAll('.rsb-'+prefix).forEach((btn,i)=>{
-    btn.classList.toggle('selected',i+1===n);
-  });
-  if(!data.reviewData)data.reviewData={};
-  if(!data.reviewData[prefix])data.reviewData[prefix]={};
-  data.reviewData[prefix].score=n;
-  save();
+  const now=new Date();
+  const day=now.getDay();
+  const monday=new Date(now);
+  monday.setDate(now.getDate()-((day+6)%7));
+  return fmt(monday);
 }
 
-function saveReviewField(prefix,field,value){
-  if(!data.reviewData)data.reviewData={};
-  if(!data.reviewData[prefix])data.reviewData[prefix]={};
-  data.reviewData[prefix][field]=value;
-  save();
+function isReviewDue(){
+  const now=new Date();
+  // Sunday = day 0, show review from Sunday
+  return now.getDay()===0||now.getDay()===1;
 }
 
-function getReviewVal(prefix,field){
-  return (data.reviewData&&data.reviewData[prefix]&&data.reviewData[prefix][field])||'';
+function hasCompletedThisWeek(){
+  if(!data.reviews)return false;
+  const wk=getWeekKey();
+  return !!data.reviews[wk];
 }
 
 function renderReview(){
-  if(!data.reviewData)data.reviewData={};
   const cont=document.getElementById('review-content');
-
-  const sections=[
-    {
-      key:'year',
-      title:'Yearly Review',
-      icon:'🌟',
-      color:'#C4983B',
-      period:'2026',
-      quote:'"Did I become who I set out to become?"',
-      groups:[
-        {
-          title:'Faith',
-          questions:[
-            {id:'faith_fajr',q:'Fajr consistency this year (%)',placeholder:'e.g. 70% — be honest'},
-            {id:'faith_evolution',q:'Spiritual evolution — how have you grown?',placeholder:'Reflect on your journey with Allah this year...'},
-            {id:'faith_closest',q:'Closest moment to Allah this year',placeholder:'Describe that moment...'},
-            {id:'faith_goals',q:'Faith goals for next year (1-3)',placeholder:'1. ...\n2. ...\n3. ...'},
-          ]
-        },
-        {
-          title:'Wealth & Business',
-          questions:[
-            {id:'year_revenue',q:'Total revenue this year (£)',placeholder:'£___'},
-            {id:'year_networth',q:'Net worth vs last year',placeholder:'£___ (growth: %)'},
-            {id:'year_24b',q:'Are you on track for £24B by 2029? What needs to change?',placeholder:'Honest assessment...'},
-            {id:'year_bizwins',q:'Top 3 business wins this year',placeholder:'1. ...\n2. ...\n3. ...'},
-            {id:'year_bizfails',q:'What failed and what did you learn?',placeholder:'Be honest — failures are data...'},
-          ]
-        },
-        {
-          title:'Health & Character',
-          questions:[
-            {id:'year_health',q:'Health this year — gym, sleep, energy, nutrition',placeholder:'Rate and reflect...'},
-            {id:'year_hardest',q:'Hardest moment this year and the lesson',placeholder:'What was it? What did it teach you?'},
-            {id:'year_proudest',q:'Proudest moment this year',placeholder:'Celebrate yourself...'},
-            {id:'year_gratitude',q:'10 things you are deeply grateful for this year',placeholder:'1. ...\n2. ...\n3. ...'},
-          ]
-        },
-        {
-          title:'The 10x Questions',
-          questions:[
-            {id:'year_10x1',q:'What would someone building a £24B business do in my position right now?',placeholder:'Think bigger than you think is possible...'},
-            {id:'year_10x2',q:'What am I doing that keeps me at the £1M-£10M level instead of £1B+?',placeholder:'Be brutally honest...'},
-            {id:'year_10x3',q:'Which current activities will be irrelevant at £1B revenue? Stop doing them now.',placeholder:'List and commit to stopping...'},
-            {id:'year_legacy',q:'Legacy declaration — if this was my last year, what must I accomplish, become, and leave?',placeholder:'Write your legacy...'},
-          ]
-        }
-      ]
-    },
-    {
-      key:'quarter',
-      title:'Quarterly Review',
-      icon:'◈',
-      color:'#D85A30',
-      period:'Q'+Math.ceil((new Date().getMonth()+1)/3)+' '+new Date().getFullYear(),
-      quote:'"Comprehensive review of all pillars. What systems are working? What needs to change?"',
-      groups:[
-        {
-          title:'Faith & Spiritual',
-          questions:[
-            {id:'q_faith',q:'Fajr / Tahajjud / Quran this quarter',placeholder:'Fajr: __/90 | Tahajjud: __/90 | Quran: __ juz'},
-            {id:'q_faith_goals',q:'Faith goals next quarter (1-3)',placeholder:'1. ...\n2. ...\n3. ...'},
-          ]
-        },
-        {
-          title:'Wealth & Business',
-          questions:[
-            {id:'q_revenue',q:'Quarterly revenue (£)',placeholder:'£___ (Target: Q2 £500k | Q3 £800k | Q4 £1M+)'},
-            {id:'q_deals',q:'Deals closed / Demos / Close rate',placeholder:'Deals: ___ | Demos: ___ | Close rate: ___%'},
-            {id:'q_24b',q:'£24B on track? YES/NO — what must change?',placeholder:'Honest assessment...'},
-            {id:'q_bizwins',q:'What worked brilliantly this quarter (1-3)?',placeholder:'1. ...\n2. ...\n3. ...'},
-            {id:'q_bizfails',q:'What failed? What is the system fix?',placeholder:'Failure → Root cause → System solution...'},
-            {id:'q_wealth_alloc',q:'Wealth allocation check — are you investing correctly?',placeholder:'Business: _% | Crypto: _% | Charity: _% | Lifestyle: _%'},
-          ]
-        },
-        {
-          title:'Uncle Grant 7-Step Framework',
-          questions:[
-            {id:'q_grant',q:'Rate yourself 1-10 on each step and identify the weakest link:',placeholder:'✓ Targets set (big enough?): __/10\n✓ Marketing plan (visible daily?): __/10\n✓ Lead generation (250+ DMs?): __/10\n✓ Lead management (CRM/follow-up?): __/10\n✓ Conversion (demos booked and closed?): __/10\n✓ People/Team (who to hire/develop?): __/10\n✓ Money management (measuring surplus?): __/10\n\nWeakest link: ___\nFix: ___'},
-          ]
-        },
-        {
-          title:'Health, Philanthropy & Character',
-          questions:[
-            {id:'q_health',q:'Sleep avg / Energy / Gym / Burnout signs?',placeholder:'Sleep: __hrs | Energy: __/10 | Gym: __/66 | Burnout: YES/NO'},
-            {id:'q_charity',q:'Total charity given this quarter (£)',placeholder:'£___ — is this enough?'},
-            {id:'q_discipline',q:'Discipline / Integrity / Courage (1-10 each)',placeholder:'Discipline: __ | Integrity: __ | Courage: __'},
-          ]
-        },
-        {
-          title:'Next Quarter Plan',
-          questions:[
-            {id:'q_goals',q:'Big 3 goals for next quarter',placeholder:'FAITH: ___\nWEALTH: ___\nIMPACT: ___'},
-            {id:'q_change',q:'What must change? (1-3)',placeholder:'1. ...\n2. ...\n3. ...'},
-            {id:'q_letter',q:'Letter to yourself in 3 months',placeholder:'Dear Halima, by the time you read this...'},
-          ]
-        }
-      ]
-    },
-    {
-      key:'month',
-      title:'Monthly Review',
-      icon:'◉',
-      color:'#1AA8B8',
-      period:new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'}),
-      quote:'"Progress check. Financial review. What needs adjustment?"',
-      groups:[
-        {
-          title:'Faith',
-          questions:[
-            {id:'m_faith',q:'Faith level (1-10) | Fajr / Tahajjud / Quran',placeholder:'Faith: __/10 | Fajr: __/30 | Tahajjud: __/30 | Quran: __ juz'},
-            {id:'m_faith_breakthrough',q:'Spiritual breakthrough this month',placeholder:'What shifted spiritually?'},
-          ]
-        },
-        {
-          title:'Wealth & Business',
-          questions:[
-            {id:'m_revenue',q:'Cash received this month (£) | Deals closed | Avg deal',placeholder:'Revenue: £___ | Deals: ___ | Avg: £___'},
-            {id:'m_demos',q:'Demos / Messages / Close rate',placeholder:'Demos: ___ (Target 24-32) | Messages: ___ (Target 1,000+) | Close: ___%'},
-            {id:'m_deepwork',q:'Deep work days this month',placeholder:'__/22 days (Target: 20+)'},
-            {id:'m_halal',q:'Staying halal in all dealings? Wealth allocation correct?',placeholder:'YES/NO — any concerns?'},
-          ]
-        },
-        {
-          title:'The CBT 10 Habits Check',
-          questions:[
-            {id:'m_cbt',q:'Rate yourself 1-10 on each habit and identify the one to work on next month:',placeholder:'1. Chronic Lateness: __/10\n2. Overeating/Sleepiness: __/10\n3. Negative thoughts about others: __/10\n4. Overspending: __/10\n5. Body itching (stress): __/10\n6. Forgetfulness: __/10\n7. Not following through: __/10\n8. Negative self-belief: __/10\n9. Mindless scrolling: __/10\n10. Intellectual overconfidence: __/10\n\nFocus habit next month: ___\nStrategy: ___'},
-          ]
-        },
-        {
-          title:'Health & Personal',
-          questions:[
-            {id:'m_health',q:'Sleep avg / Energy / Gym / OMAD',placeholder:'Sleep: __hrs | Energy: __/10 | Gym: __/22 | OMAD: __/30'},
-            {id:'m_biggest_win',q:'Biggest win this month',placeholder:'Celebrate it properly...'},
-            {id:'m_biggest_lesson',q:'Biggest lesson this month',placeholder:'What did life teach you?'},
-            {id:'m_charity',q:'Charity given this month (£) — is it enough?',placeholder:'£___ — ___% of income'},
-          ]
-        },
-        {
-          title:'Gratitude & Forward',
-          questions:[
-            {id:'m_gratitude',q:'10 things you are grateful for this month',placeholder:'1. ...\n2. ...\n3. ...\n4. ...\n5. ...\n6. ...\n7. ...\n8. ...\n9. ...\n10. ...'},
-            {id:'m_letter',q:'Letter to future self (3 months from now)',placeholder:'Dear Halima...'},
-          ]
-        }
-      ]
-    },
-    {
-      key:'week',
-      title:'Weekly Review',
-      icon:'✦',
-      color:'#2E8B57',
-      period:'Week '+getWeekNum(new Date())+' — '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}),
-      quote:'"Progress is not linear. A setback is not a failure — it is data."',
-      groups:[
-        {
-          title:'Wins & Challenges',
-          questions:[
-            {id:'w_great',q:'What was great about this week?',placeholder:'Celebrate every win, big and small. Alhamdulillah...'},
-            {id:'w_bad',q:'What was not so great and how could you improve it?',placeholder:'Be honest — awareness is the first step to change...'},
-            {id:'w_system',q:'Create the system to improve it, then implement it',placeholder:'The specific fix I will implement this week: ...'},
-          ]
-        },
-        {
-          title:'Ritual & Pillar Check',
-          questions:[
-            {id:'w_rituals',q:'Morning ritual completion rate this week',placeholder:'Mon: AM __ PM __ | Tue: AM __ PM __ | Wed: AM __ PM __ | Thu: AM __ PM __ | Fri: AM __ PM __'},
-            {id:'w_pillars',q:'Which pillar got the most attention? Which was neglected?',placeholder:'Most: ___ | Neglected: ___ | Why: ___'},
-            {id:'w_donate',q:'Did you donate £1 every morning this week?',placeholder:'Mon: YES/NO | Tue: YES/NO | Wed: YES/NO | Thu: YES/NO | Fri: YES/NO'},
-          ]
-        },
-        {
-          title:'Business Metrics',
-          questions:[
-            {id:'w_revenue',q:'Revenue this week (£)',placeholder:'£___ (Target: £12,500/week)'},
-            {id:'w_deals',q:'Deals closed / Demos / Messages sent',placeholder:'Deals: ___ (Target: 1-2) | Demos: ___ (Target: 6-8) | Messages: ___ (Target: 250+)'},
-            {id:'w_closerate',q:'Close rate this week (%)',placeholder:'___% (Target: 60-80%)'},
-            {id:'w_content',q:'Did you post content daily? (Market yourself 7/7)',placeholder:'Mon: YES/NO | Tue: YES/NO | Wed: YES/NO | Thu: YES/NO | Fri: YES/NO | Sat: YES/NO | Sun: YES/NO'},
-          ]
-        },
-        {
-          title:'Intelligence Evidence',
-          questions:[
-            {id:'w_evidence',q:'3 pieces of evidence you are intelligent and capable this week',placeholder:'1. ...\n2. ...\n3. ...\n(This rewires your self-belief. From your CBT plan — Habit 8.)'},
-            {id:'w_scrolling',q:'Screen time this week vs last week — did you reduce it?',placeholder:'This week: ___hrs | Last week: ___hrs | Improvement: YES/NO'},
-          ]
-        },
-        {
-          title:'Spiritual Anchors',
-          questions:[
-            {id:'w_spiritual',q:'Spiritual practices this week',placeholder:'Thursday: Surah Al-Baqarah: YES/NO\nFriday: Surah Al-Kahf: YES/NO\nSaturday: Surah Al-Imran: YES/NO\nJumuah attended: YES/NO'},
-            {id:'w_gratitude',q:'3 things you are deeply grateful for this week (be specific)',placeholder:'1. ...\n2. ...\n3. ...'},
-            {id:'w_mantra',q:'This week mantra — write it and mean it',placeholder:'e.g. "I am resolving what needs resolution while building what demands creation. Allahs timing is perfect."'},
-          ]
-        },
-        {
-          title:'Next Week Plan',
-          questions:[
-            {id:'w_top3',q:'TOP 3 objectives for next week',placeholder:'1. ...\n2. ...\n3. ...'},
-            {id:'w_obstacles',q:'Anticipated obstacles and how you will handle them',placeholder:'Obstacle: ___ → Solution: ___'},
-            {id:'w_exceptional',q:'What does "exceptional" look like for next week?',placeholder:'Not decent — exceptional. Define it.'},
-          ]
-        }
-      ]
-    }
-  ];
-
-  cont.innerHTML = sections.map(section => `
-    <div style="margin-bottom:2rem;border:0.5px solid ${section.color}40;border-radius:var(--radius);overflow:hidden;">
-      <div style="background:${section.color}15;border-bottom:0.5px solid ${section.color}40;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;">
-        <div>
-          <div style="font-family:var(--font-display);font-size:22px;font-weight:300;color:${section.color}">${section.icon} ${section.title}</div>
-          <div style="font-size:12px;color:var(--text-tertiary);margin-top:2px">${section.period}</div>
-          <div style="font-size:12px;color:var(--text-secondary);font-style:italic;margin-top:6px">${section.quote}</div>
+  if(!data.reviews)data.reviews={};
+  
+  // Show past reviews
+  const pastReviews=Object.entries(data.reviews).sort((a,b)=>b[0].localeCompare(a[0]));
+  const pastHTML=pastReviews.length?`
+    <div style="margin-top:1.5rem">
+      <span class="section-lbl">Past Reviews</span>
+      ${pastReviews.slice(0,5).map(([wk,rev])=>`
+        <div class="review-history-item">
+          <div class="review-history-date">Week of ${new Date(wk+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})} · Score: ${rev.score}/10</div>
+          <div class="review-history-text">${rev.wins?'<b>Wins:</b> '+rev.wins.substring(0,150)+'...':''}</div>
         </div>
-        <div style="background:${section.color}20;border-radius:var(--radius-sm);padding:6px 12px;font-size:12px;color:${section.color};cursor:pointer" onclick="toggleReviewSection('${section.key}')">
-          Collapse ▾
-        </div>
-      </div>
-      <div id="review-section-${section.key}" style="padding:1.25rem 1.5rem;">
-        ${section.groups.map(group => `
-          <div style="margin-bottom:1.25rem;">
-            <div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:${section.color};margin-bottom:.75rem;font-weight:500">${group.title}</div>
-            ${group.questions.map(q => `
-              <div class="review-form" style="border-color:${section.color}20;">
-                <div class="review-q" style="color:${section.color}">${q.q}</div>
-                <textarea class="review-textarea" 
-                  id="rv-${section.key}-${q.id}" 
-                  placeholder="${q.placeholder}"
-                  oninput="saveReviewField('${section.key}','${q.id}',this.value)"
-                >${getReviewVal(section.key, q.id)}</textarea>
-              </div>
-            `).join('')}
-          </div>
-        `).join('')}
-        <div style="display:flex;align-items:center;gap:8px;margin-top:1rem;">
-          <div style="font-size:12px;color:var(--text-secondary)">Overall score:</div>
-          <div style="display:flex;gap:4px;">
-            ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="review-score-btn rsb-${section.key}${(getReviewVal(section.key,'score')||7)==n?' selected':''}" onclick="setReviewScore(${n},'${section.key}')" style="${(getReviewVal(section.key,'score')||7)==n?'background:'+section.color+'30;border-color:'+section.color+';color:'+section.color:''}">${n}</button>`).join('')}
-          </div>
-        </div>
-      </div>
+      `).join('')}
     </div>
-  `).join('');
-}
+  `:'';
 
-function toggleReviewSection(key){
-  const el=document.getElementById('review-section-'+key);
-  if(el)el.style.display=el.style.display==='none'?'block':'none';
-}
-
-
-
-// ── DAILY NAME BANNER ──
-function renderDailyNameBanner() {
-  if (!NAMES_99 || !NAMES_99.length) return;
-  // Pick a random name that changes each day
-  const today = new Date();
-  const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
-  const idx = seed % 99;
-  const n = NAMES_99[idx];
-  if (!n) return;
-  const color = PILLAR_COLORS[n.pillar] || '#C4983B';
-  const el = document.getElementById('daily-name-banner');
-  const arabic = document.getElementById('dnb-arabic');
-  const name = document.getElementById('dnb-name');
-  const meaning = document.getElementById('dnb-meaning');
-  const dua = document.getElementById('dnb-dua');
-  const pillar = document.getElementById('dnb-pillar');
-  if (!el) return;
-  if (arabic) arabic.textContent = n.arabic;
-  if (name) name.textContent = n.name;
-  if (meaning) meaning.textContent = n.meaning;
-  if (dua) dua.textContent = n.dua.substring(0, 100) + '...';
-  if (pillar) { pillar.textContent = n.pillar; pillar.style.background = color + '20'; pillar.style.color = color; }
-}
-
-
-// ── EVENT MANAGEMENT ──
-let evtDragIdx = null;
-
-function evtDragStart(e, idx, dateStr) {
-  evtDragIdx = {idx, dateStr};
-  e.dataTransfer.effectAllowed = 'move';
-}
-
-function evtDrop(e, targetIdx, dateStr) {
-  e.preventDefault();
-  if (!evtDragIdx || evtDragIdx.dateStr !== dateStr) return;
-  const events = data.calendar && data.calendar[dateStr];
-  if (!events) return;
-  const moved = events.splice(evtDragIdx.idx, 1)[0];
-  events.splice(targetIdx, 0, moved);
-  evtDragIdx = null;
-  save(); renderMiniCalendar(); renderDayDetail(dateStr);
-}
-
-function updateEventTitle(dateStr, id, title) {
-  if (!data.calendar || !data.calendar[dateStr]) return;
-  const e = data.calendar[dateStr].find(x => x.id === id);
-  if (e) { e.title = title; save(); renderMiniCalendar(); }
-}
-
-function updateEventTime(dateStr, id, time) {
-  if (!data.calendar || !data.calendar[dateStr]) return;
-  const e = data.calendar[dateStr].find(x => x.id === id);
-  if (e) { e.time = time; save(); }
-}
-
-function cycleEventColor(dateStr, id) {
-  if (!data.calendar || !data.calendar[dateStr]) return;
-  const e = data.calendar[dateStr].find(x => x.id === id);
-  if (!e) return;
-  const colors = Object.keys(COLOR_MAP);
-  const idx = colors.indexOf(e.color || 'gold');
-  e.color = colors[(idx + 1) % colors.length];
-  save(); renderDayDetail(dateStr); renderMiniCalendar();
-}
-
-function moveEventToPillar(dateStr, id) {
-  if (!data.calendar || !data.calendar[dateStr]) return;
-  const e = data.calendar[dateStr].find(x => x.id === id);
-  if (!e) return;
-  // Ask which pillar
-  const pillarNames = PILLARS.map((p,i) => i+1+'. '+p.name).join('\n');
-  const choice = prompt('Move "'+e.title+'" to which pillar?\n\n'+pillarNames+'\n\nEnter number (1-5):');
-  const idx = parseInt(choice) - 1;
-  if (idx >= 0 && idx < PILLARS.length) {
-    const pid = PILLARS[idx].id;
-    if (!data[dateStr]) ensureDay(dateStr);
-    data[dateStr].pillars[pid].push({text: (e.time ? e.time + ' — ' : '') + e.title, done: false});
-    // Remove from events
-    data.calendar[dateStr] = data.calendar[dateStr].filter(x => x.id !== id);
-    save(); renderPillarsDaily(dateStr); renderMiniCalendar(); renderDayDetail(dateStr);
+  if(hasCompletedThisWeek()){
+    const rev=data.reviews[getWeekKey()];
+    cont.innerHTML=`
+      <div class="review-complete">
+        <div style="font-size:32px;margin-bottom:12px">✦</div>
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--gold);margin-bottom:8px">This week's review is complete</div>
+        <div style="font-size:14px;color:var(--text-secondary)">Score: ${rev.score}/10 · Alhamdulillah for another week of growth.</div>
+        <button class="review-submit-btn" style="margin-top:1.5rem;max-width:200px" onclick="startNewReview()">Review Again</button>
+      </div>
+      ${pastHTML}
+    `;
+    return;
   }
+
+  cont.innerHTML=`
+    <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem;font-size:13px;color:var(--gold)">
+      ✦ Weekly review — reflect honestly, build intentionally. This is your mirror.
+    </div>
+    ${REVIEW_QUESTIONS.map(q=>`
+      <div class="review-form">
+        <div class="review-q">${q.q}</div>
+        <div class="review-q-sub">${q.sub}</div>
+        ${q.id==='score'?`
+          <div class="review-score-row">
+            ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="review-score-btn${n===reviewScore?' selected':''}" onclick="setReviewScore(${n})">${n}</button>`).join('')}
+          </div>
+        `:`<textarea class="review-textarea" id="review-${q.id}" placeholder="Write here..."></textarea>`}
+      </div>
+    `).join('')}
+    <button class="review-submit-btn" onclick="submitReview()">Complete Weekly Review ✦</button>
+    ${pastHTML}
+  `;
 }
+
+function setReviewScore(n){
+  reviewScore=n;
+  document.querySelectorAll('.review-score-btn').forEach((btn,i)=>{
+    btn.classList.toggle('selected',i+1===n);
+  });
+}
+
+function startNewReview(){
+  const wk=getWeekKey();
+  if(data.reviews)delete data.reviews[wk];
+  renderReview();
+}
+
+function submitReview(){
+  const wk=getWeekKey();
+  if(!data.reviews)data.reviews={};
+  const review={score:reviewScore,date:new Date().toISOString()};
+  REVIEW_QUESTIONS.forEach(q=>{
+    if(q.id!=='score'){
+      const el=document.getElementById('review-'+q.id);
+      if(el)review[q.id]=el.value;
+    }
+  });
+  data.reviews[wk]=review;
+  save();
+  renderReview();
+}
+
 
 // ── MINI CALENDAR ──
 let miniCalYear = new Date().getFullYear();
@@ -2191,115 +1919,55 @@ function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
   panel.style.display = 'grid';
-  panel.style.marginBottom = '2rem';
-  const parts = dateStr.split('-'); const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  const d = new Date(dateStr + 'T00:00:00');
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const dd = data[dateStr] || {};
   const amSteps = ['Cold wudu + pray','Meditation','Journal','Read morning ritual','Walk outside'];
   const pmSteps = ['Journal — wins, systems','Read night ritual','Pray 2 rakats','Healing light body scan','Phone across the room'];
-
-  // Build all tasks from pillars - auto-synced
+  const amDone = amSteps.filter((_,i) => dd.am && dd.am[i]);
+  const pmDone = pmSteps.filter((_,i) => dd.pm && dd.pm[i]);
+  
+  // Pillar tasks
   const pillarItems = [];
   if (dd.pillars) {
     PILLARS.forEach(p => {
-      (dd.pillars[p.id] || []).forEach((t,i) => {
-        pillarItems.push({...t, pillarName: p.name, color: p.color, pid: p.id, idx: i});
+      (dd.pillars[p.id] || []).forEach(t => {
+        pillarItems.push({...t, pillarName: p.name, color: p.color});
       });
     });
   }
-
+  
   // Calendar events
   const events = (data.calendar && data.calendar[dateStr]) || [];
-
+  
   panel.innerHTML = `
-    <div class="day-detail-title" style="grid-column:1/-1">✦ ${label}</div>
+    <div class="day-detail-title">✦ ${label}</div>
     <div>
       <div class="day-detail-section">
-        <div class="day-detail-section-title">Morning Ritual</div>
-        ${amSteps.map((s,i) => `<div class="day-detail-item${dd.am&&dd.am[i]?' done':''}">
-          <div class="day-detail-dot" style="background:#1AA8B8"></div>${s}
-        </div>`).join('')}
+        <div class="day-detail-section-title">Morning Ritual (${amDone.length}/5)</div>
+        ${amSteps.map((s,i) => `<div class="day-detail-item${dd.am&&dd.am[i]?' done':''}"><div class="day-detail-dot" style="background:#1A9E8F"></div>${s}</div>`).join('')}
       </div>
       <div class="day-detail-section" style="margin-top:12px">
-        <div class="day-detail-section-title">Evening Ritual</div>
-        ${pmSteps.map((s,i) => `<div class="day-detail-item${dd.pm&&dd.pm[i]?' done':''}">
-          <div class="day-detail-dot" style="background:#C4983B"></div>${s}
-        </div>`).join('')}
+        <div class="day-detail-section-title">Evening Ritual (${pmDone.length}/5)</div>
+        ${pmSteps.map((s,i) => `<div class="day-detail-item${dd.pm&&dd.pm[i]?' done':''}"><div class="day-detail-dot" style="background:#C4983B"></div>${s}</div>`).join('')}
       </div>
     </div>
     <div>
       <div class="day-detail-section">
-        <div class="day-detail-section-title" style="display:flex;align-items:center;justify-content:space-between">
-          Five Pillar Tasks — drag to reorder
-          <span style="font-size:10px;color:var(--text-tertiary)">${pillarItems.filter(t=>t.done).length}/${pillarItems.length} done</span>
-        </div>
-        <div id="cal-task-list" style="min-height:40px">
-          ${pillarItems.length ? pillarItems.map((t,i) => `
-            <div class="day-detail-item${t.done?' done':''}" draggable="true" 
-              ondragstart="calDragStart(event,${i})" ondragover="calDragOver(event)" ondrop="calDrop(event,${i},'${dateStr}')"
-              style="cursor:grab;padding:6px 4px">
-              <div class="day-detail-dot" style="background:${t.color}"></div>
-              <span style="flex:1;font-size:12px">${t.text}</span>
-              <span style="font-size:10px;color:var(--text-tertiary);margin-left:4px">${t.pillarName}</span>
-            </div>
-          `).join('') : '<div style="font-size:12px;color:var(--text-tertiary);padding:8px 0">Add tasks in Five Pillars above — they appear here automatically</div>'}
-        </div>
+        <div class="day-detail-section-title">Five Pillars Tasks (${pillarItems.filter(t=>t.done).length}/${pillarItems.length})</div>
+        ${pillarItems.length ? pillarItems.map(t => `<div class="day-detail-item${t.done?' done':''}"><div class="day-detail-dot" style="background:${t.color}"></div>${t.text}</div>`).join('') : '<div style="font-size:12px;color:var(--text-tertiary)">No tasks added yet</div>'}
       </div>
       <div class="day-detail-section" style="margin-top:12px">
-        <div class="day-detail-section-title">Events & Appointments</div>
-        ${events.map((e,ei) => `<div class="day-detail-item" draggable="true"
-          ondragstart="evtDragStart(event,${ei},'${dateStr}')" 
-          ondragover="calDragOver(event)" 
-          ondrop="evtDrop(event,${ei},'${dateStr}')"
-          style="cursor:grab">
-          <div class="day-detail-dot" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'};cursor:pointer" onclick="cycleEventColor('${dateStr}','${e.id}')" title="Click to change colour"></div>
-          <input value="${e.time||''}" placeholder="Time" 
-            style="width:55px;background:none;border:none;font-size:11px;color:var(--text-tertiary);font-family:var(--font-body);outline:none;padding:0"
-            onblur="updateEventTime('${dateStr}','${e.id}',this.value)"/>
-          <input value="${e.title}" 
-            style="flex:1;background:none;border:none;font-size:12px;color:var(--text-primary);font-family:var(--font-body);outline:none;padding:0 4px"
-            onblur="updateEventTitle('${dateStr}','${e.id}',this.value)"/>
-          <button onclick="moveEventToPillar('${dateStr}','${e.id}')" style="background:none;border:0.5px solid var(--charcoal-border);border-radius:4px;cursor:pointer;color:var(--text-tertiary);font-size:10px;padding:2px 5px;margin-right:4px" title="Move to Five Pillars">↑ Pillar</button>
-          <button onclick="deleteCalEvent('${dateStr}','${e.id}')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:11px;opacity:.6">✕</button>
-        </div>`).join('')}
-        ${!events.length ? '<div style="font-size:12px;color:var(--text-tertiary)">No events yet</div>' : ''}
-        <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap" id="event-color-picker-${dateStr}">
-          ${Object.entries(COLOR_MAP).map(([k,v])=>`<div 
-            onclick="selectedEventColor='${k}';document.querySelectorAll('#event-color-picker-${dateStr} .ecp-dot').forEach(d=>{d.style.outline='none';d.style.transform='scale(1)'});this.style.outline='2.5px solid #fff';this.style.transform='scale(1.2)'" 
-            class="ecp-dot" 
-            data-color="${k}"
-            style="width:18px;height:18px;border-radius:50%;background:${v.hex};cursor:pointer;flex-shrink:0;transition:all .15s;${k==='rose'?'outline:2.5px solid #fff;transform:scale(1.2)':''}"></div>`).join('')}
-        </div>
-        <div class="mini-add-event" style="margin-top:8px">
+        <div class="day-detail-section-title">Events</div>
+        ${events.length ? events.map(e => `<div class="day-detail-item"><div class="day-detail-dot" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'}"></div>${e.time?e.time+' · ':''}${e.title}</div>`).join('') : '<div style="font-size:12px;color:var(--text-tertiary)">No events</div>'}
+        <div class="mini-add-event">
           <input class="mini-add-input" id="mini-event-title" placeholder="Add event..." />
-          <input class="mini-add-time" id="mini-event-time" placeholder="Time e.g. 9am" />
+          <input class="mini-add-time" id="mini-event-time" placeholder="Time" />
           <button class="mini-add-btn-sm" onclick="addMiniEvent('${dateStr}')">+ Add</button>
         </div>
       </div>
     </div>
   `;
-}
-
-// Drag to reorder tasks in calendar
-let calDragIdx = null;
-function calDragStart(e, idx) { calDragIdx = idx; e.dataTransfer.effectAllowed = 'move'; }
-function calDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
-function calDrop(e, targetIdx, dateStr) {
-  e.preventDefault();
-  if (calDragIdx === null || calDragIdx === targetIdx) return;
-  const dd = data[dateStr];
-  if (!dd || !dd.pillars) return;
-  // Build flat list
-  let all = [];
-  PILLARS.forEach(p => { (dd.pillars[p.id]||[]).forEach((t,i) => all.push({...t,pid:p.id,idx:i})); });
-  // Reorder
-  const moved = all.splice(calDragIdx, 1)[0];
-  all.splice(targetIdx, 0, moved);
-  // Write back - rebuild pillars
-  PILLARS.forEach(p => { dd.pillars[p.id] = []; });
-  all.forEach(t => { dd.pillars[t.pid].push({text:t.text,done:t.done}); });
-  calDragIdx = null;
-  save(); renderPillarsDaily(dateStr); renderDayDetail(dateStr);
 }
 
 function addMiniEvent(dateStr) {
@@ -2308,13 +1976,19 @@ function addMiniEvent(dateStr) {
   const time = document.getElementById('mini-event-time').value.trim();
   if (!data.calendar) data.calendar = {};
   if (!data.calendar[dateStr]) data.calendar[dateStr] = [];
-  data.calendar[dateStr].push({id: Date.now()+'', title, time, color:'gold'});
+  // Read active color from picker
+  const activeDot = document.querySelector('#event-color-picker-'+dateStr+' .ecp-dot[style*="scale(1.2)"]') || 
+                    document.querySelector('#event-color-picker-'+dateStr+' .ecp-dot[style*="2.5px"]');
+  const color = activeDot ? activeDot.getAttribute('data-color') : (selectedEventColor || 'rose');
+  data.calendar[dateStr].push({id: Date.now()+'', title, time, color});
   save();
   renderMiniCalendar();
   renderDayDetail(dateStr);
 }
 
 function renderMiniCalendar() {
+  if(!document.getElementById('mini-cal-month'))return;
+  if(!document.getElementById('mini-cal-cells'))return;
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('mini-cal-month').textContent = monthNames[miniCalMonth] + ' ' + miniCalYear;
   const today = new Date();
@@ -2401,29 +2075,24 @@ function renderMiniCalendar() {
     cells.appendChild(cell);
   }
   
-  // Always show today's detail
-  renderDayDetail(miniSelectedDate);
+  // Show today's detail by default
+  if (document.getElementById('day-detail-panel').style.display === 'none') {
+    renderDayDetail(miniSelectedDate);
+  }
 }
 
 // ── CALENDAR ──
 let calYear=new Date().getFullYear();
 let calMonth=new Date().getMonth();
 let calSelectedDate=fmt(new Date());
-let selectedEventColor='rose';
+let selectedEventColor='gold';
 
 const COLOR_MAP={
-  gold:{bg:'#C4983B20',text:'#C4983B',hex:'#C4983B'},
-  rose:{bg:'#F43F5E20',text:'#F43F5E',hex:'#F43F5E'},
-  violet:{bg:'#8B5CF620',text:'#8B5CF6',hex:'#8B5CF6'},
-  sky:{bg:'#0EA5E920',text:'#0EA5E9',hex:'#0EA5E9'},
-  lime:{bg:'#84CC1620',text:'#84CC16',hex:'#84CC16'},
-  pink:{bg:'#EC489920',text:'#EC4899',hex:'#EC4899'},
-  amber:{bg:'#F59E0B20',text:'#F59E0B',hex:'#F59E0B'},
-  indigo:{bg:'#6366F120',text:'#6366F1',hex:'#6366F1'},
-  red:{bg:'#EF444420',text:'#EF4444',hex:'#EF4444'},
-  cyan:{bg:'#06B6D420',text:'#06B6D4',hex:'#06B6D4'},
-  fuchsia:{bg:'#D946EF20',text:'#D946EF',hex:'#D946EF'},
-  white:{bg:'#ffffff15',text:'#ffffff',hex:'#ffffff'}
+  gold:{bg:'var(--gold-dim)',text:'var(--gold)',hex:'#C4983B'},
+  coral:{bg:'#E8733A20',text:'#E8733A',hex:'#E8733A'},
+  blue:{bg:'#3B8FC420',text:'#3B8FC4',hex:'#3B8FC4'},
+  purple:{bg:'#7F77DD20',text:'#7F77DD',hex:'#7F77DD'},
+  green:{bg:'#22C55E20',text:'#22C55E',hex:'#22C55E'}
 };
 
 function selectEventColor(el){
@@ -2491,6 +2160,7 @@ function renderCalDayEvents(){
 }
 
 function renderCalendar(){
+  if(!document.getElementById('cal-month-label'))return;
   const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('cal-month-label').textContent=monthNames[calMonth]+' '+calYear;
   const today=new Date();
@@ -2560,14 +2230,12 @@ function initPlanningData() {
   if (!data.planning) data.planning = {};
   if (!data.planning._initialized) {
     data.planning.lifetime = [
-      {text:"Build a global technology and architecture empire generating £24B+ in halal wealth by December 2029", status:"status-green"},
-      {text:"Fund construction of 7+ masjids, 7+ schools, 7+ orphanages and wellness centres globally", status:"status-grey"},
-      {text:"Establish The Fathema Ali Trust as a permanent sadaqah jariyah institution", status:"status-grey"},
-      {text:"Complete memorisation of the Quran with tajweed and deep comprehension", status:"status-grey"},
+      {text:"Build a global technology and architecture empire generating £24B+ in halal wealth", status:"status-green"},
+      {text:"Fund construction of 100+ masjids worldwide", status:"status-grey"},
+      {text:"Establish The Fathema Ali Trust as a permanent charitable institution", status:"status-grey"},
+      {text:"Complete memorisation of the Quran with tajweed", status:"status-grey"},
       {text:"Raise eight children who are faithful, courageous, generous and independent", status:"status-grey"},
-      {text:"Move to Madinah in later life — the ultimate return to what matters most", status:"status-grey"},
-      {text:"Mentor 10+ Muslim women entrepreneurs — launch at least 3 profitable businesses", status:"status-grey"},
-      {text:"Become a woman who prays Tahajjud consistently as a lifestyle — not occasionally", status:"status-amber"}
+      {text:"Move to Madinah in later life", status:"status-grey"}
     ];
     data.planning.ten = [
       {text:"Build TigerFlow AI into a global technology company (2026-2035)", status:"status-green"},
@@ -2596,14 +2264,10 @@ function initPlanningData() {
       {text:"12-month Python/React coding roadmap — complete", status:"status-grey"}
     ];
     data.planning.quarterly = [
-      {text:"Q2 revenue target: £200,000 monthly recurring", status:"status-green"},
-      {text:"6-8 demos per week — 250+ DMs daily — 60-80% close rate", status:"status-green"},
-      {text:"Morning + evening ritual — 100% completion rate (up from 60%)", status:"status-amber"},
-      {text:"Architecture Project 1 (The Atelier) — RIBA Stage 0-1 complete", status:"status-grey"},
-      {text:"Tiger + Dragon book — manuscript finalised and submitted", status:"status-grey"},
-      {text:"CBT Habit focus this quarter: Habit #7 (Follow-through) + Habit #9 (Scrolling)", status:"status-grey"},
-      {text:"Read: Challenger Sale + Gap Selling + Never Split the Difference", status:"status-grey"},
-      {text:"Donate minimum 2.5% of all revenue to immediate charitable causes", status:"status-grey"}
+      {text:"TigerFlow AI frontend dashboard — Ascension Dashboard live", status:"status-green"},
+      {text:"6-8 demos per week, 60%+ close rate", status:"status-grey"},
+      {text:"Morning + evening ritual — 100% completion rate", status:"status-grey"},
+      {text:"Architecture Project 1 (The Atelier) — RIBA Stage 0-1 complete", status:"status-grey"}
     ];
     data.planning.monthly = [
       {text:"TigerFlow AI — 5 new brokerage clients signed", status:"status-grey"},
@@ -2612,16 +2276,10 @@ function initPlanningData() {
       {text:"Architecture — 4 design sessions completed", status:"status-grey"}
     ];
     data.planning.weekly = [
-      {text:"Complete all 5 morning rituals Mon-Fri (Fajr → Walk)", status:"status-grey"},
-      {text:"Complete all 5 evening rituals Mon-Fri (Journal → Sleep meditation)", status:"status-grey"},
-      {text:"6-8 TigerFlow AI demos booked and conducted", status:"status-grey"},
-      {text:"250+ personalised DMs sent (LinkedIn prospecting)", status:"status-grey"},
-      {text:"5-7 pieces of content published (60% educational, 30% results, 10% personal)", status:"status-grey"},
-      {text:"2 hours minimum coding per day on TigerFlow — treat like Fajr", status:"status-grey"},
-      {text:"Donate £1 every morning — automate the barakah", status:"status-grey"},
-      {text:"1-2 deals closed (target: £25k-£50k per week)", status:"status-grey"},
-      {text:"3 pieces of evidence of intelligence recorded in evening journal", status:"status-grey"},
-      {text:"Screen time reduced vs last week — no scrolling outside 2 x 15-min windows", status:"status-grey"}
+      {text:"Complete all 5 morning rituals Mon-Fri", status:"status-grey"},
+      {text:"Complete all 5 evening rituals Mon-Fri", status:"status-grey"},
+      {text:"6+ TigerFlow AI demos booked and conducted", status:"status-grey"},
+      {text:"2 hours coding per day on TigerFlow", status:"status-grey"}
     ];
     data.planning._initialized = true;
     save();
@@ -2631,8 +2289,11 @@ function initPlanningData() {
 // ── INIT ──
 load();
 initPlanningData();
-try { renderHeader(); } catch(e) {}
-try { renderAffirmationBar(); } catch(e) {}
+renderHeader();
+renderAffirmationBar();
+renderDaily();
+renderMiniCalendar();
+renderDayDetail(fmt(new Date()));
 
 // ── SUPABASE + ENCRYPTION CONFIG ──
 const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
@@ -2684,24 +2345,19 @@ async function syncToSupabase() {
 
 async function loadFromSupabase() {
   if (!MASTER_PASSWORD || !USER_ID) return false;
-  try {
-    showSync();
-    const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
-    hideSync();
-    if (rows && rows.length > 0) {
-      const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
-      if (decrypted) { data = decrypted; return true; }
-      return false; // wrong password
-    }
-    return true; // new user, no data yet - let them in
-  } catch(e) {
-    hideSync();
-    return true; // network error - let them in anyway, will save when possible
+  showSync();
+  const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
+  hideSync();
+  if (rows && rows.length > 0) {
+    const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
+    if (decrypted) { data = decrypted; return true; }
+    return false;
   }
+  return true; // new user, no data yet
 }
 
-function showSync() { document.getElementById('sync-indicator').classList.add('show'); }
-function hideSync() { document.getElementById('sync-indicator').classList.remove('show'); }
+function showSync() { const el=document.getElementById('sync-indicator');if(el)el.classList.add('show'); }
+function hideSync() { const el=document.getElementById('sync-indicator');if(el)el.classList.remove('show'); }
 
 // ── DEBOUNCED SAVE ──
 const originalSave = save;
@@ -2713,7 +2369,7 @@ window.save = function() {
 
 // ── LOGIN ──
 async function attemptLogin() {
-  const userId = document.getElementById('login-userid').value.trim();
+  const userId = document.getElementById('login-userid').value.trim().toLowerCase();
   const password = document.getElementById('login-password').value;
   if (!userId || !password) { showLoginError('Please enter both fields.'); return; }
   
@@ -2726,19 +2382,13 @@ async function attemptLogin() {
   
   const success = await loadFromSupabase();
   
-  // success = true means either new user (no data) or correct password
-  // success = false means decryption failed (wrong password for existing data)
   if (success) {
     sessionStorage.setItem('nn_uid', userId);
     sessionStorage.setItem('nn_pw', password);
     document.getElementById('login-overlay').classList.add('hidden');
-    try { renderHeader(); } catch(e) {}
-    try { renderAffirmationBar(); } catch(e) {}
-    try { renderDaily(); renderDailyNameBanner(); } catch(e) {}
-    setTimeout(() => {
-      try { renderMiniCalendar(); } catch(e) {console.log('cal err',e);}
-      try { miniSelectedDate=fmt(new Date()); renderDayDetail(fmt(new Date())); } catch(e) {console.log('detail err',e);}
-    }, 300);
+    renderHeader();
+    renderAffirmationBar();
+    renderDaily();
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
     showLoginError('Incorrect password. Try again.');
@@ -2769,13 +2419,9 @@ function logout() {
     const success = await loadFromSupabase();
     if (success) {
       document.getElementById('login-overlay').classList.add('hidden');
-      try { renderHeader(); } catch(e) {}
-      try { renderAffirmationBar(); } catch(e) {}
-      try { renderDaily(); renderDailyNameBanner(); } catch(e) {}
-      setTimeout(() => {
-        try { renderMiniCalendar(); } catch(e) {}
-        try { renderDayDetail(fmt(new Date())); } catch(e) {}
-      }, 200);
+      try{renderHeader();}catch(e){}
+      try{renderAffirmationBar();}catch(e){}
+      try{renderDaily();}catch(e){}
     } else {
       MASTER_PASSWORD = null; USER_ID = null;
     }
