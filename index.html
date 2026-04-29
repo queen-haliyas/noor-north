@@ -764,6 +764,16 @@ body{
       <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
     </div>
   </div>
+  <!-- Daily Name of Allah -->
+  <div class="daily-name-banner" id="daily-name-banner" onclick="showPage('names',document.querySelectorAll('.nav-tab')[5])">
+    <div class="daily-name-arabic-sm" id="dnb-arabic"></div>
+    <div class="daily-name-info">
+      <div class="daily-name-en" id="dnb-name"></div>
+      <div class="daily-name-meaning" id="dnb-meaning"></div>
+      <div class="daily-name-dua-preview" id="dnb-dua"></div>
+    </div>
+    <div class="daily-name-badge" id="dnb-pillar"></div>
+  </div>
 
   <div class="flow-grid">
     <!-- MORNING -->
@@ -812,6 +822,26 @@ body{
         <div class="ritual-flow-label">Process → Reflect → Surrender → Release → Sleep</div>
       </div>
     </div>
+  </div>
+
+  <!-- MINI CALENDAR -->
+  <div style="margin-top:2rem;margin-bottom:3rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+      <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+      <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
+      <div class="mini-cal-day-hdr">Mon</div>
+      <div class="mini-cal-day-hdr">Tue</div>
+      <div class="mini-cal-day-hdr">Wed</div>
+      <div class="mini-cal-day-hdr">Thu</div>
+      <div class="mini-cal-day-hdr">Fri</div>
+      <div class="mini-cal-day-hdr">Sat</div>
+      <div class="mini-cal-day-hdr">Sun</div>
+    </div>
+    <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px"></div>
+    <div id="day-detail-panel" style="margin-top:16px;min-height:60px"></div>
   </div>
 </div>
 
@@ -1163,6 +1193,7 @@ function deleteAffirmation(idx){
 function changeDay(d){dayOffset+=d;renderDaily();}
 function renderDaily(){
   const ds=getDateStr(dayOffset);
+  try{renderDailyNameBanner();}catch(e){}
   setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},100);
   ensureDay(ds);
   document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
@@ -1896,6 +1927,29 @@ function submitReview(){
   renderReview();
 }
 
+
+
+// ── DAILY NAME BANNER ──
+function renderDailyNameBanner() {
+  if (!NAMES_99 || !NAMES_99.length) return;
+  if (!document.getElementById('dnb-arabic')) return;
+  const today = new Date();
+  const seed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+  const idx = seed % 99;
+  const n = NAMES_99[idx];
+  if (!n) return;
+  const color = PILLAR_COLORS[n.pillar] || '#C4983B';
+  document.getElementById('dnb-arabic').textContent = n.arabic;
+  document.getElementById('dnb-name').textContent = n.name;
+  document.getElementById('dnb-meaning').textContent = n.meaning;
+  document.getElementById('dnb-dua').textContent = n.dua;
+  const pillarEl = document.getElementById('dnb-pillar');
+  if (pillarEl) {
+    pillarEl.textContent = n.pillar;
+    pillarEl.style.background = color + '20';
+    pillarEl.style.color = color;
+  }
+}
 
 // ── MINI CALENDAR ──
 let miniCalYear = new Date().getFullYear();
