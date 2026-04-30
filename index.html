@@ -1819,20 +1819,24 @@ function renderRitual(session,ds){
   const steps=session==='am'?AM_STEPS:PM_STEPS;
   const color=session==='am'?'#1A9E8F':'#7F77DD';
   const done=steps.filter((_,i)=>data[ds][session][i]).length;
-  document.getElementById(session+'-badge').textContent=done+'/'+steps.length;
-  // progress dots
+  const badge=document.getElementById(session+'-badge');
+  if(badge)badge.textContent=done+'/'+steps.length;
   const prog=document.getElementById(session+'-progress');
-  prog.innerHTML=steps.map((_,i)=>`<div class="ritual-prog-dot" style="${data[ds][session][i]?'background:'+color:''}"></div>`).join('');
-  // steps
+  if(prog)prog.innerHTML=steps.map((_,i)=>`<div class="ritual-prog-dot" style="${data[ds][session][i]?'background:'+color:''}"></div>`).join('');
   const cont=document.getElementById(session+'-steps');
+  if(!cont)return;
+  // flex column space-between so steps spread evenly
+  cont.style.display='flex';
+  cont.style.flexDirection='column';
+  cont.style.flex='1';
   cont.innerHTML=steps.map((s,i)=>`
-    <div class="ritual-step">
-      <div class="ritual-check${data[ds][session][i]?' done':''}" onclick="toggleRitual('${ds}','${session}',${i})" style="${data[ds][session][i]?'background:'+color+';border-color:'+color:'border-color:var(--charcoal-border)'}">
-        <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="ritual-step" style="flex:1;display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:0.5px solid var(--charcoal-border);" onclick="toggleRitual('${ds}','${session}',${i})">
+      <div class="ritual-check${data[ds][session][i]?' done':''}" style="width:22px;height:22px;border-radius:50%;border:1.5px solid ${data[ds][session][i]?color:'var(--charcoal-border)'};background:${data[ds][session][i]?color:'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;">
+        ${data[ds][session][i]?'<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<span style="font-size:10px;font-weight:600;color:var(--text-tertiary)">'+(i+1)+'</span>'}
       </div>
-      <div class="ritual-step-content">
-        <div class="ritual-step-title${data[ds][session][i]?' done':''}">${s.title}</div>
-        <div class="ritual-step-time">${s.time}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;color:${data[ds][session][i]?'var(--text-tertiary)':'var(--text-primary)'};${data[ds][session][i]?'text-decoration:line-through;':''}line-height:1.3;font-weight:500;">${s.title}</div>
+        <div style="font-size:11px;color:var(--text-tertiary);margin-top:1px">${s.time}</div>
       </div>
     </div>
   `).join('');
