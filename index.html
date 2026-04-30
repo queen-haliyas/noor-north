@@ -395,21 +395,7 @@ body{
 }
 
 /* ── AFFIRMATION BANNER ── */
-.affirmation-bar{
-  background:linear-gradient(135deg,#1A1205,#251A08);
-  border-bottom:1px solid #C4983B44;
-  padding:10px 2rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  position:sticky;
-  top:0;
-  z-index:150;
-  margin-left:190px;
-  transition:margin-left .25s ease;
-}
-@media(max-width:700px){.affirmation-bar{margin-left:54px;}}
+.affirmation-bar{display:none;}
 .affirmation-text{
   font-family:var(--font-display);
   font-style:italic;
@@ -441,13 +427,13 @@ body{
 .site-header{
   background:var(--charcoal-mid);
   border-bottom:1px solid var(--charcoal-border);
-  padding:1rem 2rem;
+  padding:0.75rem 2rem;
   display:flex;
   align-items:center;
-  justify-content:space-between;
   gap:1rem;
   margin-left:190px;
   transition:margin-left .25s ease;
+  position:sticky;top:0;z-index:100;
 }
 @media(max-width:700px){.site-header{margin-left:54px;}}
 .logo{display:flex;align-items:baseline;gap:10px;}
@@ -1393,20 +1379,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 <!-- AFFIRMATION BAR -->
-<div class="affirmation-bar">
-  <div class="affirmation-nav">
-    <button onclick="prevAffirmation()">←</button>
-  </div>
-  <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
-    Loading your affirmation...
-  </div>
-  <div class="affirmation-nav">
-    <button onclick="nextAffirmation()">→</button>
-    <button class="affirmation-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">Edit</button>
-  </div>
-</div>
-
-<!-- HEADER -->
+<!-- HEADER with affirmation -->
 <header class="site-header">
   <div class="logo">
     <div>
@@ -1417,7 +1390,13 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div class="logo-sub">Personal Operating System</div>
     </div>
   </div>
-  <div class="header-right"></div>
+  <div class="header-right" style="flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 2rem">
+    <button onclick="prevAffirmation()" style="background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:14px;padding:4px;opacity:.5;transition:opacity .15s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">←</button>
+    <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])" style="font-size:13px;max-width:700px;text-align:center">
+      Loading your affirmation...
+    </div>
+    <button onclick="nextAffirmation()" style="background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:14px;padding:4px;opacity:.5;transition:opacity .15s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">→</button>
+  </div>
 </header>
 
 <!-- SIDEBAR NAV -->
