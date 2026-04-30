@@ -1199,6 +1199,7 @@ body{
 /* ══ SIDEBAR NAV (Discord-style) ══ */
 .sidebar-nav{
   position:fixed;left:0;top:0;bottom:0;width:190px;
+  transition:width .25s ease;
   background:#110E05;border-right:0.5px solid var(--charcoal-border);
   display:flex;flex-direction:column;align-items:flex-start;
   padding:12px 8px;gap:2px;z-index:200;
@@ -1238,6 +1239,24 @@ body{
 .app-shell{margin-left:190px;}
 
 /* Mobile: collapse sidebar */
+.sidebar-nav.collapsed{width:54px;align-items:center;padding:12px 4px;}
+.sidebar-nav.collapsed .sidebar-label{display:none;}
+.sidebar-nav.collapsed .sidebar-btn{width:44px;padding:0;justify-content:center;}
+.sidebar-nav.collapsed .sidebar-logo{margin-left:0;cursor:pointer;}
+.sidebar-logo{cursor:pointer;transition:transform .2s;}
+.sidebar-logo:hover{transform:scale(1.08);}
+
+/* Collapsed margins */
+.sidebar-nav.collapsed ~ * .site-header,
+body.sidebar-collapsed .site-header{margin-left:54px;}
+body.sidebar-collapsed .affirmation-bar{margin-left:54px;}
+body.sidebar-collapsed .app-shell{margin-left:54px;}
+
+/* Smooth transitions on shifted elements */
+.site-header{transition:margin-left .25s ease;}
+.affirmation-bar{transition:margin-left .25s ease;}
+.app-shell{transition:margin-left .25s ease;}
+
 @media(max-width:700px){
   .sidebar-nav{width:54px;align-items:center;padding:12px 4px;}
   .sidebar-label{display:none;}
@@ -1310,7 +1329,7 @@ body{
 
 <!-- SIDEBAR NAV -->
 <nav class="sidebar-nav" id="sidebar-nav">
-  <div class="sidebar-logo">N</div>
+  <div class="sidebar-logo" onclick="toggleSidebar()" title="Toggle sidebar">N</div>
   <button class="sidebar-btn active" onclick="showPage('daily',this);setSidebarActive(this)" title="Daily Flow">
     <span>☽</span><span class="sidebar-label">Daily Flow</span>
   </button>
@@ -3524,6 +3543,24 @@ function setSidebarActive(btn){
   document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
 }
+
+function toggleSidebar(){
+  const nav = document.getElementById('sidebar-nav');
+  const collapsed = nav.classList.toggle('collapsed');
+  document.body.classList.toggle('sidebar-collapsed', collapsed);
+  localStorage.setItem('nn_sidebar_collapsed', collapsed?'1':'0');
+}
+
+// Restore sidebar state on load
+(function(){
+  const saved = localStorage.getItem('nn_sidebar_collapsed');
+  if(saved==='1'){
+    document.addEventListener('DOMContentLoaded',()=>{
+      const nav=document.getElementById('sidebar-nav');
+      if(nav){nav.classList.add('collapsed');document.body.classList.add('sidebar-collapsed');}
+    });
+  }
+})();
 
 function selectEventColor(el){
   document.querySelectorAll('.cal-color-opt').forEach(e=>e.classList.remove('selected'));
