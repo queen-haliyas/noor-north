@@ -2371,7 +2371,8 @@ function addPillarTask(ds,pid){
   const inp=document.getElementById('padd-'+pid);
   const text=inp?inp.value.trim():'';if(!text)return;
   data[ds].pillars[pid].push({text,done:false});
-  showToast('Task added to '+p.name, p.color);
+  const pillar=PILLARS.find(p=>p.id===pid);
+  if(pillar)showToast('Task added to '+pillar.name, pillar.color);
   inp.value='';save();renderPillarsDaily(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
 }
 function togglePillarTask(ds,pid,idx){
