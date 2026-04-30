@@ -44,8 +44,8 @@ body{
   background:linear-gradient(135deg,#1A1205,#2A1E08);
   border:0.5px solid #C4983B33;
   border-radius:var(--radius);
-  padding:1.25rem 1.5rem;
-  margin-bottom:1.5rem;
+  padding:0.6rem 1.2rem;
+  margin-bottom:0.8rem;
   display:grid;
   grid-template-columns:auto 1fr auto;
   gap:1rem;
@@ -485,7 +485,7 @@ body{
 .page.active{display:block;}
 
 /* ── DAILY FLOW ── */
-.daily-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.daily-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;}
 .daily-header h2{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary);}
 .daily-header-right{display:flex;align-items:center;gap:10px;}
 .day-nav-btn{
@@ -523,7 +523,7 @@ body{
   font-size:13px;
 }
 .flow-col-badge{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:500;}
-.flow-col-body{padding:14px 16px;}
+.flow-col-body{padding:8px 12px;}
 
 /* Ritual steps */
 .ritual-step{
@@ -542,9 +542,9 @@ body{
 .ritual-check svg{display:none;}
 .ritual-check.done svg{display:block;}
 .ritual-step-content{flex:1;}
-.ritual-step-title{font-size:13px;color:var(--text-primary);line-height:1.4;font-weight:500;}
+.ritual-step-title{font-size:12px;color:var(--text-primary);line-height:1.3;font-weight:500;}
 .ritual-step-title.done{color:var(--text-tertiary);text-decoration:line-through;}
-.ritual-step-time{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.ritual-step-time{font-size:10px;color:var(--text-tertiary);margin-top:1px;}
 .ritual-flow-label{
   margin-top:12px;padding-top:10px;border-top:0.5px solid var(--charcoal-border);
   font-size:10px;color:var(--text-tertiary);font-style:italic;letter-spacing:.03em;
@@ -570,11 +570,11 @@ body{
 }
 .pillar-item-header:hover{background:var(--charcoal-mid);}
 .pillar-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.pillar-name{font-size:13px;font-weight:500;flex:1;color:var(--text-primary);}
+.pillar-name{font-size:12px;font-weight:500;flex:1;color:var(--text-primary);}
 .pillar-count{font-size:11px;color:var(--text-tertiary);}
 .pillar-chevron{font-size:11px;color:var(--text-tertiary);transition:transform .2s;}
 .pillar-item.open .pillar-chevron{transform:rotate(180deg);}
-.pillar-item-body{display:none;padding:0 12px 10px;}
+.pillar-item-body{display:none;padding:0 10px 6px;}
 .pillar-item.open .pillar-item-body{display:block;}
 .pillar-task{
   display:flex;align-items:center;gap:8px;
@@ -675,7 +675,7 @@ body{
 .status-grey{background:var(--text-tertiary);}
 
 /* ── EMPIRE DASHBOARD ── */
-.empire-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:1.5rem;}
+.empire-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:0.8rem;}
 @media(max-width:800px){.empire-grid{grid-template-columns:repeat(3,1fr);}}
 .empire-card{
   background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
@@ -689,7 +689,7 @@ body{
 .empire-label{font-size:10px;color:var(--text-tertiary);margin-top:2px;}
 .empire-bar{height:3px;border-radius:2px;background:var(--charcoal-border);margin-top:10px;overflow:hidden;}
 .empire-bar-fill{height:100%;border-radius:2px;transition:width .5s;}
-.empire-streak-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;}
+.empire-streak-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:0.8rem;}
 .empire-stat{
   background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
   border-radius:var(--radius);padding:14px;text-align:center;
@@ -801,7 +801,7 @@ body{
 }
 
 /* page title */
-.page-title{font-family:var(--font-display);font-size:32px;font-weight:300;margin-bottom:1.5rem;color:var(--text-primary);}
+.page-title{font-family:var(--font-display);font-size:32px;font-weight:300;margin-bottom:0.8rem;color:var(--text-primary);}
 .page-title span{color:var(--text-tertiary);font-size:18px;margin-left:10px;}
 
 /* section label */
@@ -918,7 +918,7 @@ body{
 
 
 /* ── 99 NAMES ── */
-.names-hero{background:linear-gradient(135deg,#1A1205,#2E2510);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:2rem;text-align:center;margin-bottom:1.5rem;}
+.names-hero{background:linear-gradient(135deg,#1A1205,#2E2510);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:2rem;text-align:center;margin-bottom:0.8rem;}
 .names-arabic{font-size:42px;color:var(--gold);margin-bottom:8px;line-height:1.3;}
 .names-english{font-size:22px;font-weight:500;color:var(--text-primary);margin-bottom:6px;}
 .names-meaning{font-size:15px;color:var(--text-secondary);margin-bottom:16px;font-style:italic;}
@@ -984,7 +984,7 @@ body{
 .voice-record-btn:hover{background:var(--gold-dim);}
 @keyframes recordPulse{0%,100%{box-shadow:0 0 0 0 #C4983B40;}50%{box-shadow:0 0 0 12px #C4983B10;}}
 .voice-status{text-align:center;font-size:13px;color:var(--text-secondary);margin-bottom:1rem;}
-.voice-timer{font-size:24px;font-family:var(--font-display);color:var(--gold);text-align:center;margin-bottom:1.5rem;}
+.voice-timer{font-size:24px;font-family:var(--font-display);color:var(--gold);text-align:center;margin-bottom:0.8rem;}
 .voice-memo-item{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
 .voice-play-btn{width:32px;height:32px;border-radius:50%;background:var(--gold-dim);border:0.5px solid var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold);flex-shrink:0;transition:all .15s;}
 .voice-play-btn:hover{background:var(--gold);color:#1A1508;}
@@ -1112,7 +1112,7 @@ body{
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
   <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:10px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
       <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -1171,7 +1171,7 @@ body{
         </div>
         <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/5</span>
       </div>
-      <div style="padding:10px 14px">
+      <div style="padding:6px 12px">
         <div class="ritual-progress" id="am-progress"></div>
         <div id="am-steps"></div>
         <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Surrender → Stillness → Process → Declare → Activate</div>
@@ -1187,7 +1187,7 @@ body{
         </div>
         <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
       </div>
-      <div style="padding:10px 14px">
+      <div style="padding:6px 12px">
         <div class="pillars-overall" id="pillars-overall-bar"></div>
         <div id="pillars-list"></div>
       </div>
@@ -1202,7 +1202,7 @@ body{
         </div>
         <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
       </div>
-      <div style="padding:10px 14px">
+      <div style="padding:6px 12px">
         <div class="ritual-progress" id="pm-progress"></div>
         <div id="pm-steps"></div>
         <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Process → Reflect → Surrender → Release → Sleep</div>
@@ -2502,7 +2502,7 @@ function renderReview(){
   }
 
   cont.innerHTML=`
-    <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem;font-size:13px;color:var(--gold)">
+    <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:var(--radius);padding:1rem;margin-bottom:0.8rem;font-size:13px;color:var(--gold)">
       ✦ Weekly review — reflect honestly, build intentionally. This is your mirror.
     </div>
     ${REVIEW_QUESTIONS.map(q=>`
