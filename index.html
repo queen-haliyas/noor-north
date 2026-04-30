@@ -958,20 +958,7 @@ body{
 
 
 
-  <!-- Week at a glance -->
-  <div class="week-glance">
-    <div class="week-glance-title">Week at a Glance</div>
-    <div class="week-glance-row">
-      <div class="week-glance-label">Morning</div>
-      <div class="week-glance-bar"><div class="week-glance-fill" id="wg-am-bar" style="width:0%;background:#1A9E8F"></div></div>
-      <div class="week-glance-pct" id="wg-am-pct">0%</div>
-    </div>
-    <div class="week-glance-row">
-      <div class="week-glance-label">Evening</div>
-      <div class="week-glance-bar"><div class="week-glance-fill" id="wg-pm-bar" style="width:0%;background:var(--gold)"></div></div>
-      <div class="week-glance-pct" id="wg-pm-pct">0%</div>
-    </div>
-  </div>
+
 
   <!-- 3-Column Layout: Morning | Five Pillars | Evening -->
   <div style="display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:14px;margin-bottom:1rem;align-items:start">
@@ -1024,8 +1011,7 @@ body{
     </div>
   </div>
 
-  <!-- Weekly Tracker Grid (below the 3 columns) -->
-  <div class="ritual-week-grid" id="ritual-week-grid" style="margin-bottom:1rem"></div>
+
 
   <!-- Mini Calendar -->
   <div style="margin-top:1.5rem;margin-bottom:3rem">
@@ -1404,7 +1390,6 @@ function renderDaily(){
   document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
   renderRitual('am',ds);
   renderRitual('pm',ds);
-  renderRitualWeekGrid();
   renderDailyStats();
   renderPillarsDaily(ds);
 }
@@ -1563,7 +1548,6 @@ function toggleRitual(ds,session,idx){
   ensureDay(ds);
   data[ds][session][idx]=!data[ds][session][idx];
   save();
-  renderRitualWeekGrid();
   renderDailyStats();
   // Also refresh AM/PM columns if viewing today
   const todayDs=getDateStr(dayOffset);
@@ -2318,7 +2302,8 @@ function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
   panel.style.display = 'grid';
-  const d = new Date(dateStr + 'T00:00:00');
+  const parts = dateStr.split('-');
+  const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const dd = data[dateStr] || {};
   const amSteps = ['Cold wudu + pray','Meditation','Journal','Read morning ritual','Walk outside'];
