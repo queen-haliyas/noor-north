@@ -395,7 +395,21 @@ body{
 }
 
 /* ── AFFIRMATION BANNER ── */
-.affirmation-bar{display:none;}
+.affirmation-bar{
+  background:linear-gradient(135deg,#1A1205,#251A08);
+  border-bottom:1px solid #C4983B44;
+  padding:10px 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  position:sticky;
+  top:0;
+  z-index:150;
+  margin-left:190px;
+  transition:margin-left .25s ease;
+}
+@media(max-width:700px){.affirmation-bar{margin-left:54px;}}
 .affirmation-text{
   font-family:var(--font-display);
   font-style:italic;
@@ -427,13 +441,13 @@ body{
 .site-header{
   background:var(--charcoal-mid);
   border-bottom:1px solid var(--charcoal-border);
-  padding:0.75rem 2rem;
+  padding:1rem 2rem;
   display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:1rem;
   margin-left:190px;
   transition:margin-left .25s ease;
-  position:sticky;top:0;z-index:100;
 }
 @media(max-width:700px){.site-header{margin-left:54px;}}
 .logo{display:flex;align-items:baseline;gap:10px;}
@@ -1379,7 +1393,20 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 <!-- AFFIRMATION BAR -->
-<!-- HEADER with affirmation -->
+<div class="affirmation-bar">
+  <div class="affirmation-nav">
+    <button onclick="prevAffirmation()">←</button>
+  </div>
+  <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
+    Loading your affirmation...
+  </div>
+  <div class="affirmation-nav">
+    <button onclick="nextAffirmation()">→</button>
+    <button class="affirmation-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">Edit</button>
+  </div>
+</div>
+
+<!-- HEADER -->
 <header class="site-header">
   <div class="logo">
     <div>
@@ -1390,13 +1417,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div class="logo-sub">Personal Operating System</div>
     </div>
   </div>
-  <div class="header-right" style="flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 2rem">
-    <button onclick="prevAffirmation()" style="background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:14px;padding:4px;opacity:.5;transition:opacity .15s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">←</button>
-    <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])" style="font-size:13px;max-width:700px;text-align:center">
-      Loading your affirmation...
-    </div>
-    <button onclick="nextAffirmation()" style="background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:14px;padding:4px;opacity:.5;transition:opacity .15s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.5">→</button>
-  </div>
+  <div class="header-right"></div>
 </header>
 
 <!-- SIDEBAR NAV -->
@@ -1981,7 +2002,7 @@ function showPage(id,btn){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(id==='daily'){renderDaily();setTimeout(()=>{const s=document.getElementById('day-time-slots');if(s&&s.children.length<2)initDayView();else{dvRenderEvents();dvUpdateNow();}},100);}
+  if(id==='daily'){renderDaily();setTimeout(initDayView, 100);}
   if(id==='planning'){renderPlanning();renderPlanningTimeline();}
   if(id==='empire'){renderEmpire();renderStackedBar();renderPolarGrid();}
   if(id==='notes')renderNotes();
@@ -4190,7 +4211,7 @@ async function attemptLogin() {
     setTimeout(() => {
       try { renderMiniCalendar(); } catch(e) {}
       try { renderDayDetail(fmt(new Date())); } catch(e) {}
-      try { initDayView(); } catch(e) {}
+      setTimeout(initDayView, 500);
     }, 300);
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
@@ -4262,8 +4283,12 @@ let dvPopupMin = 9*60;
 function initDayView() {
   const labelsEl = document.getElementById('day-time-labels');
   const slotsEl = document.getElementById('day-time-slots');
-  if (!labelsEl || !slotsEl) return;
-  if (slotsEl.querySelector('.time-slot-line')) { dvRenderEvents(); dvUpdateNow(); return; }
+  if (!labelsEl || !slotsEl) {
+    // Elements not ready yet, retry
+    setTimeout(initDayView, 200);
+    return;
+  }
+  // Always rebuild the grid
   let lHtml = '', sHtml = '';
   for (let h = 0; h < 24; h++) {
     const top = h * HOUR_H;
@@ -4276,11 +4301,15 @@ function initDayView() {
   slotsEl.innerHTML = sHtml;
   dvRenderEvents();
   dvUpdateNow();
-  setInterval(dvUpdateNow, 60000);
-  setTimeout(() => {
-    const s = document.getElementById('day-view-scroll');
-    if (s) s.scrollTop = 7 * HOUR_H;
-  }, 50);
+  if (!window._dvNowInterval) {
+    window._dvNowInterval = setInterval(dvUpdateNow, 60000);
+  }
+  // Scroll to current hour
+  const s = document.getElementById('day-view-scroll');
+  if (s) {
+    const now = new Date();
+    s.scrollTop = Math.max(0, (now.getHours() - 1) * HOUR_H);
+  }
   dvUpdateHeader();
 }
 
