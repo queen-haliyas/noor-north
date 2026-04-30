@@ -1319,6 +1319,110 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
 .empire-charts-row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1rem;}
 @media(max-width:900px){.empire-charts-row2{grid-template-columns:1fr;}}
 
+
+/* ══ BATCH 4 CSS ══ */
+
+/* Affirmations — masonry card upgrade */
+.affirmations-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.affirmation-card{
+  background:linear-gradient(135deg,var(--charcoal-light),var(--charcoal-mid));
+  border:0.5px solid var(--charcoal-border);border-radius:var(--radius);
+  padding:20px;display:flex;flex-direction:column;gap:10px;
+  position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;
+}
+.affirmation-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px #00000050;}
+.affirmation-card::before{
+  content:'✦';position:absolute;right:16px;top:12px;
+  font-size:20px;color:var(--gold);opacity:.15;
+}
+.affirmation-num{
+  font-size:10px;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--text-tertiary);font-weight:500;
+}
+.affirmation-input{
+  background:none;border:none;outline:none;
+  font-family:var(--font-body);font-size:14px;line-height:1.7;
+  color:var(--text-primary);resize:none;width:100%;min-height:60px;
+  font-style:italic;
+}
+.affirmation-input::placeholder{color:var(--text-tertiary);}
+.affirmation-del{
+  background:none;border:none;cursor:pointer;
+  color:var(--text-tertiary);font-size:12px;opacity:0;
+  transition:opacity .15s;align-self:flex-end;padding:2px 6px;
+}
+.affirmation-card:hover .affirmation-del{opacity:1;}
+.add-affirmation-btn{
+  margin-top:1rem;background:none;border:0.5px dashed var(--charcoal-border);
+  border-radius:var(--radius);padding:14px;width:100%;
+  font-size:13px;color:var(--text-tertiary);cursor:pointer;
+  font-family:var(--font-body);transition:all .15s;display:block;
+}
+.add-affirmation-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Voice memos upgrade */
+.voice-page-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:700px){.voice-page-layout{grid-template-columns:1fr;}}
+.voice-recorder-card{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:2rem;text-align:center;
+}
+.voice-waveform{height:60px;display:flex;align-items:center;justify-content:center;gap:3px;margin:16px 0;}
+.voice-wave-bar{width:4px;border-radius:2px;background:var(--gold);opacity:.3;transition:height .1s;}
+.voice-wave-bar.active{opacity:1;}
+.voice-memos-panel{
+  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:var(--radius);padding:1rem;
+}
+.voice-memo-item{
+  padding:10px;border-radius:8px;border:0.5px solid var(--charcoal-border);
+  margin-bottom:8px;transition:background .15s;
+}
+.voice-memo-item:hover{background:var(--charcoal-mid);}
+.voice-memo-title{font-size:13px;color:var(--text-primary);font-weight:500;}
+.voice-memo-meta{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.voice-memo-controls{display:flex;gap:8px;margin-top:8px;}
+.voice-memo-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:6px;
+  padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text-secondary);
+  font-family:var(--font-body);transition:all .15s;}
+.voice-memo-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Arabella upgrade — typing indicator */
+.arabella-typing{display:flex;align-items:center;gap:4px;padding:8px 12px;}
+.arabella-typing span{width:6px;height:6px;border-radius:50%;background:var(--gold);
+  animation:typingBounce 1.2s infinite;opacity:.6;}
+.arabella-typing span:nth-child(2){animation-delay:.2s;}
+.arabella-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
+
+/* Mobile responsive improvements */
+@media(max-width:700px){
+  .flow-grid{grid-template-columns:1fr !important;}
+  .empire-charts-row{grid-template-columns:1fr !important;}
+  .empire-charts-row2{grid-template-columns:1fr !important;}
+  .planning-grid{grid-template-columns:1fr !important;}
+  #page-planning > div:first-of-type{grid-template-columns:1fr !important;}
+  .daily-header{flex-wrap:wrap;gap:8px;}
+  .page-title{font-size:24px;}
+  .notes-sidebar{max-height:250px;}
+}
+
+/* Windrose chart */
+.windrose-wrap{display:flex;justify-content:center;margin-bottom:1rem;}
+
+/* Calendar streak dots upgrade */
+.cal-day-dot{width:5px;height:5px;border-radius:50%;margin:1px;display:inline-block;}
+
+/* Quick stats bar on daily flow */
+.daily-quick-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
+.dqs-pill{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
+  border-radius:20px;padding:5px 12px;font-size:12px;color:var(--text-secondary);
+  display:flex;align-items:center;gap:5px;}
+.dqs-val{font-weight:600;color:var(--text-primary);}
+
+/* Smooth scroll for pages */
+.page.active{scroll-behavior:smooth;}
+
 </style>
 </head>
 <body>
@@ -1728,9 +1832,14 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
      AFFIRMATIONS PAGE
 ══════════════════════════════════════ -->
 <div class="page" id="page-affirmations">
-  <div class="page-title">Daily Affirmations</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:10px;">
+    <div class="page-title" style="margin:0">Daily Affirmations</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="aff-count" style="font-size:12px;color:var(--text-tertiary)">0 affirmations</span>
+      <button style="background:var(--gold);color:#1A1508;border:none;border-radius:8px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:var(--font-body);font-weight:500" onclick="addAffirmation()">+ Add</button>
+    </div>
+  </div>
   <div class="affirmations-grid" id="affirmations-grid"></div>
-  <button class="add-affirmation-btn" onclick="addAffirmation()">+ Add Affirmation</button>
 </div>
 
 </div>
@@ -1766,6 +1875,10 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
 <div class="page" id="page-review">
   <div class="page-title">Weekly Review</div>
   <div id="review-charts"></div>
+<div class="empire-chart-card" style="margin-bottom:1rem">
+  <div class="empire-chart-title">🌹 Windrose — Weekly Productivity</div>
+  <div class="windrose-wrap"><svg id="windrose-svg" width="220" height="220" viewBox="-110 -110 220 220"></svg></div>
+</div>
   <div id="review-content"></div>
 </div>
 
@@ -1800,13 +1913,26 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
 <!-- VOICE MEMOS PAGE -->
 <div class="page" id="page-voice">
   <div class="page-title">Voice Memos</div>
-  <div class="voice-center">
-    <div class="voice-timer" id="voice-timer">0:00</div>
-    <button class="voice-record-btn" id="voice-record-btn" onclick="toggleRecording()">🎙</button>
-    <div class="voice-status" id="voice-status">Tap to record</div>
+  <div class="voice-page-layout">
+    <div class="voice-recorder-card">
+      <div class="voice-timer" id="voice-timer">0:00</div>
+      <div class="voice-waveform" id="voice-waveform">
+        ${Array.from({length:20},(_,i)=>`<div class="voice-wave-bar" id="wb-${i}" style="height:${8+Math.random()*20}px"></div>`).join('')}
+      </div>
+      <button class="voice-record-btn" id="voice-record-btn" onclick="toggleRecording()">🎙</button>
+      <div class="voice-status" id="voice-status">Tap to record</div>
+    </div>
+    <div class="voice-memos-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <span class="section-lbl" style="margin:0">Your recordings</span>
+        <span id="voice-count" style="font-size:11px;color:var(--text-tertiary)">0 memos</span>
+      </div>
+      <div id="voice-memos-list"></div>
+      <div id="voice-empty" style="text-align:center;padding:2rem;color:var(--text-tertiary);font-size:13px">
+        🎙 No recordings yet.<br>Tap the mic to start.
+      </div>
+    </div>
   </div>
-  <div style="margin-bottom:.75rem"><span class="section-lbl">Your recordings</span></div>
-  <div id="voice-memos-list"></div>
 </div>
 
 <!-- MODAL -->
@@ -1956,7 +2082,7 @@ function showPage(id,btn){
   if(id==='affirmations')renderAffirmations();
   if(id==='calendar'){renderCalendar();}
   if(id==='names'){todaysName();renderNamesGrid();renderNamesSunburst();}
-  if(id==='review'){renderReview();renderWeeklyCharts();}
+  if(id==='review'){renderReview();renderWeeklyCharts();renderWindrose();}
   if(id==='arabella'){}
   if(id==='voice'){renderVoiceMemos();}
 }
@@ -1979,7 +2105,7 @@ function nextAffirmation(){
   currentAffIdx=(currentAffIdx+1)%affs.length;
   renderAffirmationBar();
 }
-function renderAffirmations(){
+function renderAffirmations(){updateAffCount();
   const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
   const grid=document.getElementById('affirmations-grid');
   grid.innerHTML=affs.map((a,i)=>`
@@ -2765,7 +2891,7 @@ async function startRecording() {
     
     mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
     mediaRecorder.onstop = saveVoiceMemo;
-    mediaRecorder.start();
+    mediaRecorder.start();startWaveAnimation();
     
     isRecording = true;
     recordingSeconds = 0;
@@ -2787,7 +2913,7 @@ async function startRecording() {
 
 function stopRecording() {
   if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-    mediaRecorder.stop();
+    mediaRecorder.stop();stopWaveAnimation();
     mediaRecorder.stream.getTracks().forEach(t => t.stop());
   }
   isRecording = false;
@@ -3845,6 +3971,105 @@ function renderNamesSunburst(){
     html2 += '</div>';
     mp.innerHTML = html2;
   }
+}
+
+
+// ── WINDROSE PRODUCTIVITY CHART ──
+function renderWindrose(){
+  const el = document.getElementById('windrose-svg');
+  if(!el) return;
+  const days = getWeekDays();
+  const now = new Date();
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const pcts = days.map(d => {
+    const ds = fmt(d);
+    const dd = data[ds];
+    if(!dd || d > now) return 0;
+    const am = AM_STEPS.filter((_,i)=>dd.am&&dd.am[i]).length;
+    const pm = PM_STEPS.filter((_,i)=>dd.pm&&dd.pm[i]).length;
+    let p=0; PILLARS.forEach(pi=>{p+=(dd.pillars&&dd.pillars[pi.id]||[]).filter(t=>t.done).length;});
+    return Math.round((am+pm+p)/(AM_STEPS.length+PM_STEPS.length+5)*100);
+  });
+  const n=7, r=80;
+  let html='';
+  // rings
+  [0.25,0.5,0.75,1].forEach(frac=>{
+    html+=`<circle cx="0" cy="0" r="${r*frac}" fill="none" stroke="#3D3118" stroke-width="0.5"/>`;
+  });
+  // petals
+  pcts.forEach((pct,i)=>{
+    const angle=(Math.PI*2*i/n)-Math.PI/2;
+    const val=r*pct/100;
+    const w=Math.PI*2/n*0.7;
+    const a1=angle-w/2, a2=angle+w/2;
+    const x1=Math.cos(a1)*val, y1=Math.sin(a1)*val;
+    const x2=Math.cos(a2)*val, y2=Math.sin(a2)*val;
+    const alpha=Math.round(40+pct*0.6).toString(16).padStart(2,'0');
+    html+=`<path d="M 0 0 L ${x1} ${y1} A ${val} ${val} 0 0 1 ${x2} ${y2} Z" fill="#E8B84B${alpha}" stroke="#E8B84B44"/>`;
+    const lx=Math.cos(angle)*(r+16), ly=Math.sin(angle)*(r+16);
+    html+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="8" fill="#B8A878">${dayNames[i]}</text>`;
+    if(pct>0) html+=`<text x="${Math.cos(angle)*val*0.6}" y="${Math.sin(angle)*val*0.6}" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="7" fill="#E8B84B">${pct}%</text>`;
+  });
+  el.innerHTML=html;
+}
+
+// ── VOICE WAVEFORM ANIMATION ──
+let waveInterval=null;
+function startWaveAnimation(){
+  const bars=document.querySelectorAll('.voice-wave-bar');
+  waveInterval=setInterval(()=>{
+    bars.forEach(b=>{
+      b.style.height=(8+Math.random()*40)+'px';
+      b.classList.add('active');
+    });
+  },100);
+}
+function stopWaveAnimation(){
+  if(waveInterval)clearInterval(waveInterval);
+  document.querySelectorAll('.voice-wave-bar').forEach(b=>{
+    b.style.height='8px';b.classList.remove('active');
+  });
+}
+
+// ── AFFIRMATION COUNT UPDATE ──
+function updateAffCount(){
+  const el=document.getElementById('aff-count');
+  if(el&&data.affirmations)el.textContent=data.affirmations.length+' affirmation'+(data.affirmations.length===1?'':'s');
+}
+
+// ── ARABELLA TYPING INDICATOR ──
+function showArabellTyping(){
+  const msgs=document.getElementById('arabella-messages');
+  if(!msgs)return;
+  const div=document.createElement('div');
+  div.className='arabella-msg assistant';div.id='arabella-typing-indicator';
+  div.innerHTML='<div class="arabella-bubble"><div class="arabella-typing"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+function hideArabellTyping(){
+  const el=document.getElementById('arabella-typing-indicator');
+  if(el)el.remove();
+}
+
+// ── CALENDAR MONTH COMPLETION BADGE ──
+function renderMonthBadge(){
+  const el=document.getElementById('cal-month-badge');
+  if(!el)return;
+  const now=new Date();
+  const year=now.getFullYear(),month=now.getMonth();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  let completed=0,passed=0;
+  for(let d=1;d<=Math.min(now.getDate(),daysInMonth);d++){
+    const ds=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dd=data[ds];passed++;
+    if(dd){
+      const am=AM_STEPS.filter((_,i)=>dd.am&&dd.am[i]).length;
+      const pm=PM_STEPS.filter((_,i)=>dd.pm&&dd.pm[i]).length;
+      if(am>0||pm>0)completed++;
+    }
+  }
+  const pct=passed?Math.round(completed/passed*100):0;
+  el.textContent=`✦ ${completed}/${passed} days active this month · ${pct}%`;
 }
 
 function selectEventColor(el){
