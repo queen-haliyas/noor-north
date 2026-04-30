@@ -960,6 +960,29 @@ body{
 
 
 
+  <!-- Calendar + Day Detail side by side -->
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:1.5rem;align-items:start">
+    <!-- Calendar -->
+    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:0.5px solid var(--charcoal-border)">
+        <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
+        <div style="font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+        <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
+      </div>
+      <div style="padding:10px 12px">
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
+          <div class="mini-cal-day-hdr">Mon</div><div class="mini-cal-day-hdr">Tue</div>
+          <div class="mini-cal-day-hdr">Wed</div><div class="mini-cal-day-hdr">Thu</div>
+          <div class="mini-cal-day-hdr">Fri</div><div class="mini-cal-day-hdr">Sat</div>
+          <div class="mini-cal-day-hdr">Sun</div>
+        </div>
+        <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+      </div>
+    </div>
+    <!-- Day Detail -->
+    <div id="day-detail-panel" style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;min-height:200px"></div>
+  </div>
+
   <!-- 3-Column Layout: Morning | Five Pillars | Evening -->
   <div style="display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:14px;margin-bottom:1rem;align-items:start">
 
@@ -1013,22 +1036,7 @@ body{
 
 
 
-  <!-- Mini Calendar -->
-  <div style="margin-top:1.5rem;margin-bottom:3rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-      <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
-      <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
-      <div class="mini-cal-day-hdr">Mon</div><div class="mini-cal-day-hdr">Tue</div>
-      <div class="mini-cal-day-hdr">Wed</div><div class="mini-cal-day-hdr">Thu</div>
-      <div class="mini-cal-day-hdr">Fri</div><div class="mini-cal-day-hdr">Sat</div>
-      <div class="mini-cal-day-hdr">Sun</div>
-    </div>
-    <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px"></div>
-    <div id="day-detail-panel" style="margin-top:16px;min-height:60px"></div>
-  </div>
+
 </div>
 
 <!-- ══════════════════════════════════════
@@ -2301,7 +2309,7 @@ function selectMiniDay(dateStr) {
 function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
-  panel.style.display = 'grid';
+  panel.style.display = 'block';
   const parts = dateStr.split('-');
   const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
@@ -2325,30 +2333,26 @@ function renderDayDetail(dateStr) {
   const events = (data.calendar && data.calendar[dateStr]) || [];
   
   panel.innerHTML = `
-    <div class="day-detail-title">✦ ${label}</div>
-    <div>
-      <div class="day-detail-section">
-        <div class="day-detail-section-title">Morning Ritual (${amDone.length}/5)</div>
-        ${amSteps.map((s,i) => `<div class="day-detail-item${dd.am&&dd.am[i]?' done':''}"><div class="day-detail-dot" style="background:#1A9E8F"></div>${s}</div>`).join('')}
-      </div>
-      <div class="day-detail-section" style="margin-top:12px">
-        <div class="day-detail-section-title">Evening Ritual (${pmDone.length}/5)</div>
-        ${pmSteps.map((s,i) => `<div class="day-detail-item${dd.pm&&dd.pm[i]?' done':''}"><div class="day-detail-dot" style="background:#C4983B"></div>${s}</div>`).join('')}
-      </div>
+    <div style="font-family:var(--font-display);font-size:15px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--charcoal-border)">✦ ${label}</div>
+    <div class="day-detail-section">
+      <div class="day-detail-section-title">Morning Ritual (${amDone.length}/${amSteps.length})</div>
+      ${amSteps.map((s,i) => `<div class="day-detail-item${dd.am&&dd.am[i]?' done':''}"><div class="day-detail-dot" style="background:#1A9E8F"></div>${s}</div>`).join('')}
     </div>
-    <div>
-      <div class="day-detail-section">
-        <div class="day-detail-section-title">Five Pillars Tasks (${pillarItems.filter(t=>t.done).length}/${pillarItems.length})</div>
-        ${pillarItems.length ? pillarItems.map(t => `<div class="day-detail-item${t.done?' done':''}"><div class="day-detail-dot" style="background:${t.color}"></div>${t.text}</div>`).join('') : '<div style="font-size:12px;color:var(--text-tertiary)">No tasks added yet</div>'}
-      </div>
-      <div class="day-detail-section" style="margin-top:12px">
-        <div class="day-detail-section-title">Events</div>
-        ${events.length ? events.map(e => `<div class="day-detail-item"><div class="day-detail-dot" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'}"></div>${e.time?e.time+' · ':''}${e.title}</div>`).join('') : '<div style="font-size:12px;color:var(--text-tertiary)">No events</div>'}
-        <div class="mini-add-event">
-          <input class="mini-add-input" id="mini-event-title" placeholder="Add event..." />
-          <input class="mini-add-time" id="mini-event-time" placeholder="Time" />
-          <button class="mini-add-btn-sm" onclick="addMiniEvent('${dateStr}')">+ Add</button>
-        </div>
+    <div class="day-detail-section" style="margin-top:10px">
+      <div class="day-detail-section-title">Evening Ritual (${pmDone.length}/${pmSteps.length})</div>
+      ${pmSteps.map((s,i) => `<div class="day-detail-item${dd.pm&&dd.pm[i]?' done':''}"><div class="day-detail-dot" style="background:#C4983B"></div>${s}</div>`).join('')}
+    </div>
+    <div class="day-detail-section" style="margin-top:10px">
+      <div class="day-detail-section-title">Five Pillars (${pillarItems.filter(t=>t.done).length}/${pillarItems.length})</div>
+      ${pillarItems.length ? pillarItems.map(t => `<div class="day-detail-item${t.done?' done':''}"><div class="day-detail-dot" style="background:${t.color}"></div>${t.text}</div>`).join('') : '<div style="font-size:11px;color:var(--text-tertiary)">No tasks yet</div>'}
+    </div>
+    <div class="day-detail-section" style="margin-top:10px">
+      <div class="day-detail-section-title">Events</div>
+      ${events.length ? events.map(e => `<div class="day-detail-item"><div class="day-detail-dot" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'}"></div>${e.time?e.time+' · ':''}${e.title}</div>`).join('') : '<div style="font-size:11px;color:var(--text-tertiary)">No events</div>'}
+      <div class="mini-add-event" style="margin-top:8px">
+        <input class="mini-add-input" id="mini-event-title" placeholder="Add event..." />
+        <input class="mini-add-time" id="mini-event-time" placeholder="Time" />
+        <button class="mini-add-btn-sm" onclick="addMiniEvent('${dateStr}')">+ Add</button>
       </div>
     </div>
   `;
