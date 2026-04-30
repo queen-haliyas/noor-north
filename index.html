@@ -195,6 +195,211 @@ body{
   display:flex;align-items:center;gap:8px;
 }
 
+/* ── DAILY FLOW VIEWPORT FIT ── */
+#page-daily {
+  padding: 0.75rem 1.5rem;
+  height: calc(100vh - 130px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.daily-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+.daily-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.daily-completion-ring {
+  width: 48px; height: 48px;
+  position: relative; flex-shrink: 0;
+}
+.daily-completion-ring svg { transform: rotate(-90deg); }
+.daily-completion-pct {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: var(--gold);
+}
+.daily-stat-pill {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--charcoal-light);
+  border: 0.5px solid var(--charcoal-border);
+  border-radius: 20px; padding: 3px 9px;
+  font-size: 11px;
+}
+.what-left-pill {
+  background: var(--gold-dim);
+  border: 0.5px solid var(--gold);
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 11px; color: var(--gold);
+  white-space: nowrap;
+}
+
+/* name card compact */
+.name-card-compact {
+  background: linear-gradient(135deg,#1A1205,#2A1E08);
+  border: 0.5px solid #C4983B33;
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color .2s;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+.name-card-compact:hover { border-color: var(--gold); }
+.name-card-compact-arabic { font-size: 22px; color: var(--gold); }
+.name-card-compact-en { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.name-card-compact-dua { font-size: 11px; color: var(--text-secondary); border-left: 2px solid var(--gold); padding-left: 8px; line-height: 1.5; margin-top: 2px; }
+.name-card-compact-pillar { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 20px; white-space: nowrap; align-self: start; }
+
+/* main grid */
+.daily-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+.daily-cal-col {
+  background: var(--charcoal-light);
+  border: 0.5px solid var(--charcoal-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.daily-cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 0.5px solid var(--charcoal-border);
+  flex-shrink: 0;
+}
+.daily-cal-body { padding: 6px 8px; flex: 1; overflow: hidden; }
+.daily-right-col {
+  display: flex; flex-direction: column; gap: 8px;
+  overflow-y: auto; min-height: 0;
+  scrollbar-width: thin;
+}
+
+/* ritual card new style */
+.ritual-card {
+  background: var(--charcoal-light);
+  border: 0.5px solid var(--charcoal-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color .3s;
+}
+.ritual-card.complete { border-color: var(--gold); }
+.ritual-card-header {
+  padding: 8px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 0.5px solid var(--charcoal-border);
+  user-select: none;
+}
+.ritual-card-header:hover { background: var(--charcoal-mid); }
+.ritual-card-body { padding: 8px 12px; }
+.ritual-card-body.collapsed { display: none; }
+
+/* ritual step new badge style */
+.ritual-step-new {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 0;
+  border-bottom: 0.5px solid var(--charcoal-border);
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.ritual-step-new:last-child { border-bottom: none; }
+.ritual-step-new:hover { opacity: .8; }
+.ritual-badge {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--charcoal-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; color: var(--text-tertiary);
+  flex-shrink: 0;
+  transition: all .2s;
+}
+.ritual-badge.am-done {
+  background: #1A9E8F; border-color: #1A9E8F; color: #fff;
+  box-shadow: 0 0 6px #1A9E8F44;
+}
+.ritual-badge.pm-done {
+  background: var(--gold); border-color: var(--gold); color: #1A1508;
+  box-shadow: 0 0 6px #C4983B44;
+}
+.ritual-step-text {
+  font-size: 12px; color: var(--text-primary); flex: 1; line-height: 1.3;
+  transition: all .2s;
+}
+.ritual-step-text.done { color: var(--text-tertiary); text-decoration: line-through; }
+.ritual-step-time-sm { font-size: 10px; color: var(--text-tertiary); white-space: nowrap; }
+.ritual-flow-sm {
+  font-size: 9px; color: var(--text-tertiary); font-style: italic;
+  margin-top: 6px; padding-top: 5px;
+  border-top: 0.5px solid var(--charcoal-border);
+  letter-spacing: .03em;
+}
+.ritual-time-remaining {
+  font-size: 10px; color: var(--text-tertiary);
+  margin-left: 4px;
+}
+
+/* pillar card compact */
+.pillar-card {
+  background: var(--charcoal-light);
+  border: 0.5px solid var(--charcoal-border);
+  border-radius: var(--radius);
+  overflow: hidden; flex-shrink: 0;
+}
+.pillar-card-header {
+  padding: 8px 12px;
+  border-bottom: 0.5px solid var(--charcoal-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pillar-card-body { padding: 6px 12px; }
+.pillar-row-compact {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 0;
+  border-bottom: 0.5px solid var(--charcoal-border);
+}
+.pillar-row-compact:last-child { border-bottom: none; }
+.pillar-dot-sm { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.pillar-name-sm { font-size: 12px; color: var(--text-primary); flex: 1; }
+.pillar-prog-sm { height: 3px; border-radius: 2px; background: var(--charcoal-border); width: 50px; overflow: hidden; }
+.pillar-prog-fill { height: 100%; border-radius: 2px; transition: width .4s; }
+.pillar-count-sm { font-size: 10px; color: var(--text-tertiary); width: 28px; text-align: right; }
+.pillar-quick-add {
+  display: flex; gap: 4px; margin-top: 6px; padding-top: 6px;
+  border-top: 0.5px solid var(--charcoal-border);
+}
+.pillar-quick-select {
+  background: var(--charcoal-mid); border: 0.5px solid var(--charcoal-border);
+  border-radius: 6px; padding: 4px 6px; font-size: 11px;
+  color: var(--text-secondary); font-family: var(--font-body); outline: none;
+  max-width: 80px;
+}
+.pillar-quick-input {
+  flex: 1; background: var(--charcoal-mid); border: 0.5px solid var(--charcoal-border);
+  border-radius: 6px; padding: 4px 8px; font-size: 11px;
+  color: var(--text-primary); font-family: var(--font-body); outline: none;
+}
+.pillar-quick-input:focus, .pillar-quick-select:focus { border-color: var(--gold); }
+.pillar-quick-btn {
+  background: var(--gold); color: #1A1508; border: none;
+  border-radius: 6px; padding: 4px 10px; font-size: 11px;
+  cursor: pointer; font-family: var(--font-body); font-weight: 500;
+  white-space: nowrap;
+}
+
 /* ── AFFIRMATION BANNER ── */
 .affirmation-bar{
   background:linear-gradient(135deg,#1A1205,#251A08);
@@ -1357,11 +1562,120 @@ function renderDaily(){
   try{renderDailyNameBanner();}catch(e){}
   setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},100);
   ensureDay(ds);
-  document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
-  renderRitual('am',ds);
-  renderRitual('pm',ds);
+  if(document.getElementById('daily-day-label'))
+    document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
+  renderRitualNew('am',ds);
+  renderRitualNew('pm',ds);
   renderDailyStats();
-  renderPillarsDaily(ds);
+  renderPillarsCompact(ds);
+}
+
+function goToday(){dayOffset=0;renderDaily();}
+function changeMiniMonthToToday(){miniCalYear=new Date().getFullYear();miniCalMonth=new Date().getMonth();renderMiniCalendar();}
+
+function toggleRitualCard(session){
+  const body=document.getElementById(session+'-body');
+  const chev=document.getElementById(session+'-chevron');
+  if(!body)return;
+  const isOpen=!body.classList.contains('collapsed');
+  body.classList.toggle('collapsed',isOpen);
+  if(chev)chev.textContent=isOpen?'▸':'▾';
+}
+
+function renderRitualNew(session,ds){
+  const steps=session==='am'?AM_STEPS:PM_STEPS;
+  const color=session==='am'?'#1A9E8F':'var(--gold)';
+  const doneClass=session==='am'?'am-done':'pm-done';
+  const done=steps.filter((_,i)=>data[ds][session][i]).length;
+  const total=steps.length;
+  const timeLeft=steps.reduce((t,s,i)=>data[ds][session][i]?t:t+(parseInt(s.time)||0),0);
+
+  // badge
+  const badge=document.getElementById(session+'-badge');
+  if(badge)badge.textContent=done+'/'+total;
+
+  // time left
+  const tEl=document.getElementById(session+'-time-left');
+  if(tEl)tEl.textContent=timeLeft>0?'~'+timeLeft+'min left':'';
+
+  // card glow when complete
+  const card=document.getElementById(session+'-card');
+  if(card)card.classList.toggle('complete',done===total);
+
+  // steps
+  const cont=document.getElementById(session+'-steps');
+  if(!cont)return;
+  cont.innerHTML='';
+  steps.forEach((s,i)=>{
+    const isDone=!!(data[ds][session][i]);
+    const row=document.createElement('div');
+    row.className='ritual-step-new';
+    row.onclick=()=>{toggleRitual(ds,session,i);};
+    const badge=document.createElement('div');
+    badge.className='ritual-badge'+(isDone?' '+doneClass:'');
+    badge.textContent=i+1;
+    const text=document.createElement('div');
+    text.className='ritual-step-text'+(isDone?' done':'');
+    text.textContent=s.title;
+    const time=document.createElement('div');
+    time.className='ritual-step-time-sm';
+    time.textContent=s.time;
+    row.appendChild(badge);
+    row.appendChild(text);
+    row.appendChild(time);
+    cont.appendChild(row);
+  });
+}
+
+function renderPillarsCompact(ds){
+  ensureDay(ds);
+  let totalDone=0,totalAll=0;
+  const list=document.getElementById('pillars-compact-list');
+  if(!list)return;
+  list.innerHTML='';
+  PILLARS.forEach(p=>{
+    const tasks=data[ds].pillars[p.id]||[];
+    const done=tasks.filter(t=>t.done).length;
+    const all=tasks.length;
+    totalDone+=done; totalAll+=all;
+    const pct=all?Math.round(done/all*100):0;
+    const row=document.createElement('div');
+    row.className='pillar-row-compact';
+    row.innerHTML=`
+      <div class="pillar-dot-sm" style="background:${p.color}"></div>
+      <div class="pillar-name-sm">${p.name}</div>
+      <div class="pillar-prog-sm"><div class="pillar-prog-fill" style="width:${pct}%;background:${p.color}"></div></div>
+      <div class="pillar-count-sm">${done}/${all}</div>
+    `;
+    list.appendChild(row);
+  });
+  const badge=document.getElementById('pillars-badge');
+  if(badge)badge.textContent=totalDone+'/'+totalAll;
+  // overall bar
+  const bar=document.getElementById('pillars-overall-bar');
+  if(bar){
+    bar.innerHTML=PILLARS.map(p=>{
+      const tasks=(data[ds].pillars[p.id]||[]);
+      const d=tasks.filter(t=>t.done).length,a=tasks.length;
+      const pct=a?Math.round(d/a*100):0;
+      return `<div class="pillar-bar-seg" style="${a?'background:'+p.color+Math.round(40+pct*0.6).toString(16).padStart(2,'0'):''}"></div>`;
+    }).join('');
+  }
+}
+
+function quickAddTask(){
+  const input=document.getElementById('quick-task-input');
+  const select=document.getElementById('quick-pillar-select');
+  const text=input?input.value.trim():'';
+  const pid=select?select.value:'life';
+  if(!text)return;
+  const ds=getDateStr(dayOffset);
+  ensureDay(ds);
+  data[ds].pillars[pid].push({text,done:false});
+  input.value='';
+  save();
+  renderPillarsCompact(ds);
+  renderMiniCalendar();
 }
 
 function getWeekDays(){
@@ -1410,8 +1724,25 @@ function renderDailyStats(){
   if(document.getElementById('stat-fulldays'))document.getElementById('stat-fulldays').textContent=fulldays;
   if(document.getElementById('wg-am-bar'))document.getElementById('wg-am-bar').style.width=amPct+'%';
   if(document.getElementById('wg-pm-bar'))document.getElementById('wg-pm-bar').style.width=pmPct+'%';
-  if(document.getElementById('wg-am-pct'))document.getElementById('wg-am-pct').textContent=amPct+'%';
-  if(document.getElementById('wg-pm-pct'))document.getElementById('wg-pm-pct').textContent=pmPct+'%';
+  // completion ring
+  const ds=getDateStr(dayOffset);
+  ensureDay(ds);
+  const amTotal=AM_STEPS.length, pmTotal=PM_STEPS.length;
+  const amDoneToday=AM_STEPS.filter((_,i)=>data[ds].am&&data[ds].am[i]).length;
+  const pmDoneToday=PM_STEPS.filter((_,i)=>data[ds].pm&&data[ds].pm[i]).length;
+  let pillarDone=0,pillarAll=0;
+  PILLARS.forEach(p=>{const t=(data[ds].pillars[p.id]||[]);pillarDone+=t.filter(x=>x.done).length;pillarAll+=t.length;});
+  const totalDone=amDoneToday+pmDoneToday+pillarDone;
+  const totalAll=amTotal+pmTotal+(pillarAll||1);
+  const pct=Math.round(totalDone/totalAll*100);
+  const circle=document.getElementById('completion-circle');
+  if(circle)circle.style.strokeDashoffset=125.6-(125.6*pct/100);
+  const pctEl=document.getElementById('completion-pct');
+  if(pctEl)pctEl.textContent=pct+'%';
+  // what's left
+  const left=(amTotal-amDoneToday)+(pmTotal-pmDoneToday)+(pillarAll-pillarDone);
+  const wl=document.getElementById('what-left-pill');
+  if(wl)wl.textContent=left===0?'✦ All done!':'✦ '+left+' left today';
 }
 
 function renderRitualWeekGrid(){
@@ -1519,12 +1850,12 @@ function toggleRitual(ds,session,idx){
   data[ds][session][idx]=!data[ds][session][idx];
   save();
   renderDailyStats();
-  // Also refresh AM/PM columns if viewing today
   const todayDs=getDateStr(dayOffset);
   if(ds===todayDs){
-    renderRitual('am',todayDs);
-    renderRitual('pm',todayDs);
+    renderRitualNew('am',todayDs);
+    renderRitualNew('pm',todayDs);
   }
+  try{renderMiniCalendar();}catch(e){}
 }
 function renderPillarsDaily(ds){
   let totalDone=0,totalAll=0;
@@ -2238,10 +2569,9 @@ function renderDailyNameBanner() {
   const n = NAMES_99[idx];
   if (!n) return;
   const color = PILLAR_COLORS[n.pillar] || '#C4983B';
-  document.getElementById('dnb-arabic').textContent = n.arabic;
-  document.getElementById('dnb-name').textContent = n.name;
-  document.getElementById('dnb-meaning').textContent = n.meaning;
-  document.getElementById('dnb-dua').textContent = n.dua;
+  if(document.getElementById('dnb-arabic'))document.getElementById('dnb-arabic').textContent = n.arabic;
+  if(document.getElementById('dnb-name'))document.getElementById('dnb-name').textContent = n.name;
+  if(document.getElementById('dnb-dua'))document.getElementById('dnb-dua').textContent = n.dua;
   const pillarEl = document.getElementById('dnb-pillar');
   if (pillarEl) {
     pillarEl.textContent = n.pillar;
