@@ -913,9 +913,32 @@ body{
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
   <!-- Header -->
-  <div class="daily-header">
-    <h2 id="daily-title">Daily Flow</h2>
-    <div class="daily-header-right">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:5px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;padding:4px 10px">
+          <span style="font-size:11px;color:var(--text-tertiary)">🔥 Streak</span>
+          <span style="font-size:12px;font-weight:600;color:var(--gold)" id="stat-streak">0</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;padding:4px 10px">
+          <span style="font-size:11px;color:#1A9E8F">☽</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text-primary)" id="stat-mornings">0</span>
+          <span style="font-size:10px;color:var(--text-tertiary)">AM</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;padding:4px 10px">
+          <span style="font-size:11px;color:var(--gold)">◑</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text-primary)" id="stat-evenings">0</span>
+          <span style="font-size:10px;color:var(--text-tertiary)">PM</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;padding:4px 10px">
+          <span style="font-size:11px;color:var(--text-tertiary)">✦</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text-primary)" id="stat-fulldays">0</span>
+          <span style="font-size:10px;color:var(--text-tertiary)">Full</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
       <button class="day-nav-btn" onclick="changeDay(-1)">← prev</button>
       <span class="day-label" id="daily-day-label"></span>
       <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
@@ -933,13 +956,7 @@ body{
     <div class="name-card-pillar" id="dnb-pillar"></div>
   </div>
 
-  <!-- Stats Row -->
-  <div class="stats-row" id="daily-stats-row">
-    <div class="stat-box"><div class="stat-box-num" id="stat-streak">0</div><div class="stat-box-lbl">Day Streak</div></div>
-    <div class="stat-box"><div class="stat-box-num" id="stat-mornings">0</div><div class="stat-box-lbl">Mornings Done</div></div>
-    <div class="stat-box"><div class="stat-box-num" id="stat-evenings">0</div><div class="stat-box-lbl">Evenings Done</div></div>
-    <div class="stat-box"><div class="stat-box-num" id="stat-fulldays">0</div><div class="stat-box-lbl">Full Days</div></div>
-  </div>
+
 
   <!-- Week at a glance -->
   <div class="week-glance">
@@ -1171,11 +1188,11 @@ let syncTimeout = null;
 
 // ── DATA ──
 const PILLARS=[
-  {id:'life',name:'Me Life',icon:'✦',color:'#E8B84B'},
-  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#C4983B'},
-  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#D4A843'},
+  {id:'life',name:'Me Life',icon:'✦',color:'#5BC4C4'},
+  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#22C55E'},
+  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#E8B84B'},
   {id:'td',name:'Tiger + Dragon',icon:'◉',color:'#E8733A'},
-  {id:'myc',name:'Mycelink',icon:'⬡',color:'#B8943A'}
+  {id:'myc',name:'Mycelink',icon:'⬡',color:'#3B5FC4'}
 ];
 const AM_STEPS=[
   {title:'Cold wudu + pray Fajr',time:'10 min'},
