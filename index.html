@@ -1034,6 +1034,8 @@ body{
 .mini-add-input:focus{border-color:var(--gold);}
 .mini-add-time{width:90px;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:6px 10px;font-size:12px;color:var(--text-primary);font-family:var(--font-body);outline:none;}
 .mini-add-btn-sm{background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--font-body);font-weight:500;white-space:nowrap;}
+.mini-color-dot{transition:transform .15s,outline .15s;}
+.mini-color-dot.mcd-active{outline:2px solid #fff;outline-offset:2px;transform:scale(1.25);}
 
 </style>
 </head>
@@ -2640,14 +2642,58 @@ function renderDayDetail(dateStr) {
     </div>
     <div class="day-detail-section" style="margin-top:10px">
       <div class="day-detail-section-title">Events</div>
-      ${events.length ? events.map(e => `<div class="day-detail-item"><div class="day-detail-dot" style="background:${COLOR_MAP[e.color]?.hex||'#C4983B'}"></div>${e.time?e.time+' · ':''}${e.title}</div>`).join('') : '<div style="font-size:11px;color:var(--text-tertiary)">No events</div>'}
-      <div class="mini-add-event" style="margin-top:8px">
-        <input class="mini-add-input" id="mini-event-title" placeholder="Add event..." />
-        <input class="mini-add-time" id="mini-event-time" placeholder="Time" />
-        <button class="mini-add-btn-sm" onclick="addMiniEvent('${dateStr}')">+ Add</button>
+      ${events.length ? events.map(e => `
+        <div class="day-detail-item" style="gap:8px">
+          <div style="width:10px;height:10px;border-radius:50%;flex-shrink:0;background:${COLOR_MAP[e.color]?.hex||'#E8B84B'}"></div>
+          <span style="flex:1">${e.time?'<span style=\"color:var(--text-tertiary);font-size:11px\">'+e.time+'&nbsp;&middot;&nbsp;</span>':''}${e.title}</span>
+          <button onclick="deleteMiniEvent('${dateStr}','${e.id}')" style="background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:11px;padding:0;opacity:0.5">&#x2715;</button>
+        </div>`).join('') : '<div style="font-size:11px;color:var(--text-tertiary);padding:4px 0">No events yet</div>'}
+      <div style="margin-top:10px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+          ${Object.entries(COLOR_MAP).map(([k,v])=>`
+            <div data-color="${k}" onclick="selectMiniColor(this,'${dateStr}')" title="${k}"
+              style="width:16px;height:16px;border-radius:50%;background:${v.hex};cursor:pointer;transition:transform .15s;flex-shrink:0;outline:2px solid transparent;outline-offset:2px"
+              class="mini-color-dot${k==='gold'?' mcd-active':''}"></div>`).join('')}
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <input class="mini-add-input" id="mini-event-title" placeholder="Add event..." />
+          <input class="mini-add-time" id="mini-event-time" placeholder="Time" style="width:80px" />
+          <button class="mini-add-btn-sm" onclick="addMiniEvent('${dateStr}')">+ Add</button>
+        </div>
       </div>
     </div>
+    <div class="day-detail-section" style="margin-top:14px;grid-column:1/-1">
+      <div class="day-detail-section-title" style="margin-bottom:6px">&#10022; Diary</div>
+      <textarea id="diary-${dateStr}" placeholder="Write freely&#8230; this is your space."
+        style="width:100%;min-height:120px;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;resize:vertical;line-height:1.7;transition:border-color .2s"
+        onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--charcoal-border)';saveDiary('${dateStr}',this.value)"
+      >${(data[dateStr]&&data[dateStr].diary)||''}</textarea>
+    </div>
   `;
+}
+
+let miniSelectedColor = 'gold';
+
+function selectMiniColor(el, dateStr) {
+  document.querySelectorAll('.mini-color-dot').forEach(d => {
+    d.style.outline = '2px solid transparent';
+    d.style.transform = 'scale(1)';
+  });
+  el.style.outline = '2px solid #fff';
+  el.style.transform = 'scale(1.25)';
+  miniSelectedColor = el.getAttribute('data-color');
+}
+
+function deleteMiniEvent(dateStr, id) {
+  if (!data.calendar || !data.calendar[dateStr]) return;
+  data.calendar[dateStr] = data.calendar[dateStr].filter(e => e.id !== id);
+  save(); renderMiniCalendar(); renderDayDetail(dateStr);
+}
+
+function saveDiary(dateStr, text) {
+  if (!data[dateStr]) data[dateStr] = {};
+  data[dateStr].diary = text;
+  save();
 }
 
 function addMiniEvent(dateStr) {
@@ -2656,10 +2702,7 @@ function addMiniEvent(dateStr) {
   const time = document.getElementById('mini-event-time').value.trim();
   if (!data.calendar) data.calendar = {};
   if (!data.calendar[dateStr]) data.calendar[dateStr] = [];
-  // Read active color from picker
-  const activeDot = document.querySelector('#event-color-picker-'+dateStr+' .ecp-dot[style*="scale(1.2)"]') || 
-                    document.querySelector('#event-color-picker-'+dateStr+' .ecp-dot[style*="2.5px"]');
-  const color = activeDot ? activeDot.getAttribute('data-color') : (selectedEventColor || 'rose');
+  const color = miniSelectedColor || 'gold';
   data.calendar[dateStr].push({id: Date.now()+'', title, time, color});
   save();
   renderMiniCalendar();
@@ -2769,11 +2812,18 @@ let calSelectedDate=fmt(new Date());
 let selectedEventColor='gold';
 
 const COLOR_MAP={
-  gold:{bg:'var(--gold-dim)',text:'var(--gold)',hex:'#C4983B'},
-  coral:{bg:'#E8733A20',text:'#E8733A',hex:'#E8733A'},
-  blue:{bg:'#3B8FC420',text:'#3B8FC4',hex:'#3B8FC4'},
-  purple:{bg:'#7F77DD20',text:'#7F77DD',hex:'#7F77DD'},
-  green:{bg:'#22C55E20',text:'#22C55E',hex:'#22C55E'}
+  gold:   {bg:'#E8B84B20',text:'#E8B84B',hex:'#E8B84B'},
+  rose:   {bg:'#FB718520',text:'#FB7185',hex:'#FB7185'},
+  violet: {bg:'#A78BFA20',text:'#A78BFA',hex:'#A78BFA'},
+  sky:    {bg:'#38BDF820',text:'#38BDF8',hex:'#38BDF8'},
+  lime:   {bg:'#A3E63520',text:'#A3E635',hex:'#A3E635'},
+  pink:   {bg:'#F472B620',text:'#F472B6',hex:'#F472B6'},
+  amber:  {bg:'#FB923C20',text:'#FB923C',hex:'#FB923C'},
+  indigo: {bg:'#818CF820',text:'#818CF8',hex:'#818CF8'},
+  red:    {bg:'#F8717120',text:'#F87171',hex:'#F87171'},
+  cyan:   {bg:'#22D3EE20',text:'#22D3EE',hex:'#22D3EE'},
+  fuchsia:{bg:'#E879F920',text:'#E879F9',hex:'#E879F9'},
+  white:  {bg:'#FFFFFF15',text:'#E2DDD0',hex:'#E2DDD0'}
 };
 
 function selectEventColor(el){
