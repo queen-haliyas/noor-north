@@ -407,6 +407,7 @@ body{
   top:0;
   z-index:150;
   margin-left:190px;
+  transition:margin-left .25s ease;
 }
 @media(max-width:700px){.affirmation-bar{margin-left:54px;}}
 .affirmation-text{
@@ -446,6 +447,7 @@ body{
   justify-content:space-between;
   gap:1rem;
   margin-left:190px;
+  transition:margin-left .25s ease;
 }
 @media(max-width:700px){.site-header{margin-left:54px;}}
 .logo{display:flex;align-items:baseline;gap:10px;}
@@ -485,7 +487,7 @@ body{
 .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* ── PAGES ── */
-.page{display:none;padding:1.5rem 2rem 1.5rem 2rem;max-width:1200px;margin:0 auto;}
+.page{display:none;padding:1.5rem 2rem 1.5rem calc(190px + 2rem);max-width:100%;margin:0;transition:padding-left .25s ease;}
 .page.active{display:block;}
 
 /* ── DAILY FLOW ── */
@@ -1251,6 +1253,8 @@ body{
 body.sidebar-collapsed .site-header{margin-left:54px;}
 body.sidebar-collapsed .affirmation-bar{margin-left:54px;}
 body.sidebar-collapsed .app-shell{margin-left:54px;}
+body.sidebar-collapsed .page{padding-left:calc(54px + 2rem);}
+body.sidebar-collapsed #page-notes{padding-left:54px !important;}
 
 /* Smooth transitions on shifted elements */
 .site-header{transition:margin-left .25s ease;}
@@ -1602,7 +1606,7 @@ body.sidebar-collapsed .app-shell{margin-left:54px;}
 <!-- ══════════════════════════════════════
      NOTES PAGE
 ══════════════════════════════════════ -->
-<div class="page" id="page-notes" style="padding:0;max-width:100%;margin:0;">
+<div class="page" id="page-notes" style="padding:0 0 0 190px;max-width:100%;margin:0;transition:padding-left .25s ease;">
   <div class="notes-page-wrap">
     <!-- LEFT: Note list -->
     <div class="notes-sidebar">
