@@ -4,293 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Noor North — Personal OS</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js">
-// ══ GOOGLE CALENDAR DAY VIEW ══
-let dayViewDate = fmt(new Date());
-let popupClickTime = null;
-let dragState = null;
-let resizeState = null;
-const HOUR_PX = 60; // 60px per hour
-
-function initDayView() {
-  const labelsEl = document.getElementById('time-labels');
-  const slotsEl = document.getElementById('time-slots');
-  if (!labelsEl || !slotsEl) return;
-
-  // Build time labels + slot lines
-  let labelsHTML = '', slotsHTML = '';
-  for (let h = 0; h < 24; h++) {
-    const top = h * HOUR_PX;
-    const label = h === 0 ? '' : (h < 12 ? `${h} am` : h === 12 ? '12 pm' : `${h-12} pm`);
-    labelsHTML += `<div class="time-label" style="top:${top}px">${label}</div>`;
-    // Hour line
-    slotsHTML += `<div class="time-slot-line hour" style="top:${top}px;height:${HOUR_PX}px" data-hour="${h}" data-min="0" onclick="handleSlotClick(event,${h},0)"></div>`;
-    // Half-hour line
-    slotsHTML += `<div class="time-slot-line half" style="top:${top+30}px;height:0" data-hour="${h}" data-min="30" onclick="handleSlotClick(event,${h},30)"></div>`;
-  }
-  labelsEl.innerHTML = labelsHTML;
-  slotsEl.innerHTML = slotsHTML;
-
-  renderDayViewEvents();
-  updateNowLine();
-  setInterval(updateNowLine, 60000);
-
-  // Scroll to 7am on init
-  setTimeout(() => {
-    const scroll = document.getElementById('day-view-scroll');
-    if (scroll) scroll.scrollTop = 7 * HOUR_PX;
-  }, 100);
-}
-
-function updateNowLine() {
-  const slotsEl = document.getElementById('time-slots');
-  if (!slotsEl) return;
-  const existing = slotsEl.querySelector('.now-line');
-  if (existing) existing.remove();
-  if (dayViewDate !== fmt(new Date())) return;
-  const now = new Date();
-  const top = (now.getHours() * 60 + now.getMinutes()) * (HOUR_PX / 60);
-  const line = document.createElement('div');
-  line.className = 'now-line';
-  line.style.top = top + 'px';
-  line.innerHTML = '<div class="now-dot"></div>';
-  slotsEl.appendChild(line);
-}
-
-function renderDayViewEvents() {
-  const slotsEl = document.getElementById('time-slots');
-  if (!slotsEl) return;
-  // Remove existing event blocks
-  slotsEl.querySelectorAll('.day-event-block').forEach(e => e.remove());
-
-  const events = (data.calendar && data.calendar[dayViewDate]) || [];
-  events.forEach(ev => {
-    if (!ev.startMin && ev.startMin !== 0) {
-      // Parse from time string if no startMin
-      if (ev.time) {
-        const parts = ev.time.split(':');
-        ev.startMin = parseInt(parts[0]||0)*60 + parseInt(parts[1]||0);
-        ev.endMin = ev.startMin + (ev.durationMin || 60);
-      } else {
-        ev.startMin = 9 * 60;
-        ev.endMin = 10 * 60;
-      }
-    }
-    if (!ev.endMin) ev.endMin = ev.startMin + (ev.durationMin || 60);
-    createEventBlock(ev);
-  });
-
-  // Update header
-  const d = new Date(dayViewDate + 'T12:00:00');
-  const titleEl = document.getElementById('day-view-title');
-  const dateEl = document.getElementById('day-view-date');
-  if (titleEl) titleEl.textContent = dayViewDate === fmt(new Date()) ? 'Today' : d.toLocaleDateString('en-GB',{weekday:'long'});
-  if (dateEl) dateEl.textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
-}
-
-function createEventBlock(ev) {
-  const slotsEl = document.getElementById('time-slots');
-  if (!slotsEl) return;
-  const top = ev.startMin * (HOUR_PX / 60);
-  const height = Math.max((ev.endMin - ev.startMin) * (HOUR_PX / 60), 20);
-  const color = COLOR_MAP[ev.color]?.hex || '#E8B84B';
-  const startLabel = minToTime(ev.startMin);
-  const endLabel = minToTime(ev.endMin);
-
-  const block = document.createElement('div');
-  block.className = 'day-event-block';
-  block.id = 'ev-' + ev.id;
-  block.style.cssText = `top:${top}px;height:${height}px;background:${color}22;border-left-color:${color};color:${color};`;
-  block.innerHTML = `
-    <button class="day-event-delete" onclick="deleteDayEvent('${ev.id}')">✕</button>
-    <div class="day-event-title">${ev.title}</div>
-    <div class="day-event-time">${startLabel} – ${endLabel}</div>
-    <div class="day-event-resize" data-id="${ev.id}"></div>
-  `;
-
-  // Drag to move
-  block.addEventListener('mousedown', e => {
-    if (e.target.classList.contains('day-event-resize') || e.target.classList.contains('day-event-delete')) return;
-    e.preventDefault();
-    const startY = e.clientY;
-    const origTop = parseInt(block.style.top);
-    block.classList.add('dragging');
-    dragState = {id: ev.id, startY, origTop, block};
-  });
-
-  // Resize handle
-  const resizeHandle = block.querySelector('.day-event-resize');
-  resizeHandle.addEventListener('mousedown', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    const startY = e.clientY;
-    const origHeight = parseInt(block.style.height);
-    resizeState = {id: ev.id, startY, origHeight, block};
-  });
-
-  slotsEl.appendChild(block);
-}
-
-// Global mouse move + up for drag & resize
-document.addEventListener('mousemove', e => {
-  if (dragState) {
-    const dy = e.clientY - dragState.startY;
-    const newTop = Math.max(0, Math.min(dragState.origTop + dy, 24*HOUR_PX - 20));
-    const snapped = Math.round(newTop / (HOUR_PX/4)) * (HOUR_PX/4); // snap to 15min
-    dragState.block.style.top = snapped + 'px';
-  }
-  if (resizeState) {
-    const dy = e.clientY - resizeState.startY;
-    const newH = Math.max(HOUR_PX/4, resizeState.origHeight + dy);
-    const snapped = Math.round(newH / (HOUR_PX/4)) * (HOUR_PX/4);
-    resizeState.block.style.height = snapped + 'px';
-  }
-});
-
-document.addEventListener('mouseup', e => {
-  if (dragState) {
-    const {id, block} = dragState;
-    const newTop = parseInt(block.style.top);
-    const newStartMin = Math.round(newTop / (HOUR_PX/60));
-    updateEventTime(id, newStartMin, null);
-    dragState = null;
-    block.classList.remove('dragging');
-  }
-  if (resizeState) {
-    const {id, block} = resizeState;
-    const newHeight = parseInt(block.style.height);
-    const durationMin = Math.round(newHeight / (HOUR_PX/60));
-    updateEventDuration(id, durationMin);
-    resizeState = null;
-  }
-});
-
-function updateEventTime(id, newStartMin, newEndMin) {
-  if (!data.calendar || !data.calendar[dayViewDate]) return;
-  const ev = data.calendar[dayViewDate].find(e => e.id === id);
-  if (!ev) return;
-  const dur = (ev.endMin || ev.startMin+60) - ev.startMin;
-  ev.startMin = newStartMin;
-  ev.endMin = newEndMin || (newStartMin + dur);
-  ev.time = minToTime(newStartMin);
-  ev.durationMin = ev.endMin - ev.startMin;
-  save();
-  renderDayViewEvents();
-  renderDayDetail(dayViewDate);
-}
-
-function updateEventDuration(id, durationMin) {
-  if (!data.calendar || !data.calendar[dayViewDate]) return;
-  const ev = data.calendar[dayViewDate].find(e => e.id === id);
-  if (!ev) return;
-  ev.durationMin = durationMin;
-  ev.endMin = ev.startMin + durationMin;
-  save();
-  renderDayViewEvents();
-}
-
-function deleteDayEvent(id) {
-  if (!data.calendar || !data.calendar[dayViewDate]) return;
-  data.calendar[dayViewDate] = data.calendar[dayViewDate].filter(e => e.id !== id);
-  save();
-  renderDayViewEvents();
-  renderDayDetail(dayViewDate);
-  renderMiniCalendar();
-  showToast('Event deleted', '#E8733A');
-}
-
-function handleSlotClick(e, hour, min) {
-  if (dragState || resizeState) return;
-  e.stopPropagation();
-  popupClickTime = hour * 60 + min;
-  openEventPopup(popupClickTime);
-}
-
-function openEventPopup(startMin) {
-  const overlay = document.getElementById('event-popup-overlay');
-  if (!overlay) return;
-  document.getElementById('popup-event-title').value = '';
-  document.getElementById('popup-start-time').value = minToTime(startMin);
-  document.getElementById('popup-end-time').value = minToTime(startMin + 60);
-  // Build color dots
-  const colorsEl = document.getElementById('popup-colors');
-  if (colorsEl) {
-    colorsEl.innerHTML = Object.entries(COLOR_MAP).map(([k,v]) =>
-      `<div class="event-popup-color-dot${k==='gold'?' selected':''}" data-color="${k}"
-        style="background:${v.hex}" onclick="selectPopupColor(this)" title="${k}"></div>`
-    ).join('');
-  }
-  overlay.style.display = 'flex';
-  setTimeout(() => document.getElementById('popup-event-title').focus(), 50);
-}
-
-function selectPopupColor(el) {
-  document.querySelectorAll('.event-popup-color-dot').forEach(d => d.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function closeEventPopup(e) {
-  if (e && e.target !== document.getElementById('event-popup-overlay')) return;
-  document.getElementById('event-popup-overlay').style.display = 'none';
-}
-
-function savePopupEvent() {
-  const title = document.getElementById('popup-event-title').value.trim();
-  if (!title) { document.getElementById('popup-event-title').focus(); return; }
-  const startStr = document.getElementById('popup-start-time').value.trim();
-  const endStr = document.getElementById('popup-end-time').value.trim();
-  const selectedDot = document.querySelector('.event-popup-color-dot.selected');
-  const color = selectedDot ? selectedDot.getAttribute('data-color') : 'gold';
-  const startMin = timeToMin(startStr) || popupClickTime || 9*60;
-  const endMin = timeToMin(endStr) || (startMin + 60);
-  if (!data.calendar) data.calendar = {};
-  if (!data.calendar[dayViewDate]) data.calendar[dayViewDate] = [];
-  const ev = {
-    id: Date.now()+'',
-    title, color,
-    time: minToTime(startMin),
-    startMin, endMin,
-    durationMin: endMin - startMin
-  };
-  data.calendar[dayViewDate].push(ev);
-  save();
-  document.getElementById('event-popup-overlay').style.display = 'none';
-  renderDayViewEvents();
-  renderDayDetail(dayViewDate);
-  renderMiniCalendar();
-  showToast('✦ ' + title + ' added', COLOR_MAP[color]?.hex || '#E8B84B');
-}
-
-function minToTime(min) {
-  const h = Math.floor(min / 60) % 24;
-  const m = min % 60;
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-}
-
-function timeToMin(str) {
-  if (!str) return null;
-  const parts = str.split(':');
-  return parseInt(parts[0]||0)*60 + parseInt(parts[1]||0);
-}
-
-function switchDayView(dateStr) {
-  dayViewDate = dateStr;
-  renderDayViewEvents();
-  updateNowLine();
-}
-
-function dayViewGoToday() {
-  dayViewDate = fmt(new Date());
-  renderDayViewEvents();
-  updateNowLine();
-  const scroll = document.getElementById('day-view-scroll');
-  if (scroll) {
-    const now = new Date();
-    scroll.scrollTop = Math.max(0, (now.getHours()-1) * HOUR_PX);
-  }
-}
-
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1607,152 +1321,47 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 /* ══ GOOGLE CALENDAR DAY PLANNER ══ */
-.cal-planner-wrap{
-  display:grid;
-  grid-template-columns:1fr 420px;
-  gap:16px;
-  margin-bottom:1rem;
-  align-items:start;
-}
+.cal-planner-wrap{display:grid;grid-template-columns:1fr 400px;gap:16px;margin-bottom:1rem;align-items:start;}
 @media(max-width:1100px){.cal-planner-wrap{grid-template-columns:1fr;}}
-
-/* Day view */
-.day-view-card{
-  background:var(--charcoal-light);
-  border:0.5px solid var(--charcoal-border);
-  border-radius:var(--radius);
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  height:600px;
-}
-.day-view-header{
-  padding:12px 16px;
-  border-bottom:0.5px solid var(--charcoal-border);
-  display:flex;align-items:center;justify-content:space-between;
-  flex-shrink:0;background:#1C1507;
-}
-.day-view-title{
-  font-family:var(--font-display);font-size:16px;
-  font-weight:400;color:var(--text-primary);
-}
-.day-view-date{font-size:12px;color:var(--text-tertiary);}
+.day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:620px;}
+.day-view-header{padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
+.day-view-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);}
+.day-view-date-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px;}
 .day-view-scroll{flex:1;overflow-y:auto;position:relative;}
 .day-view-scroll::-webkit-scrollbar{width:4px;}
 .day-view-scroll::-webkit-scrollbar-thumb{background:var(--charcoal-border);border-radius:2px;}
-
-/* Time grid */
-.day-time-grid{
-  display:grid;
-  grid-template-columns:52px 1fr;
-  position:relative;
-  min-height:1440px; /* 60px per hour × 24 */
-}
-.time-label-col{position:relative;}
-.time-label{
-  position:absolute;right:8px;
-  font-size:10px;color:var(--text-tertiary);
-  transform:translateY(-50%);
-  white-space:nowrap;
-}
-.time-slots-col{
-  position:relative;
-  border-left:0.5px solid var(--charcoal-border);
-}
-.time-slot-line{
-  position:absolute;left:0;right:0;
-  border-top:0.5px solid var(--charcoal-border);
-  cursor:pointer;
-  transition:background .1s;
-}
+.day-time-grid{display:grid;grid-template-columns:48px 1fr;min-height:1440px;position:relative;}
+.time-label{position:absolute;right:6px;font-size:9px;color:var(--text-tertiary);transform:translateY(-50%);white-space:nowrap;}
+.time-slots-col{position:relative;border-left:0.5px solid var(--charcoal-border);}
+.time-slot-line{position:absolute;left:0;right:0;cursor:pointer;transition:background .1s;}
 .time-slot-line:hover{background:#E8B84B08;}
-.time-slot-line.hour{border-top-color:var(--charcoal-border);}
-.time-slot-line.half{border-top-style:dashed;border-top-color:#2E2510;opacity:.6;}
-
-/* Current time indicator */
-.now-line{
-  position:absolute;left:0;right:0;z-index:10;
-  border-top:2px solid #E8733A;
-  pointer-events:none;
-}
-.now-dot{
-  position:absolute;left:-5px;top:-5px;
-  width:10px;height:10px;border-radius:50%;
-  background:#E8733A;
-}
-
-/* Calendar events on day view */
-.day-event-block{
-  position:absolute;left:4px;right:4px;
-  border-radius:6px;padding:4px 8px;
-  font-size:11px;font-weight:500;
-  cursor:grab;user-select:none;
-  overflow:hidden;box-shadow:0 2px 8px #00000030;
-  border-left:3px solid rgba(255,255,255,0.3);
-  transition:box-shadow .15s,opacity .15s;
-  z-index:5;
-}
-.day-event-block:hover{box-shadow:0 4px 16px #00000050;opacity:.95;}
+.time-slot-line.hour{border-top:0.5px solid var(--charcoal-border);}
+.time-slot-line.half{border-top:0.5px dashed #2E2510;}
+.now-line{position:absolute;left:0;right:0;border-top:2px solid #E8733A;z-index:10;pointer-events:none;}
+.now-dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#E8733A;}
+.day-event-block{position:absolute;left:4px;right:4px;border-radius:6px;padding:4px 8px;font-size:11px;cursor:grab;user-select:none;overflow:hidden;box-shadow:0 2px 8px #00000030;border-left:3px solid rgba(255,255,255,0.3);z-index:5;transition:box-shadow .15s;}
+.day-event-block:hover{box-shadow:0 4px 16px #00000050;}
 .day-event-block.dragging{cursor:grabbing;opacity:.8;z-index:20;box-shadow:0 8px 24px #00000060;}
 .day-event-title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.day-event-time{font-size:10px;opacity:.8;margin-top:1px;}
-.day-event-delete{
-  position:absolute;top:3px;right:4px;
-  background:none;border:none;cursor:pointer;
-  color:rgba(255,255,255,0.7);font-size:11px;
-  opacity:0;transition:opacity .15s;padding:0;line-height:1;
-}
-.day-event-block:hover .day-event-delete{opacity:1;}
-.day-event-resize{
-  position:absolute;bottom:0;left:0;right:0;height:8px;
-  cursor:ns-resize;background:rgba(255,255,255,0.1);
-  border-radius:0 0 6px 6px;
-}
-
-/* Event popup */
-.event-popup-overlay{
-  position:fixed;inset:0;z-index:1000;
-  background:#00000060;backdrop-filter:blur(2px);
-  display:flex;align-items:center;justify-content:center;
-}
-.event-popup{
-  background:var(--charcoal-light);
-  border:0.5px solid var(--charcoal-border);
-  border-radius:var(--radius);
-  padding:24px;width:340px;
-  box-shadow:0 20px 60px #00000060;
-  animation:popupIn .2s ease;
-}
-@keyframes popupIn{from{opacity:0;transform:scale(.95)translateY(8px);}to{opacity:1;transform:scale(1)translateY(0);}}
-.event-popup-title{
-  font-family:var(--font-display);font-size:18px;
-  font-weight:300;color:var(--text-primary);margin-bottom:16px;
-}
-.event-popup-field{margin-bottom:12px;}
-.event-popup-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);margin-bottom:5px;}
-.event-popup-input{
-  width:100%;background:var(--charcoal-mid);
-  border:0.5px solid var(--charcoal-border);border-radius:8px;
-  padding:9px 12px;font-size:13px;color:var(--text-primary);
-  font-family:var(--font-body);outline:none;transition:border-color .2s;
-  box-sizing:border-box;
-}
-.event-popup-input:focus{border-color:var(--gold);}
-.event-popup-colors{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
-.event-popup-color-dot{
-  width:20px;height:20px;border-radius:50%;cursor:pointer;
-  transition:transform .15s,outline .15s;outline:2px solid transparent;outline-offset:2px;
-}
-.event-popup-color-dot.selected{outline-color:#fff;transform:scale(1.2);}
-.event-popup-btns{display:flex;gap:8px;margin-top:20px;}
-.event-popup-btn{
-  flex:1;padding:9px;border-radius:8px;border:none;
-  font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;
-  transition:opacity .15s;
-}
-.event-popup-btn.primary{background:var(--gold);color:#1A1508;}
-.event-popup-btn.secondary{background:var(--charcoal-mid);color:var(--text-secondary);border:0.5px solid var(--charcoal-border);}
-.event-popup-btn:hover{opacity:.85;}
+.day-event-time-label{font-size:10px;opacity:.8;margin-top:1px;}
+.day-event-del{position:absolute;top:2px;right:4px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);font-size:10px;opacity:0;transition:opacity .15s;padding:0;}
+.day-event-block:hover .day-event-del{opacity:1;}
+.day-event-resize-handle{position:absolute;bottom:0;left:0;right:0;height:8px;cursor:ns-resize;border-radius:0 0 6px 6px;}
+.event-popup-overlay{position:fixed;inset:0;z-index:2000;background:#00000070;backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;}
+.event-popup{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:24px;width:320px;box-shadow:0 20px 60px #00000080;animation:popIn .2s ease;}
+@keyframes popIn{from{opacity:0;transform:scale(.94) translateY(8px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.ep-title{font-family:var(--font-display);font-size:18px;font-weight:300;color:var(--text-primary);margin-bottom:16px;}
+.ep-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);margin-bottom:4px;}
+.ep-input{width:100%;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;transition:border-color .2s;box-sizing:border-box;}
+.ep-input:focus{border-color:var(--gold);}
+.ep-field{margin-bottom:12px;}
+.ep-colors{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+.ep-cdot{width:18px;height:18px;border-radius:50%;cursor:pointer;transition:transform .15s,outline .15s;outline:2px solid transparent;outline-offset:2px;flex-shrink:0;}
+.ep-cdot.sel{outline-color:#fff;transform:scale(1.25);}
+.ep-btns{display:flex;gap:8px;margin-top:18px;}
+.ep-btn{flex:1;padding:9px;border-radius:8px;border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;}
+.ep-btn.ok{background:var(--gold);color:#1A1508;}
+.ep-btn.cancel{background:var(--charcoal-mid);color:var(--text-secondary);border:0.5px solid var(--charcoal-border);}
 
 </style>
 </head>
@@ -1967,10 +1576,9 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
   </div>
 
-  <!-- CALENDAR + DAY PLANNER SIDE BY SIDE -->
+  <!-- CALENDAR + DAY VIEW SIDE BY SIDE -->
   <div class="cal-planner-wrap">
-
-    <!-- LEFT: Month calendar + day detail -->
+    <!-- LEFT: month calendar + day detail -->
     <div>
       <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border)">
@@ -1989,51 +1597,41 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
           <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:70px;gap:4px"></div>
         </div>
       </div>
-      <!-- Day detail panel below calendar -->
       <div id="day-detail-panel" style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;margin-bottom:2rem"></div>
     </div>
-
-    <!-- RIGHT: Google Calendar day view -->
+    <!-- RIGHT: Day view -->
     <div class="day-view-card">
       <div class="day-view-header">
         <div>
           <div class="day-view-title" id="day-view-title">Today</div>
-          <div class="day-view-date" id="day-view-date"></div>
+          <div class="day-view-date-sub" id="day-view-date-sub"></div>
         </div>
         <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
       </div>
       <div class="day-view-scroll" id="day-view-scroll">
-        <div class="day-time-grid" id="day-time-grid">
-          <div class="time-label-col" id="time-labels"></div>
-          <div class="time-slots-col" id="time-slots"></div>
+        <div class="day-time-grid">
+          <div id="day-time-labels" style="position:relative"></div>
+          <div class="time-slots-col" id="day-time-slots"></div>
         </div>
       </div>
     </div>
-
   </div>
-
-  <!-- Event popup -->
-  <div class="event-popup-overlay" id="event-popup-overlay" style="display:none" onclick="closeEventPopup(event)">
-    <div class="event-popup" onclick="event.stopPropagation()">
-      <div class="event-popup-title">✦ New Event</div>
-      <div class="event-popup-field">
-        <div class="event-popup-label">Event name</div>
-        <input class="event-popup-input" id="popup-event-title" placeholder="e.g. Client call, Prayer, Gym..." onkeydown="if(event.key==='Enter')savePopupEvent()"/>
-      </div>
-      <div class="event-popup-field">
-        <div class="event-popup-label">Time</div>
+  <!-- Event add popup -->
+  <div class="event-popup-overlay" id="ev-popup" style="display:none" onclick="if(event.target===this)closeEvPopup()">
+    <div class="event-popup">
+      <div class="ep-title">✦ Add Event</div>
+      <div class="ep-field"><div class="ep-label">Name</div><input class="ep-input" id="ep-name" placeholder="e.g. Prayer, Meeting, Gym..." onkeydown="if(event.key==='Enter')saveEvPopup()"/></div>
+      <div class="ep-field"><div class="ep-label">Time</div>
         <div style="display:flex;gap:8px">
-          <input class="event-popup-input" id="popup-start-time" placeholder="09:00" style="flex:1"/>
-          <input class="event-popup-input" id="popup-end-time" placeholder="10:00" style="flex:1"/>
+          <input class="ep-input" id="ep-start" placeholder="09:00" style="flex:1"/>
+          <span style="align-self:center;color:var(--text-tertiary);font-size:12px">to</span>
+          <input class="ep-input" id="ep-end" placeholder="10:00" style="flex:1"/>
         </div>
       </div>
-      <div class="event-popup-field">
-        <div class="event-popup-label">Colour</div>
-        <div class="event-popup-colors" id="popup-colors"></div>
-      </div>
-      <div class="event-popup-btns">
-        <button class="event-popup-btn secondary" onclick="closeEventPopup()">Cancel</button>
-        <button class="event-popup-btn primary" onclick="savePopupEvent()">Add Event ✦</button>
+      <div class="ep-field"><div class="ep-label">Colour</div><div class="ep-colors" id="ep-colors"></div></div>
+      <div class="ep-btns">
+        <button class="ep-btn cancel" onclick="closeEvPopup()">Cancel</button>
+        <button class="ep-btn ok" onclick="saveEvPopup()">Add ✦</button>
       </div>
     </div>
   </div>
@@ -3738,11 +3336,9 @@ function changeMiniMonth(dir) {
 
 function selectMiniDay(dateStr) {
   miniSelectedDate = dateStr;
-  dayViewDate = dateStr;
+  dvGoToDate(dateStr);
   renderMiniCalendar();
   renderDayDetail(dateStr);
-  renderDayViewEvents();
-  updateNowLine();
 }
 
 function renderDayDetail(dateStr) {
@@ -4644,6 +4240,7 @@ async function attemptLogin() {
     setTimeout(() => {
       try { renderMiniCalendar(); } catch(e) {}
       try { renderDayDetail(fmt(new Date())); } catch(e) {}
+      try { initDayView(); } catch(e) {}
     }, 300);
   } else {
     MASTER_PASSWORD = null; USER_ID = null;
@@ -4704,6 +4301,230 @@ function logout() {
   }
 })();
 
+
+// ══ DAY VIEW ENGINE ══
+const HOUR_H = 60;
+let dvDate = fmt(new Date());
+let dvDragState = null;
+let dvResizeState = null;
+let dvPopupMin = 9*60;
+
+function initDayView() {
+  const labelsEl = document.getElementById('day-time-labels');
+  const slotsEl = document.getElementById('day-time-slots');
+  if (!labelsEl || !slotsEl) return;
+  let lHtml = '', sHtml = '';
+  for (let h = 0; h < 24; h++) {
+    const top = h * HOUR_H;
+    const lbl = h === 0 ? '' : h < 12 ? h+'am' : h === 12 ? '12pm' : (h-12)+'pm';
+    lHtml += `<div class="time-label" style="top:${top}px">${lbl}</div>`;
+    sHtml += `<div class="time-slot-line hour" style="top:${top}px;height:${HOUR_H}px" onclick="dvSlotClick(event,${h},0)"></div>`;
+    sHtml += `<div class="time-slot-line half" style="top:${top+30}px;height:0" onclick="dvSlotClick(event,${h},30)"></div>`;
+  }
+  labelsEl.innerHTML = lHtml;
+  slotsEl.innerHTML = sHtml;
+  dvRenderEvents();
+  dvUpdateNow();
+  setInterval(dvUpdateNow, 60000);
+  setTimeout(() => {
+    const s = document.getElementById('day-view-scroll');
+    if (s) s.scrollTop = 7 * HOUR_H;
+  }, 50);
+  dvUpdateHeader();
+}
+
+function dvUpdateHeader() {
+  const t = document.getElementById('day-view-title');
+  const s = document.getElementById('day-view-date-sub');
+  const d = new Date(dvDate + 'T12:00:00');
+  if (t) t.textContent = dvDate === fmt(new Date()) ? 'Today' : d.toLocaleDateString('en-GB',{weekday:'long'});
+  if (s) s.textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function dvUpdateNow() {
+  const slotsEl = document.getElementById('day-time-slots');
+  if (!slotsEl) return;
+  const old = slotsEl.querySelector('.now-line');
+  if (old) old.remove();
+  if (dvDate !== fmt(new Date())) return;
+  const now = new Date();
+  const top = (now.getHours()*60 + now.getMinutes()) * (HOUR_H/60);
+  const line = document.createElement('div');
+  line.className = 'now-line';
+  line.style.top = top + 'px';
+  line.innerHTML = '<div class="now-dot"></div>';
+  slotsEl.appendChild(line);
+}
+
+function dvRenderEvents() {
+  const slotsEl = document.getElementById('day-time-slots');
+  if (!slotsEl) return;
+  slotsEl.querySelectorAll('.day-event-block').forEach(e => e.remove());
+  const evs = (data.calendar && data.calendar[dvDate]) || [];
+  evs.forEach(ev => {
+    if (ev.startMin == null) {
+      if (ev.time) {
+        const p = ev.time.split(':');
+        ev.startMin = parseInt(p[0]||0)*60 + parseInt(p[1]||0);
+      } else { ev.startMin = 9*60; }
+      ev.endMin = ev.startMin + (ev.durationMin || 60);
+    }
+    if (!ev.endMin) ev.endMin = ev.startMin + (ev.durationMin || 60);
+    dvMakeBlock(ev, slotsEl);
+  });
+  dvUpdateNow();
+}
+
+function dvMakeBlock(ev, slotsEl) {
+  const top = ev.startMin * (HOUR_H/60);
+  const height = Math.max((ev.endMin - ev.startMin)*(HOUR_H/60), 18);
+  const hex = COLOR_MAP[ev.color]?.hex || '#E8B84B';
+  const el = document.createElement('div');
+  el.className = 'day-event-block';
+  el.id = 'dvev-' + ev.id;
+  el.style.cssText = `top:${top}px;height:${height}px;background:${hex}28;border-left-color:${hex};color:${hex};`;
+  el.innerHTML = `<button class="day-event-del" onclick="dvDeleteEvent('${ev.id}')">✕</button>
+    <div class="day-event-title">${ev.title}</div>
+    <div class="day-event-time-label">${dvMinToTime(ev.startMin)} – ${dvMinToTime(ev.endMin)}</div>
+    <div class="day-event-resize-handle" data-id="${ev.id}"></div>`;
+  // Drag
+  el.addEventListener('mousedown', e => {
+    if (e.target.classList.contains('day-event-resize-handle') || e.target.classList.contains('day-event-del')) return;
+    e.preventDefault();
+    dvDragState = {id:ev.id, startY:e.clientY, origTop:parseInt(el.style.top), el};
+    el.classList.add('dragging');
+  });
+  // Resize
+  el.querySelector('.day-event-resize-handle').addEventListener('mousedown', e => {
+    e.preventDefault(); e.stopPropagation();
+    dvResizeState = {id:ev.id, startY:e.clientY, origH:parseInt(el.style.height), el};
+  });
+  slotsEl.appendChild(el);
+}
+
+document.addEventListener('mousemove', e => {
+  if (dvDragState) {
+    const dy = e.clientY - dvDragState.startY;
+    const raw = dvDragState.origTop + dy;
+    const snapped = Math.round(raw / (HOUR_H/4)) * (HOUR_H/4);
+    dvDragState.el.style.top = Math.max(0, Math.min(snapped, 23*HOUR_H)) + 'px';
+  }
+  if (dvResizeState) {
+    const dy = e.clientY - dvResizeState.startY;
+    const raw = dvResizeState.origH + dy;
+    const snapped = Math.max(HOUR_H/4, Math.round(raw/(HOUR_H/4))*(HOUR_H/4));
+    dvResizeState.el.style.height = snapped + 'px';
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  if (dvDragState) {
+    const {id, el} = dvDragState;
+    el.classList.remove('dragging');
+    const newStart = Math.round(parseInt(el.style.top) / (HOUR_H/60));
+    dvUpdateEventTime(id, newStart, null);
+    dvDragState = null;
+  }
+  if (dvResizeState) {
+    const {id, el} = dvResizeState;
+    const dur = Math.round(parseInt(el.style.height) / (HOUR_H/60));
+    dvUpdateEventDur(id, dur);
+    dvResizeState = null;
+  }
+});
+
+function dvUpdateEventTime(id, newStart, newEnd) {
+  if (!data.calendar?.[dvDate]) return;
+  const ev = data.calendar[dvDate].find(e => e.id === id);
+  if (!ev) return;
+  const dur = (ev.endMin||ev.startMin+60) - ev.startMin;
+  ev.startMin = newStart;
+  ev.endMin = newEnd || newStart + dur;
+  ev.time = dvMinToTime(newStart);
+  ev.durationMin = ev.endMin - ev.startMin;
+  save(); dvRenderEvents(); renderDayDetail(dvDate); renderMiniCalendar();
+}
+
+function dvUpdateEventDur(id, dur) {
+  if (!data.calendar?.[dvDate]) return;
+  const ev = data.calendar[dvDate].find(e => e.id === id);
+  if (!ev) return;
+  ev.durationMin = dur; ev.endMin = ev.startMin + dur;
+  save(); dvRenderEvents();
+}
+
+function dvDeleteEvent(id) {
+  if (!data.calendar?.[dvDate]) return;
+  data.calendar[dvDate] = data.calendar[dvDate].filter(e => e.id !== id);
+  save(); dvRenderEvents(); renderDayDetail(dvDate); renderMiniCalendar();
+  showToast('Event deleted', '#E8733A');
+}
+
+function dvSlotClick(e, h, m) {
+  if (dvDragState || dvResizeState) return;
+  e.stopPropagation();
+  dvPopupMin = h*60 + m;
+  openEvPopup(dvPopupMin);
+}
+
+function openEvPopup(startMin) {
+  document.getElementById('ep-name').value = '';
+  document.getElementById('ep-start').value = dvMinToTime(startMin);
+  document.getElementById('ep-end').value = dvMinToTime(startMin + 60);
+  const ce = document.getElementById('ep-colors');
+  if (ce) ce.innerHTML = Object.entries(COLOR_MAP).map(([k,v]) =>
+    `<div class="ep-cdot${k==='gold'?' sel':''}" data-color="${k}" style="background:${v.hex}" onclick="dvPickColor(this)"></div>`
+  ).join('');
+  document.getElementById('ev-popup').style.display = 'flex';
+  setTimeout(() => document.getElementById('ep-name').focus(), 50);
+}
+
+function dvPickColor(el) {
+  document.querySelectorAll('.ep-cdot').forEach(d => d.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function closeEvPopup() {
+  document.getElementById('ev-popup').style.display = 'none';
+}
+
+function saveEvPopup() {
+  const title = document.getElementById('ep-name').value.trim();
+  if (!title) { document.getElementById('ep-name').focus(); return; }
+  const startMin = dvTimeToMin(document.getElementById('ep-start').value) ?? dvPopupMin;
+  const endMin = dvTimeToMin(document.getElementById('ep-end').value) ?? startMin + 60;
+  const sel = document.querySelector('.ep-cdot.sel');
+  const color = sel ? sel.getAttribute('data-color') : 'gold';
+  if (!data.calendar) data.calendar = {};
+  if (!data.calendar[dvDate]) data.calendar[dvDate] = [];
+  const ev = {id:Date.now()+'', title, color, time:dvMinToTime(startMin), startMin, endMin, durationMin:endMin-startMin};
+  data.calendar[dvDate].push(ev);
+  save(); closeEvPopup(); dvRenderEvents(); renderDayDetail(dvDate); renderMiniCalendar();
+  showToast('✦ '+title+' added', COLOR_MAP[color]?.hex||'#E8B84B');
+}
+
+function dvMinToTime(min) {
+  const h = Math.floor(min/60)%24, m = min%60;
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+}
+function dvTimeToMin(str) {
+  if (!str) return null;
+  const p = str.split(':');
+  return parseInt(p[0]||0)*60 + parseInt(p[1]||0);
+}
+
+function dvGoToDate(dateStr) {
+  dvDate = dateStr;
+  dvRenderEvents(); dvUpdateNow(); dvUpdateHeader();
+}
+
+function dayViewGoToday() {
+  dvDate = fmt(new Date());
+  dvRenderEvents(); dvUpdateNow(); dvUpdateHeader();
+  const s = document.getElementById('day-view-scroll');
+  const now = new Date();
+  if (s) s.scrollTop = Math.max(0,(now.getHours()-1)*HOUR_H);
+}
 </script>
 </body>
 </html>
