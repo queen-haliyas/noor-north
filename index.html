@@ -405,8 +405,10 @@ body{
   gap:1rem;
   position:sticky;
   top:0;
-  z-index:200;
+  z-index:150;
+  margin-left:190px;
 }
+@media(max-width:700px){.affirmation-bar{margin-left:54px;}}
 .affirmation-text{
   font-family:var(--font-display);
   font-style:italic;
@@ -443,7 +445,9 @@ body{
   align-items:center;
   justify-content:space-between;
   gap:1rem;
+  margin-left:190px;
 }
+@media(max-width:700px){.site-header{margin-left:54px;}}
 .logo{display:flex;align-items:baseline;gap:10px;}
 .logo-noor{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--emerald);letter-spacing:.05em;}
 .logo-north{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--text-secondary);letter-spacing:.05em;}
@@ -481,7 +485,7 @@ body{
 .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* ── PAGES ── */
-.page{display:none;padding:1.5rem 2rem 1.5rem calc(64px + 2rem);max-width:1464px;margin:0;}
+.page{display:none;padding:1.5rem 2rem 1.5rem 2rem;max-width:1200px;margin:0 auto;}
 .page.active{display:block;}
 
 /* ── DAILY FLOW ── */
@@ -1130,27 +1134,27 @@ body{
 
 /* ══ SIDEBAR NAV (Discord-style) ══ */
 .sidebar-nav{
-  position:fixed;left:0;top:0;bottom:0;width:64px;
+  position:fixed;left:0;top:0;bottom:0;width:190px;
   background:#110E05;border-right:0.5px solid var(--charcoal-border);
-  display:flex;flex-direction:column;align-items:center;
-  padding:12px 0;gap:4px;z-index:200;
-  transition:width .2s ease;
+  display:flex;flex-direction:column;align-items:flex-start;
+  padding:12px 8px;gap:2px;z-index:200;
+  overflow-y:auto;overflow-x:hidden;
 }
-.sidebar-nav:hover{width:180px;}
+.sidebar-nav::-webkit-scrollbar{display:none;}
 .sidebar-logo{
   width:40px;height:40px;border-radius:12px;
   background:linear-gradient(135deg,#C4983B,#E8B84B);
   display:flex;align-items:center;justify-content:center;
   font-family:var(--font-display);font-size:16px;font-weight:600;color:#1A1508;
-  margin-bottom:12px;flex-shrink:0;
+  margin-bottom:12px;flex-shrink:0;margin-left:4px;
 }
 .sidebar-btn{
-  width:44px;height:44px;border-radius:10px;border:none;
+  width:100%;height:40px;border-radius:8px;border:none;
   background:transparent;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;color:var(--text-tertiary);
+  display:flex;align-items:center;gap:10px;padding:0 10px;
+  font-size:16px;color:var(--text-tertiary);
   transition:all .15s;position:relative;
-  flex-shrink:0;overflow:hidden;
+  flex-shrink:0;text-align:left;
 }
 .sidebar-btn:hover,.sidebar-btn.active{
   background:var(--charcoal-light);color:var(--gold);
@@ -1160,15 +1164,23 @@ body{
   width:3px;height:60%;background:var(--gold);border-radius:0 2px 2px 0;
 }
 .sidebar-label{
-  position:absolute;left:52px;white-space:nowrap;
-  font-size:12px;font-weight:500;color:var(--text-primary);
-  opacity:0;pointer-events:none;transition:opacity .15s;
+  font-size:12px;font-weight:500;color:var(--text-secondary);
+  white-space:nowrap;transition:color .15s;
 }
-.sidebar-nav:hover .sidebar-label{opacity:1;}
-.sidebar-divider{width:32px;height:0.5px;background:var(--charcoal-border);margin:6px 0;flex-shrink:0;}
+.sidebar-btn:hover .sidebar-label,.sidebar-btn.active .sidebar-label{color:var(--text-primary);}
+.sidebar-divider{width:100%;height:0.5px;background:var(--charcoal-border);margin:6px 0;flex-shrink:0;}
 
-/* Shift main content right when sidebar is present */
-.app-shell{margin-left:64px;}
+/* Shift main content right */
+.app-shell{margin-left:190px;}
+
+/* Mobile: collapse sidebar */
+@media(max-width:700px){
+  .sidebar-nav{width:54px;align-items:center;padding:12px 4px;}
+  .sidebar-label{display:none;}
+  .sidebar-btn{width:44px;padding:0;justify-content:center;}
+  .sidebar-logo{margin-left:0;}
+  .app-shell{margin-left:54px;}
+}
 
 </style>
 </head>
