@@ -197,12 +197,7 @@ body{
 
 /* ── DAILY FLOW VIEWPORT FIT ── */
 #page-daily {
-  padding: 6px 1.2rem 8px;
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 128px);
-  overflow: hidden;
-  box-sizing: border-box;
+  padding: 1rem 1.5rem 3rem;
 }
 .daily-top-bar {
   display: flex;
@@ -266,19 +261,14 @@ body{
 .daily-main-grid {
   display: grid;
   grid-template-columns: 1fr 320px;
-  gap: 8px;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
+  gap: 10px;
+  align-items: start;
 }
 .daily-cal-col {
   background: var(--charcoal-light);
   border: 0.5px solid var(--charcoal-border);
   border-radius: var(--radius);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 .daily-cal-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -286,16 +276,11 @@ body{
   border-bottom: 0.5px solid var(--charcoal-border);
   flex-shrink: 0;
 }
-.daily-cal-body { padding: 4px 6px; flex: 1; overflow: hidden; }
+.daily-cal-body { padding: 6px 8px; }
 .daily-right-col {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  height: 100%;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--charcoal-border) transparent;
-  min-height: 0;
+  gap: 8px;
 }
 
 /* ritual card new style */
