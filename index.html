@@ -2774,19 +2774,29 @@ function logout() {
   const pw = localStorage.getItem('nn_pw');
   if (uid && pw) {
     MASTER_PASSWORD = pw; USER_ID = uid;
-    const result = await loadFromSupabase();
-    if (result.ok) {
-      document.getElementById('login-overlay').classList.add('hidden');
-      try{renderHeader();}catch(e){}
-      try{renderAffirmationBar();}catch(e){}
-      try{renderDaily();}catch(e){}
-      setTimeout(()=>{
-        try{renderMiniCalendar();}catch(e){}
-        try{renderDayDetail(fmt(new Date()));}catch(e){}
-      },300);
-    } else {
-      MASTER_PASSWORD = null; USER_ID = null;
-    }
+    // Always unlock with local data first so refresh never shows login screen
+    load();
+    document.getElementById('login-overlay').classList.add('hidden');
+    try{renderHeader();}catch(e){}
+    try{renderAffirmationBar();}catch(e){}
+    try{renderDaily();}catch(e){}
+    setTimeout(()=>{
+      try{renderMiniCalendar();}catch(e){}
+      try{renderDayDetail(fmt(new Date()));}catch(e){}
+    },300);
+    // Then sync from Supabase in background — update if newer data exists
+    try {
+      const result = await loadFromSupabase();
+      if (result.ok) {
+        try{renderHeader();}catch(e){}
+        try{renderAffirmationBar();}catch(e){}
+        try{renderDaily();}catch(e){}
+        setTimeout(()=>{
+          try{renderMiniCalendar();}catch(e){}
+          try{renderDayDetail(fmt(new Date()));}catch(e){}
+        },300);
+      }
+    } catch(e) {}
   }
 })();
 
