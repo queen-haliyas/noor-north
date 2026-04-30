@@ -1002,7 +1002,7 @@ body{
 .mini-cal-title{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary);}
 .mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem;}
 .mini-cal-day-hdr{text-align:center;font-size:10px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;padding:4px 0;}
-.mini-cal-cell{min-height:44px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
+.mini-cal-cell{min-height:60px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
 .mini-cal-cell:hover{border-color:var(--gold);}
 .mini-cal-cell.today{border-color:var(--gold);background:#C4983B08;}
 .mini-cal-cell.selected{background:#C4983B12;border-color:var(--gold);}
@@ -1160,7 +1160,7 @@ body{
 
 
   <!-- 3 COLUMNS: Morning | Five Pillars | Evening -->
-  <div style="display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px;margin-bottom:1.2rem;align-items:start">
+  <div style="display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px;margin-bottom:1.2rem;align-items:stretch">
 
     <!-- MORNING RITUAL -->
     <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
@@ -1744,8 +1744,8 @@ function renderRitualWeekGrid(){
   const today=new Date();
   today.setHours(23,59,59,999);
   const dayNames=['MON','TUE','WED','THU','FRI','SAT','SUN'];
-  const amStepNames=['Cold wudu + pray','Meditation','Journal','Read ritual','Walk outside'];
-  const pmStepNames=['Journal wins','Read night ritual','Pray 2 rakats','Body scan','Sleep meditation'];
+  const amStepNames=['Cold Wudu, Tahajjud, Fajr + Dhikr','Breathing Meditation','Journal','Read Morning Ritual','Walk Outside'];
+  const pmStepNames=['Journal — Wins','Pray 2 Rakats','Read Night Ritual','Body Scan Meditation','Phone Other Side'];
 
   function makeCell(ds, session, stepIdx, d) {
     const dd = data[ds];
@@ -2599,8 +2599,8 @@ function renderDayDetail(dateStr) {
   const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
   const dd = data[dateStr] || {};
-  const amSteps = ['Cold wudu + pray','Meditation','Journal','Read morning ritual','Walk outside'];
-  const pmSteps = ['Journal — wins, systems','Read night ritual','Pray 2 rakats','Healing light body scan','Phone across the room'];
+  const amSteps = ['Cold Wudu, Tahajjud, Fajr + Dhikr','Breathing Meditation','Journal — Donate £1 · Gratitude ×3 · Manifested ×3 · MIT','Read Morning Ritual','Walk Outside In The Cold Air'];
+  const pmSteps = ['Journal — Wins, Systems, Evidence, Clear RAM','Pray 2 Rakats — Praise, Forgiveness & Wants','Read Night Ritual','Healing Body Scan Meditation','Put Phone The Other Side Of The Room'];
   const amDone = amSteps.filter((_,i) => dd.am && dd.am[i]);
   const pmDone = pmSteps.filter((_,i) => dd.pm && dd.pm[i]);
   
@@ -2692,7 +2692,7 @@ function renderMiniCalendar() {
     const isSelected = ds === miniSelectedDate;
     const cell = document.createElement('div');
     cell.className = 'mini-cal-cell' + (isToday?' today':'') + (isSelected?' selected':'');
-    cell.style.minHeight = '36px';
+    cell.style.minHeight = '60px';
     
     const dateDiv = document.createElement('div');
     dateDiv.className = 'mini-cal-date' + (isToday?' today-num':'');
