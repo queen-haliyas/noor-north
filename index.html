@@ -1269,6 +1269,56 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
   .app-shell{margin-left:54px;}
 }
 
+
+/* ── PLANNING: Timeline diagram ── */
+.planning-timeline{margin-bottom:2rem;}
+.timeline-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-tertiary);margin-bottom:16px;}
+.timeline-track{position:relative;padding-left:24px;}
+.timeline-track::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent);}
+.timeline-node{position:relative;margin-bottom:20px;}
+.timeline-node::before{content:'';position:absolute;left:-20px;top:6px;width:10px;height:10px;border-radius:50%;border:2px solid var(--gold);background:var(--charcoal);transition:background .2s;}
+.timeline-node:first-child::before{background:var(--gold);}
+.timeline-node-title{font-size:13px;font-weight:500;color:var(--text-primary);}
+.timeline-node-sub{font-size:11px;color:var(--text-tertiary);margin-top:2px;}
+.timeline-node-goals{font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.6;}
+
+/* ── PLANNING: Mind map visual ── */
+.mindmap-wrap{overflow-x:auto;margin-bottom:1rem;}
+
+/* ── NAMES: Sunburst ── */
+.names-sunburst-wrap{display:flex;justify-content:center;margin-bottom:1.5rem;}
+.names-sunburst-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:1rem;}
+.sunburst-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary);}
+.sunburst-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ── EMPIRE: Polar grid ── */
+.polar-wrap{display:flex;justify-content:center;margin-bottom:1rem;}
+
+/* ── EMPIRE: Stacked bar ── */
+.stacked-wrap{margin-bottom:1rem;}
+.stacked-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.stacked-bar-label{font-size:11px;color:var(--text-secondary);width:32px;text-align:right;flex-shrink:0;}
+.stacked-bar-track{flex:1;height:20px;border-radius:4px;background:var(--charcoal-border);overflow:hidden;display:flex;}
+.stacked-bar-seg{height:100%;transition:width .5s ease;}
+.stacked-bar-total{font-size:10px;color:var(--text-tertiary);width:28px;flex-shrink:0;}
+
+/* ── PLANNING: Goal completion funnel ── */
+.funnel-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:1rem;}
+.funnel-row{display:flex;align-items:center;gap:10px;width:100%;}
+.funnel-bar{height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#1A1508;transition:width .5s ease;}
+.funnel-label{font-size:11px;color:var(--text-secondary);width:100px;flex-shrink:0;}
+.funnel-count{font-size:11px;color:var(--text-tertiary);width:40px;}
+
+/* ── CALENDAR: streak dots on calendar cells ── */
+.cal-streak-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);margin:1px auto 0;}
+
+/* ── MONTH completion badge ── */
+.month-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--gold);margin-bottom:1rem;}
+
+/* ── Empire extra charts row ── */
+.empire-charts-row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1rem;}
+@media(max-width:900px){.empire-charts-row2{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -1514,6 +1564,22 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
 ══════════════════════════════════════ -->
 <div class="page" id="page-planning">
   <div class="page-title">Planning Layers <span>from lifetime to this week</span></div>
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:1rem;">
+    <div>
+      <div class="planning-timeline" id="planning-timeline"></div>
+    </div>
+    <div>
+      <div class="empire-chart-card" style="margin-bottom:1rem">
+        <div class="empire-chart-title">◎ Goal Funnel</div>
+        <div class="funnel-wrap" id="planning-funnel"></div>
+      </div>
+      <div class="empire-chart-card">
+        <div class="empire-chart-title">✦ Focus This Week</div>
+        <div id="planning-focus" style="font-size:13px;color:var(--text-secondary);line-height:1.7;padding:4px 0"></div>
+      </div>
+    </div>
+  </div>
+  <span class="section-lbl">All Planning Layers</span>
   <div class="planning-grid" id="planning-grid"></div>
 </div>
 
@@ -1599,6 +1665,16 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
     <div class="heatmap-wrap" id="heatmap-wrap"></div>
   </div>
 
+  <div class="empire-charts-row2">
+    <div class="empire-chart-card">
+      <div class="empire-chart-title">📊 This Week — Stacked Daily</div>
+      <div class="stacked-wrap" id="empire-stacked"></div>
+    </div>
+    <div class="empire-chart-card">
+      <div class="empire-chart-title">🎯 Business Polar Grid</div>
+      <div class="polar-wrap"><svg id="polar-svg" width="200" height="200" viewBox="-100 -100 200 200"></svg></div>
+    </div>
+  </div>
   <span class="section-lbl">Pillar Health</span>
   <div class="empire-grid" id="empire-grid"></div>
 </div>
@@ -1671,6 +1747,17 @@ body.sidebar-collapsed #page-notes{padding-left:54px !important;}
     <button class="names-nav-btn" onclick="randomName()">Random</button>
   </div>
   <div class="names-hero" id="names-hero"></div>
+  <div style="display:flex;gap:16px;margin-bottom:1rem;flex-wrap:wrap;">
+    <div class="empire-chart-card" style="flex:1;min-width:280px">
+      <div class="empire-chart-title">☪ Names by Category</div>
+      <div class="names-sunburst-wrap"><svg id="names-sunburst" width="220" height="220" viewBox="-110 -110 220 220"></svg></div>
+      <div class="names-sunburst-legend" id="sunburst-legend"></div>
+    </div>
+    <div class="empire-chart-card" style="flex:1;min-width:280px">
+      <div class="empire-chart-title">📅 Month Progress</div>
+      <div id="names-month-progress" style="padding:8px 0"></div>
+    </div>
+  </div>
   <div style="margin-bottom:.75rem"><span class="section-lbl">All 99 Names — click to explore</span></div>
   <div class="names-grid" id="names-grid"></div>
 </div>
@@ -1863,12 +1950,12 @@ function showPage(id,btn){
   document.getElementById('page-'+id).classList.add('active');
   if(btn)btn.classList.add('active');
   if(id==='daily')renderDaily();
-  if(id==='planning')renderPlanning();
-  if(id==='empire')renderEmpire();
+  if(id==='planning'){renderPlanning();renderPlanningTimeline();}
+  if(id==='empire'){renderEmpire();renderStackedBar();renderPolarGrid();}
   if(id==='notes')renderNotes();
   if(id==='affirmations')renderAffirmations();
   if(id==='calendar'){renderCalendar();}
-  if(id==='names'){todaysName();renderNamesGrid();}
+  if(id==='names'){todaysName();renderNamesGrid();renderNamesSunburst();}
   if(id==='review'){renderReview();renderWeeklyCharts();}
   if(id==='arabella'){}
   if(id==='voice'){renderVoiceMemos();}
@@ -2429,6 +2516,8 @@ function renderEmpire(){
 
   // HEATMAP
   renderHeatmap();
+  renderStackedBar();
+  renderPolarGrid();
 
   // pillar cards
   const grid=document.getElementById('empire-grid');
@@ -3565,6 +3654,198 @@ function toggleSidebar(){
     });
   }
 })();
+
+
+// ── PLANNING TIMELINE ──
+function renderPlanningTimeline(){
+  const el = document.getElementById('planning-timeline');
+  if(!el) return;
+  el.innerHTML = '<div class="timeline-title">✦ Your Journey — Lifetime to Now</div><div class="timeline-track">' +
+    PLAN_LAYERS.map((layer,i) => {
+      const goals = (data.planning && data.planning[layer.id]) || [];
+      const done = goals.filter(g=>g.status==='status-green').length;
+      const total = goals.length;
+      const topGoals = goals.filter(g=>g.text).slice(0,2).map(g=>`<span style="color:${layer.color};font-size:11px">✦ ${g.text.substring(0,50)}${g.text.length>50?'…':''}</span>`).join('<br>');
+      return `<div class="timeline-node">
+        <div class="timeline-node-title" style="color:${layer.color}">${layer.title} <span style="font-size:10px;color:var(--text-tertiary);font-weight:400">${layer.sub}</span></div>
+        ${total?`<div class="timeline-node-sub">${done}/${total} goals active</div>`:'<div class="timeline-node-sub" style="opacity:.5">No goals yet</div>'}
+        ${topGoals?`<div class="timeline-node-goals">${topGoals}</div>`:''}
+      </div>`;
+    }).join('') + '</div>';
+
+  // Funnel
+  const funnel = document.getElementById('planning-funnel');
+  if(funnel){
+    const layers = PLAN_LAYERS.map(l => {
+      const goals=(data.planning&&data.planning[l.id])||[];
+      return {label:l.title.split(' ')[0], total:goals.length, done:goals.filter(g=>g.status==='status-green').length, color:l.color};
+    });
+    const maxTotal = Math.max(...layers.map(l=>l.total),1);
+    funnel.innerHTML = layers.map((l,i) => {
+      const width = Math.max(20, Math.round((1-(i*0.1))*100));
+      const pct = l.total ? Math.round(l.done/l.total*100) : 0;
+      return `<div class="funnel-row">
+        <div class="funnel-label" style="color:${l.color}">${l.label}</div>
+        <div style="flex:1;display:flex;align-items:center">
+          <div class="funnel-bar" style="width:${width}%;background:${l.color};opacity:${0.4+pct/100*0.6}">${l.total?pct+'%':''}</div>
+        </div>
+        <div class="funnel-count">${l.done}/${l.total}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Focus this week
+  const focus = document.getElementById('planning-focus');
+  if(focus){
+    const weekly = (data.planning&&data.planning['weekly'])||[];
+    const items = weekly.filter(g=>g.text).slice(0,3);
+    focus.innerHTML = items.length
+      ? items.map(g=>`<div style="padding:4px 0;border-bottom:0.5px solid var(--charcoal-border)">✦ ${g.text}</div>`).join('')
+      : '<div style="color:var(--text-tertiary);font-size:12px">Add weekly goals in Planning</div>';
+  }
+}
+
+// ── EMPIRE: STACKED BAR CHART ──
+function renderStackedBar(){
+  const el = document.getElementById('empire-stacked');
+  if(!el) return;
+  const days = ['M','T','W','T','F','S','S'];
+  const weekDays = getWeekDays();
+  const now = new Date();
+  el.innerHTML = weekDays.map((d,i) => {
+    const ds = fmt(d);
+    const isFuture = d > now;
+    const dd = data[ds];
+    const amDone = dd ? AM_STEPS.filter((_,j)=>dd.am&&dd.am[j]).length : 0;
+    const pmDone = dd ? PM_STEPS.filter((_,j)=>dd.pm&&dd.pm[j]).length : 0;
+    let pDone=0; if(dd&&dd.pillars)PILLARS.forEach(p=>{pDone+=(dd.pillars[p.id]||[]).filter(t=>t.done).length;});
+    const total = amDone+pmDone+pDone;
+    const max = AM_STEPS.length+PM_STEPS.length+5;
+    const amW = Math.round(amDone/max*100);
+    const pmW = Math.round(pmDone/max*100);
+    const pW = Math.round(pDone/max*100);
+    return `<div class="stacked-bar-row">
+      <div class="stacked-bar-label">${days[i]}</div>
+      <div class="stacked-bar-track">
+        ${isFuture?'<div style="width:100%;opacity:.1;background:var(--charcoal-border)"></div>':`
+        <div class="stacked-bar-seg" style="width:${amW}%;background:#1A9E8F"></div>
+        <div class="stacked-bar-seg" style="width:${pW}%;background:#E8B84B"></div>
+        <div class="stacked-bar-seg" style="width:${pmW}%;background:#7F77DD"></div>`}
+      </div>
+      <div class="stacked-bar-total">${isFuture?'':total}</div>
+    </div>`;
+  }).join('') + `<div style="display:flex;gap:12px;margin-top:8px;justify-content:center">
+    <span style="font-size:10px;color:#1A9E8F">▪ Morning</span>
+    <span style="font-size:10px;color:#E8B84B">▪ Pillars</span>
+    <span style="font-size:10px;color:#7F77DD">▪ Evening</span>
+  </div>`;
+}
+
+// ── EMPIRE: POLAR GRID (business axes) ──
+function renderPolarGrid(){
+  const svg = document.getElementById('polar-svg');
+  if(!svg) return;
+  const axes = PILLARS.map(p => p.name.split(' ')[0]);
+  const colors = PILLARS.map(p => p.color);
+  const today = fmt(new Date());
+  const values = PILLARS.map(p => {
+    const tasks=(data[today]&&data[today].pillars&&data[today].pillars[p.id])||[];
+    const done=tasks.filter(t=>t.done).length,all=tasks.length;
+    return all?Math.round(done/all*100):0;
+  });
+  const n = axes.length, r = 80;
+  let html = '';
+  // Grid circles
+  [0.25,0.5,0.75,1].forEach(frac => {
+    html += `<circle cx="0" cy="0" r="${r*frac}" fill="none" stroke="#3D3118" stroke-width="${frac===1?1:0.5}"/>`;
+  });
+  // Axes
+  for(let i=0;i<n;i++){
+    const angle=(Math.PI*2*i/n)-Math.PI/2;
+    html += `<line x1="0" y1="0" x2="${Math.cos(angle)*r}" y2="${Math.sin(angle)*r}" stroke="#3D3118" stroke-width="0.8"/>`;
+    const lx=Math.cos(angle)*(r+14), ly=Math.sin(angle)*(r+14);
+    html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="8" fill="${colors[i]}">${axes[i]}</text>`;
+  }
+  // Value polygon
+  const pts = values.map((v,i)=>{
+    const angle=(Math.PI*2*i/n)-Math.PI/2;
+    const val=r*Math.max(v,3)/100;
+    return [Math.cos(angle)*val, Math.sin(angle)*val];
+  });
+  html += `<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="#E8B84B18" stroke="#E8B84B" stroke-width="2" stroke-linejoin="round"/>`;
+  pts.forEach(([x,y],i)=>{
+    html += `<circle cx="${x}" cy="${y}" r="4" fill="${colors[i]}" stroke="#1A1508" stroke-width="1.5"/>`;
+    if(values[i]>0) html += `<text x="${x}" y="${y-8}" text-anchor="middle" font-family="Figtree" font-size="7" fill="${colors[i]}">${values[i]}%</text>`;
+  });
+  svg.innerHTML = html;
+}
+
+// ── NAMES SUNBURST ──
+function renderNamesSunburst(){
+  const svg = document.getElementById('names-sunburst');
+  const legend = document.getElementById('sunburst-legend');
+  if(!svg) return;
+  const categories = [
+    {name:'Mercy',count:18,color:'#E8B84B'},
+    {name:'Power',count:15,color:'#E8733A'},
+    {name:'Wisdom',count:14,color:'#3B8FC4'},
+    {name:'Beauty',count:12,color:'#22C55E'},
+    {name:'Oneness',count:10,color:'#7F77DD'},
+    {name:'Other',count:30,color:'#B8A878'},
+  ];
+  const total = categories.reduce((s,c)=>s+c.count,0);
+  const outerR=90, innerR=50;
+  let startAngle = -Math.PI/2;
+  let html = '';
+  categories.forEach(cat => {
+    const angle = (cat.count/total)*Math.PI*2;
+    const endAngle = startAngle + angle;
+    const x1=Math.cos(startAngle)*outerR, y1=Math.sin(startAngle)*outerR;
+    const x2=Math.cos(endAngle)*outerR, y2=Math.sin(endAngle)*outerR;
+    const ix1=Math.cos(startAngle)*innerR, iy1=Math.sin(startAngle)*innerR;
+    const ix2=Math.cos(endAngle)*innerR, iy2=Math.sin(endAngle)*innerR;
+    const large=angle>Math.PI?1:0;
+    const midAngle=startAngle+angle/2;
+    const lx=Math.cos(midAngle)*(outerR+14), ly=Math.sin(midAngle)*(outerR+14);
+    html += `<path d="M ${ix1} ${iy1} L ${x1} ${y1} A ${outerR} ${outerR} 0 ${large} 1 ${x2} ${y2} L ${ix2} ${iy2} A ${innerR} ${innerR} 0 ${large} 0 ${ix1} ${iy1} Z"
+      fill="${cat.color}" opacity="0.8" stroke="#1A1508" stroke-width="1.5">
+      <title>${cat.name}: ${cat.count} names</title>
+    </path>`;
+    if(angle > 0.3){
+      html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="8" fill="#FDF6E3">${cat.name}</text>`;
+    }
+    startAngle = endAngle;
+  });
+  html += `<text x="0" y="-6" text-anchor="middle" font-family="Figtree" font-size="14" font-weight="300" fill="#E8B84B">99</text>`;
+  html += `<text x="0" y="10" text-anchor="middle" font-family="Figtree" font-size="8" fill="#B8A878">Names</text>`;
+  svg.innerHTML = html;
+  if(legend){
+    legend.innerHTML = categories.map(c=>`
+      <div class="sunburst-legend-item">
+        <div class="sunburst-legend-dot" style="background:${c.color}"></div>
+        <span>${c.name} (${c.count})</span>
+      </div>`).join('');
+  }
+
+  // Month progress for names
+  const mp = document.getElementById('names-month-progress');
+  if(mp){
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(),0,0))/(1000*60*60*24));
+    const todayNameIdx = (dayOfYear-1)%99;
+    const monthStart = new Date(today.getFullYear(),today.getMonth(),1);
+    const daysThisMonth = today.getDate();
+    let html2 = `<div style="margin-bottom:10px;font-size:12px;color:var(--text-secondary)">Today's name: <span style="color:var(--gold);font-weight:500">Name ${todayNameIdx+1} of 99</span></div>`;
+    html2 += `<div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px">Names explored this month</div>`;
+    html2 += `<div style="display:grid;grid-template-columns:repeat(10,1fr);gap:3px;">`;
+    for(let i=0;i<daysThisMonth;i++){
+      const idx=(todayNameIdx-daysThisMonth+1+i+99)%99;
+      html2 += `<div style="width:100%;padding-top:100%;border-radius:3px;background:${i===daysThisMonth-1?'var(--gold)':'#E8B84B44'};position:relative" title="Name ${idx+1}"></div>`;
+    }
+    html2 += '</div>';
+    mp.innerHTML = html2;
+  }
+}
 
 function selectEventColor(el){
   document.querySelectorAll('.cal-color-opt').forEach(e=>e.classList.remove('selected'));
