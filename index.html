@@ -704,44 +704,108 @@ body{
 .empire-stat-lbl{font-size:11px;color:var(--text-tertiary);margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
 
 /* ── NOTES ── */
-.notes-layout{display:grid;grid-template-columns:260px 1fr;gap:16px;min-height:60vh;}
-@media(max-width:700px){.notes-layout{grid-template-columns:1fr;}}
+/* ══ NOTES — Bear/Notion style ══ */
+.notes-page-wrap{
+  display:flex;height:calc(100vh - 120px);
+  margin:-1.5rem -2rem;overflow:hidden;
+  border-radius:0;
+}
+/* Left panel — note list */
 .notes-sidebar{
-  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
-  border-radius:var(--radius);padding:14px;
+  width:280px;flex-shrink:0;
+  background:#1C1507;
+  border-right:0.5px solid var(--charcoal-border);
+  display:flex;flex-direction:column;
+  overflow:hidden;
 }
-.notes-sidebar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.notes-sidebar-title{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);}
+.notes-sidebar-header{
+  padding:14px 14px 10px;
+  border-bottom:0.5px solid var(--charcoal-border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+.notes-sidebar-title{
+  font-size:13px;font-weight:500;color:var(--text-primary);letter-spacing:.02em;
+}
 .new-note-btn{
+  width:28px;height:28px;border-radius:8px;
   background:var(--gold);color:#1A1508;border:none;
-  border-radius:6px;padding:4px 10px;font-size:11px;
-  cursor:pointer;font-family:var(--font-body);
+  font-size:18px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-body);font-weight:400;
+  transition:opacity .15s;flex-shrink:0;
 }
+.new-note-btn:hover{opacity:.85;}
+.notes-search{
+  margin:10px 10px 6px;
+  background:var(--charcoal-border);border:none;border-radius:8px;
+  padding:7px 12px;font-size:12px;color:var(--text-primary);
+  font-family:var(--font-body);outline:none;width:calc(100% - 20px);
+}
+.notes-search::placeholder{color:var(--text-tertiary);}
+.notes-list-scroll{flex:1;overflow-y:auto;padding:6px 6px;}
+.notes-list-scroll::-webkit-scrollbar{width:4px;}
+.notes-list-scroll::-webkit-scrollbar-thumb{background:var(--charcoal-border);border-radius:2px;}
 .note-item{
-  padding:10px;border-radius:var(--radius-sm);cursor:pointer;
-  margin-bottom:4px;transition:background .15s;border:0.5px solid transparent;
+  padding:10px 10px;border-radius:8px;cursor:pointer;
+  margin-bottom:2px;transition:background .15s;
+  border:0.5px solid transparent;
 }
-.note-item:hover{background:var(--charcoal-mid);}
-.note-item.active{background:var(--charcoal-mid);border-color:var(--charcoal-border);}
-.note-item-title{font-size:13px;color:var(--text-primary);font-weight:500;margin-bottom:2px;}
-.note-item-preview{font-size:11px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.note-item-date{font-size:10px;color:var(--text-tertiary);margin-top:4px;}
+.note-item:hover{background:var(--charcoal-light);}
+.note-item.active{background:var(--charcoal-light);border-color:var(--charcoal-border);}
+.note-item-title{font-size:13px;color:var(--text-primary);font-weight:500;margin-bottom:3px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.note-item-preview{font-size:11px;color:var(--text-tertiary);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+.note-item-date{font-size:10px;color:var(--text-tertiary);opacity:.7;}
+
+/* Right panel — editor */
 .notes-editor{
-  background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);
-  border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;
+  flex:1;display:flex;flex-direction:column;
+  background:var(--charcoal);overflow:hidden;
 }
+.notes-editor-toolbar{
+  padding:10px 32px;border-bottom:0.5px solid var(--charcoal-border);
+  display:flex;align-items:center;gap:8px;flex-shrink:0;
+  background:#1C1507;
+}
+.notes-toolbar-btn{
+  background:none;border:none;cursor:pointer;
+  padding:4px 8px;border-radius:5px;font-size:13px;
+  color:var(--text-tertiary);font-family:var(--font-body);
+  transition:all .15s;
+}
+.notes-toolbar-btn:hover{background:var(--charcoal-light);color:var(--text-primary);}
+.notes-toolbar-sep{width:0.5px;height:18px;background:var(--charcoal-border);margin:0 2px;}
+.note-word-count{font-size:11px;color:var(--text-tertiary);margin-left:auto;}
+.notes-editor-body{flex:1;overflow-y:auto;padding:32px 60px;}
+.notes-editor-body::-webkit-scrollbar{width:4px;}
+.notes-editor-body::-webkit-scrollbar-thumb{background:var(--charcoal-border);border-radius:2px;}
 .note-title-input{
-  font-family:var(--font-display);font-size:28px;font-weight:300;
+  font-family:var(--font-display);font-size:30px;font-weight:300;
   color:var(--text-primary);background:none;border:none;outline:none;
-  width:100%;margin-bottom:16px;
+  width:100%;margin-bottom:6px;line-height:1.3;
 }
 .note-title-input::placeholder{color:var(--text-tertiary);}
+.note-meta{font-size:11px;color:var(--text-tertiary);margin-bottom:20px;
+  padding-bottom:16px;border-bottom:0.5px solid var(--charcoal-border);}
 .note-body-input{
-  flex:1;font-family:var(--font-body);font-size:14px;line-height:1.8;
+  flex:1;font-family:var(--font-body);font-size:14px;line-height:1.9;
   color:var(--text-primary);background:none;border:none;outline:none;
-  width:100%;resize:none;min-height:400px;
+  width:100%;resize:none;min-height:500px;
 }
 .note-body-input::placeholder{color:var(--text-tertiary);}
+.notes-empty-state{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--text-tertiary);gap:12px;
+}
+.notes-empty-icon{font-size:40px;opacity:.4;}
+.notes-empty-text{font-size:14px;}
+@media(max-width:700px){
+  .notes-page-wrap{flex-direction:column;height:auto;}
+  .notes-sidebar{width:100%;max-height:300px;}
+  .notes-editor-body{padding:20px;}
+}
 
 /* ── AFFIRMATIONS EDITOR ── */
 .affirmations-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
@@ -1519,19 +1583,44 @@ body{
 <!-- ══════════════════════════════════════
      NOTES PAGE
 ══════════════════════════════════════ -->
-<div class="page" id="page-notes">
-  <div class="page-title">Notes & Vault</div>
-  <div class="notes-layout">
+<div class="page" id="page-notes" style="padding:0;max-width:100%;margin:0;">
+  <div class="notes-page-wrap">
+    <!-- LEFT: Note list -->
     <div class="notes-sidebar">
       <div class="notes-sidebar-header">
-        <span class="notes-sidebar-title">All Notes</span>
-        <button class="new-note-btn" onclick="newNote()">+ New</button>
+        <span class="notes-sidebar-title">✎ Notes</span>
+        <button class="new-note-btn" onclick="newNote()" title="New note">+</button>
       </div>
-      <div id="notes-list"></div>
+      <input class="notes-search" id="notes-search" placeholder="Search notes..." oninput="filterNotes(this.value)"/>
+      <div class="notes-list-scroll" id="notes-list"></div>
     </div>
-    <div class="notes-editor">
-      <input class="note-title-input" id="note-title" placeholder="Note title..." oninput="saveCurrentNote()"/>
-      <textarea class="note-body-input" id="note-body" placeholder="Start writing... your thoughts are safe here." oninput="saveCurrentNote()"></textarea>
+    <!-- RIGHT: Editor -->
+    <div class="notes-editor" id="notes-editor-panel">
+      <div class="notes-toolbar" id="notes-toolbar" style="display:none">
+        <div class="notes-editor-toolbar">
+          <button class="notes-toolbar-btn" onclick="noteFormat('bold')" title="Bold"><b>B</b></button>
+          <button class="notes-toolbar-btn" onclick="noteFormat('italic')" title="Italic"><i>I</i></button>
+          <div class="notes-toolbar-sep"></div>
+          <button class="notes-toolbar-btn" onclick="noteInsert('## ')" title="Heading">H</button>
+          <button class="notes-toolbar-btn" onclick="noteInsert('• ')" title="Bullet">•</button>
+          <button class="notes-toolbar-btn" onclick="noteInsert('☐ ')" title="Checklist">☐</button>
+          <div class="notes-toolbar-sep"></div>
+          <button class="notes-toolbar-btn" onclick="deleteCurrentNote()" title="Delete" style="color:#E8733A">🗑</button>
+          <span class="note-word-count" id="note-word-count">0 words</span>
+        </div>
+      </div>
+      <div class="notes-editor-body" id="notes-editor-body">
+        <div class="notes-empty-state" id="notes-empty">
+          <div class="notes-empty-icon">✎</div>
+          <div class="notes-empty-text">Select a note or create a new one</div>
+          <button class="new-note-btn" onclick="newNote()" style="width:auto;padding:8px 20px;font-size:13px;border-radius:8px;margin-top:8px">+ New Note</button>
+        </div>
+        <div id="notes-editor-fields" style="display:none;height:100%">
+          <input class="note-title-input" id="note-title" placeholder="Untitled" oninput="saveCurrentNote();updateWordCount()"/>
+          <div class="note-meta" id="note-meta"></div>
+          <textarea class="note-body-input" id="note-body" placeholder="Start writing… your thoughts are safe here." oninput="saveCurrentNote();updateWordCount()"></textarea>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1623,14 +1712,14 @@ body{
 </div>
 
 <script>
-// ── SUPABASE + ENCRYPTION CONFIG ──
+// SUPABASE + ENCRYPTION CONFIG
 const SUPABASE_URL = 'https://bodgqvcxxxpavvnzmxdw.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvZGdxdmN4eHhwYXZ2bnpteGR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNDI1MTksImV4cCI6MjA5MjkxODUxOX0.hzPaTALBGUY-g3yo8Dqm-0KvNssNZFdpczPYmn6BXkE';
 let MASTER_PASSWORD = null;
 let USER_ID = null;
 let syncTimeout = null;
 
-// ── DATA ──
+// DATA
 const PILLARS=[
   {id:'life',name:'Me Life',icon:'✦',color:'#5BC4C4'},
   {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#E8B84B'},
@@ -1709,7 +1798,7 @@ let currentNoteId=null;
 let currentAffIdx=0;
 let modalContext=null;
 
-// ── UTILS ──
+// UTILS
 function fmt(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
 function getDateStr(offset){const d=new Date();d.setDate(d.getDate()+offset);return fmt(d);}
 function fmtLabel(offset){
@@ -1735,7 +1824,7 @@ function ensureDay(ds){
   PILLARS.forEach(p=>{if(!data[ds].pillars[p.id])data[ds].pillars[p.id]=[];});
 }
 
-// ── HEADER ──
+// HEADER
 function renderHeader(){
   const now=new Date();
   if(!document.getElementById('hdr-date'))return;
@@ -1744,7 +1833,7 @@ function renderHeader(){
   document.getElementById('hdr-qt').textContent='Q'+getQ(now)+' '+now.getFullYear();
 }
 
-// ── PAGES ──
+// PAGES
 function showPage(id,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
@@ -1762,7 +1851,7 @@ function showPage(id,btn){
   if(id==='voice'){renderVoiceMemos();}
 }
 
-// ── AFFIRMATIONS ──
+// AFFIRMATIONS
 function renderAffirmationBar(){
   const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
   if(!affs.length)return;
@@ -1803,7 +1892,7 @@ function deleteAffirmation(idx){
   data.affirmations.splice(idx,1);save();renderAffirmations();renderAffirmationBar();
 }
 
-// ── DAILY FLOW ──
+// DAILY FLOW
 function changeDay(d){dayOffset+=d;renderDaily();}
 function renderDaily(){
   const ds=getDateStr(dayOffset);
@@ -2187,7 +2276,7 @@ function deletePillarTask(ds,pid,idx){
   data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);
 }
 
-// ── PLANNING ──
+// PLANNING
 function renderPlanning(){
   const grid=document.getElementById('planning-grid');
   grid.innerHTML=PLAN_LAYERS.map(layer=>{
@@ -2245,7 +2334,7 @@ function saveModal(){
 }
 function closeModal(){document.getElementById('modal-overlay').classList.remove('open');modalContext=null;}
 
-// ── EMPIRE ──
+// EMPIRE
 function renderEmpire(){
   const today=fmt(new Date());
   ensureDay(today);
@@ -2289,7 +2378,7 @@ function renderEmpire(){
   if(data.planning)PLAN_LAYERS.forEach(l=>{goals+=(data.planning[l.id]||[]).filter(g=>g.text).length;});
   document.getElementById('emp-goals').textContent=goals;
 
-  // ── GAUGE ──
+  // GAUGE
   const ds=today;
   const amDoneT=AM_STEPS.filter((_,i)=>data[ds]&&data[ds].am&&data[ds].am[i]).length;
   const pmDoneT=PM_STEPS.filter((_,i)=>data[ds]&&data[ds].pm&&data[ds].pm[i]).length;
@@ -2300,7 +2389,7 @@ function renderEmpire(){
   const dayPct=Math.round(totalDoneT/totalAllT*100);
   renderGauge(dayPct);
 
-  // ── RADAR ──
+  // RADAR
   const pillarPcts=PILLARS.map(p=>{
     const t=(data[ds]&&data[ds].pillars&&data[ds].pillars[p.id])||[];
     const d=t.filter(x=>x.done).length,a=t.length;
@@ -2308,14 +2397,14 @@ function renderEmpire(){
   });
   renderRadar(pillarPcts);
 
-  // ── DONUT ──
+  // DONUT
   renderDonut([
     {label:'Morning',value:amDoneT,max:AM_STEPS.length,color:'#1A9E8F'},
     {label:'Pillars',value:pillarDoneT,max:pillarAllT||1,color:'#E8B84B'},
     {label:'Evening',value:pmDoneT,max:PM_STEPS.length,color:'#7F77DD'},
   ]);
 
-  // ── HEATMAP ──
+  // HEATMAP
   renderHeatmap();
 
   // pillar cards
@@ -2336,49 +2425,122 @@ function renderEmpire(){
   }).join('');
 }
 
-// ── NOTES ──
-function renderNotes(){
+// NOTES
+function renderNotes(filter=''){
   if(!data.notes)data.notes=[];
   const list=document.getElementById('notes-list');
-  list.innerHTML=data.notes.length?data.notes.map((n,i)=>`
-    <div class="note-item${currentNoteId===i?' active':''}" onclick="openNote(${i})">
+  const filtered=data.notes.filter((n,i)=>{
+    if(!filter)return true;
+    const q=filter.toLowerCase();
+    return (n.title||'').toLowerCase().includes(q)||(n.body||'').toLowerCase().includes(q);
+  });
+  list.innerHTML=filtered.length?filtered.map((n,i)=>{
+    const realIdx=data.notes.indexOf(n);
+    return `<div class="note-item${currentNoteId===realIdx?' active':''}" onclick="openNote(${realIdx})">
       <div class="note-item-title">${n.title||'Untitled'}</div>
-      <div class="note-item-preview">${n.body||'Empty note'}</div>
+      <div class="note-item-preview">${(n.body||'').substring(0,60)||'Empty note'}</div>
       <div class="note-item-date">${n.date||''}</div>
-    </div>
-  `).join(''):'<div style="font-size:12px;color:var(--text-tertiary);padding:8px">No notes yet. Click + New to start.</div>';
+    </div>`;
+  }).join(''):'<div style="font-size:12px;color:var(--text-tertiary);padding:12px 8px">No notes found</div>';
+  
+  // Show/hide editor
+  const empty=document.getElementById('notes-empty');
+  const fields=document.getElementById('notes-editor-fields');
+  const toolbar=document.getElementById('notes-toolbar');
   if(currentNoteId!==null&&data.notes[currentNoteId]){
+    if(empty)empty.style.display='none';
+    if(fields)fields.style.display='block';
+    if(toolbar)toolbar.style.display='block';
     document.getElementById('note-title').value=data.notes[currentNoteId].title||'';
     document.getElementById('note-body').value=data.notes[currentNoteId].body||'';
+    const meta=document.getElementById('note-meta');
+    if(meta)meta.textContent=data.notes[currentNoteId].date||'';
+    updateWordCount();
+  } else {
+    if(empty)empty.style.display='flex';
+    if(fields)fields.style.display='none';
+    if(toolbar)toolbar.style.display='none';
   }
 }
+
+function filterNotes(q){renderNotes(q);}
+
+function updateWordCount(){
+  const body=document.getElementById('note-body');
+  const wc=document.getElementById('note-word-count');
+  if(!body||!wc)return;
+  const words=body.value.trim().split(/\s+/).filter(w=>w).length;
+  wc.textContent=words+' word'+(words===1?'':'s');
+}
+
+function noteFormat(type){
+  const ta=document.getElementById('note-body');
+  if(!ta)return;
+  const start=ta.selectionStart,end=ta.selectionEnd;
+  const sel=ta.value.substring(start,end);
+  const wrap=type==='bold'?'**':type==='italic'?'_':'';
+  ta.value=ta.value.substring(0,start)+wrap+sel+wrap+ta.value.substring(end);
+  ta.focus();ta.selectionStart=start+wrap.length;ta.selectionEnd=end+wrap.length;
+  saveCurrentNote();
+}
+
+function noteInsert(prefix){
+  const ta=document.getElementById('note-body');
+  if(!ta)return;
+  const start=ta.selectionStart;
+  const lineStart=ta.value.lastIndexOf('\n',start-1)+1;
+  ta.value=ta.value.substring(0,lineStart)+prefix+ta.value.substring(lineStart);
+  ta.focus();ta.selectionStart=ta.selectionEnd=lineStart+prefix.length;
+  saveCurrentNote();
+}
+
+function deleteCurrentNote(){
+  if(currentNoteId===null)return;
+  if(!confirm('Delete this note?'))return;
+  data.notes.splice(currentNoteId,1);
+  currentNoteId=data.notes.length>0?0:null;
+  save();renderNotes();
+  showToast('Note deleted','#E8733A');
+}
+
 function newNote(){
   if(!data.notes)data.notes=[];
   data.notes.unshift({title:'',body:'',date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})});
   currentNoteId=0;save();renderNotes();
-  document.getElementById('note-title').focus();
+  setTimeout(()=>document.getElementById('note-title').focus(),50);
 }
-function openNote(idx){currentNoteId=idx;renderNotes();}
+
+function openNote(idx){
+  currentNoteId=idx;
+  renderNotes(document.getElementById('notes-search')?.value||'');
+}
+
 function saveCurrentNote(){
   if(currentNoteId===null||!data.notes[currentNoteId])return;
   data.notes[currentNoteId].title=document.getElementById('note-title').value;
   data.notes[currentNoteId].body=document.getElementById('note-body').value;
   save();
-  // update sidebar preview without full re-render
+  // update sidebar item without full re-render
   const items=document.querySelectorAll('.note-item');
-  if(items[currentNoteId]){
-    items[currentNoteId].querySelector('.note-item-title').textContent=data.notes[currentNoteId].title||'Untitled';
-    items[currentNoteId].querySelector('.note-item-preview').textContent=data.notes[currentNoteId].body||'Empty note';
-  }
+  items.forEach(item=>{
+    const idx=parseInt(item.getAttribute('onclick')?.match(/\d+/)?.[0]);
+    if(idx===currentNoteId){
+      item.querySelector('.note-item-title').textContent=data.notes[idx].title||'Untitled';
+      item.querySelector('.note-item-preview').textContent=(data.notes[idx].body||'').substring(0,60)||'Empty note';
+    }
+  });
+  // auto-save indicator
+  const wc=document.getElementById('note-word-count');
+  if(wc){const orig=wc.textContent;wc.textContent='✓ Saved';setTimeout(()=>{updateWordCount();},1200);}
 }
 
-// ── AUTO-ROTATE AFFIRMATIONS ──
+// AUTO-ROTATE AFFIRMATIONS
 setInterval(()=>{nextAffirmation();},30000);
 
 
 
 
-// ── ARABELLA AI ──
+// ARABELLA AI
 let arabellaMode = 'coach';
 let arabellaHistory = [];
 
@@ -2471,7 +2633,7 @@ function addArabellMessage(role, text, id) {
   cont.scrollTop = cont.scrollHeight;
 }
 
-// ── VOICE MEMOS ──
+// VOICE MEMOS
 let mediaRecorder = null;
 let audioChunks = [];
 let recordingTimer = null;
@@ -2575,7 +2737,7 @@ function deleteMemo(id) {
   save(); renderVoiceMemos();
 }
 
-// ── 99 NAMES DATA ──
+// 99 NAMES DATA
 const NAMES_99 = [
   {num:1,arabic:'ٱلرَّحْمَٰنُ',name:'Ar-Raḥmān',meaning:'The Most Merciful',pillar:'EARN',dua:"O Ar-Raḥmān, shower Your infinite mercy upon me, make me a billionaire through halal means, and I am grateful for Your blessings as You guide me to the straight path.",vision:"Shower infinite mercy on TigerFlow AI demos — 60%+ close rate, every brokerage served with excellence."},
   {num:2,arabic:'ٱلرَّحِيمُ',name:'Ar-Raḥīm',meaning:'The Especially Merciful',pillar:'EARN',dua:"O Ar-Raḥīm, forgive my sins, grant me Your compassion to become a billionaire in this life and the hereafter, and I am grateful for Your endless mercy.",vision:"Forgive my sales missteps; let compassion drive every client call to billionaire-level revenue."},
@@ -2740,7 +2902,7 @@ function renderNamesGrid(){
   `).join('');
 }
 
-// ── WEEKLY REVIEW ──
+// WEEKLY REVIEW
 const REVIEW_QUESTIONS = [
   {id:'wins',q:'What were your biggest wins this week?',sub:'Celebrate every victory, big and small.'},
   {id:'challenges',q:'What challenges did you face?',sub:'Be honest — awareness is the first step to improvement.'},
@@ -2944,7 +3106,7 @@ function submitReview(){
 
 
 
-// ── DAILY NAME BANNER ──
+// DAILY NAME BANNER
 function renderDailyNameBanner() {
   if (!NAMES_99 || !NAMES_99.length) return;
   if (!document.getElementById('dnb-arabic')) return;
@@ -2965,7 +3127,7 @@ function renderDailyNameBanner() {
   }
 }
 
-// ── MINI CALENDAR ──
+// MINI CALENDAR
 let miniCalYear = new Date().getFullYear();
 let miniCalMonth = new Date().getMonth();
 let miniSelectedDate = fmt(new Date());
@@ -3189,7 +3351,7 @@ function renderMiniCalendar() {
   }
 }
 
-// ── CALENDAR ──
+// CALENDAR
 let calYear=new Date().getFullYear();
 let calMonth=new Date().getMonth();
 let calSelectedDate=fmt(new Date());
@@ -3211,7 +3373,7 @@ const COLOR_MAP={
 };
 
 
-// ── TOAST NOTIFICATIONS ──
+// TOAST NOTIFICATIONS
 function showToast(msg, color='#E8B84B') {
   const container = document.getElementById('toast-container');
   if (!container) return;
@@ -3226,7 +3388,7 @@ function showToast(msg, color='#E8B84B') {
   }, 2200);
 }
 
-// ── GAUGE RENDER ──
+// GAUGE RENDER
 function renderGauge(pct) {
   const arc = document.getElementById('gauge-arc');
   const pctEl = document.getElementById('gauge-pct');
@@ -3241,7 +3403,7 @@ function renderGauge(pct) {
   if (lbl) lbl.textContent = pct === 100 ? '✦ Perfect Day!' : pct >= 70 ? 'Strong flow ✦' : pct >= 40 ? 'Keep going ✦' : 'Start your day ✦';
 }
 
-// ── RADAR CHART ──
+// RADAR CHART
 function renderRadar(pillarPcts) {
   const svg = document.getElementById('radar-svg');
   if (!svg) return;
@@ -3299,7 +3461,7 @@ function renderRadar(pillarPcts) {
   svg.innerHTML = html;
 }
 
-// ── DONUT CHART ──
+// DONUT CHART
 function renderDonut(segments) {
   // segments: [{label, value, color}]
   const svg = document.getElementById('donut-svg');
@@ -3329,7 +3491,7 @@ function renderDonut(segments) {
   }
 }
 
-// ── HEATMAP ──
+// HEATMAP
 function renderHeatmap() {
   const wrap = document.getElementById('heatmap-wrap');
   if (!wrap) return;
@@ -3493,7 +3655,7 @@ function renderCalendar(){
 }
 
 
-// ── PRE-POPULATE PLANNING FROM EMPIRE BLUEPRINT ──
+// PRE-POPULATE PLANNING FROM EMPIRE BLUEPRINT
 function initPlanningData() {
   if (!data.planning) data.planning = {};
   if (!data.planning._initialized) {
@@ -3554,14 +3716,14 @@ function initPlanningData() {
   }
 }
 
-// ── INIT ──
+// INIT
 load();
 initPlanningData();
 renderHeader();
 renderAffirmationBar();
 renderDaily();
 renderMiniCalendar();
-// ── KEYBOARD SHORTCUTS ──
+// KEYBOARD SHORTCUTS
 document.addEventListener('keydown', function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   const tabs = document.querySelectorAll('.nav-tab');
@@ -3575,9 +3737,9 @@ document.addEventListener('keydown', function(e){
 
 renderDayDetail(fmt(new Date()));
 
-// ── SUPABASE VARS MOVED TO TOP ──
+// SUPABASE VARS MOVED TO TOP
 
-// ── ENCRYPTION ──
+// ENCRYPTION
 function encrypt(text, password) {
   return CryptoJS.AES.encrypt(JSON.stringify(text), password).toString();
 }
@@ -3588,7 +3750,7 @@ function decrypt(ciphertext, password) {
   } catch(e) { return null; }
 }
 
-// ── SUPABASE API ──
+// SUPABASE API
 async function sbRequest(method, path, body) {
   const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
     method,
@@ -3639,7 +3801,7 @@ async function loadFromSupabase() {
 function showSync() { const el=document.getElementById('sync-indicator');if(el)el.classList.add('show'); }
 function hideSync() { const el=document.getElementById('sync-indicator');if(el)el.classList.remove('show'); }
 
-// ── DEBOUNCED SAVE ──
+// DEBOUNCED SAVE
 const originalSave = save;
 window.save = function() {
   originalSave();
@@ -3647,7 +3809,7 @@ window.save = function() {
   syncTimeout = setTimeout(syncToSupabase, 1500);
 };
 
-// ── LOGIN ──
+// LOGIN
 async function attemptLogin() {
   const userId = document.getElementById('login-userid').value.trim();
   const password = document.getElementById('login-password').value;
@@ -3700,7 +3862,7 @@ function logout() {
   document.getElementById('login-password').value = '';
 }
 
-// ── AUTO LOGIN FROM SESSION ──
+// AUTO LOGIN FROM SESSION
 (async function autoLogin() {
   const uid = localStorage.getItem('nn_uid');
   const pw = localStorage.getItem('nn_pw');
