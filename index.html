@@ -1407,7 +1407,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 </div>
 
 <!-- HEADER -->
-<header class="site-header" style="padding:6px 2rem 6px calc(190px + 2rem)">
+<header class="site-header">
   <div class="logo">
     <div>
       <div style="display:flex;align-items:baseline;gap:6px">
@@ -1417,9 +1417,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div class="logo-sub">Personal Operating System</div>
     </div>
   </div>
-  <div class="header-right">
-    <button class="logout-btn" onclick="logout()">Lock</button>
-  </div>
+  <div class="header-right"></div>
 </header>
 
 <!-- SIDEBAR NAV -->
@@ -1454,6 +1452,11 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <button class="sidebar-btn" onclick="showPage('voice',this);setSidebarActive(this)" title="Voice Memos">
     <span>🎙</span><span class="sidebar-label">Voice Memos</span>
   </button>
+  <div style="flex:1"></div>
+  <div class="sidebar-divider"></div>
+  <button class="sidebar-btn" onclick="logout()" title="Lock" style="color:#EF444488">
+    <span>⏻</span><span class="sidebar-label" style="color:#EF444488">Lock</span>
+  </button>
 </nav>
 
 <!-- TOP NAV (hidden but keeping for compatibility) -->
@@ -1474,8 +1477,16 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
   <!-- Header -->
-  <div style="margin-bottom:0.8rem">
-    <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
+
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="day-nav-btn" onclick="changeDay(-1)">← prev</button>
+      <span class="day-label" id="daily-day-label"></span>
+      <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
+    </div>
   </div>
 
 
