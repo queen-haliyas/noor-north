@@ -1002,7 +1002,7 @@ body{
 .mini-cal-title{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary);}
 .mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem;}
 .mini-cal-day-hdr{text-align:center;font-size:10px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;padding:4px 0;}
-.mini-cal-cell{min-height:60px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
+.mini-cal-cell{min-height:52px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
 .mini-cal-cell:hover{border-color:var(--gold);}
 .mini-cal-cell.today{border-color:var(--gold);background:#C4983B08;}
 .mini-cal-cell.selected{background:#C4983B12;border-color:var(--gold);}
@@ -1163,48 +1163,48 @@ body{
   <div style="display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px;margin-bottom:1.2rem;align-items:stretch">
 
     <!-- MORNING RITUAL -->
-    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
-      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;">
+      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
         <div style="display:flex;align-items:center;gap:8px">
           <div style="width:24px;height:24px;border-radius:6px;background:#1A9E8F18;color:#1A9E8F;display:flex;align-items:center;justify-content:center;font-size:13px">☽</div>
           <span style="font-family:var(--font-display);font-size:15px">Morning Ritual</span>
         </div>
         <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/5</span>
       </div>
-      <div style="padding:6px 12px">
+      <div style="padding:6px 12px;flex:1;display:flex;flex-direction:column;justify-content:space-between">
         <div class="ritual-progress" id="am-progress"></div>
-        <div id="am-steps"></div>
+        <div id="am-steps" style="flex:1"></div>
         <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Surrender → Stillness → Process → Declare → Activate</div>
       </div>
     </div>
 
     <!-- FIVE PILLARS -->
-    <div class="pillars-section">
-      <div class="pillars-section-header">
+    <div class="pillars-section" style="display:flex;flex-direction:column;">
+      <div class="pillars-section-header" style="flex-shrink:0">
         <div class="pillars-section-title">
           <span style="color:var(--gold)">✦</span>
           <span>Five Pillars</span>
         </div>
         <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
       </div>
-      <div style="padding:6px 12px">
+      <div style="padding:6px 12px;flex:1;display:flex;flex-direction:column;justify-content:space-evenly">
         <div class="pillars-overall" id="pillars-overall-bar"></div>
         <div id="pillars-list"></div>
       </div>
     </div>
 
     <!-- EVENING RITUAL -->
-    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
-      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;">
+      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
         <div style="display:flex;align-items:center;gap:8px">
           <div style="width:24px;height:24px;border-radius:6px;background:#7F77DD18;color:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:13px">◑</div>
           <span style="font-family:var(--font-display);font-size:15px">Evening Ritual</span>
         </div>
         <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
       </div>
-      <div style="padding:6px 12px">
+      <div style="padding:6px 12px;flex:1;display:flex;flex-direction:column;justify-content:space-between">
         <div class="ritual-progress" id="pm-progress"></div>
-        <div id="pm-steps"></div>
+        <div id="pm-steps" style="flex:1"></div>
         <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Process → Reflect → Surrender → Release → Sleep</div>
       </div>
     </div>
@@ -2692,7 +2692,7 @@ function renderMiniCalendar() {
     const isSelected = ds === miniSelectedDate;
     const cell = document.createElement('div');
     cell.className = 'mini-cal-cell' + (isToday?' today':'') + (isSelected?' selected':'');
-    cell.style.minHeight = '60px';
+    
     
     const dateDiv = document.createElement('div');
     dateDiv.className = 'mini-cal-date' + (isToday?' today-num':'');
