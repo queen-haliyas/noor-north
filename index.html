@@ -2002,7 +2002,7 @@ function showPage(id,btn){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(id==='daily')renderDaily();
+  if(id==='daily'){renderDaily();setTimeout(()=>{const s=document.getElementById('day-time-slots');if(s&&s.children.length<2)initDayView();else{dvRenderEvents();dvUpdateNow();}},100);}
   if(id==='planning'){renderPlanning();renderPlanningTimeline();}
   if(id==='empire'){renderEmpire();renderStackedBar();renderPolarGrid();}
   if(id==='notes')renderNotes();
@@ -4284,6 +4284,7 @@ function initDayView() {
   const labelsEl = document.getElementById('day-time-labels');
   const slotsEl = document.getElementById('day-time-slots');
   if (!labelsEl || !slotsEl) return;
+  if (slotsEl.querySelector('.time-slot-line')) { dvRenderEvents(); dvUpdateNow(); return; }
   let lHtml = '', sHtml = '';
   for (let h = 0; h < 24; h++) {
     const top = h * HOUR_H;
