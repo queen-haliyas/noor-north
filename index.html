@@ -1586,6 +1586,23 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
         </div>
       </div>
     </div>
+    <script>
+    // Inline init - runs as soon as this HTML is parsed
+    document.addEventListener('DOMContentLoaded', function() {
+      // Retry loop until initDayView is available and elements exist
+      var tries = 0;
+      var dvTimer = setInterval(function() {
+        tries++;
+        var labels = document.getElementById('day-time-labels');
+        var slots = document.getElementById('day-time-slots');
+        if (labels && slots && typeof initDayView === 'function') {
+          clearInterval(dvTimer);
+          initDayView();
+        }
+        if (tries > 30) clearInterval(dvTimer);
+      }, 200);
+    });
+    </script>
   </div>
   <!-- Event add popup -->
   <div class="event-popup-overlay" id="ev-popup" style="display:none" onclick="if(event.target===this)closeEvPopup()">
