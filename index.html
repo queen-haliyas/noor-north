@@ -481,7 +481,7 @@ body{
 .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
 
 /* ── PAGES ── */
-.page{display:none;padding:1.5rem 2rem;max-width:1400px;margin:0 auto;}
+.page{display:none;padding:1.5rem 2rem 1.5rem calc(64px + 2rem);max-width:1464px;margin:0;}
 .page.active{display:block;}
 
 /* ── DAILY FLOW ── */
@@ -1105,6 +1105,71 @@ body{
 /* Card hover glow */
 .flow-col:hover{box-shadow:0 0 0 1px var(--charcoal-border);transition:box-shadow .2s;}
 
+
+/* ── WEEKLY BAR CHART ── */
+.weekly-chart-wrap{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;}
+.weekly-chart-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-tertiary);margin-bottom:12px;}
+.weekly-bars{display:flex;gap:8px;align-items:flex-end;height:80px;}
+.weekly-bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.weekly-bar-track{width:100%;border-radius:4px;background:var(--charcoal-border);position:relative;overflow:hidden;flex:1;}
+.weekly-bar-fill{position:absolute;bottom:0;width:100%;border-radius:4px;transition:height .6s ease;}
+.weekly-bar-lbl{font-size:10px;color:var(--text-tertiary);}
+.weekly-bar-val{font-size:10px;color:var(--text-secondary);}
+
+/* ── STAT CARDS ROW ── */
+.review-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1rem;}
+.review-stat-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:12px;text-align:center;}
+.review-stat-num{font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--gold);}
+.review-stat-lbl{font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+
+/* ── PILLAR WEEK RINGS ── */
+.pillar-week-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:1rem;}
+.pillar-ring-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.pillar-ring-label{font-size:10px;color:var(--text-secondary);}
+
+
+/* ══ SIDEBAR NAV (Discord-style) ══ */
+.sidebar-nav{
+  position:fixed;left:0;top:0;bottom:0;width:64px;
+  background:#110E05;border-right:0.5px solid var(--charcoal-border);
+  display:flex;flex-direction:column;align-items:center;
+  padding:12px 0;gap:4px;z-index:200;
+  transition:width .2s ease;
+}
+.sidebar-nav:hover{width:180px;}
+.sidebar-logo{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,#C4983B,#E8B84B);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:16px;font-weight:600;color:#1A1508;
+  margin-bottom:12px;flex-shrink:0;
+}
+.sidebar-btn{
+  width:44px;height:44px;border-radius:10px;border:none;
+  background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--text-tertiary);
+  transition:all .15s;position:relative;
+  flex-shrink:0;overflow:hidden;
+}
+.sidebar-btn:hover,.sidebar-btn.active{
+  background:var(--charcoal-light);color:var(--gold);
+}
+.sidebar-btn.active::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:60%;background:var(--gold);border-radius:0 2px 2px 0;
+}
+.sidebar-label{
+  position:absolute;left:52px;white-space:nowrap;
+  font-size:12px;font-weight:500;color:var(--text-primary);
+  opacity:0;pointer-events:none;transition:opacity .15s;
+}
+.sidebar-nav:hover .sidebar-label{opacity:1;}
+.sidebar-divider{width:32px;height:0.5px;background:var(--charcoal-border);margin:6px 0;flex-shrink:0;}
+
+/* Shift main content right when sidebar is present */
+.app-shell{margin-left:64px;}
+
 </style>
 </head>
 <body>
@@ -1167,8 +1232,42 @@ body{
   </div>
 </header>
 
-<!-- NAV -->
-<nav class="main-nav">
+<!-- SIDEBAR NAV -->
+<nav class="sidebar-nav" id="sidebar-nav">
+  <div class="sidebar-logo">N</div>
+  <button class="sidebar-btn active" onclick="showPage('daily',this);setSidebarActive(this)" title="Daily Flow">
+    <span>☽</span><span class="sidebar-label">Daily Flow</span>
+  </button>
+  <button class="sidebar-btn" onclick="showPage('planning',this);setSidebarActive(this)" title="Planning">
+    <span>◈</span><span class="sidebar-label">Planning</span>
+  </button>
+  <button class="sidebar-btn" onclick="showPage('empire',this);setSidebarActive(this)" title="Empire">
+    <span>◆</span><span class="sidebar-label">Empire</span>
+  </button>
+  <div class="sidebar-divider"></div>
+  <button class="sidebar-btn" onclick="showPage('notes',this);setSidebarActive(this)" title="Notes">
+    <span>✎</span><span class="sidebar-label">Notes</span>
+  </button>
+  <button class="sidebar-btn" onclick="showPage('affirmations',this);setSidebarActive(this)" title="Affirmations">
+    <span>✦</span><span class="sidebar-label">Affirmations</span>
+  </button>
+  <button class="sidebar-btn" onclick="showPage('names',this);setSidebarActive(this)" title="99 Names">
+    <span>☪</span><span class="sidebar-label">99 Names</span>
+  </button>
+  <div class="sidebar-divider"></div>
+  <button class="sidebar-btn" onclick="showPage('review',this);setSidebarActive(this)" title="Weekly Review">
+    <span>◎</span><span class="sidebar-label">Weekly Review</span>
+  </button>
+  <button class="sidebar-btn" onclick="showPage('arabella',this);setSidebarActive(this)" title="Arabella AI">
+    <span>✿</span><span class="sidebar-label">Arabella AI</span>
+  </button>
+  <button class="sidebar-btn" onclick="showPage('voice',this);setSidebarActive(this)" title="Voice Memos">
+    <span>🎙</span><span class="sidebar-label">Voice Memos</span>
+  </button>
+</nav>
+
+<!-- TOP NAV (hidden but keeping for compatibility) -->
+<nav class="main-nav" style="display:none">
   <button class="nav-tab active" onclick="showPage('daily',this)">Daily Flow</button>
   <button class="nav-tab" onclick="showPage('planning',this)">Planning</button>
   <button class="nav-tab" onclick="showPage('empire',this)">Empire</button>
@@ -1343,10 +1442,7 @@ body{
     <div class="empire-chart-card">
       <div class="empire-chart-title">⚡ Day Power</div>
       <div class="gauge-wrap">
-        <svg class="gauge-svg" width="160" height="90" viewBox="0 0 160 90">
-          <path d="M20,80 A60,60 0 0,1 140,80" fill="none" stroke="#2E2510" stroke-width="12" stroke-linecap="round"/>
-          <path id="gauge-arc" d="M20,80 A60,60 0 0,1 140,80" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round"
-            stroke-dasharray="188.5" stroke-dashoffset="188.5" style="transition:stroke-dashoffset .8s ease"/>
+        <svg class="gauge-svg" width="180" height="110" viewBox="0 0 180 110">
           <defs>
             <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" style="stop-color:#E8733A"/>
@@ -1354,7 +1450,27 @@ body{
               <stop offset="100%" style="stop-color:#1A9E8F"/>
             </linearGradient>
           </defs>
-          <text id="gauge-pct" x="80" y="72" text-anchor="middle" font-family="Figtree" font-size="22" font-weight="300" fill="#FDF6E3">0%</text>
+          <!-- Track -->
+          <path d="M18,95 A72,72 0 0,1 162,95" fill="none" stroke="#2E2510" stroke-width="14" stroke-linecap="round"/>
+          <!-- Coloured arc -->
+          <path id="gauge-arc" d="M18,95 A72,72 0 0,1 162,95" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round"
+            stroke-dasharray="226" stroke-dashoffset="226" style="transition:stroke-dashoffset .9s cubic-bezier(.4,0,.2,1)"/>
+          <!-- Tick marks -->
+          <line x1="18" y1="95" x2="24" y2="95" stroke="#3D3118" stroke-width="1.5" transform="rotate(-180,90,95)"/>
+          <line x1="18" y1="95" x2="24" y2="95" stroke="#3D3118" stroke-width="1.5" transform="rotate(-135,90,95)"/>
+          <line x1="18" y1="95" x2="24" y2="95" stroke="#3D3118" stroke-width="1.5" transform="rotate(-90,90,95)"/>
+          <line x1="18" y1="95" x2="24" y2="95" stroke="#3D3118" stroke-width="1.5" transform="rotate(-45,90,95)"/>
+          <line x1="18" y1="95" x2="24" y2="95" stroke="#3D3118" stroke-width="1.5" transform="rotate(0,90,95)"/>
+          <!-- Needle -->
+          <line id="gauge-needle" x1="90" y1="95" x2="90" y2="32" stroke="#FDF6E3" stroke-width="2" stroke-linecap="round"
+            transform="rotate(-90,90,95)" style="transition:transform .9s cubic-bezier(.4,0,.2,1);transform-origin:90px 95px"/>
+          <circle cx="90" cy="95" r="5" fill="#FDF6E3"/>
+          <!-- Labels -->
+          <text x="14" y="108" font-family="Figtree" font-size="9" fill="#6B5A38">0</text>
+          <text x="84" y="18" font-family="Figtree" font-size="9" fill="#6B5A38" text-anchor="middle">50</text>
+          <text x="162" y="108" font-family="Figtree" font-size="9" fill="#6B5A38" text-anchor="end">100</text>
+          <!-- Centre pct -->
+          <text id="gauge-pct" x="90" y="82" text-anchor="middle" font-family="Figtree" font-size="20" font-weight="300" fill="#FDF6E3">0%</text>
         </svg>
         <div class="gauge-label" id="gauge-label">Keep going ✦</div>
       </div>
@@ -1438,6 +1554,7 @@ body{
 <!-- WEEKLY REVIEW PAGE -->
 <div class="page" id="page-review">
   <div class="page-title">Weekly Review</div>
+  <div id="review-charts"></div>
   <div id="review-content"></div>
 </div>
 
@@ -1628,7 +1745,7 @@ function showPage(id,btn){
   if(id==='affirmations')renderAffirmations();
   if(id==='calendar'){renderCalendar();}
   if(id==='names'){todaysName();renderNamesGrid();}
-  if(id==='review'){renderReview();}
+  if(id==='review'){renderReview();renderWeeklyCharts();}
   if(id==='arabella'){}
   if(id==='voice'){renderVoiceMemos();}
 }
@@ -2120,19 +2237,21 @@ function closeModal(){document.getElementById('modal-overlay').classList.remove(
 function renderEmpire(){
   const today=fmt(new Date());
   ensureDay(today);
-  // streak
+  // streak - count any activity (matches daily flow logic)
   let streak=0;
-  for(let d=0;d<90;d++){
+  for(let d=0;d<365;d++){
     const dd=new Date();dd.setDate(dd.getDate()-d);
     const ds=fmt(dd);
     if(!data[ds])break;
     const amDone=AM_STEPS.filter((_,i)=>data[ds].am&&data[ds].am[i]).length;
     const pmDone=PM_STEPS.filter((_,i)=>data[ds].pm&&data[ds].pm[i]).length;
-    if(amDone===AM_STEPS.length&&pmDone===PM_STEPS.length)streak++;else break;
+    let pillarDone=0;
+    PILLARS.forEach(p=>{pillarDone+=(data[ds].pillars&&data[ds].pillars[p.id]||[]).filter(t=>t.done).length;});
+    if(amDone>0||pmDone>0||pillarDone>0)streak++;else break;
   }
   document.getElementById('emp-streak').textContent=streak;
   const flame=document.getElementById('emp-flame');
-  if(flame)flame.textContent=streak>=30?'🔥🔥':streak>=7?'🔥':streak>=1?'✦':'○';
+  if(flame)flame.textContent=streak>=30?'🔥🔥':streak>=7?'🔥':streak>=3?'✦':'◦';
 
   // tasks today
   let tasks=0;
@@ -2643,6 +2762,94 @@ function hasCompletedThisWeek(){
   return !!data.reviews[wk];
 }
 
+function renderWeeklyCharts(){
+  // Build weekly bar chart - last 7 days completion
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const weekDays = getWeekDays();
+  const now = new Date();
+  const bars = weekDays.map((d,i) => {
+    const ds = fmt(d);
+    const isFuture = d > now;
+    const dd = data[ds];
+    const amDone = dd ? AM_STEPS.filter((_,j)=>dd.am&&dd.am[j]).length : 0;
+    const pmDone = dd ? PM_STEPS.filter((_,j)=>dd.pm&&dd.pm[j]).length : 0;
+    let pillarDone=0,pillarAll=0;
+    if(dd&&dd.pillars)PILLARS.forEach(p=>{const t=dd.pillars[p.id]||[];pillarDone+=t.filter(x=>x.done).length;pillarAll+=t.length;});
+    const total = amDone+pmDone+pillarDone;
+    const max = AM_STEPS.length+PM_STEPS.length+(pillarAll||1);
+    const pct = isFuture ? 0 : Math.round(total/max*100);
+    return {day:days[i],pct,isFuture,amDone,pmDone,pillarDone,amTotal:AM_STEPS.length,pmTotal:PM_STEPS.length};
+  });
+
+  // Weekly stats
+  const completedDays = bars.filter(b=>!b.isFuture&&b.pct>0).length;
+  const avgPct = bars.filter(b=>!b.isFuture).reduce((s,b)=>s+b.pct,0)/Math.max(bars.filter(b=>!b.isFuture).length,1);
+  const totalTasks = bars.reduce((s,b)=>s+b.pillarDone,0);
+  let streak=0;
+  for(let d=0;d<365;d++){
+    const dd2=new Date();dd2.setDate(dd2.getDate()-d);
+    const ds2=fmt(dd2);
+    if(!data[ds2])break;
+    const a=AM_STEPS.filter((_,i)=>data[ds2].am&&data[ds2].am[i]).length;
+    const p2=PM_STEPS.filter((_,i)=>data[ds2].pm&&data[ds2].pm[i]).length;
+    let pl=0;PILLARS.forEach(p=>{pl+=(data[ds2].pillars&&data[ds2].pillars[p.id]||[]).filter(t=>t.done).length;});
+    if(a>0||p2>0||pl>0)streak++;else break;
+  }
+
+  const chartHTML = `
+    <div class="review-stats-row">
+      <div class="review-stat-card"><div class="review-stat-num">${streak}</div><div class="review-stat-lbl">🔥 Day Streak</div></div>
+      <div class="review-stat-card"><div class="review-stat-num">${completedDays}/7</div><div class="review-stat-lbl">Active Days</div></div>
+      <div class="review-stat-card"><div class="review-stat-num">${Math.round(avgPct)}%</div><div class="review-stat-lbl">Avg Completion</div></div>
+      <div class="review-stat-card"><div class="review-stat-num">${totalTasks}</div><div class="review-stat-lbl">Pillar Tasks Done</div></div>
+    </div>
+    <div class="weekly-chart-wrap">
+      <div class="weekly-chart-title">📊 This Week — Daily Completion</div>
+      <div class="weekly-bars">
+        ${bars.map(b=>`
+          <div class="weekly-bar-col">
+            <div class="weekly-bar-val">${b.isFuture?'':b.pct+'%'}</div>
+            <div class="weekly-bar-track">
+              <div class="weekly-bar-fill" style="height:${b.pct}%;background:${b.pct>=80?'#1A9E8F':b.pct>=40?'#E8B84B':'#E8733A'}"></div>
+            </div>
+            <div class="weekly-bar-lbl">${b.day}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="weekly-chart-wrap">
+      <div class="weekly-chart-title">🕸 Pillar Performance This Week</div>
+      <div class="pillar-week-row">
+        ${PILLARS.map(p=>{
+          let done=0,all=0;
+          weekDays.forEach(d=>{
+            const ds=fmt(d);
+            if(data[ds]&&data[ds].pillars){
+              const t=data[ds].pillars[p.id]||[];
+              done+=t.filter(x=>x.done).length;all+=t.length;
+            }
+          });
+          const pct=all?Math.round(done/all*100):0;
+          const r=28,stroke=6,circ=2*Math.PI*r;
+          const dash=pct/100*circ;
+          return `<div class="pillar-ring-item">
+            <svg width="72" height="72" viewBox="-36 -36 72 72">
+              <circle cx="0" cy="0" r="${r}" fill="none" stroke="#2E2510" stroke-width="${stroke}"/>
+              <circle cx="0" cy="0" r="${r}" fill="none" stroke="${p.color}" stroke-width="${stroke}"
+                stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"/>
+              <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="11" fill="${p.color}">${pct}%</text>
+            </svg>
+            <div class="pillar-ring-label">${p.name.split(' ')[0]}</div>
+            <div class="pillar-ring-label" style="color:var(--text-tertiary)">${done}/${all}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+  
+  const chartEl = document.getElementById('review-charts');
+  if(chartEl) chartEl.innerHTML = chartHTML;
+}
+
 function renderReview(){
   const cont=document.getElementById('review-content');
   if(!data.reviews)data.reviews={};
@@ -3012,9 +3219,12 @@ function renderGauge(pct) {
   const arc = document.getElementById('gauge-arc');
   const pctEl = document.getElementById('gauge-pct');
   const lbl = document.getElementById('gauge-label');
+  const needle = document.getElementById('gauge-needle');
   if (!arc) return;
-  const total = 188.5;
+  const total = 226;
   arc.style.strokeDashoffset = total - (total * pct / 100);
+  // Needle: rotates from -90deg (0%) to +90deg (100%)
+  if (needle) needle.style.transform = `rotate(${-90 + (pct * 1.8)}deg)`;
   if (pctEl) pctEl.textContent = pct + '%';
   if (lbl) lbl.textContent = pct === 100 ? '✦ Perfect Day!' : pct >= 70 ? 'Strong flow ✦' : pct >= 40 ? 'Keep going ✦' : 'Start your day ✦';
 }
@@ -3023,45 +3233,57 @@ function renderGauge(pct) {
 function renderRadar(pillarPcts) {
   const svg = document.getElementById('radar-svg');
   if (!svg) return;
+  svg.setAttribute('viewBox', '-95 -95 190 190');
   const n = pillarPcts.length;
-  const r = 60;
+  const r = 62;
   const labels = PILLARS.map(p => p.name.split(' ')[0]);
   const colors = PILLARS.map(p => p.color);
   
-  // grid rings
   let html = '';
-  [0.25, 0.5, 0.75, 1].forEach(frac => {
+  // background fill per segment (alternating)
+  for(let i=0;i<n;i++){
+    const a1=(Math.PI*2*i/n)-Math.PI/2, a2=(Math.PI*2*(i+1)/n)-Math.PI/2;
+    html += `<path d="M0,0 L${Math.cos(a1)*r},${Math.sin(a1)*r} A${r},${r} 0 0,1 ${Math.cos(a2)*r},${Math.sin(a2)*r} Z" fill="${i%2===0?'#2E251008':'#3D311808'}"/>`;
+  }
+  // grid rings
+  [0.25,0.5,0.75,1].forEach(frac => {
     const pts = Array.from({length:n}, (_,i) => {
-      const angle = (Math.PI * 2 * i / n) - Math.PI/2;
+      const angle = (Math.PI*2*i/n)-Math.PI/2;
       return [Math.cos(angle)*r*frac, Math.sin(angle)*r*frac];
     }).map(p=>p.join(',')).join(' ');
-    html += `<polygon points="${pts}" fill="none" stroke="#3D3118" stroke-width="0.5"/>`;
+    html += `<polygon points="${pts}" fill="none" stroke="${frac===1?'#4D3D20':'#3D3118'}" stroke-width="${frac===1?1:0.5}"/>`;
   });
-  
   // axes
-  for (let i = 0; i < n; i++) {
-    const angle = (Math.PI * 2 * i / n) - Math.PI/2;
-    html += `<line x1="0" y1="0" x2="${Math.cos(angle)*r}" y2="${Math.sin(angle)*r}" stroke="#3D3118" stroke-width="0.5"/>`;
+  for(let i=0;i<n;i++){
+    const angle=(Math.PI*2*i/n)-Math.PI/2;
+    html += `<line x1="0" y1="0" x2="${Math.cos(angle)*r}" y2="${Math.sin(angle)*r}" stroke="#3D3118" stroke-width="0.8"/>`;
   }
-  
-  // data polygon
-  const pts = pillarPcts.map((pct, i) => {
-    const angle = (Math.PI * 2 * i / n) - Math.PI/2;
-    const val = r * pct / 100;
+  // data polygon with glow
+  const pts = pillarPcts.map((pct,i) => {
+    const angle=(Math.PI*2*i/n)-Math.PI/2;
+    const val=r*Math.max(pct,3)/100;
     return [Math.cos(angle)*val, Math.sin(angle)*val];
   });
-  const polyPts = pts.map(p=>p.join(',')).join(' ');
-  html += `<polygon points="${polyPts}" fill="#E8B84B18" stroke="#E8B84B" stroke-width="1.5"/>`;
-  
+  const polyPts=pts.map(p=>p.join(',')).join(' ');
+  html += `<polygon points="${polyPts}" fill="#E8B84B22" stroke="#E8B84B" stroke-width="2" stroke-linejoin="round"/>`;
   // dots + labels
-  pts.forEach(([x, y], i) => {
-    html += `<circle cx="${x}" cy="${y}" r="3" fill="${colors[i]}"/>`;
-    const angle = (Math.PI * 2 * i / n) - Math.PI/2;
-    const lx = Math.cos(angle)*(r+14);
-    const ly = Math.sin(angle)*(r+14);
-    html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="9" fill="#B8A878">${labels[i]}</text>`;
+  pts.forEach(([x,y],i) => {
+    html += `<circle cx="${x}" cy="${y}" r="4" fill="${colors[i]}" stroke="#1A1508" stroke-width="1.5"/>`;
+    const angle=(Math.PI*2*i/n)-Math.PI/2;
+    const dist=r+20;
+    const lx=Math.cos(angle)*dist;
+    const ly=Math.sin(angle)*dist;
+    // wrap long names
+    const words=PILLARS[i].name.split(' ');
+    if(words.length>2){
+      html += `<text x="${lx}" y="${ly-5}" text-anchor="middle" font-family="Figtree" font-size="8" fill="#B8A878">${words.slice(0,2).join(' ')}</text>`;
+      html += `<text x="${lx}" y="${ly+6}" text-anchor="middle" font-family="Figtree" font-size="8" fill="#B8A878">${words.slice(2).join(' ')}</text>`;
+    } else {
+      html += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="8.5" fill="#B8A878">${PILLARS[i].name}</text>`;
+    }
+    // pct label on dot
+    if(pillarPcts[i]>0) html += `<text x="${x}" y="${y-7}" text-anchor="middle" font-family="Figtree" font-size="7" fill="${colors[i]}">${pillarPcts[i]}%</text>`;
   });
-  
   svg.innerHTML = html;
 }
 
@@ -3122,6 +3344,11 @@ function renderHeatmap() {
     cells.push(`<div class="heatmap-col">${col.join('')}</div>`);
   }
   wrap.innerHTML = `<div class="heatmap-grid">${cells.join('')}</div>`;
+}
+
+function setSidebarActive(btn){
+  document.querySelectorAll('.sidebar-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
 }
 
 function selectEventColor(el){
