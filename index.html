@@ -960,8 +960,9 @@ body{
 
 
 
-  <!-- Calendar + Day Detail side by side -->
-  <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:1.5rem;align-items:start">
+  <!-- Calendar (left) + Cards (right) -->
+  <div style="display:grid;grid-template-columns:1fr 380px;gap:16px;margin-bottom:1.5rem;align-items:start">
+
     <!-- Calendar -->
     <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:0.5px solid var(--charcoal-border)">
@@ -979,60 +980,61 @@ body{
         <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
       </div>
     </div>
-    <!-- Day Detail -->
-    <div id="day-detail-panel" style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;min-height:200px"></div>
+
+    <!-- Right column: all 3 cards stacked -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <!-- MORNING RITUAL -->
+      <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
+        <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:24px;height:24px;border-radius:6px;background:#1A9E8F18;color:#1A9E8F;display:flex;align-items:center;justify-content:center;font-size:12px">☽</div>
+            <span style="font-family:var(--font-display);font-size:14px">Morning Ritual</span>
+          </div>
+          <span style="font-size:11px;padding:2px 7px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/5</span>
+        </div>
+        <div style="padding:10px 14px">
+          <div class="ritual-progress" id="am-progress"></div>
+          <div id="am-steps"></div>
+          <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Surrender → Stillness → Process → Declare → Activate</div>
+        </div>
+      </div>
+
+      <!-- FIVE PILLARS -->
+      <div class="pillars-section">
+        <div class="pillars-section-header">
+          <div class="pillars-section-title">
+            <span style="color:var(--gold)">✦</span>
+            <span>Five Pillars</span>
+          </div>
+          <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
+        </div>
+        <div style="padding:10px 14px">
+          <div class="pillars-overall" id="pillars-overall-bar"></div>
+          <div id="pillars-list"></div>
+        </div>
+      </div>
+
+      <!-- EVENING RITUAL -->
+      <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
+        <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:24px;height:24px;border-radius:6px;background:#7F77DD18;color:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:12px">◑</div>
+            <span style="font-family:var(--font-display);font-size:14px">Evening Ritual</span>
+          </div>
+          <span style="font-size:11px;padding:2px 7px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
+        </div>
+        <div style="padding:10px 14px">
+          <div class="ritual-progress" id="pm-progress"></div>
+          <div id="pm-steps"></div>
+          <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Process → Reflect → Surrender → Release → Sleep</div>
+        </div>
+      </div>
+
+    </div><!-- end right column -->
   </div>
-
-  <!-- 3-Column Layout: Morning | Five Pillars | Evening -->
-  <div style="display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:14px;margin-bottom:1rem;align-items:start">
-
-    <!-- MORNING RITUAL -->
-    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
-      <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="width:26px;height:26px;border-radius:6px;background:#1A9E8F18;color:#1A9E8F;display:flex;align-items:center;justify-content:center;font-size:13px">☽</div>
-          <span style="font-family:var(--font-display);font-size:15px">Morning Ritual</span>
-        </div>
-        <span style="font-size:11px;padding:3px 8px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/7</span>
-      </div>
-      <div style="padding:12px 14px">
-        <div class="ritual-progress" id="am-progress"></div>
-        <div id="am-steps"></div>
-        <div style="margin-top:10px;padding-top:8px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Surrender → Stillness → Process → Declare → Activate</div>
-      </div>
-    </div>
-
-    <!-- FIVE PILLARS -->
-    <div class="pillars-section">
-      <div class="pillars-section-header">
-        <div class="pillars-section-title">
-          <span style="color:var(--gold)">✦</span>
-          <span>Five Pillars</span>
-        </div>
-        <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
-      </div>
-      <div style="padding:14px 16px">
-        <div class="pillars-overall" id="pillars-overall-bar"></div>
-        <div id="pillars-list"></div>
-      </div>
-    </div>
-
-    <!-- EVENING RITUAL -->
-    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
-      <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="width:26px;height:26px;border-radius:6px;background:#7F77DD18;color:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:13px">◑</div>
-          <span style="font-family:var(--font-display);font-size:15px">Evening Ritual</span>
-        </div>
-        <span style="font-size:11px;padding:3px 8px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
-      </div>
-      <div style="padding:12px 14px">
-        <div class="ritual-progress" id="pm-progress"></div>
-        <div id="pm-steps"></div>
-        <div style="margin-top:10px;padding-top:8px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Process → Reflect → Surrender → Release → Sleep</div>
-      </div>
-    </div>
-  </div>
+  <!-- Hidden day detail panel (kept for data functions) -->
+  <div id="day-detail-panel" style="display:none"></div>
 
 
 
