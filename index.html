@@ -973,24 +973,59 @@ body{
     </div>
   </div>
 
-  <!-- Ritual Tracker Grid -->
-  <div class="ritual-week-grid" id="ritual-week-grid"></div>
+  <!-- 3-Column Layout: Morning | Five Pillars | Evening -->
+  <div style="display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:14px;margin-bottom:1rem;align-items:start">
 
-  <!-- Five Pillars -->
-  <div class="pillars-section">
-    <div class="pillars-section-header">
-      <div class="pillars-section-title">
-        <span style="color:var(--gold)">✦</span>
-        <span>Five Pillars</span>
-        <span style="font-size:11px;color:var(--text-tertiary);font-family:var(--font-body);margin-left:4px">3–5 tasks per pillar, every day</span>
+    <!-- MORNING RITUAL -->
+    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
+      <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:26px;height:26px;border-radius:6px;background:#1A9E8F18;color:#1A9E8F;display:flex;align-items:center;justify-content:center;font-size:13px">☽</div>
+          <span style="font-family:var(--font-display);font-size:15px">Morning Ritual</span>
+        </div>
+        <span style="font-size:11px;padding:3px 8px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/7</span>
       </div>
-      <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
+      <div style="padding:12px 14px">
+        <div class="ritual-progress" id="am-progress"></div>
+        <div id="am-steps"></div>
+        <div style="margin-top:10px;padding-top:8px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Surrender → Stillness → Process → Declare → Activate</div>
+      </div>
     </div>
-    <div style="padding:14px 16px">
-      <div class="pillars-overall" id="pillars-overall-bar"></div>
-      <div id="pillars-list"></div>
+
+    <!-- FIVE PILLARS -->
+    <div class="pillars-section">
+      <div class="pillars-section-header">
+        <div class="pillars-section-title">
+          <span style="color:var(--gold)">✦</span>
+          <span>Five Pillars</span>
+        </div>
+        <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
+      </div>
+      <div style="padding:14px 16px">
+        <div class="pillars-overall" id="pillars-overall-bar"></div>
+        <div id="pillars-list"></div>
+      </div>
+    </div>
+
+    <!-- EVENING RITUAL -->
+    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
+      <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:26px;height:26px;border-radius:6px;background:#7F77DD18;color:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:13px">◑</div>
+          <span style="font-family:var(--font-display);font-size:15px">Evening Ritual</span>
+        </div>
+        <span style="font-size:11px;padding:3px 8px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
+      </div>
+      <div style="padding:12px 14px">
+        <div class="ritual-progress" id="pm-progress"></div>
+        <div id="pm-steps"></div>
+        <div style="margin-top:10px;padding-top:8px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Process → Reflect → Surrender → Release → Sleep</div>
+      </div>
     </div>
   </div>
+
+  <!-- Weekly Tracker Grid (below the 3 columns) -->
+  <div class="ritual-week-grid" id="ritual-week-grid" style="margin-bottom:1rem"></div>
 
   <!-- Mini Calendar -->
   <div style="margin-top:1.5rem;margin-bottom:3rem">
@@ -1369,6 +1404,8 @@ function renderDaily(){
   setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},100);
   ensureDay(ds);
   document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
+  renderRitual('am',ds);
+  renderRitual('pm',ds);
   renderRitualWeekGrid();
   renderDailyStats();
   renderPillarsDaily(ds);
@@ -1530,6 +1567,12 @@ function toggleRitual(ds,session,idx){
   save();
   renderRitualWeekGrid();
   renderDailyStats();
+  // Also refresh AM/PM columns if viewing today
+  const todayDs=getDateStr(dayOffset);
+  if(ds===todayDs){
+    renderRitual('am',todayDs);
+    renderRitual('pm',todayDs);
+  }
 }
 function renderPillarsDaily(ds){
   let totalDone=0,totalAll=0;
@@ -2741,8 +2784,8 @@ async function attemptLogin() {
   const result = await loadFromSupabase();
   
   if (result.ok) {
-    sessionStorage.setItem('nn_uid', userId);
-    sessionStorage.setItem('nn_pw', password);
+    localStorage.setItem('nn_uid', userId);
+    localStorage.setItem('nn_pw', password);
     document.getElementById('login-overlay').classList.add('hidden');
     try { renderHeader(); } catch(e) {}
     try { renderAffirmationBar(); } catch(e) {}
@@ -2771,8 +2814,8 @@ function showLoginError(msg) {
 }
 
 function logout() {
-  sessionStorage.removeItem('nn_uid');
-  sessionStorage.removeItem('nn_pw');
+  localStorage.removeItem('nn_uid');
+  localStorage.removeItem('nn_pw');
   MASTER_PASSWORD = null; USER_ID = null;
   document.getElementById('login-overlay').classList.remove('hidden');
   document.getElementById('login-password').value = '';
@@ -2780,8 +2823,8 @@ function logout() {
 
 // ── AUTO LOGIN FROM SESSION ──
 (async function autoLogin() {
-  const uid = sessionStorage.getItem('nn_uid');
-  const pw = sessionStorage.getItem('nn_pw');
+  const uid = localStorage.getItem('nn_uid');
+  const pw = localStorage.getItem('nn_pw');
   if (uid && pw) {
     MASTER_PASSWORD = pw; USER_ID = uid;
     const result = await loadFromSupabase();
