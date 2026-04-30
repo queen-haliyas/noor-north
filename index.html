@@ -1159,81 +1159,79 @@ body{
 
 
 
-  <!-- Calendar (left) + Cards (right) -->
-  <div style="display:grid;grid-template-columns:1fr 380px;gap:16px;margin-bottom:1.5rem;align-items:start">
+  <!-- 3 COLUMNS: Morning | Five Pillars | Evening -->
+  <div style="display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px;margin-bottom:1.2rem;align-items:start">
 
-    <!-- Calendar -->
+    <!-- MORNING RITUAL -->
     <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:0.5px solid var(--charcoal-border)">
-        <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
-        <div style="font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
-        <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
-      </div>
-      <div style="padding:10px 12px">
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
-          <div class="mini-cal-day-hdr">Mon</div><div class="mini-cal-day-hdr">Tue</div>
-          <div class="mini-cal-day-hdr">Wed</div><div class="mini-cal-day-hdr">Thu</div>
-          <div class="mini-cal-day-hdr">Fri</div><div class="mini-cal-day-hdr">Sat</div>
-          <div class="mini-cal-day-hdr">Sun</div>
+      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:24px;height:24px;border-radius:6px;background:#1A9E8F18;color:#1A9E8F;display:flex;align-items:center;justify-content:center;font-size:13px">☽</div>
+          <span style="font-family:var(--font-display);font-size:15px">Morning Ritual</span>
         </div>
-        <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/5</span>
+      </div>
+      <div style="padding:10px 14px">
+        <div class="ritual-progress" id="am-progress"></div>
+        <div id="am-steps"></div>
+        <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Surrender → Stillness → Process → Declare → Activate</div>
       </div>
     </div>
 
-    <!-- Right column: all 3 cards stacked -->
-    <div style="display:flex;flex-direction:column;gap:12px">
-
-      <!-- MORNING RITUAL -->
-      <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
-        <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div style="width:24px;height:24px;border-radius:6px;background:#1A9E8F18;color:#1A9E8F;display:flex;align-items:center;justify-content:center;font-size:12px">☽</div>
-            <span style="font-family:var(--font-display);font-size:14px">Morning Ritual</span>
-          </div>
-          <span style="font-size:11px;padding:2px 7px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/5</span>
+    <!-- FIVE PILLARS -->
+    <div class="pillars-section">
+      <div class="pillars-section-header">
+        <div class="pillars-section-title">
+          <span style="color:var(--gold)">✦</span>
+          <span>Five Pillars</span>
         </div>
-        <div style="padding:10px 14px">
-          <div class="ritual-progress" id="am-progress"></div>
-          <div id="am-steps"></div>
-          <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Surrender → Stillness → Process → Declare → Activate</div>
-        </div>
+        <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
       </div>
-
-      <!-- FIVE PILLARS -->
-      <div class="pillars-section">
-        <div class="pillars-section-header">
-          <div class="pillars-section-title">
-            <span style="color:var(--gold)">✦</span>
-            <span>Five Pillars</span>
-          </div>
-          <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
-        </div>
-        <div style="padding:10px 14px">
-          <div class="pillars-overall" id="pillars-overall-bar"></div>
-          <div id="pillars-list"></div>
-        </div>
+      <div style="padding:10px 14px">
+        <div class="pillars-overall" id="pillars-overall-bar"></div>
+        <div id="pillars-list"></div>
       </div>
+    </div>
 
-      <!-- EVENING RITUAL -->
-      <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
-        <div style="padding:12px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div style="width:24px;height:24px;border-radius:6px;background:#7F77DD18;color:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:12px">◑</div>
-            <span style="font-family:var(--font-display);font-size:14px">Evening Ritual</span>
-          </div>
-          <span style="font-size:11px;padding:2px 7px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
+    <!-- EVENING RITUAL -->
+    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden">
+      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:24px;height:24px;border-radius:6px;background:#7F77DD18;color:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:13px">◑</div>
+          <span style="font-family:var(--font-display);font-size:15px">Evening Ritual</span>
         </div>
-        <div style="padding:10px 14px">
-          <div class="ritual-progress" id="pm-progress"></div>
-          <div id="pm-steps"></div>
-          <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Process → Reflect → Surrender → Release → Sleep</div>
-        </div>
+        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
       </div>
+      <div style="padding:10px 14px">
+        <div class="ritual-progress" id="pm-progress"></div>
+        <div id="pm-steps"></div>
+        <div style="margin-top:8px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic">Process → Reflect → Surrender → Release → Sleep</div>
+      </div>
+    </div>
 
-    </div><!-- end right column -->
   </div>
-  <!-- Hidden day detail panel (kept for data functions) -->
-  <div id="day-detail-panel" style="display:none"></div>
+
+  <!-- CALENDAR (full width) -->
+  <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border)">
+      <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
+      <div style="font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+      <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Today</button>
+      <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
+    </div>
+    <div style="padding:8px 12px">
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
+        <div class="mini-cal-day-hdr">Mon</div><div class="mini-cal-day-hdr">Tue</div>
+        <div class="mini-cal-day-hdr">Wed</div><div class="mini-cal-day-hdr">Thu</div>
+        <div class="mini-cal-day-hdr">Fri</div><div class="mini-cal-day-hdr">Sat</div>
+        <div class="mini-cal-day-hdr">Sun</div>
+      </div>
+      <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+    </div>
+  </div>
+
+  <!-- DAY DETAIL PANEL -->
+  <div id="day-detail-panel" style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;margin-bottom:2rem"></div>
 
 
 
@@ -2596,6 +2594,7 @@ function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
   panel.style.display = 'block';
+  panel.style.marginBottom = '2rem';
   const parts = dateStr.split('-');
   const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
