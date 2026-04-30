@@ -1407,7 +1407,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 </div>
 
 <!-- HEADER -->
-<header class="site-header">
+<header class="site-header" style="padding:6px 2rem 6px calc(190px + 2rem)">
   <div class="logo">
     <div>
       <div style="display:flex;align-items:baseline;gap:6px">
@@ -1418,9 +1418,6 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
     </div>
   </div>
   <div class="header-right">
-    <span class="week-badge-sm wk" id="hdr-week"></span>
-    <span class="week-badge-sm qt" id="hdr-qt"></span>
-    <span class="date-badge" id="hdr-date"></span>
     <button class="logout-btn" onclick="logout()">Lock</button>
   </div>
 </header>
@@ -1477,16 +1474,8 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
   <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;flex-wrap:wrap;gap:10px">
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-      <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
-
-    </div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="day-nav-btn" onclick="changeDay(-1)">← prev</button>
-      <span class="day-label" id="daily-day-label"></span>
-      <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
-    </div>
+  <div style="margin-bottom:0.8rem">
+    <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
   </div>
 
 
