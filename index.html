@@ -1548,24 +1548,8 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   </div>
 
   <!-- CALENDAR + DAY VIEW SIDE BY SIDE -->
-  <div class="cal-planner-wrap" style="grid-template-columns:400px 1fr;">
-    <!-- LEFT: Day view (Today's Schedule) -->
-    <div class="day-view-card">
-      <div class="day-view-header">
-        <div>
-          <div class="day-view-title" id="day-view-title">Today</div>
-          <div class="day-view-date-sub" id="day-view-date-sub"></div>
-        </div>
-        <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
-      </div>
-      <div class="day-view-scroll" id="day-view-scroll">
-        <div class="day-time-grid">
-          <div id="day-time-labels" style="position:relative"></div>
-          <div class="time-slots-col" id="day-time-slots"></div>
-        </div>
-      </div>
-    </div>
-    <!-- RIGHT: month calendar + day detail -->
+  <div class="cal-planner-wrap">
+    <!-- LEFT: month calendar + day detail -->
     <div>
       <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border)">
@@ -1584,7 +1568,23 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
           <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:70px;gap:4px"></div>
         </div>
       </div>
-      <div id="day-detail-panel" style="display:none"></div>
+      <div id="day-detail-panel" style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;margin-bottom:2rem"></div>
+    </div>
+    <!-- RIGHT: Day view -->
+    <div class="day-view-card">
+      <div class="day-view-header">
+        <div>
+          <div class="day-view-title" id="day-view-title">Today</div>
+          <div class="day-view-date-sub" id="day-view-date-sub"></div>
+        </div>
+        <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
+      </div>
+      <div class="day-view-scroll" id="day-view-scroll">
+        <div class="day-time-grid">
+          <div id="day-time-labels" style="position:relative"></div>
+          <div class="time-slots-col" id="day-time-slots"></div>
+        </div>
+      </div>
     </div>
     <script>
     // Inline init - runs as soon as this HTML is parsed
@@ -4353,10 +4353,99 @@ function dvUpdateNow() {
   slotsEl.appendChild(line);
 }
 
+// ══ SOLAR PRAYER RHYTHM ══
+// Uses sunrise-sunset.org free API (Manchester: 53.4808°N, 2.2426°W)
+// Calculates: wake (astro twilight − 45min), Fajr, Sunrise, Solar Noon nap, Sunset, Sleep (astro twilight end + 30min)
+let solarCache = {};
+
+async function fetchSolarData(dateStr) {
+  if (solarCache[dateStr]) return solarCache[dateStr];
+  try {
+    const res = await fetch(
+      `https://api.sunrise-sunset.org/json?lat=53.4808&lng=-2.2426&date=${dateStr}&formatted=0`
+    );
+    const json = await res.json();
+    if (json.status !== 'OK') return null;
+    const r = json.results;
+    // Parse UTC ISO strings to local minutes-since-midnight
+    const toLocalMin = (iso) => {
+      const d = new Date(iso);
+      return d.getHours() * 60 + d.getMinutes();
+    };
+    const data = {
+      astroTwilightStart: toLocalMin(r.astronomical_twilight_begin),
+      astroTwilightEnd:   toLocalMin(r.astronomical_twilight_end),
+      nautiTwilightStart: toLocalMin(r.nautical_twilight_begin),
+      civilTwilightStart: toLocalMin(r.civil_twilight_begin),
+      sunrise:            toLocalMin(r.sunrise),
+      solarNoon:          toLocalMin(r.solar_noon),
+      sunset:             toLocalMin(r.sunset),
+      civilTwilightEnd:   toLocalMin(r.civil_twilight_end),
+    };
+    solarCache[dateStr] = data;
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dvRenderSolarMarkers(dateStr) {
+  const slotsEl = document.getElementById('day-time-slots');
+  if (!slotsEl) return;
+  // Remove old solar markers
+  slotsEl.querySelectorAll('.solar-marker,.solar-band').forEach(e => e.remove());
+
+  const sol = await fetchSolarData(dateStr);
+  if (!sol) return;
+
+  const WAKE_MIN   = sol.astroTwilightStart - 45;  // Wake 45min before astro twilight
+  const FAJR_MIN   = sol.astroTwilightStart;        // Fajr starts at astro twilight
+  const RISE_MIN   = sol.sunrise;
+  const NOON_MIN   = sol.solarNoon;
+  const SET_MIN    = sol.sunset;
+  const SLEEP_MIN  = sol.astroTwilightEnd + 30;     // Sleep 30min after astro twilight ends
+
+  const markers = [
+    { min: WAKE_MIN,  label: '☽ Wake — Tahajjud Time',  color: '#7F77DD', bg: '#7F77DD' },
+    { min: FAJR_MIN,  label: '✦ Fajr Begins',           color: '#C4983B', bg: '#C4983B' },
+    { min: RISE_MIN,  label: '☀ Sunrise — Ishraq',      color: '#E8B84B', bg: '#E8B84B' },
+    { min: NOON_MIN,  label: '◎ Solar Noon — Nap & Dhuhr', color: '#1A9E8F', bg: '#1A9E8F' },
+    { min: SET_MIN,   label: '◑ Sunset — Maghrib',      color: '#E8733A', bg: '#E8733A' },
+    { min: SLEEP_MIN, label: '☾ Sleep — Night Begins',  color: '#3B8FC4', bg: '#3B8FC4' },
+  ];
+
+  // Draw shaded day band (sunrise → sunset)
+  const bandEl = document.createElement('div');
+  bandEl.className = 'solar-band';
+  const bandTop  = RISE_MIN * (HOUR_H / 60);
+  const bandH    = (SET_MIN - RISE_MIN) * (HOUR_H / 60);
+  bandEl.style.cssText = `position:absolute;left:0;right:0;top:${bandTop}px;height:${bandH}px;background:linear-gradient(180deg,#E8B84B06,#E8B84B10);pointer-events:none;z-index:1;`;
+  slotsEl.appendChild(bandEl);
+
+  markers.forEach(m => {
+    const top = Math.max(0, m.min) * (HOUR_H / 60);
+    const el = document.createElement('div');
+    el.className = 'solar-marker';
+    el.style.cssText = `position:absolute;left:0;right:0;top:${top}px;z-index:6;pointer-events:none;`;
+    el.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;padding:2px 6px;background:${m.bg}18;border-left:3px solid ${m.color};border-radius:0 6px 6px 0;">
+        <span style="font-size:10px;font-weight:600;color:${m.color};white-space:nowrap;">${m.label}</span>
+        <span style="font-size:9px;color:${m.color}99;margin-left:auto;">${dvMinToTime(m.min)}</span>
+      </div>`;
+    slotsEl.appendChild(el);
+  });
+
+  // Update the header subtitle with today's key solar times
+  const sub = document.getElementById('day-view-date-sub');
+  if (sub && dateStr === fmt(new Date())) {
+    sub.innerHTML = `<span style="color:#E8B84B99;font-size:10px">☀ ${dvMinToTime(RISE_MIN)} rise &nbsp;·&nbsp; ◎ ${dvMinToTime(NOON_MIN)} noon &nbsp;·&nbsp; ◑ ${dvMinToTime(SET_MIN)} set</span>`;
+  }
+}
+
 function dvRenderEvents() {
   const slotsEl = document.getElementById('day-time-slots');
   if (!slotsEl) return;
   slotsEl.querySelectorAll('.day-event-block').forEach(e => e.remove());
+  // Always (re)draw solar markers for the current date
+  dvRenderSolarMarkers(dvDate);
   const evs = (data.calendar && data.calendar[dvDate]) || [];
   evs.forEach(ev => {
     if (ev.startMin == null) {
