@@ -1548,8 +1548,24 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   </div>
 
   <!-- CALENDAR + DAY VIEW SIDE BY SIDE -->
-  <div class="cal-planner-wrap">
-    <!-- LEFT: month calendar + day detail -->
+  <div class="cal-planner-wrap" style="grid-template-columns:400px 1fr;">
+    <!-- LEFT: Day view (Today's Schedule) -->
+    <div class="day-view-card">
+      <div class="day-view-header">
+        <div>
+          <div class="day-view-title" id="day-view-title">Today</div>
+          <div class="day-view-date-sub" id="day-view-date-sub"></div>
+        </div>
+        <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
+      </div>
+      <div class="day-view-scroll" id="day-view-scroll">
+        <div class="day-time-grid">
+          <div id="day-time-labels" style="position:relative"></div>
+          <div class="time-slots-col" id="day-time-slots"></div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: month calendar + day detail -->
     <div>
       <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border)">
@@ -1569,22 +1585,6 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
         </div>
       </div>
       <div id="day-detail-panel" style="display:none"></div>
-    </div>
-    <!-- RIGHT: Day view -->
-    <div class="day-view-card">
-      <div class="day-view-header">
-        <div>
-          <div class="day-view-title" id="day-view-title">Today</div>
-          <div class="day-view-date-sub" id="day-view-date-sub"></div>
-        </div>
-        <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
-      </div>
-      <div class="day-view-scroll" id="day-view-scroll">
-        <div class="day-time-grid">
-          <div id="day-time-labels" style="position:relative"></div>
-          <div class="time-slots-col" id="day-time-slots"></div>
-        </div>
-      </div>
     </div>
     <script>
     // Inline init - runs as soon as this HTML is parsed
