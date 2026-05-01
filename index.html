@@ -394,48 +394,39 @@ body{
   white-space: nowrap;
 }
 
-/* ── AFFIRMATION BANNER ── */
-.affirmation-bar{
-  background:linear-gradient(135deg,#1A1205,#251A08);
-  border-bottom:1px solid #C4983B44;
-  padding:10px 2rem;
+/* ── AFFIRMATION IN HEADER ── */
+.header-affirmation{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  position:sticky;
-  top:0;
-  z-index:150;
-  margin-left:190px;
-  transition:margin-left .25s ease;
+  gap:6px;
+  max-width:520px;
 }
-@media(max-width:700px){.affirmation-bar{margin-left:54px;}}
 .affirmation-text{
   font-family:var(--font-display);
   font-style:italic;
-  font-size:15px;
+  font-size:13px;
   color:var(--gold);
   flex:1;
-  text-align:center;
+  text-align:right;
   letter-spacing:.02em;
   cursor:pointer;
   transition:opacity .2s;
+  line-height:1.4;
 }
 .affirmation-text:hover{opacity:.7;}
-.affirmation-nav{display:flex;gap:6px;align-items:center;}
-.affirmation-nav button{
+.aff-nav-btn{
   background:none;border:none;cursor:pointer;
-  color:var(--text-tertiary);font-size:14px;padding:2px 6px;
-  transition:color .15s;
+  color:var(--text-tertiary);font-size:13px;padding:2px 4px;
+  transition:color .15s;flex-shrink:0;
 }
-.affirmation-nav button:hover{color:var(--emerald);}
+.aff-nav-btn:hover{color:var(--gold);}
 .affirmation-edit-btn{
   background:none;border:0.5px solid var(--charcoal-border);
   border-radius:6px;padding:3px 8px;font-size:11px;
   color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);
-  transition:all .15s;white-space:nowrap;
+  transition:all .15s;white-space:nowrap;flex-shrink:0;
 }
-.affirmation-edit-btn:hover{border-color:var(--emerald);color:var(--emerald);}
+.affirmation-edit-btn:hover{border-color:var(--gold);color:var(--gold);}
 
 /* ── HEADER ── */
 .site-header{
@@ -1251,14 +1242,12 @@ body{
 /* Collapsed margins */
 .sidebar-nav.collapsed ~ * .site-header,
 body.sidebar-collapsed .site-header{margin-left:54px;}
-body.sidebar-collapsed .affirmation-bar{margin-left:54px;}
 body.sidebar-collapsed .app-shell{margin-left:54px;}
 body.sidebar-collapsed .page{margin-left:54px;}
 body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 /* Smooth transitions on shifted elements */
 .site-header{transition:margin-left .25s ease;}
-.affirmation-bar{transition:margin-left .25s ease;}
 .app-shell{transition:margin-left .25s ease;}
 
 @media(max-width:700px){
@@ -1393,19 +1382,6 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 <!-- AFFIRMATION BAR -->
-<div class="affirmation-bar">
-  <div class="affirmation-nav">
-    <button onclick="prevAffirmation()">←</button>
-  </div>
-  <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
-    Loading your affirmation...
-  </div>
-  <div class="affirmation-nav">
-    <button onclick="nextAffirmation()">→</button>
-    <button class="affirmation-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">Edit</button>
-  </div>
-</div>
-
 <!-- HEADER -->
 <header class="site-header">
   <div class="logo">
@@ -1417,7 +1393,16 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div class="logo-sub">Personal Operating System</div>
     </div>
   </div>
-  <div class="header-right"></div>
+  <div class="header-right">
+    <div class="header-affirmation">
+      <button class="aff-nav-btn" onclick="prevAffirmation()">←</button>
+      <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
+        Loading your affirmation...
+      </div>
+      <button class="aff-nav-btn" onclick="nextAffirmation()">→</button>
+      <button class="affirmation-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">Edit</button>
+    </div>
+  </div>
 </header>
 
 <!-- SIDEBAR NAV -->
