@@ -1437,7 +1437,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 /* ══ GOOGLE CALENDAR DAY PLANNER ══ */
-.cal-planner-wrap{display:grid;grid-template-columns:1fr 400px;gap:16px;margin-bottom:1rem;align-items:start;}
+.cal-planner-wrap{display:grid;grid-template-columns:400px 1fr;gap:16px;margin-bottom:1rem;align-items:start;}
 @media(max-width:1100px){.cal-planner-wrap{grid-template-columns:1fr;}}
 .day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:620px;}
 .day-view-header{padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
@@ -1667,7 +1667,23 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
   <!-- CALENDAR + DAY VIEW SIDE BY SIDE -->
   <div class="cal-planner-wrap">
-    <!-- LEFT: month calendar + day detail -->
+    <!-- LEFT: Day view (Today schedule) -->
+    <div class="day-view-card">
+      <div class="day-view-header">
+        <div>
+          <div class="day-view-title" id="day-view-title">Today</div>
+          <div class="day-view-date-sub" id="day-view-date-sub"></div>
+        </div>
+        <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
+      </div>
+      <div class="day-view-scroll" id="day-view-scroll">
+        <div class="day-time-grid">
+          <div id="day-time-labels" style="position:relative"></div>
+          <div class="time-slots-col" id="day-time-slots"></div>
+        </div>
+      </div>
+    </div>
+    <!-- RIGHT: month calendar + day detail -->
     <div>
       <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border)">
@@ -1687,22 +1703,6 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
         </div>
       </div>
       <div id="day-detail-panel" style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:16px;margin-bottom:2rem"></div>
-    </div>
-    <!-- RIGHT: Day view -->
-    <div class="day-view-card">
-      <div class="day-view-header">
-        <div>
-          <div class="day-view-title" id="day-view-title">Today</div>
-          <div class="day-view-date-sub" id="day-view-date-sub"></div>
-        </div>
-        <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
-      </div>
-      <div class="day-view-scroll" id="day-view-scroll">
-        <div class="day-time-grid">
-          <div id="day-time-labels" style="position:relative"></div>
-          <div class="time-slots-col" id="day-time-slots"></div>
-        </div>
-      </div>
     </div>
     <script>
     // Inline init - runs as soon as this HTML is parsed
