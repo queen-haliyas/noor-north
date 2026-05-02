@@ -928,10 +928,14 @@ body{
   background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);
   border-radius:20px;padding:5px 12px;font-size:11px;
   color:var(--text-tertiary);z-index:100;display:none;
-  align-items:center;gap:6px;
+  align-items:center;gap:6px;transition:border-color .2s,color .2s;
 }
 .sync-indicator.show{display:flex;}
+.sync-indicator.sync-ok{border-color:#4caf7d;color:#4caf7d;}
+.sync-indicator.sync-err{border-color:#e05c5c;color:#e05c5c;}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.5s infinite;}
+.sync-indicator.sync-ok .sync-dot{background:#4caf7d;animation:none;}
+.sync-indicator.sync-err .sync-dot{background:#e05c5c;animation:none;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 .logout-btn{
   background:none;border:0.5px solid var(--charcoal-border);
@@ -4152,48 +4156,100 @@ async function sbRequest(method, path, body) {
       'apikey': SUPABASE_KEY,
       'Authorization': 'Bearer ' + SUPABASE_KEY,
       'Content-Type': 'application/json',
-      'Prefer': method === 'POST' ? 'resolution=merge-duplicates' : ''
+      'Prefer': method === 'POST' ? 'resolution=merge-duplicates,return=minimal' : ''
     },
     body: body ? JSON.stringify(body) : undefined
   });
+  if (!res.ok) {
+    const errText = await res.text().catch(() => '(no body)');
+    console.error(`[Supabase] ${method} ${path} → ${res.status} ${res.statusText}`, errText);
+  }
   if (method === 'GET') return res.json();
   return res;
 }
 
 async function syncToSupabase() {
   if (!MASTER_PASSWORD || !USER_ID) return;
-  showSync();
-  const encrypted = encrypt(data, MASTER_PASSWORD);
-  await sbRequest('POST', 'noor_north_data', {
-    user_id: USER_ID,
-    data_key: 'main',
-    encrypted_value: encrypted,
-    updated_at: new Date().toISOString()
-  });
-  hideSync();
+  showSyncSaving();
+  try {
+    const encrypted = encrypt(data, MASTER_PASSWORD);
+    console.log('[Supabase] syncToSupabase: posting upsert for user', USER_ID);
+    const res = await sbRequest('POST', 'noor_north_data', {
+      user_id: USER_ID,
+      data_key: 'main',
+      encrypted_value: encrypted,
+      updated_at: new Date().toISOString()
+    });
+    if (res.ok) {
+      console.log('[Supabase] syncToSupabase: upsert succeeded');
+      showSyncOk();
+    } else {
+      console.error('[Supabase] syncToSupabase: upsert failed, status', res.status);
+      showSyncErr();
+    }
+  } catch(e) {
+    console.error('[Supabase] syncToSupabase: exception', e);
+    showSyncErr();
+  }
 }
 
 async function loadFromSupabase() {
   if (!MASTER_PASSWORD || !USER_ID) return { ok: false, reason: 'no-creds' };
-  showSync();
+  showSyncSaving();
   try {
+    console.log('[Supabase] loadFromSupabase: fetching for user', USER_ID);
     const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
     hideSync();
-    if (!Array.isArray(rows)) return { ok: false, reason: 'network' };
+    if (!Array.isArray(rows)) {
+      console.error('[Supabase] loadFromSupabase: unexpected response (not array)', rows);
+      return { ok: false, reason: 'network' };
+    }
+    console.log('[Supabase] loadFromSupabase: got', rows.length, 'row(s)');
     if (rows.length > 0) {
       const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
-      if (decrypted) { data = decrypted; return { ok: true }; }
+      if (decrypted) {
+        console.log('[Supabase] loadFromSupabase: decrypted ok, updating data');
+        data = decrypted;
+        return { ok: true };
+      }
+      console.error('[Supabase] loadFromSupabase: decryption failed — wrong password?');
       return { ok: false, reason: 'wrong-password' };
     }
+    console.log('[Supabase] loadFromSupabase: no rows — new user');
     return { ok: true }; // new user, no data yet
   } catch(e) {
     hideSync();
+    console.error('[Supabase] loadFromSupabase: exception', e);
     return { ok: false, reason: 'network' };
   }
 }
 
-function showSync() { const el=document.getElementById('sync-indicator');if(el)el.classList.add('show'); }
-function hideSync() { const el=document.getElementById('sync-indicator');if(el)el.classList.remove('show'); }
+let _syncHideTimer = null;
+function _syncEl() { return document.getElementById('sync-indicator'); }
+function _syncText(txt) { const el=_syncEl(); if(!el) return; el.querySelector('span').textContent=txt; }
+function showSync() { showSyncSaving(); }
+function hideSync() { const el=_syncEl(); if(el){el.classList.remove('show','sync-ok','sync-err');} }
+function showSyncSaving() {
+  const el=_syncEl(); if(!el) return;
+  clearTimeout(_syncHideTimer);
+  el.classList.remove('sync-ok','sync-err');
+  _syncText('Syncing...');
+  el.classList.add('show');
+}
+function showSyncOk() {
+  const el=_syncEl(); if(!el) return;
+  el.classList.remove('sync-err'); el.classList.add('sync-ok');
+  _syncText('✓ Saved to cloud');
+  clearTimeout(_syncHideTimer);
+  _syncHideTimer = setTimeout(() => { el.classList.remove('show','sync-ok'); }, 3000);
+}
+function showSyncErr() {
+  const el=_syncEl(); if(!el) return;
+  el.classList.remove('sync-ok'); el.classList.add('sync-err');
+  _syncText('⚠ Sync failed');
+  clearTimeout(_syncHideTimer);
+  _syncHideTimer = setTimeout(() => { el.classList.remove('show','sync-err'); }, 6000);
+}
 
 // DEBOUNCED SAVE
 const originalSave = save;
@@ -4285,7 +4341,7 @@ function logout() {
           try{renderDayDetail(fmt(new Date()));}catch(e){}
         },300);
       }
-    } catch(e) {}
+    } catch(e) { console.error('[Supabase] autoLogin background sync failed', e); showSyncErr(); }
   }
 })();
 
