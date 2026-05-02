@@ -1018,19 +1018,126 @@ body{
 .names-card-num{font-size:10px;color:var(--text-tertiary);margin-bottom:4px;}
 .names-card-arabic{font-size:18px;color:var(--gold);}
 .names-card-english{font-size:12px;color:var(--text-primary);margin-top:2px;}
-/* ── WEEKLY REVIEW ── */
-.review-locked{text-align:center;padding:3rem;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);}
-.review-lock-icon{font-size:40px;margin-bottom:1rem;}
-.review-lock-title{font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--text-primary);margin-bottom:8px;}
-.review-lock-sub{font-size:14px;color:var(--text-secondary);}
+/* ── REVIEWS ── */
+.rev-tabs{display:flex;gap:6px;margin-bottom:1.2rem;flex-wrap:wrap;}
+.rev-tab{background:none;border:0.5px solid var(--charcoal-border);border-radius:20px;padding:6px 18px;font-size:13px;cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);transition:all .15s;}
+.rev-tab:hover{border-color:var(--gold);color:var(--gold);}
+.rev-tab.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);font-weight:500;}
+.rev-pane{animation:rev-fadein .2s ease;}
+.rev-pane.hidden{display:none;}
+@keyframes rev-fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.rev-saved-badge{position:fixed;top:18px;right:24px;background:var(--charcoal-light);border:0.5px solid var(--gold);color:var(--gold);border-radius:20px;padding:4px 14px;font-size:12px;z-index:500;pointer-events:none;transition:opacity .4s;}
+.rev-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-bottom:1rem;}
+.rev-card-title{font-family:var(--font-display);font-size:15px;font-weight:500;color:var(--gold);margin-bottom:1rem;}
+.rev-sublabel{font-size:12px;color:var(--text-secondary);margin-bottom:6px;}
+.rev-textarea{width:100%;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;resize:vertical;min-height:72px;line-height:1.6;transition:border-color .15s;}
+.rev-textarea:focus{border-color:var(--gold);}
+.rev-input{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;transition:border-color .15s;}
+.rev-input:focus{border-color:var(--gold);}
+.rev-w-num{width:90px;}
+.rev-metrics-grid{display:flex;flex-direction:column;gap:10px;}
+.rev-metric-row{display:flex;align-items:center;gap:12px;}
+.rev-metric-row label{font-size:13px;color:var(--text-secondary);min-width:90px;}
+.rev-metric-input-wrap{display:flex;align-items:center;gap:8px;}
+.rev-prefix{font-size:13px;color:var(--text-tertiary);}
+.rev-target{font-size:11px;color:var(--text-tertiary);font-style:italic;}
+.rev-q-list{display:flex;flex-direction:column;gap:14px;}
+.rev-q-item{border-left:2px solid var(--gold);padding-left:12px;}
+.rev-q-prompt{font-size:13px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5;}
+.rev-q-num{font-size:11px;color:var(--gold);margin-bottom:4px;font-weight:500;}
+.rev-grant-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--charcoal-border);}
+.rev-grant-item:last-child{border-bottom:none;}
+.rev-grant-cb{width:16px;height:16px;accent-color:var(--gold);flex-shrink:0;margin-top:1px;cursor:pointer;}
+.rev-grant-label{font-size:13px;color:var(--text-secondary);line-height:1.5;}
+.rev-manif-grid{display:flex;flex-direction:column;gap:12px;}
+.rev-manif-item{display:flex;flex-direction:column;gap:4px;}
+.rev-manif-prompt{font-size:13px;color:var(--text-tertiary);font-style:italic;}
+.rev-obj-list{display:flex;flex-direction:column;gap:8px;}
+.rev-obj-item{display:flex;align-items:center;gap:10px;}
+.rev-obj-num{font-size:12px;color:var(--gold);font-weight:600;min-width:18px;}
+.rev-static-list{display:flex;flex-direction:column;gap:8px;}
+.rev-static-row{font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:10px;}
+.rev-day-lbl{font-size:11px;font-weight:500;color:var(--gold);min-width:72px;background:var(--gold-dim);border-radius:12px;padding:2px 8px;text-align:center;}
+.rev-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:800px){.rev-3col{grid-template-columns:1fr;}}
+/* Habit accordion */
+.rev-habit{border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;}
+.rev-habit-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;background:var(--charcoal-mid);user-select:none;}
+.rev-habit-hdr:hover{background:#2A200C;}
+.rev-habit-num{font-size:11px;color:var(--gold);font-weight:600;min-width:50px;}
+.rev-habit-name{font-size:13px;font-weight:500;color:var(--text-primary);flex:1;}
+.rev-habit-chev{font-size:10px;color:var(--text-tertiary);transition:transform .2s;}
+.rev-habit.open .rev-habit-chev{transform:rotate(180deg);}
+.rev-habit-body{display:none;padding:14px;}
+.rev-habit.open .rev-habit-body{display:block;}
+.rev-habit-belief{font-size:12px;color:var(--text-tertiary);font-style:italic;margin-bottom:6px;}
+.rev-habit-distortion{display:inline-block;font-size:11px;color:var(--coral);border:0.5px solid var(--coral);border-radius:10px;padding:2px 8px;margin-bottom:10px;}
+.rev-habit-reframe{border-left:3px solid var(--gold);padding:10px 14px;background:var(--gold-dim);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:13px;font-style:italic;color:var(--gold);margin-bottom:12px;line-height:1.6;}
+.rev-habit-sublabel{font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;margin-top:10px;}
+.rev-slider-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.rev-slider{flex:1;accent-color:var(--gold);height:4px;cursor:pointer;}
+.rev-slider-val{font-size:13px;color:var(--gold);min-width:24px;font-weight:600;}
+.rev-strategy-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;}
+.rev-strategy-cb{width:14px;height:14px;accent-color:var(--gold);flex-shrink:0;margin-top:2px;cursor:pointer;}
+.rev-strategy-text{font-size:12px;color:var(--text-secondary);line-height:1.5;}
+/* Review table */
+.rev-table-wrap{overflow-x:auto;}
+.rev-table{width:100%;border-collapse:collapse;font-size:12px;}
+.rev-table th{padding:8px 12px;text-align:left;color:var(--gold);font-weight:500;border-bottom:0.5px solid var(--charcoal-border);}
+.rev-table td{padding:8px 12px;color:var(--text-secondary);border-bottom:0.5px solid var(--charcoal-border);line-height:1.5;}
+.rev-table tr:last-child td{border-bottom:none;}
+/* Yes/No toggle */
+.rev-yn-row{display:flex;align-items:center;gap:10px;margin:8px 0;}
+.rev-yn-label{font-size:13px;color:var(--text-secondary);}
+.rev-yn{display:flex;gap:6px;}
+.rev-yn-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:12px;padding:4px 14px;font-size:12px;cursor:pointer;color:var(--text-tertiary);font-family:var(--font-body);transition:all .15s;}
+.rev-yn-btn.active-yes{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
+.rev-yn-btn.active-no{background:#E8733A20;border-color:var(--coral);color:var(--coral);}
+/* Section sub-grid */
+.rev-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.rev-2col{grid-template-columns:1fr;}}
+.rev-field-group{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.rev-field-label{font-size:12px;color:var(--text-tertiary);margin-bottom:2px;}
+.rev-input-full{width:100%;}
+/* Empire additions */
+.emp-ref-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-bottom:1rem;}
+.emp-ref-title{font-family:var(--font-display);font-size:15px;font-weight:500;color:var(--gold);margin-bottom:1rem;}
+.emp-price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
+.emp-price-card{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:14px;text-align:center;position:relative;}
+.emp-price-card.popular{border-color:var(--gold);}
+.emp-price-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1A1508;font-size:9px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap;}
+.emp-price-tier{font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.emp-price-val{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary);margin-bottom:4px;}
+.emp-price-sub{font-size:11px;color:var(--text-tertiary);line-height:1.4;}
+.emp-milestone-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:0.5px solid var(--charcoal-border);}
+.emp-milestone-row:last-child{border-bottom:none;}
+.emp-milestone-year{font-size:13px;font-weight:600;color:var(--gold);min-width:44px;}
+.emp-milestone-rev{font-size:13px;font-weight:500;color:var(--text-primary);min-width:100px;}
+.emp-milestone-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;}
+.emp-rev-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--charcoal-border);font-size:13px;}
+.emp-rev-row:last-child{border-bottom:none;}
+.emp-rev-date{color:var(--text-secondary);}
+.emp-rev-amount{color:var(--gold);font-weight:500;}
+/* Legacy review CSS kept for charts */
+.review-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1rem;}
+.review-stat-card{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
+.review-stat-num{font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary);}
+.review-stat-lbl{font-size:11px;color:var(--text-tertiary);margin-top:4px;}
+.weekly-chart-wrap{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1rem;margin-bottom:0.8rem;}
+.weekly-chart-title{font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:12px;}
+.weekly-bars{display:flex;gap:8px;align-items:flex-end;height:100px;}
+.weekly-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.weekly-bar-val{font-size:10px;color:var(--text-tertiary);height:14px;display:flex;align-items:flex-end;}
+.weekly-bar-track{width:100%;height:70px;background:var(--charcoal-mid);border-radius:3px;overflow:hidden;display:flex;align-items:flex-end;}
+.weekly-bar-fill{width:100%;border-radius:3px;transition:height .5s;}
+.weekly-bar-lbl{font-size:10px;color:var(--text-tertiary);}
+.pillar-week-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.pillar-ring-item{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.pillar-ring-label{font-size:10px;color:var(--text-tertiary);}
+/* Old review CSS kept for backward compat */
 .review-form{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;}
 .review-q{font-size:14px;font-weight:500;color:var(--gold);margin-bottom:8px;}
 .review-q-sub{font-size:12px;color:var(--text-secondary);margin-bottom:10px;}
-.review-textarea{width:100%;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;resize:vertical;min-height:80px;line-height:1.6;transition:border-color .15s;margin-bottom:8px;}
-.review-textarea:focus{border-color:var(--gold);}
-.review-score-row{display:flex;gap:8px;margin-bottom:8px;}
-.review-score-btn{flex:1;padding:8px;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);background:none;cursor:pointer;font-size:13px;color:var(--text-secondary);font-family:var(--font-body);transition:all .15s;}
-.review-score-btn.selected{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
 .review-submit-btn{width:100%;background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:12px;font-size:14px;cursor:pointer;font-family:var(--font-body);font-weight:500;margin-top:1rem;}
 .review-complete{text-align:center;padding:2rem;background:var(--charcoal-light);border:0.5px solid var(--gold);border-radius:var(--radius);}
 .review-history-item{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:8px;}
@@ -1493,8 +1600,8 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
     <span>☪</span><span class="sidebar-label">99 Names</span>
   </button>
   <div class="sidebar-divider"></div>
-  <button class="sidebar-btn" onclick="showPage('review',this);setSidebarActive(this)" title="Weekly Review">
-    <span>◎</span><span class="sidebar-label">Weekly Review</span>
+  <button class="sidebar-btn" onclick="showPage('review',this);setSidebarActive(this)" title="Reviews">
+    <span>◎</span><span class="sidebar-label">Reviews</span>
   </button>
   <button class="sidebar-btn" onclick="showPage('arabella',this);setSidebarActive(this)" title="Arabella AI">
     <span>✿</span><span class="sidebar-label">Arabella AI</span>
@@ -1517,7 +1624,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <button class="nav-tab" onclick="showPage('notes',this)">Notes</button>
   <button class="nav-tab" onclick="showPage('affirmations',this)">Affirmations</button>
   <button class="nav-tab" onclick="showPage('names',this)">99 Names</button>
-  <button class="nav-tab" onclick="showPage('review',this)">Weekly Review</button>
+  <button class="nav-tab" onclick="showPage('review',this)">Reviews</button>
   <button class="nav-tab" onclick="showPage('arabella',this)">Arabella AI</button>
   <button class="nav-tab" onclick="showPage('voice',this)">Voice Memos</button>
 </nav>
@@ -1779,6 +1886,89 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   </div>
   <span class="section-lbl">Pillar Health</span>
   <div class="empire-grid" id="empire-grid"></div>
+
+  <!-- OFFER STRUCTURE -->
+  <div class="emp-ref-card" style="margin-top:1rem">
+    <div class="emp-ref-title">💼 Offer Structure</div>
+    <div class="emp-price-grid">
+      <div class="emp-price-card">
+        <div class="emp-price-tier">Solo Agent</div>
+        <div class="emp-price-val">£5,000</div>
+        <div class="emp-price-sub">1 agent</div>
+      </div>
+      <div class="emp-price-card">
+        <div class="emp-price-tier">Starter</div>
+        <div class="emp-price-val">£14,997</div>
+        <div class="emp-price-sub">≤5 agents</div>
+      </div>
+      <div class="emp-price-card popular">
+        <div class="emp-price-badge">MOST POPULAR</div>
+        <div class="emp-price-tier">Pro</div>
+        <div class="emp-price-val">£24,997</div>
+        <div class="emp-price-sub">≤12 agents</div>
+      </div>
+      <div class="emp-price-card">
+        <div class="emp-price-tier">Elite</div>
+        <div class="emp-price-val">£39,997</div>
+        <div class="emp-price-sub">≤25 agents</div>
+      </div>
+      <div class="emp-price-card">
+        <div class="emp-price-tier">Enterprise</div>
+        <div class="emp-price-val">£64,997</div>
+        <div class="emp-price-sub">Unlimited</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-tertiary);margin-top:10px">Payment plans available · 90-day guarantee (50+ bookings) · White-label</div>
+  </div>
+
+  <!-- WEALTH ALLOCATION -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">💰 Wealth Allocation Table</div>
+    <div class="rev-table-wrap">
+      <table class="rev-table">
+        <thead><tr><th>Bracket</th><th>Business</th><th>Crypto</th><th>Charity</th><th>Lifestyle</th></tr></thead>
+        <tbody>
+          <tr><td>£0–£100k</td><td>60%</td><td>20%</td><td>10%</td><td>10%</td></tr>
+          <tr><td>£100k–£1M</td><td>50%</td><td>30%</td><td>10%</td><td>10%</td></tr>
+          <tr><td>£1M–£10M</td><td>40%</td><td>40%</td><td>15%</td><td>5%</td></tr>
+          <tr><td>£10M+</td><td>30%</td><td>50%</td><td>20%</td><td>0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:var(--text-tertiary);margin-top:8px">Rules: Halal only · No riba · Gold/cash buffer maintained</div>
+  </div>
+
+  <!-- MILESTONES TO £24B -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">🚀 Milestones to £24 Billion</div>
+    <div class="emp-milestone-row"><span class="emp-milestone-year">2025</span><span class="emp-milestone-rev">£150k+</span><span class="emp-milestone-desc">Prove model — 4–8 clients</span></div>
+    <div class="emp-milestone-row"><span class="emp-milestone-year">2026</span><span class="emp-milestone-rev">£5–10M</span><span class="emp-milestone-desc">100 clients — £5M ARR</span></div>
+    <div class="emp-milestone-row"><span class="emp-milestone-year">2027</span><span class="emp-milestone-rev">£100–200M</span><span class="emp-milestone-desc">£20–50M raise at £500M valuation</span></div>
+    <div class="emp-milestone-row"><span class="emp-milestone-year">2028</span><span class="emp-milestone-rev">£1–3B</span><span class="emp-milestone-desc">5,000 global brokerages</span></div>
+    <div class="emp-milestone-row"><span class="emp-milestone-year">2029</span><span class="emp-milestone-rev">£24B</span><span class="emp-milestone-desc">IPO + 7 masjids + 7 schools</span></div>
+  </div>
+
+  <!-- REVENUE TARGETS -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">🎯 Revenue Targets</div>
+    <div class="emp-rev-row"><span class="emp-rev-date">December 2025</span><span class="emp-rev-amount">£50,000</span><span style="font-size:11px;color:var(--text-tertiary)">(2 deals)</span></div>
+    <div class="emp-rev-row"><span class="emp-rev-date">January 2026</span><span class="emp-rev-amount">£150,000</span><span style="font-size:11px;color:var(--text-tertiary)">(cumulative)</span></div>
+    <div class="emp-rev-row"><span class="emp-rev-date">Q2 2026</span><span class="emp-rev-amount">£200,000/mo</span><span style="font-size:11px;color:var(--text-tertiary)">(monthly recurring)</span></div>
+    <div class="emp-rev-row"><span class="emp-rev-date">Year 1</span><span class="emp-rev-amount">£1.5M</span><span style="font-size:11px;color:var(--text-tertiary)"></span></div>
+    <div class="emp-rev-row"><span class="emp-rev-date">Year 3</span><span class="emp-rev-amount">£5M+</span><span style="font-size:11px;color:var(--text-tertiary)"></span></div>
+    <div class="emp-rev-row"><span class="emp-rev-date">2029</span><span class="emp-rev-amount">£24 BILLION</span><span style="font-size:11px;color:var(--text-tertiary)"></span></div>
+  </div>
+
+  <!-- MARKETING STRATEGY -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">📣 Marketing Strategy</div>
+    <div class="rev-static-list">
+      <div class="rev-static-row">✦ LinkedIn: 50 personalised messages daily</div>
+      <div class="rev-static-row">✦ Content: 5–7 posts/week (60% educational, 30% results, 10% personal)</div>
+      <div class="rev-static-row">✦ Demo conversion: 40% book → 70% close</div>
+      <div class="rev-static-row">✦ Expansion: UK → Ireland → Australia → Canada</div>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -1864,11 +2054,133 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <div class="names-grid" id="names-grid"></div>
 </div>
 
-<!-- WEEKLY REVIEW PAGE -->
+<!-- REVIEWS PAGE -->
 <div class="page" id="page-review">
-  <div class="page-title">Weekly Review</div>
-  <div id="review-charts"></div>
-  <div id="review-content"></div>
+  <div class="page-title">Reviews</div>
+  <!-- Tab Bar -->
+  <div class="rev-tabs">
+    <button class="rev-tab active" onclick="switchRevTab('weekly',this)">Weekly</button>
+    <button class="rev-tab" onclick="switchRevTab('monthly',this)">Monthly</button>
+    <button class="rev-tab" onclick="switchRevTab('quarterly',this)">Quarterly</button>
+    <button class="rev-tab" onclick="switchRevTab('yearly',this)">Yearly</button>
+  </div>
+  <div id="rev-saved-badge" class="rev-saved-badge" style="display:none">✓ Saved</div>
+
+  <!-- ── WEEKLY TAB ── -->
+  <div class="rev-pane" id="rev-pane-weekly">
+    <div id="review-charts"></div>
+    <!-- Metrics Review -->
+    <div class="rev-card">
+      <div class="rev-card-title">📊 Metrics Review</div>
+      <div class="rev-metrics-grid">
+        <div class="rev-metric-row"><label>Revenue</label><div class="rev-metric-input-wrap"><span class="rev-prefix">£</span><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricRevenue" placeholder="0"><span class="rev-target">Target: £12,500/wk</span></div></div>
+        <div class="rev-metric-row"><label>Deals</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricDeals" placeholder="0"><span class="rev-target">Target: 1–2</span></div></div>
+        <div class="rev-metric-row"><label>Demos</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricDemos" placeholder="0"><span class="rev-target">Target: 6–8</span></div></div>
+        <div class="rev-metric-row"><label>Messages</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricMessages" placeholder="0"><span class="rev-target">Target: 250+</span></div></div>
+        <div class="rev-metric-row"><label>Close Rate</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricClose" placeholder="0"><span class="rev-prefix" style="order:2">%</span><span class="rev-target">Target: 60–80%</span></div></div>
+      </div>
+    </div>
+
+    <!-- 10X Questions -->
+    <div class="rev-card">
+      <div class="rev-card-title">⚡ The 10X Questions</div>
+      <div class="rev-q-list" id="rev-10x-questions"></div>
+    </div>
+
+    <!-- Grant's 7-Step -->
+    <div class="rev-card">
+      <div class="rev-card-title">✦ Uncle Grant's 7-Step Framework</div>
+      <div id="rev-grant-checklist"></div>
+    </div>
+
+    <!-- Target Manifestation -->
+    <div class="rev-card">
+      <div class="rev-card-title">🌟 Target Manifestation</div>
+      <div class="rev-manif-grid" id="rev-manif"></div>
+    </div>
+
+    <!-- Top 3 Objectives -->
+    <div class="rev-card">
+      <div class="rev-card-title">🎯 Top 3 Objectives This Week</div>
+      <div class="rev-obj-list" id="rev-objectives"></div>
+    </div>
+
+    <!-- Weekly Targets (static) -->
+    <div class="rev-card">
+      <div class="rev-card-title">📌 Weekly Targets</div>
+      <div class="rev-static-list">
+        <div class="rev-static-row">✦ 1–2 deals (£25k–£50k)</div>
+        <div class="rev-static-row">✦ 6–8 demos</div>
+        <div class="rev-static-row">✦ 250+ DMs</div>
+        <div class="rev-static-row">✦ Deep Work 5/6 days</div>
+        <div class="rev-static-row">✦ Market myself 7/7 days</div>
+      </div>
+    </div>
+
+    <!-- Spiritual Anchors (static) -->
+    <div class="rev-card">
+      <div class="rev-card-title">☪ Spiritual Anchors</div>
+      <div class="rev-static-list">
+        <div class="rev-static-row"><span class="rev-day-lbl">Thursday</span> Surah Al-Baqarah</div>
+        <div class="rev-static-row"><span class="rev-day-lbl">Friday</span> Surah Al-Kahf</div>
+        <div class="rev-static-row"><span class="rev-day-lbl">Saturday</span> Surah Al-Imran</div>
+      </div>
+    </div>
+
+    <!-- 10 Habits -->
+    <div class="rev-card">
+      <div class="rev-card-title">🧠 10 Habits — Weekly Self-Assessment</div>
+      <div id="rev-habits-accordion"></div>
+    </div>
+
+    <!-- 90-Day Integration Plan -->
+    <div class="rev-card">
+      <div class="rev-card-title">📅 90-Day Integration Plan</div>
+      <div class="rev-table-wrap">
+        <table class="rev-table">
+          <thead><tr><th>Phase</th><th>Habits</th><th>Focus</th></tr></thead>
+          <tbody>
+            <tr><td>Days 1–14</td><td>#7 Follow-Through &amp; #9 Scrolling</td><td>24-Hour Yes rule · Time-blocked scrolling windows</td></tr>
+            <tr><td>Days 15–30</td><td>#1 Lateness &amp; #4 Spending</td><td>15-Minute Buffer Rule · Values-Based Budget</td></tr>
+            <tr><td>Days 31–60</td><td>#2 Overeating, #3 Neg. Thoughts, #6 Forgetfulness</td><td>Prophetic Thirds · Thought Audit · Single Capture System</td></tr>
+            <tr><td>Days 61–90</td><td>#5 Body Itching, #8 Self-Belief, #10 Overconfidence</td><td>Awareness logging · Evidence Journal · Curious Question</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- What went well / Challenges / Adjustments -->
+    <div class="rev-card">
+      <div class="rev-card-title">🔄 Reflection</div>
+      <div class="rev-3col">
+        <div><div class="rev-sublabel">What went well this week?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="wentWell" rows="4" placeholder="Write here..."></textarea></div>
+        <div><div class="rev-sublabel">What challenges did I face?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="challenges" rows="4" placeholder="Write here..."></textarea></div>
+        <div><div class="rev-sublabel">What needs adjustment?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="adjustments" rows="4" placeholder="Write here..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- Gratitude -->
+    <div class="rev-card">
+      <div class="rev-card-title">🤲 Gratitude</div>
+      <div class="rev-sublabel">10 things I'm grateful for this week</div>
+      <textarea class="rev-textarea" data-rkey="weekly" data-field="gratitude" rows="5" placeholder="Alhamdulillah..."></textarea>
+    </div>
+  </div>
+
+  <!-- ── MONTHLY TAB ── -->
+  <div class="rev-pane hidden" id="rev-pane-monthly">
+    <div id="rev-monthly-content"></div>
+  </div>
+
+  <!-- ── QUARTERLY TAB ── -->
+  <div class="rev-pane hidden" id="rev-pane-quarterly">
+    <div id="rev-quarterly-content"></div>
+  </div>
+
+  <!-- ── YEARLY TAB ── -->
+  <div class="rev-pane hidden" id="rev-pane-yearly">
+    <div id="rev-yearly-content"></div>
+  </div>
 </div>
 
 
@@ -2061,7 +2373,7 @@ function showPage(id,btn){
   if(id==='affirmations')renderAffirmations();
   if(id==='calendar'){renderCalendar();}
   if(id==='names'){todaysName();renderNamesGrid();renderNamesSunburst();}
-  if(id==='review'){renderReview();renderWeeklyCharts();}
+  if(id==='review'){switchRevTab('weekly',document.querySelector('.rev-tab'));}
   if(id==='arabella'){}
   if(id==='voice'){renderVoiceMemos();}
 }
@@ -3145,7 +3457,7 @@ function renderNamesGrid(){
   `).join('');
 }
 
-// WEEKLY REVIEW
+// REVIEWS
 const REVIEW_QUESTIONS = [
   {id:'wins',q:'What were your biggest wins this week?',sub:'Celebrate every victory, big and small.'},
   {id:'challenges',q:'What challenges did you face?',sub:'Be honest — awareness is the first step to improvement.'},
@@ -3157,7 +3469,39 @@ const REVIEW_QUESTIONS = [
   {id:'score',q:'Overall score for this week (1–10):',sub:'Be honest with yourself.'}
 ];
 
+const HABITS_10 = [
+  {num:'01',name:'Chronic Lateness',belief:'I am late for most things.',distortion:'Time Optimism & Avoidance',reframe:'I honour my time and the time of others. Being early is an act of respect and self-discipline that reflects the leader I am becoming.',strategies:['The 15-Minute Buffer Rule: Set every appointment 15 minutes earlier in your calendar than it actually is.','Transition Ritual: Create a 5-minute wind-down ritual before leaving — gather belongings, check appearance, say Bismillah.','Reverse Schedule: Work backwards from arrival time. Build in margin for the unexpected.','Weekly Tracking: Each Friday, note how many commitments you arrived on time for. Aim for 80% week one, 90% by week four.']},
+  {num:'02',name:'Overeating Leading to Sleepiness',belief:'I overeat so then I get sleepy.',distortion:'Emotional Eating & All-or-Nothing Thinking',reframe:'I nourish my body with intention. Food is fuel for my mission, and I eat in a way that keeps my energy aligned with my ambitions.',strategies:['The Prophetic Thirds: Follow the Sunnah principle — one-third food, one-third water, one-third air.','Emotional Check-In: Before eating, pause and ask: Am I hungry, or am I avoiding something?','Energy Mapping: Note what you eat and your energy levels 1 hour later for two weeks.','Structured Meal Windows: Set consistent meal times that align with your productivity schedule.']},
+  {num:'03',name:'Negative Thoughts About Others',belief:'I get negative thoughts about others.',distortion:'Mind Reading & Projection',reframe:'Other people are mirrors, not enemies. When I notice a negative thought about someone, it is information about what I need to heal within myself.',strategies:['The Thought Audit: When a negative thought arises, write it down — is this fact or interpretation?','The 70 Excuses Practice: Actively generate three possible benign explanations for their behaviour.','Gratitude Pivot: Immediately follow a negative thought with one thing you genuinely appreciate about that person.','Boundary Check: If the same person triggers you repeatedly, explore whether you need a conversation or a boundary.']},
+  {num:'04',name:'Overspending & Financial Discipline',belief:'I spend all my money, need to be more tight with myself & give more to charity.',distortion:'Emotional Reasoning & Instant Gratification Bias',reframe:'True wealth is built through discipline, not display. Every pound I steward wisely is a seed for the empire I am building and the charity I want to give.',strategies:['The 72-Hour Rule: For any non-essential purchase over £50, wait 72 hours.','Values-Based Budget: Allocate income into categories — Business Growth, Personal Development, Living Expenses, Charity.','Charity First, Not Last: Set up automatic charitable giving at the start of each month.','Spending Journal: Track every purchase for 30 days — Need, Want, or Impulse.']},
+  {num:'05',name:'Body Itching (Stress Response)',belief:'I itch my body.',distortion:'Somatisation of Anxiety',reframe:'My body communicates what my mind has not yet processed. I listen to its signals and respond with care, not compulsion.',strategies:['Awareness Logging: Note every time you catch yourself itching — time, activity, feeling.','Competing Response: When the urge arises, press palms together or hold tasbih beads for 60 seconds.','Progressive Muscle Relaxation: Practise a 5-minute body scan each evening.','Skincare Ritual: Apply soothing body lotion mindfully each morning and evening.']},
+  {num:'06',name:'Forgetfulness',belief:'I forget things.',distortion:"Labelling ('I'm forgetful') & Cognitive Overload",reframe:'I have a capable mind that works best with strong systems. I do not need to remember everything; I need to capture everything.',strategies:['Single Capture System: Choose ONE place where everything gets noted immediately.','The Two-Minute Rule: If something takes less than two minutes, do it immediately.','Evening Brain Dump: Each night, spend 5 minutes writing down everything on your mind.','Weekly Review: Every Sunday, review your capture system, calendar, and commitments.']},
+  {num:'07',name:'Not Following Through on Commitments',belief:'I say I will do something and don\'t end up doing it.',distortion:'Overcommitment & Perfectionist Procrastination',reframe:'My word is my bond. I commit only to what I can deliver, and I deliver everything I commit to.',strategies:["The 24-Hour Yes: Never commit to anything on the spot. Say: 'Let me check my schedule.'",'Commitment Audit: List every current commitment and assess each one honestly.','Micro-Commitments: Break large promises into the smallest possible first step.','Accountability Partner: Share weekly commitments with Fadlan or a trusted friend.']},
+  {num:'08',name:'Negative Self-Belief',belief:'I think I am dumb and stupid because my mum abused me verbally.',distortion:'Internalised Shame & Negative Core Belief',reframe:'I am intelligent, resourceful, and building something extraordinary. The voice that tells me otherwise is an echo of someone else\'s pain, not a reflection of my reality.',strategies:['Evidence Journal: Each day, write three pieces of evidence that you are intelligent and capable.','Thought Record: When \'I am dumb\' surfaces, use the CBT thought record: Situation → Automatic Thought → Evidence For → Evidence Against → Balanced Thought.','Reparenting Script: Write a letter from your wisest self to your younger self.','Professional Support: Consider working with a therapist experienced in childhood trauma and EMDR.']},
+  {num:'09',name:'Mindless Scrolling',belief:'Scrolling. God I hate it but I do scroll at the wrong times.',distortion:'Avoidance Behaviour & Dopamine Seeking',reframe:'I am the master of my attention, not a passenger. Every minute I reclaim from scrolling is a minute invested in my legacy.',strategies:['Environmental Design: Remove social media apps from your home screen. Charge phone outside bedroom.','Time-Blocked Scrolling: Designate two 15-minute scroll windows per day (12:30pm and 7:00pm).','Replacement Stack: Boredom = read 2 pages; avoidance = do the task for 2 minutes; tiredness = 10 slow breaths.','Screen Time Review: Check weekly screen time report every Sunday. Reduce by 15 minutes per week.']},
+  {num:'10',name:'Intellectual Overconfidence',belief:'Thinking I know better when I actually don\'t.',distortion:'Dunning-Kruger Effect & Defensive Certainty',reframe:"True wisdom is knowing what I do not know. My willingness to learn is my greatest competitive advantage.",strategies:["The Curious Question: Before stating your opinion, ask one genuine question — 'What am I missing here?'",'Beginner\'s Mind Practice: In one area per week, deliberately position yourself as the learner.','Decision Journaling: Before major decisions, write: What do I know? What do I think I know? What do I not know?','Seek Disconfirming Evidence: When certain about something, actively search for one credible source that disagrees.']}
+];
+
+const TEN_X_QUESTIONS = [
+  'What would someone building a £24B business do in my position right now?',
+  'What am I doing that keeps me at the £1M–£10M level instead of the £1B+ level?',
+  'If I had £100M in capital today, what would I build? Why am I not building that now?',
+  'Which current activities will be irrelevant at £1B revenue? Stop doing them now.',
+  'What are the actionable steps to move you forward to your vision?'
+];
+
+const GRANT_STEPS = [
+  'Targets set (big enough?)',
+  'Marketing plan (am I visible daily?)',
+  'Lead generation (250+ DMs = leads)',
+  'Lead management (CRM/follow-up system?)',
+  'Conversion (demos booked and closed?)',
+  'People/Team (who to hire/fire/develop?)',
+  'Money management (measuring surplus/overflow?)'
+];
+
 let reviewScore = 7;
+let _revSaveTimer = null;
 
 function getWeekKey(){
   const now=new Date();
@@ -3166,54 +3510,61 @@ function getWeekKey(){
   monday.setDate(now.getDate()-((day+6)%7));
   return fmt(monday);
 }
+function getMonthKey(){const n=new Date();return n.getFullYear()+'-'+(n.getMonth()+1).toString().padStart(2,'0');}
+function getQuarterKey(){const n=new Date();return n.getFullYear()+'-Q'+Math.ceil((n.getMonth()+1)/3);}
+function getYearKey(){return String(new Date().getFullYear());}
 
+function ensureReviews(){
+  if(!data.reviews)data.reviews={};
+  if(!data.reviews.weekly)data.reviews.weekly={};
+  if(!data.reviews.monthly)data.reviews.monthly={};
+  if(!data.reviews.quarterly)data.reviews.quarterly={};
+  if(!data.reviews.yearly)data.reviews.yearly={};
+}
+function getRevData(tab){
+  ensureReviews();
+  const key = tab==='weekly'?getWeekKey():tab==='monthly'?getMonthKey():tab==='quarterly'?getQuarterKey():getYearKey();
+  if(!data.reviews[tab][key])data.reviews[tab][key]={};
+  return data.reviews[tab][key];
+}
 function isReviewDue(){
   const now=new Date();
-  // Sunday = day 0, show review from Sunday
   return now.getDay()===0||now.getDay()===1;
 }
-
 function hasCompletedThisWeek(){
-  if(!data.reviews)return false;
+  ensureReviews();
   const wk=getWeekKey();
-  return !!data.reviews[wk];
+  return !!(data.reviews.weekly&&data.reviews.weekly[wk]&&data.reviews.weekly[wk]._submitted);
 }
 
 function renderWeeklyCharts(){
-  // Build weekly bar chart - last 7 days completion
-  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const weekDays = getWeekDays();
-  const now = new Date();
-  const bars = weekDays.map((d,i) => {
-    const ds = fmt(d);
-    const isFuture = d > now;
-    const dd = data[ds];
-    const amDone = dd ? AM_STEPS.filter((_,j)=>dd.am&&dd.am[j]).length : 0;
-    const pmDone = dd ? PM_STEPS.filter((_,j)=>dd.pm&&dd.pm[j]).length : 0;
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const weekDays=getWeekDays();
+  const now=new Date();
+  const bars=weekDays.map((d,i)=>{
+    const ds=fmt(d);const isFuture=d>now;const dd=data[ds];
+    const amDone=dd?AM_STEPS.filter((_,j)=>dd.am&&dd.am[j]).length:0;
+    const pmDone=dd?PM_STEPS.filter((_,j)=>dd.pm&&dd.pm[j]).length:0;
     let pillarDone=0,pillarAll=0;
     if(dd&&dd.pillars)PILLARS.forEach(p=>{const t=dd.pillars[p.id]||[];pillarDone+=t.filter(x=>x.done).length;pillarAll+=t.length;});
-    const total = amDone+pmDone+pillarDone;
-    const max = AM_STEPS.length+PM_STEPS.length+(pillarAll||1);
-    const pct = isFuture ? 0 : Math.round(total/max*100);
-    return {day:days[i],pct,isFuture,amDone,pmDone,pillarDone,amTotal:AM_STEPS.length,pmTotal:PM_STEPS.length};
+    const total=amDone+pmDone+pillarDone;
+    const max=AM_STEPS.length+PM_STEPS.length+(pillarAll||1);
+    const pct=isFuture?0:Math.round(total/max*100);
+    return{day:days[i],pct,isFuture,amDone,pmDone,pillarDone,amTotal:AM_STEPS.length,pmTotal:PM_STEPS.length};
   });
-
-  // Weekly stats
-  const completedDays = bars.filter(b=>!b.isFuture&&b.pct>0).length;
-  const avgPct = bars.filter(b=>!b.isFuture).reduce((s,b)=>s+b.pct,0)/Math.max(bars.filter(b=>!b.isFuture).length,1);
-  const totalTasks = bars.reduce((s,b)=>s+b.pillarDone,0);
+  const completedDays=bars.filter(b=>!b.isFuture&&b.pct>0).length;
+  const avgPct=bars.filter(b=>!b.isFuture).reduce((s,b)=>s+b.pct,0)/Math.max(bars.filter(b=>!b.isFuture).length,1);
+  const totalTasks=bars.reduce((s,b)=>s+b.pillarDone,0);
   let streak=0;
   for(let d=0;d<365;d++){
-    const dd2=new Date();dd2.setDate(dd2.getDate()-d);
-    const ds2=fmt(dd2);
+    const dd2=new Date();dd2.setDate(dd2.getDate()-d);const ds2=fmt(dd2);
     if(!data[ds2])break;
     const a=AM_STEPS.filter((_,i)=>data[ds2].am&&data[ds2].am[i]).length;
     const p2=PM_STEPS.filter((_,i)=>data[ds2].pm&&data[ds2].pm[i]).length;
     let pl=0;PILLARS.forEach(p=>{pl+=(data[ds2].pillars&&data[ds2].pillars[p.id]||[]).filter(t=>t.done).length;});
     if(a>0||p2>0||pl>0)streak++;else break;
   }
-
-  const chartHTML = `
+  const chartHTML=`
     <div class="review-stats-row">
       <div class="review-stat-card"><div class="review-stat-num">${streak}</div><div class="review-stat-lbl">🔥 Day Streak</div></div>
       <div class="review-stat-card"><div class="review-stat-num">${completedDays}/7</div><div class="review-stat-lbl">Active Days</div></div>
@@ -3223,128 +3574,520 @@ function renderWeeklyCharts(){
     <div class="weekly-chart-wrap">
       <div class="weekly-chart-title">📊 This Week — Daily Completion</div>
       <div class="weekly-bars">
-        ${bars.map(b=>`
-          <div class="weekly-bar-col">
-            <div class="weekly-bar-val">${b.isFuture?'':b.pct+'%'}</div>
-            <div class="weekly-bar-track">
-              <div class="weekly-bar-fill" style="height:${b.pct}%;background:${b.pct>=80?'#1A9E8F':b.pct>=40?'#E8B84B':'#E8733A'}"></div>
-            </div>
-            <div class="weekly-bar-lbl">${b.day}</div>
-          </div>`).join('')}
+        ${bars.map(b=>`<div class="weekly-bar-col"><div class="weekly-bar-val">${b.isFuture?'':b.pct+'%'}</div><div class="weekly-bar-track"><div class="weekly-bar-fill" style="height:${b.pct}%;background:${b.pct>=80?'#1A9E8F':b.pct>=40?'#E8B84B':'#E8733A'}"></div></div><div class="weekly-bar-lbl">${b.day}</div></div>`).join('')}
       </div>
     </div>
     <div class="weekly-chart-wrap">
       <div class="weekly-chart-title">🕸 Pillar Performance This Week</div>
       <div class="pillar-week-row">
-        ${PILLARS.map(p=>{
-          let done=0,all=0;
-          weekDays.forEach(d=>{
-            const ds=fmt(d);
-            if(data[ds]&&data[ds].pillars){
-              const t=data[ds].pillars[p.id]||[];
-              done+=t.filter(x=>x.done).length;all+=t.length;
-            }
-          });
-          const pct=all?Math.round(done/all*100):0;
-          const r=28,stroke=6,circ=2*Math.PI*r;
-          const dash=pct/100*circ;
-          return `<div class="pillar-ring-item">
-            <svg width="72" height="72" viewBox="-36 -36 72 72">
-              <circle cx="0" cy="0" r="${r}" fill="none" stroke="#2E2510" stroke-width="${stroke}"/>
-              <circle cx="0" cy="0" r="${r}" fill="none" stroke="${p.color}" stroke-width="${stroke}"
-                stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"/>
-              <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="11" fill="${p.color}">${pct}%</text>
-            </svg>
-            <div class="pillar-ring-label">${p.name.split(' ')[0]}</div>
-            <div class="pillar-ring-label" style="color:var(--text-tertiary)">${done}/${all}</div>
-          </div>`;
-        }).join('')}
+        ${PILLARS.map(p=>{let done=0,all=0;weekDays.forEach(d=>{const ds=fmt(d);if(data[ds]&&data[ds].pillars){const t=data[ds].pillars[p.id]||[];done+=t.filter(x=>x.done).length;all+=t.length;}});const pct=all?Math.round(done/all*100):0;const r=28,stroke=6,circ=2*Math.PI*r;const dash=pct/100*circ;return`<div class="pillar-ring-item"><svg width="72" height="72" viewBox="-36 -36 72 72"><circle cx="0" cy="0" r="${r}" fill="none" stroke="#2E2510" stroke-width="${stroke}"/><circle cx="0" cy="0" r="${r}" fill="none" stroke="${p.color}" stroke-width="${stroke}" stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"/><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="11" fill="${p.color}">${pct}%</text></svg><div class="pillar-ring-label">${p.name.split(' ')[0]}</div><div class="pillar-ring-label" style="color:var(--text-tertiary)">${done}/${all}</div></div>`;}).join('')}
       </div>
-    </div>
-  `;
-  
-  const chartEl = document.getElementById('review-charts');
-  if(chartEl) chartEl.innerHTML = chartHTML;
+    </div>`;
+  const chartEl=document.getElementById('review-charts');
+  if(chartEl)chartEl.innerHTML=chartHTML;
+}
+
+function switchRevTab(tab, btn){
+  document.querySelectorAll('.rev-tab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.rev-pane').forEach(p=>p.classList.add('hidden'));
+  const pane=document.getElementById('rev-pane-'+tab);
+  if(pane)pane.classList.remove('hidden');
+  if(tab==='weekly'){renderWeeklyCharts();renderWeeklyTabInputs();}
+  else if(tab==='monthly')renderMonthlyTab();
+  else if(tab==='quarterly')renderQuarterlyTab();
+  else if(tab==='yearly')renderYearlyTab();
+}
+
+function revSaveDebouce(){
+  clearTimeout(_revSaveTimer);
+  _revSaveTimer=setTimeout(()=>{
+    save();
+    const badge=document.getElementById('rev-saved-badge');
+    if(badge){badge.style.display='block';badge.style.opacity='1';setTimeout(()=>{badge.style.opacity='0';setTimeout(()=>{badge.style.display='none';},400);},1500);}
+  },800);
+}
+
+function revBind(container,tab){
+  container.querySelectorAll('[data-rkey]').forEach(el=>{
+    const field=el.dataset.field;
+    const rd=getRevData(tab);
+    if(el.type==='range'){
+      if(rd[field]!==undefined)el.value=rd[field];
+      const valEl=document.getElementById(el.id+'-val');
+      if(valEl)valEl.textContent=el.value;
+      el.oninput=function(){rd[field]=this.value;const v=document.getElementById(this.id+'-val');if(v)v.textContent=this.value;revSaveDebouce();};
+    } else if(el.tagName==='TEXTAREA'||el.type==='text'||el.type==='number'){
+      if(rd[field]!==undefined)el.value=rd[field];
+      el.oninput=function(){rd[field]=this.value;revSaveDebouce();};
+    }
+  });
+  container.querySelectorAll('.rev-grant-cb').forEach(cb=>{
+    const idx=parseInt(cb.dataset.idx);
+    const rd=getRevData(tab);
+    if(!rd.grantChecks)rd.grantChecks=[];
+    cb.checked=!!rd.grantChecks[idx];
+    cb.onchange=function(){rd.grantChecks[idx]=this.checked;revSaveDebouce();};
+  });
+  container.querySelectorAll('.rev-strategy-cb').forEach(cb=>{
+    const hIdx=parseInt(cb.dataset.hidx),sIdx=parseInt(cb.dataset.sidx);
+    const rd=getRevData(tab);
+    if(!rd.habitStrategies)rd.habitStrategies={};
+    if(!rd.habitStrategies[hIdx])rd.habitStrategies[hIdx]=[];
+    cb.checked=!!rd.habitStrategies[hIdx][sIdx];
+    cb.onchange=function(){rd.habitStrategies[hIdx][sIdx]=this.checked;revSaveDebouce();};
+  });
+  container.querySelectorAll('.rev-habit-slider').forEach(sl=>{
+    const hIdx=parseInt(sl.dataset.hidx);
+    const rd=getRevData(tab);
+    if(!rd.habitRatings)rd.habitRatings={};
+    if(rd.habitRatings[hIdx]!==undefined)sl.value=rd.habitRatings[hIdx];
+    const valEl=document.getElementById('habit-rating-val-'+hIdx);
+    if(valEl)valEl.textContent=sl.value;
+    sl.oninput=function(){rd.habitRatings[hIdx]=this.value;const v=document.getElementById('habit-rating-val-'+hIdx);if(v)v.textContent=this.value;revSaveDebouce();};
+  });
+  container.querySelectorAll('.rev-habit-textarea').forEach(ta=>{
+    const hIdx=parseInt(ta.dataset.hidx);
+    const rd=getRevData(tab);
+    if(!rd.habitNotes)rd.habitNotes={};
+    if(rd.habitNotes[hIdx])ta.value=rd.habitNotes[hIdx];
+    ta.oninput=function(){rd.habitNotes[hIdx]=this.value;revSaveDebouce();};
+  });
+  container.querySelectorAll('.rev-yn-btn').forEach(btn=>{
+    const field=btn.dataset.field,val=btn.dataset.val;
+    const rd=getRevData(tab);
+    if(rd[field]===val)btn.classList.add(val==='yes'?'active-yes':'active-no');
+    btn.onclick=function(){
+      const grp=this.closest('.rev-yn');
+      grp.querySelectorAll('.rev-yn-btn').forEach(b=>{b.classList.remove('active-yes','active-no');});
+      this.classList.add(val==='yes'?'active-yes':'active-no');
+      rd[field]=val;revSaveDebouce();
+    };
+  });
+}
+
+function renderWeeklyTabInputs(){
+  const rd=getRevData('weekly');
+  const pane=document.getElementById('rev-pane-weekly');
+  // 10X Questions
+  const q10=document.getElementById('rev-10x-questions');
+  if(q10&&q10.innerHTML===''){
+    q10.innerHTML=TEN_X_QUESTIONS.map((q,i)=>`
+      <div class="rev-q-item">
+        <div class="rev-q-num">Q${i+1}</div>
+        <div class="rev-q-prompt">${q}</div>
+        <textarea class="rev-textarea" data-rkey="weekly" data-field="q10x_${i}" rows="3" placeholder="Your answer..."></textarea>
+      </div>`).join('');
+  }
+  // Grant checklist
+  const gc=document.getElementById('rev-grant-checklist');
+  if(gc&&gc.innerHTML===''){
+    gc.innerHTML=GRANT_STEPS.map((s,i)=>`
+      <div class="rev-grant-item">
+        <input type="checkbox" class="rev-grant-cb" data-idx="${i}">
+        <span class="rev-grant-label">${s}</span>
+      </div>`).join('');
+  }
+  // Manifestation
+  const manif=document.getElementById('rev-manif');
+  if(manif&&manif.innerHTML===''){
+    manif.innerHTML=[
+      {field:'manifHealth',prompt:'Health target: "I am in the best shape of my life at _____"'},
+      {field:'manifBusiness',prompt:'Business target: "I closed £_____ in revenue with _____ team members"'},
+      {field:'manifFamily',prompt:'Family target: "I spent quality time with family _____ times/week"'}
+    ].map(m=>`<div class="rev-manif-item"><div class="rev-manif-prompt">${m.prompt}</div><textarea class="rev-textarea" data-rkey="weekly" data-field="${m.field}" rows="2" placeholder="Complete the statement..."></textarea></div>`).join('');
+  }
+  // Objectives
+  const obj=document.getElementById('rev-objectives');
+  if(obj&&obj.innerHTML===''){
+    obj.innerHTML=[1,2,3].map(n=>`<div class="rev-obj-item"><span class="rev-obj-num">${n}.</span><input type="text" class="rev-input rev-input-full" data-rkey="weekly" data-field="obj${n}" placeholder="Objective ${n}..."></div>`).join('');
+  }
+  // Habits accordion
+  const hab=document.getElementById('rev-habits-accordion');
+  if(hab&&hab.innerHTML===''){
+    hab.innerHTML=HABITS_10.map((h,i)=>`
+      <div class="rev-habit" id="rev-habit-${i}">
+        <div class="rev-habit-hdr" onclick="toggleRevHabit(${i})">
+          <span class="rev-habit-num">HABIT ${h.num}</span>
+          <span class="rev-habit-name">${h.name}</span>
+          <span class="rev-habit-chev">▼</span>
+        </div>
+        <div class="rev-habit-body">
+          <div class="rev-habit-belief">"${h.belief}"</div>
+          <span class="rev-habit-distortion">${h.distortion}</span>
+          <div class="rev-habit-reframe">${h.reframe}</div>
+          <div class="rev-habit-sublabel">This week's rating</div>
+          <div class="rev-slider-row">
+            <input type="range" class="rev-slider rev-habit-slider" min="1" max="10" value="5" data-hidx="${i}" id="habit-slider-${i}">
+            <span class="rev-slider-val" id="habit-rating-val-${i}">5</span>
+            <span style="font-size:11px;color:var(--text-tertiary)">/10</span>
+          </div>
+          <div class="rev-habit-sublabel">How did this show up this week?</div>
+          <textarea class="rev-textarea rev-habit-textarea" data-hidx="${i}" rows="3" placeholder="Reflect honestly..."></textarea>
+          <div class="rev-habit-sublabel">Action strategies practised</div>
+          ${h.strategies.map((s,si)=>`<div class="rev-strategy-item"><input type="checkbox" class="rev-strategy-cb" data-hidx="${i}" data-sidx="${si}"><span class="rev-strategy-text">${s}</span></div>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+  revBind(pane,'weekly');
+}
+
+function toggleRevHabit(i){
+  const el=document.getElementById('rev-habit-'+i);
+  if(el)el.classList.toggle('open');
 }
 
 function renderReview(){
-  const cont=document.getElementById('review-content');
-  if(!data.reviews)data.reviews={};
-  
-  // Show past reviews
-  const pastReviews=Object.entries(data.reviews).sort((a,b)=>b[0].localeCompare(a[0]));
-  const pastHTML=pastReviews.length?`
-    <div style="margin-top:1.5rem">
-      <span class="section-lbl">Past Reviews</span>
-      ${pastReviews.slice(0,5).map(([wk,rev])=>`
-        <div class="review-history-item">
-          <div class="review-history-date">Week of ${new Date(wk+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})} · Score: ${rev.score}/10</div>
-          <div class="review-history-text">${rev.wins?'<b>Wins:</b> '+rev.wins.substring(0,150)+'...':''}</div>
-        </div>
-      `).join('')}
-    </div>
-  `:'';
-
-  if(hasCompletedThisWeek()){
-    const rev=data.reviews[getWeekKey()];
-    cont.innerHTML=`
-      <div class="review-complete">
-        <div style="font-size:32px;margin-bottom:12px">✦</div>
-        <div style="font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--gold);margin-bottom:8px">This week's review is complete</div>
-        <div style="font-size:14px;color:var(--text-secondary)">Score: ${rev.score}/10 · Alhamdulillah for another week of growth.</div>
-        <button class="review-submit-btn" style="margin-top:1.5rem;max-width:200px" onclick="startNewReview()">Review Again</button>
-      </div>
-      ${pastHTML}
-    `;
-    return;
-  }
-
-  cont.innerHTML=`
-    <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:var(--radius);padding:1rem;margin-bottom:0.8rem;font-size:13px;color:var(--gold)">
-      ✦ Weekly review — reflect honestly, build intentionally. This is your mirror.
-    </div>
-    ${REVIEW_QUESTIONS.map(q=>`
-      <div class="review-form">
-        <div class="review-q">${q.q}</div>
-        <div class="review-q-sub">${q.sub}</div>
-        ${q.id==='score'?`
-          <div class="review-score-row">
-            ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="review-score-btn${n===reviewScore?' selected':''}" onclick="setReviewScore(${n})">${n}</button>`).join('')}
-          </div>
-        `:`<textarea class="review-textarea" id="review-${q.id}" placeholder="Write here..."></textarea>`}
-      </div>
-    `).join('')}
-    <button class="review-submit-btn" onclick="submitReview()">Complete Weekly Review ✦</button>
-    ${pastHTML}
-  `;
+  renderWeeklyCharts();
+  renderWeeklyTabInputs();
 }
 
 function setReviewScore(n){
   reviewScore=n;
-  document.querySelectorAll('.review-score-btn').forEach((btn,i)=>{
-    btn.classList.toggle('selected',i+1===n);
-  });
+  document.querySelectorAll('.review-score-btn').forEach((btn,i)=>{btn.classList.toggle('selected',i+1===n);});
 }
-
-function startNewReview(){
-  const wk=getWeekKey();
-  if(data.reviews)delete data.reviews[wk];
-  renderReview();
-}
-
+function startNewReview(){ensureReviews();delete data.reviews.weekly[getWeekKey()];renderReview();}
 function submitReview(){
-  const wk=getWeekKey();
-  if(!data.reviews)data.reviews={};
-  const review={score:reviewScore,date:new Date().toISOString()};
-  REVIEW_QUESTIONS.forEach(q=>{
-    if(q.id!=='score'){
-      const el=document.getElementById('review-'+q.id);
-      if(el)review[q.id]=el.value;
-    }
-  });
-  data.reviews[wk]=review;
-  save();
-  renderReview();
+  ensureReviews();const wk=getWeekKey();
+  if(!data.reviews.weekly[wk])data.reviews.weekly[wk]={};
+  data.reviews.weekly[wk]._submitted=true;data.reviews.weekly[wk].date=new Date().toISOString();
+  save();renderReview();
+}
+
+// ── MONTHLY TAB ──
+function renderMonthlyTab(){
+  const cont=document.getElementById('rev-monthly-content');
+  if(!cont)return;
+  if(cont.dataset.rendered===getMonthKey())return;
+  cont.dataset.rendered=getMonthKey();
+  cont.innerHTML=buildMonthlyHTML();
+  revBind(cont,'monthly');
+}
+
+function revSection(title,content){
+  return`<div class="rev-card"><div class="rev-card-title">${title}</div>${content}</div>`;
+}
+function revField(label,field,tab,type='text',extra=''){
+  const t=type==='textarea'?`<textarea class="rev-textarea" data-rkey="${tab}" data-field="${field}" rows="3" placeholder="Write here..." ${extra}></textarea>`:`<input type="${type}" class="rev-input rev-input-full" data-rkey="${tab}" data-field="${field}" placeholder="" ${extra}>`;
+  return`<div class="rev-field-group"><div class="rev-field-label">${label}</div>${t}</div>`;
+}
+function revSlider(label,field,tab,id){
+  return`<div class="rev-field-group"><div class="rev-field-label">${label}</div><div class="rev-slider-row"><input type="range" class="rev-slider" min="1" max="10" value="5" data-rkey="${tab}" data-field="${field}" id="${id}"><span class="rev-slider-val" id="${id}-val">5</span><span style="font-size:11px;color:var(--text-tertiary)">/10</span></div></div>`;
+}
+function revYN(label,field,tab){
+  return`<div class="rev-yn-row"><span class="rev-yn-label">${label}</span><div class="rev-yn"><button class="rev-yn-btn" data-field="${field}" data-val="yes">Yes</button><button class="rev-yn-btn" data-field="${field}" data-val="no">No</button></div></div>`;
+}
+function revGoals(prefix,tab,n=3){
+  return Array.from({length:n},(_,i)=>`<div class="rev-field-group"><div class="rev-field-label">Goal ${i+1}</div><input type="text" class="rev-input rev-input-full" data-rkey="${tab}" data-field="${prefix}_goal${i+1}" placeholder=""></div>`).join('');
+}
+function revInputs(labels,fields,tab){
+  return labels.map((l,i)=>revField(l,fields[i],tab,'number')).join('');
+}
+
+function buildMonthlyHTML(){
+  const t='monthly';
+  return[
+    revSection('1. FAITH (30 min)',[
+      revSlider('Faith level','faithLevel',t,'m-faith-level'),
+      `<div class="rev-2col">`,
+      revField('Fajr ___/30','fajr',t,'number'),
+      revField('Tahajjud ___/30','tahajjud',t,'number'),
+      `</div>`,
+      revField('Quran juz completed','quranJuz',t),
+      revField('Spiritual breakthrough','spiritualBreakthrough',t,'textarea'),
+      revField('Area needing work','faithNeedWork',t,'textarea')
+    ].join('')),
+    revSection('2. RELATIONSHIPS (20 min)',[
+      `<div class="rev-2col">`,
+      revField('Family quality time (hours)','famTime',t,'number'),
+      revField('Deep conversations','deepConvos',t,'number'),
+      `</div>`,
+      revField('Mastermind value given/received','mastermind',t,'textarea'),
+      revField('Who needs attention','whoNeedsAttention',t,'textarea')
+    ].join('')),
+    revSection('3. WEALTH (30 min)',[
+      revField('Cash received','cashReceived',t,'number'),
+      `<div class="rev-2col">`,
+      revField('Deals closed','dealsClosed',t,'number'),
+      revField('Average deal £','avgDeal',t,'number'),
+      `</div><div class="rev-2col">`,
+      revField('Net worth £','netWorth',t,'number'),
+      revField('Crypto £','crypto',t,'number'),
+      `</div><div class="rev-2col">`,
+      revField('Stocks £','stocks',t,'number'),
+      `</div>`,
+      revYN('Wealth allocation correct?','wealthAlloc',t),
+      revYN('Staying halal?','stayingHalal',t)
+    ].join('')),
+    revSection('4. KNOWLEDGE (20 min)',[
+      revField('Books read (target 2–3)','booksRead',t,'number'),
+      revField('Skills mastered','skillsMastered',t,'textarea'),
+      revField('Learning applied','learningApplied',t,'textarea'),
+      revField('Knowledge gap','knowledgeGap',t,'textarea')
+    ].join('')),
+    revSection('5. BUSINESS (30 min)',[
+      `<div class="rev-2col">`,
+      revField('Deep Work days (target 20+)','deepWorkDays',t,'number'),
+      revField('Demos (target 24–32)','demos',t,'number'),
+      `</div><div class="rev-2col">`,
+      revField('Close rate %','closeRate',t,'number'),
+      revField('Messages (target 1000+)','messages',t,'number'),
+      `</div>`,
+      revField('System that broke','systemBroke',t,'textarea'),
+      revField('Solution applied','systemSolution',t,'textarea')
+    ].join('')),
+    revSection('6. HEALTH (15 min)',[
+      `<div class="rev-2col">`,
+      revField('Sleep avg (hours)','sleepAvg',t,'number'),
+      revField('Gym sessions','gymSessions',t,'number'),
+      `</div><div class="rev-2col">`,
+      revField('OMAD days','omadDays',t,'number'),
+      `</div>`,
+      revSlider('Energy (1–10)','energyLevel',t,'m-energy-level'),
+      revSlider('Physical feeling (1–10)','physicalFeeling',t,'m-physical-feeling')
+    ].join('')),
+    revSection('7. PHILANTHROPY (15 min)',[
+      `<div class="rev-2col">`,
+      revField('Charity amount £','charityAmount',t,'number'),
+      revField('% of income','charityPct',t,'number'),
+      `</div>`,
+      revField('Lives changed','livesChanged',t,'textarea')
+    ].join('')),
+    revSection('8. TRAVEL (10 min)',[
+      revField('Places visited','placesVisited',t),
+      revField('Experiences','travelExperiences',t,'textarea')
+    ].join('')),
+    revSection('9. PERSONAL (15 min)',[
+      revField('Biggest win','biggestWin',t,'textarea'),
+      revField('Biggest lesson','biggestLesson',t,'textarea'),
+      revSlider('Life satisfaction (1–10)','lifeSatisfaction',t,'m-life-sat')
+    ].join('')),
+    revSection('10. GRATITUDE (15 min)',[
+      Array.from({length:10},(_,i)=>revField(`${i+1}.`,'grateful_'+(i+1),t)).join(''),
+      revField('Letter to Future Self','letterFutureSelf',t,'textarea')
+    ].join(''))
+  ].join('');
+}
+
+// ── QUARTERLY TAB ──
+function renderQuarterlyTab(){
+  const cont=document.getElementById('rev-quarterly-content');
+  if(!cont)return;
+  if(cont.dataset.rendered===getQuarterKey())return;
+  cont.dataset.rendered=getQuarterKey();
+  cont.innerHTML=buildQuarterlyHTML();
+  revBind(cont,'quarterly');
+}
+
+function buildQuarterlyHTML(){
+  const t='quarterly';
+  return[
+    revSection('PART 1: FAITH (90 min)',[
+      `<div class="rev-2col">`,revField('Fajr ___/90','fajr',t,'number'),revField('Tahajjud ___/90','tahajjud',t,'number'),`</div>`,
+      revField('Quran juz','quranJuz',t),
+      revField('Spiritual evolution this quarter','spiritualEvolution',t,'textarea'),
+      revYN('Compromised values?','compromisedValues',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Faith goals next quarter</div>`,revGoals('faithQ',t)
+    ].join('')),
+    revSection('PART 2: RELATIONSHIPS (60 min)',[
+      revSlider('Family health (1–10)','familyHealth',t,'q-fam-health'),
+      revField('Friendships — state of','friendships',t,'textarea'),
+      revField('Network value','networkValue',t,'textarea'),
+      `<div class="rev-sublabel" style="margin-top:10px">Relationship goals</div>`,revGoals('relQ',t)
+    ].join('')),
+    revSection('PART 3: WEALTH (90 min)',[
+      revField('Quarterly revenue £','quarterlyRevenue',t,'number'),
+      `<div class="rev-card" style="background:var(--charcoal-mid);margin-bottom:10px;padding:10px 14px;">
+        <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:6px">Targets</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px;text-align:center;">
+          <div><div style="color:var(--gold);font-weight:500">Q1</div><div style="color:var(--text-secondary)">£150k</div></div>
+          <div><div style="color:var(--gold);font-weight:500">Q2</div><div style="color:var(--text-secondary)">£500k</div></div>
+          <div><div style="color:var(--gold);font-weight:500">Q3</div><div style="color:var(--text-secondary)">£800k</div></div>
+          <div><div style="color:var(--gold);font-weight:500">Q4</div><div style="color:var(--text-secondary)">£1M+</div></div>
+        </div>
+      </div>`,
+      `<div class="rev-2col">`,revField('Net worth £','netWorth',t,'number'),revField('Crypto £','crypto',t,'number'),`</div><div class="rev-2col">`,revField('Stocks £','stocks',t,'number'),revField('Cash £','cash',t,'number'),`</div>`,
+      revYN('£24B on track?','on24bTrack',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Wealth goals</div>`,revGoals('wealthQ',t)
+    ].join('')),
+    revSection('PART 4: KNOWLEDGE (60 min)',[
+      revField('Books (target 6–9)','booksRead',t,'number'),
+      revField('Skills mastered','skillsMastered',t,'textarea'),
+      revField('Knowledge applied to business','knowledgeApplied',t,'textarea'),
+      revField('Learning goals next quarter','learningGoals',t,'textarea')
+    ].join('')),
+    revSection('PART 5: BUSINESS (90 min)',[
+      `<div class="rev-2col">`,revField('Clients','clients',t,'number'),revField('Client satisfaction (1–10)','clientSat',t,'number'),`</div><div class="rev-2col">`,revField('Demos','demos',t,'number'),revField('Messages','messages',t,'number'),`</div>`,
+      `<div class="rev-sublabel" style="margin-top:10px">What worked brilliantly</div>`,revGoals('worked',t),
+      `<div class="rev-sublabel" style="margin-top:10px">What failed</div>`,revGoals('failed',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Business goals</div>`,revGoals('bizQ',t)
+    ].join('')),
+    revSection('PART 6: HEALTH (45 min)',[
+      `<div class="rev-2col">`,revField('Sleep avg (hours)','sleepAvg',t,'number'),revField('Gym ___/66','gymSessions',t,'number'),`</div><div class="rev-2col">`,revField('OMAD ___/90','omadDays',t,'number'),`</div>`,
+      revSlider('Energy (1–10)','energyLevel',t,'q-energy-level'),
+      revYN('Burnout signs?','burnoutSigns',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Health goals</div>`,revGoals('healthQ',t)
+    ].join('')),
+    revSection('PART 7: PHILANTHROPY (45 min)',[
+      `<div class="rev-2col">`,revField('Total charity £','totalCharity',t,'number'),revField('Lives changed','livesChanged',t,'number'),`</div><div class="rev-2col">`,revField('Legacy Masjids ___/7','masjids',t,'number'),revField('Schools ___/7','schools',t,'number'),`</div>`,
+      `<div class="rev-sublabel" style="margin-top:10px">Philanthropy goals</div>`,revGoals('philQ',t)
+    ].join('')),
+    revSection('PART 8: TRAVEL (30 min)',[
+      `<div class="rev-2col">`,revField('Countries visited','countries',t,'number'),revField('Cities visited','cities',t,'number'),`</div>`,
+      `<div class="rev-sublabel" style="margin-top:10px">Transformative experiences</div>`,revGoals('travelExp',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Travel goals</div>`,revGoals('travelQ',t)
+    ].join('')),
+    revSection('PART 9: CHARACTER (60 min)',[
+      revSlider('Discipline (1–10)','discipline',t,'q-discipline'),
+      revSlider('Integrity (1–10)','integrity',t,'q-integrity'),
+      revSlider('Courage (1–10)','courage',t,'q-courage'),
+      `<div class="rev-sublabel" style="margin-top:10px">Virtues developed</div>`,revGoals('virtues',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Vices eliminated</div>`,revGoals('vices',t),
+      revSlider('Life satisfaction (1–10)','lifeSatisfaction',t,'q-life-sat')
+    ].join('')),
+    revSection('PART 10: NEXT QUARTER (90 min)',[
+      `<div class="rev-sublabel">Big 3 Goals</div>`,
+      revField('FAITH','bigFaith',t),revField('WEALTH','bigWealth',t),revField('IMPACT','bigImpact',t),
+      `<div class="rev-sublabel" style="margin-top:10px">What must change</div>`,revGoals('mustChange',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Top risks + solutions</div>`,
+      Array.from({length:3},(_,i)=>`<div class="rev-2col" style="margin-bottom:8px">${revField('Risk '+(i+1),'risk'+(i+1),t)}${revField('Mitigation '+(i+1),'riskMit'+(i+1),t)}</div>`).join(''),
+      revField('Letter to self','letterToSelf',t,'textarea')
+    ].join(''))
+  ].join('');
+}
+
+// ── YEARLY TAB ──
+function renderYearlyTab(){
+  const cont=document.getElementById('rev-yearly-content');
+  if(!cont)return;
+  if(cont.dataset.rendered===getYearKey())return;
+  cont.dataset.rendered=getYearKey();
+  cont.innerHTML=buildYearlyHTML();
+  revBind(cont,'yearly');
+}
+
+function buildYearlyHTML(){
+  const t='yearly';
+  const year=new Date().getFullYear();
+  return[
+    `<div class="rev-card" style="background:linear-gradient(135deg,#1A1205,#2A1E08);border-color:var(--gold)">
+      <div class="rev-card-title" style="font-size:17px">✦ DAY 1: Reflection</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+        Opening Ritual: Fajr + Tahajjud + Surah Al-Fatiha 7× + 15 min silence
+      </div>
+    </div>`,
+    revSection('The Big Question',[
+      `<div style="font-family:var(--font-display);font-size:15px;font-style:italic;color:var(--gold);margin-bottom:12px">"Did I become who I set out to become?"</div>`,
+      revYN('','bigQuestionYN',t),
+      revField('Reflect on your answer','bigQuestionReflect',t,'textarea')
+    ].join('')),
+    revSection('1. FAITH',[
+      `<div class="rev-2col">`,revField('Fajr ___/365','fajr',t,'number'),revField('Tahajjud ___/365','tahajjud',t,'number'),`</div>`,
+      revField('Quran completions','quranTimes',t,'number'),
+      revField('Spiritual evolution this year','spiritualEvolution',t,'textarea'),
+      revField('Closest to Allah moment','closestAllah',t,'textarea'),
+      `<div class="rev-sublabel" style="margin-top:10px">Faith goals Year 2</div>`,revGoals('faithY',t)
+    ].join('')),
+    revSection('2. RELATIONSHIPS',[
+      revSlider('Family (1–10)','familyHealth',t,'y-fam-health'),
+      revYN('Sacrificed relationships for work?','sacrificedRel',t),
+      revField('Community impact','communityImpact',t,'textarea'),
+      `<div class="rev-sublabel" style="margin-top:10px">Goals</div>`,revGoals('relY',t)
+    ].join('')),
+    revSection('3. WEALTH',[
+      revField(`Total revenue (target £1.5–£2M)`,'totalRevenue',t,'number'),
+      revField('Net worth growth %','netWorthGrowth',t,'number'),
+      `<div class="rev-2col">`,revField('Crypto £','crypto',t,'number'),revField('Stocks £','stocks',t,'number'),`</div>`,
+      revField('Cash £','cash',t,'number'),
+      revYN('£24B trajectory on track?','on24bTrack',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Goals</div>`,revGoals('wealthY',t)
+    ].join('')),
+    revSection('4. KNOWLEDGE',[
+      revField('Books (target 24–36)','booksRead',t,'number'),
+      `<div class="rev-sublabel">Expertise levels</div>`,
+      `<div class="rev-2col">`,revSlider('Sales (1–10)','salesExpertise',t,'y-sales'),revSlider('Marketing (1–10)','mktExpertise',t,'y-mkt'),`</div>`,
+      revSlider('Tech (1–10)','techExpertise',t,'y-tech'),
+      `<div class="rev-sublabel" style="margin-top:10px">Breakthroughs</div>`,revGoals('breakthroughs',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Goals</div>`,revGoals('knowledgeY',t)
+    ].join('')),
+    revSection('5. BUSINESS',[
+      `<div class="rev-2col">`,revField('Clients','clients',t,'number'),revField('Revenue £','revenue',t,'number'),`</div><div class="rev-2col">`,revField('Demos','demos',t,'number'),revField('Close rate %','closeRate',t,'number'),`</div><div class="rev-2col">`,revField('Team size','teamSize',t,'number'),`</div>`,
+      revField('Market position','marketPosition',t,'textarea'),
+      revField('What changed everything','changedEverything',t,'textarea'),
+      `<div class="rev-sublabel" style="margin-top:10px">Goals</div>`,revGoals('bizY',t)
+    ].join('')),
+    revSection('6. HEALTH',[
+      `<div class="rev-2col">`,revField('Sleep avg (hours)','sleepAvg',t,'number'),revField('Gym ___/288','gymSessions',t,'number'),`</div>`,
+      revField('OMAD ___/365','omadDays',t,'number'),
+      revSlider('Energy (1–10)','energyLevel',t,'y-energy'),
+      revYN('Sacrificed health for business?','sacrificedHealth',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Goals</div>`,revGoals('healthY',t)
+    ].join('')),
+    revSection('7. PHILANTHROPY',[
+      `<div class="rev-2col">`,revField('Total charity £','totalCharity',t,'number'),revField('% of income','charityPct',t,'number'),`</div>`,
+      revField('Lives changed','livesChanged',t,'number'),
+      `<div class="rev-2col">`,revField('Legacy Masjids ___/7','masjids',t,'number'),revField('Schools ___/7','schools',t,'number'),`</div>`,
+      revField('Orphanages ___/7','orphanages',t,'number'),
+      `<div class="rev-sublabel" style="margin-top:10px">Impact stories</div>`,revGoals('impactStories',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Goals</div>`,revGoals('philY',t)
+    ].join('')),
+    revSection('8. TRAVEL',[
+      `<div class="rev-2col">`,revField('Countries','countries',t,'number'),revField('Cities','cities',t,'number'),`</div>`,
+      `<div class="rev-sublabel" style="margin-top:10px">Transformative experiences</div>`,revGoals('travelExp',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Goals</div>`,revGoals('travelY',t)
+    ].join('')),
+    revSection('9. CHARACTER',[
+      revSlider('Discipline (1–10)','discipline',t,'y-discipline'),
+      revSlider('Integrity (1–10)','integrity',t,'y-integrity'),
+      revSlider('Courage (1–10)','courage',t,'y-courage'),
+      revField('Hardest moment + lesson','hardestMoment',t,'textarea'),
+      revField('Proudest moment','proudestMoment',t,'textarea'),
+      revSlider('Life satisfaction (1–10)','lifeSatisfaction',t,'y-life-sat')
+    ].join('')),
+    revSection('10. GRATITUDE — 100 Things',[
+      `<div style="max-height:500px;overflow-y:auto;padding-right:4px">`,
+      Array.from({length:100},(_,i)=>`<div class="rev-field-group" style="flex-direction:row;align-items:center;gap:10px"><span style="font-size:12px;color:var(--gold);min-width:28px;font-weight:500">${i+1}.</span><input type="text" class="rev-input rev-input-full" data-rkey="${t}" data-field="grateful_${i+1}" placeholder="I am grateful for..."></div>`).join(''),
+      `</div>`,
+      revField('Letter to Allah','letterToAllah',t,'textarea')
+    ].join('')),
+    `<div class="rev-card" style="background:linear-gradient(135deg,#1A1205,#2A1E08);border-color:var(--gold)">
+      <div class="rev-card-title" style="font-size:17px">✦ DAY 2: Vision</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+        Opening Ritual: Fajr + Tahajjud + Surah Al-Fatiha 7× + 15 min silence
+      </div>
+    </div>`,
+    revSection('AUDACIOUS GOALS',[
+      revField('FAITH','auFaith',t),revField('WEALTH','auWealth',t),revField('IMPACT','auImpact',t),revField('RELATIONSHIP','auRelationship',t),revField('HEALTH','auHealth',t),
+      `<div style="font-size:13px;font-weight:500;color:var(--gold);margin:14px 0 8px">The One Goal That Changes Everything</div>`,
+      revField('','theOneGoal',t,'textarea')
+    ].join('')),
+    revSection('QUARTERLY BREAKDOWN',[
+      `<div class="rev-2col">`,
+      revField('Q1 £ milestone','q1Milestone',t,'number'),revField('Q2 £ milestone','q2Milestone',t,'number'),
+      `</div><div class="rev-2col">`,
+      revField('Q3 £ milestone','q3Milestone',t,'number'),revField('Q4 £ milestone','q4Milestone',t,'number'),`</div>`
+    ].join('')),
+    revSection('IDENTITY SHIFT',[
+      `<div class="rev-sublabel">From → To</div>`,
+      Array.from({length:3},(_,i)=>`<div class="rev-2col" style="margin-bottom:8px">${revField('From '+(i+1),'identFrom'+(i+1),t)}${revField('To '+(i+1),'identTo'+(i+1),t)}</div>`).join(''),
+      `<div class="rev-sublabel" style="margin-top:10px">New habits to build</div>`,revGoals('newHabits',t),
+      `<div class="rev-sublabel" style="margin-top:10px">Habits to eliminate</div>`,revGoals('elimHabits',t)
+    ].join('')),
+    revSection('TOP 5 RISKS',[
+      Array.from({length:5},(_,i)=>`<div class="rev-2col" style="margin-bottom:8px">${revField('Risk '+(i+1),'risk'+(i+1),t)}${revField('Mitigation '+(i+1),'riskMit'+(i+1),t)}</div>`).join('')
+    ].join('')),
+    revSection('LEGACY DECLARATION',[
+      revField('What I must accomplish','mustAccomplish',t,'textarea'),
+      revField('Who I must become','mustBecome',t,'textarea'),
+      revField('What I must leave behind','mustLeave',t,'textarea'),
+      revField('Letter to Future Self (Dec 31)','letterFutureSelf',t,'textarea')
+    ].join('')),
+    `<div class="rev-card" style="background:var(--gold-dim);border-color:var(--gold);text-align:center;">
+      <div style="font-size:14px;color:var(--gold);font-style:italic;line-height:1.8">
+        Closing ritual: Maghrib + dua + read goals 3× + "Bismillah, I begin."
+      </div>
+    </div>`
+  ].join('');
 }
 
 
