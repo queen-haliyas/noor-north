@@ -394,49 +394,6 @@ body{
   white-space: nowrap;
 }
 
-/* ── AFFIRMATION BANNER ── */
-.affirmation-bar{
-  background:linear-gradient(135deg,#1A1205,#251A08);
-  border-bottom:1px solid #C4983B44;
-  padding:10px 2rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  position:sticky;
-  top:0;
-  z-index:150;
-  margin-left:190px;
-  transition:margin-left .25s ease;
-}
-@media(max-width:700px){.affirmation-bar{margin-left:54px;}}
-.affirmation-text{
-  font-family:var(--font-display);
-  font-style:italic;
-  font-size:15px;
-  color:var(--gold);
-  flex:1;
-  text-align:center;
-  letter-spacing:.02em;
-  cursor:pointer;
-  transition:opacity .2s;
-}
-.affirmation-text:hover{opacity:.7;}
-.affirmation-nav{display:flex;gap:6px;align-items:center;}
-.affirmation-nav button{
-  background:none;border:none;cursor:pointer;
-  color:var(--text-tertiary);font-size:14px;padding:2px 6px;
-  transition:color .15s;
-}
-.affirmation-nav button:hover{color:var(--emerald);}
-.affirmation-edit-btn{
-  background:none;border:0.5px solid var(--charcoal-border);
-  border-radius:6px;padding:3px 8px;font-size:11px;
-  color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);
-  transition:all .15s;white-space:nowrap;
-}
-.affirmation-edit-btn:hover{border-color:var(--emerald);color:var(--emerald);}
-
 /* ── HEADER ── */
 .site-header{
   background:var(--charcoal-mid);
@@ -446,9 +403,58 @@ body{
   align-items:center;
   justify-content:space-between;
   gap:1rem;
+  min-height:80px;
   margin-left:190px;
   transition:margin-left .25s ease;
 }
+
+/* ── AFFIRMATION CARD (header) ── */
+@keyframes aff-fade-in{from{opacity:0}to{opacity:1}}
+.aff-card{
+  background:rgba(0,0,0,0.2);
+  border:0.5px solid rgba(196,152,59,0.25);
+  border-radius:10px;
+  padding:12px 16px;
+  max-width:420px;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  transition:border-color .2s;
+  flex-shrink:0;
+}
+.aff-card:hover{border-color:rgba(196,152,59,0.5);}
+.aff-card-text{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:13px;
+  color:var(--gold);
+  line-height:1.4;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  cursor:pointer;
+  opacity:1;
+  transition:opacity 1.2s ease;
+}
+.aff-card-text.aff-fading{opacity:0;}
+.aff-card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.aff-dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.aff-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--text-tertiary);cursor:pointer;
+  transition:background .2s,transform .2s;
+  border:none;padding:0;flex-shrink:0;
+}
+.aff-dot.active{background:var(--gold);transform:scale(1.25);}
+.aff-edit-btn{
+  background:none;border:0.5px solid var(--charcoal-border);
+  border-radius:6px;padding:3px 8px;font-size:11px;
+  color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);
+  transition:all .15s;white-space:nowrap;flex-shrink:0;
+}
+.aff-edit-btn:hover{border-color:rgba(196,152,59,0.5);color:var(--gold);}
+@media(max-width:700px){.aff-card{display:none;}}
 @media(max-width:700px){.site-header{margin-left:54px;}}
 .logo{display:flex;align-items:baseline;gap:10px;}
 .logo-noor{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--emerald);letter-spacing:.05em;}
@@ -1255,7 +1261,6 @@ body{
 /* Collapsed margins */
 .sidebar-nav.collapsed ~ * .site-header,
 body.sidebar-collapsed .site-header{margin-left:54px;}
-body.sidebar-collapsed .affirmation-bar{margin-left:54px;}
 body.sidebar-collapsed .app-shell{margin-left:54px;}
 body.sidebar-collapsed .page{margin-left:54px;}
 body.sidebar-collapsed #page-notes{margin-left:54px !important;}
@@ -1443,20 +1448,6 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 </div>
 
 
-<!-- AFFIRMATION BAR -->
-<div class="affirmation-bar">
-  <div class="affirmation-nav">
-    <button onclick="prevAffirmation()">←</button>
-  </div>
-  <div class="affirmation-text" id="affirmation-display" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
-    Loading your affirmation...
-  </div>
-  <div class="affirmation-nav">
-    <button onclick="nextAffirmation()">→</button>
-    <button class="affirmation-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">Edit</button>
-  </div>
-</div>
-
 <!-- HEADER -->
 <header class="site-header">
   <div class="logo">
@@ -1468,7 +1459,15 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div class="logo-sub">Personal Operating System</div>
     </div>
   </div>
-  <div class="header-right"></div>
+  <div class="aff-card" id="aff-card">
+    <div class="aff-card-text" id="aff-card-text" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
+      Loading your affirmation...
+    </div>
+    <div class="aff-card-footer">
+      <div class="aff-dots" id="aff-dots"></div>
+      <button class="aff-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">✎ Edit</button>
+    </div>
+  </div>
 </header>
 
 <!-- SIDEBAR NAV -->
@@ -2068,23 +2067,49 @@ function showPage(id,btn){
 }
 
 // AFFIRMATIONS
+let _affTimer=null;
+function _affFadeTo(idx){
+  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
+  if(!affs.length)return;
+  currentAffIdx=((idx%affs.length)+affs.length)%affs.length;
+  const textEl=document.getElementById('aff-card-text');
+  if(!textEl)return;
+  textEl.classList.add('aff-fading');
+  setTimeout(()=>{
+    textEl.textContent='"'+affs[currentAffIdx]+'"';
+    textEl.classList.remove('aff-fading');
+    _renderAffDots(affs.length);
+  },1200);
+}
+function _renderAffDots(total){
+  const dots=document.getElementById('aff-dots');
+  if(!dots)return;
+  dots.innerHTML='';
+  const max=Math.min(total,12);
+  for(let i=0;i<max;i++){
+    const b=document.createElement('button');
+    b.className='aff-dot'+(i===currentAffIdx?' active':'');
+    b.onclick=(e=>{e.stopPropagation();jumpToAffirmation(i);});
+    dots.appendChild(b);
+  }
+}
 function renderAffirmationBar(){
   const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
   if(!affs.length)return;
   if(currentAffIdx>=affs.length)currentAffIdx=0;
-  if(!document.getElementById('affirmation-display'))return;
-  document.getElementById('affirmation-display').textContent='"'+affs[currentAffIdx]+'"';
+  const textEl=document.getElementById('aff-card-text');
+  if(!textEl)return;
+  textEl.textContent='"'+affs[currentAffIdx]+'"';
+  _renderAffDots(affs.length);
+  if(_affTimer)clearInterval(_affTimer);
+  _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),8000);
 }
+function jumpToAffirmation(idx){_affFadeTo(idx);}
 function prevAffirmation(){
   const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
-  currentAffIdx=(currentAffIdx-1+affs.length)%affs.length;
-  renderAffirmationBar();
+  _affFadeTo(currentAffIdx-1+affs.length);
 }
-function nextAffirmation(){
-  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
-  currentAffIdx=(currentAffIdx+1)%affs.length;
-  renderAffirmationBar();
-}
+function nextAffirmation(){_affFadeTo(currentAffIdx+1);}
 function renderAffirmations(){
   const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
   const grid=document.getElementById('affirmations-grid');
@@ -2754,8 +2779,6 @@ function saveCurrentNote(){
   if(wc){const orig=wc.textContent;wc.textContent='✓ Saved';setTimeout(()=>{updateWordCount();},1200);}
 }
 
-// AUTO-ROTATE AFFIRMATIONS
-setInterval(()=>{nextAffirmation();},30000);
 
 
 
