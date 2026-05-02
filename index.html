@@ -4967,6 +4967,33 @@ async function sbRequest(method, path, body) {
   return res;
 }
 
+let _syncHideTimer = null;
+function _syncEl() { return document.getElementById('sync-indicator'); }
+function _syncText(txt) { const el=_syncEl(); if(!el) return; el.querySelector('span').textContent=txt; }
+function showSync() { showSyncSaving(); }
+function hideSync() { const el=_syncEl(); if(el){el.classList.remove('show','sync-ok','sync-err');} }
+function showSyncSaving() {
+  const el=_syncEl(); if(!el) return;
+  clearTimeout(_syncHideTimer);
+  el.classList.remove('sync-ok','sync-err');
+  _syncText('Syncing...');
+  el.classList.add('show');
+}
+function showSyncOk() {
+  const el=_syncEl(); if(!el) return;
+  el.classList.remove('sync-err'); el.classList.add('sync-ok');
+  _syncText('✓ Saved to cloud');
+  clearTimeout(_syncHideTimer);
+  _syncHideTimer = setTimeout(() => { el.classList.remove('show','sync-ok'); }, 3000);
+}
+function showSyncErr() {
+  const el=_syncEl(); if(!el) return;
+  el.classList.remove('sync-ok'); el.classList.add('sync-err');
+  _syncText('⚠ Sync failed');
+  clearTimeout(_syncHideTimer);
+  _syncHideTimer = setTimeout(() => { el.classList.remove('show','sync-err'); }, 6000);
+}
+
 async function syncToSupabase() {
   if (!MASTER_PASSWORD || !USER_ID) return;
   showSyncSaving();
@@ -5021,33 +5048,6 @@ async function loadFromSupabase() {
     console.error('[Supabase] loadFromSupabase: exception', e);
     return { ok: false, reason: 'network' };
   }
-}
-
-let _syncHideTimer = null;
-function _syncEl() { return document.getElementById('sync-indicator'); }
-function _syncText(txt) { const el=_syncEl(); if(!el) return; el.querySelector('span').textContent=txt; }
-function showSync() { showSyncSaving(); }
-function hideSync() { const el=_syncEl(); if(el){el.classList.remove('show','sync-ok','sync-err');} }
-function showSyncSaving() {
-  const el=_syncEl(); if(!el) return;
-  clearTimeout(_syncHideTimer);
-  el.classList.remove('sync-ok','sync-err');
-  _syncText('Syncing...');
-  el.classList.add('show');
-}
-function showSyncOk() {
-  const el=_syncEl(); if(!el) return;
-  el.classList.remove('sync-err'); el.classList.add('sync-ok');
-  _syncText('✓ Saved to cloud');
-  clearTimeout(_syncHideTimer);
-  _syncHideTimer = setTimeout(() => { el.classList.remove('show','sync-ok'); }, 3000);
-}
-function showSyncErr() {
-  const el=_syncEl(); if(!el) return;
-  el.classList.remove('sync-ok'); el.classList.add('sync-err');
-  _syncText('⚠ Sync failed');
-  clearTimeout(_syncHideTimer);
-  _syncHideTimer = setTimeout(() => { el.classList.remove('show','sync-err'); }, 6000);
 }
 
 // DEBOUNCED SAVE
