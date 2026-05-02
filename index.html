@@ -1367,6 +1367,53 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .ep-btn.ok{background:var(--gold);color:#1A1508;}
 .ep-btn.cancel{background:var(--charcoal-mid);color:var(--text-secondary);border:0.5px solid var(--charcoal-border);}
 
+/* ── FIVE PILLARS DRAG PANEL ── */
+.fp-panel{background:var(--charcoal-light);border:0.5px solid var(--gold);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;}
+.fp-panel-hdr{padding:10px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#1A1205,#2A1E08);}
+.fp-pillars-grid{display:grid;grid-template-columns:repeat(5,1fr);}
+@media(max-width:900px){.fp-pillars-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.fp-pillars-grid{grid-template-columns:repeat(2,1fr);}}
+.fp-col{border-right:0.5px solid var(--charcoal-border);}
+.fp-col:last-child{border-right:none;}
+.fp-col-hdr{display:flex;align-items:center;gap:6px;padding:8px 10px;cursor:pointer;transition:background .15s;user-select:none;}
+.fp-col-hdr:hover{background:var(--charcoal-mid);}
+.fp-col-body{padding:2px 8px 8px;display:none;}
+.fp-col-body.fp-open{display:block;}
+.fp-task-row{display:flex;align-items:center;gap:5px;padding:4px 2px;cursor:grab;border-bottom:0.5px solid var(--charcoal-border);border-radius:4px;transition:background .1s;}
+.fp-task-row:last-of-type{border-bottom:none;}
+.fp-task-row:hover{background:var(--charcoal-mid);}
+.fp-task-row.fp-dragging{opacity:.35;}
+.fp-drag-handle{color:var(--text-tertiary);font-size:11px;flex-shrink:0;cursor:grab;}
+.fp-task-label{flex:1;font-size:11px;color:var(--text-primary);line-height:1.3;}
+.fp-task-label.fp-done{color:var(--text-tertiary);text-decoration:line-through;}
+.fp-add-row{display:flex;gap:4px;margin-top:6px;padding-top:6px;border-top:0.5px solid var(--charcoal-border);}
+.fp-add-input{flex:1;background:none;border:none;outline:none;font-size:11px;color:var(--text-primary);font-family:var(--font-body);}
+.fp-add-input::placeholder{color:var(--text-tertiary);}
+.fp-add-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:5px;padding:2px 7px;font-size:10px;cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);transition:all .15s;}
+.fp-add-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Timeline drag-over highlight */
+.timeline-drop-active{box-shadow:inset 0 0 0 2px var(--gold);}
+
+/* ── RITUAL TIMELINE BLOCKS ── */
+.ritual-timeline-block{position:absolute;left:4px;right:4px;border-radius:8px;overflow:hidden;z-index:8;border-left:3px solid var(--gold);box-shadow:0 2px 12px #00000030;transition:box-shadow .2s;}
+.ritual-timeline-block:hover{box-shadow:0 4px 20px #00000050;}
+.rtb-header{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;cursor:pointer;user-select:none;}
+.rtb-tasks{padding:2px 6px 4px;}
+.rtb-task-row{display:flex;align-items:center;gap:6px;padding:3px 2px;cursor:pointer;border-radius:4px;transition:background .1s;}
+.rtb-task-row:hover{background:rgba(255,255,255,.05);}
+
+/* ── DURATION POPUP ── */
+.dur-popup-overlay{position:fixed;inset:0;z-index:3000;background:#00000070;backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;}
+.dur-popup-overlay.open{display:flex;}
+.dur-popup{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:20px;width:280px;box-shadow:0 20px 60px #00000080;animation:popIn .2s ease;}
+.dur-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.dur-btn{flex:1;min-width:60px;padding:8px;border:0.5px solid var(--charcoal-border);border-radius:8px;background:var(--charcoal-mid);color:var(--text-primary);font-size:13px;cursor:pointer;font-family:var(--font-body);transition:all .15s;}
+.dur-btn:hover{border-color:var(--gold);color:var(--gold);}
+.dur-custom-row{display:flex;gap:6px;margin-top:8px;}
+.dur-custom-input{flex:1;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;}
+.dur-custom-input:focus{border-color:var(--gold);}
+
 </style>
 </head>
 <body>
@@ -1499,56 +1546,17 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 
-  <!-- 3 COLUMNS: Morning | Five Pillars | Evening -->
-  <div style="display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:14px;margin-bottom:1.2rem;align-items:start">
-
-    <!-- MORNING RITUAL -->
-    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:280px;border-color:#1A9E8F">
-      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="width:24px;height:24px;border-radius:6px;background:#1A9E8F18;color:#1A9E8F;display:flex;align-items:center;justify-content:center;font-size:13px">☽</div>
-          <span style="font-family:var(--font-display);font-size:15px">Morning Ritual</span>
-        </div>
-        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#1A9E8F18;color:#1A9E8F" id="am-badge">0/5</span>
+  <!-- FIVE PILLARS DRAG PANEL -->
+  <div class="fp-panel" id="fp-panel">
+    <div class="fp-panel-hdr">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="color:var(--gold);font-size:16px">✦</span>
+        <span style="font-family:var(--font-display);font-size:16px">Five Pillars</span>
+        <span id="fp-badge" style="font-size:12px;color:var(--text-tertiary);background:var(--charcoal-mid);border-radius:10px;padding:1px 8px">0/0</span>
       </div>
-      <div style="padding:8px 14px 6px;flex:1;display:flex;flex-direction:column;min-height:0">
-        <div class="ritual-progress" id="am-progress" style="flex-shrink:0"></div>
-        <div class="ritual-progress-bar" id="am-prog-bar"><div class="ritual-progress-fill" id="am-prog-fill" style="background:#1A9E8F;width:0%"></div></div><div id="am-steps" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:0"></div>
-        <div style="padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic;flex-shrink:0;margin-top:6px">Surrender → Stillness → Process → Declare → Activate</div>
-      </div>
+      <span style="font-size:11px;color:var(--text-tertiary);font-style:italic">Drag any task onto the timeline →</span>
     </div>
-
-    <!-- FIVE PILLARS -->
-    <div class="pillars-section" style="display:flex;flex-direction:column;border-color:var(--gold);">
-      <div class="pillars-section-header" style="flex-shrink:0">
-        <div class="pillars-section-title">
-          <span style="color:var(--gold)">✦</span>
-          <span>Five Pillars</span>
-        </div>
-        <span style="font-size:12px;color:var(--text-tertiary)" id="pillars-badge">0/0</span>
-      </div>
-      <div style="padding:8px 14px 6px;flex:1;display:flex;flex-direction:column;min-height:0">
-        <div class="pillars-overall" id="pillars-overall-bar" style="flex-shrink:0"></div>
-        <div id="pillars-list"></div>
-      </div>
-    </div>
-
-    <!-- EVENING RITUAL -->
-    <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:280px;border-color:#7F77DD">
-      <div style="padding:11px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="width:24px;height:24px;border-radius:6px;background:#7F77DD18;color:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:13px">◑</div>
-          <span style="font-family:var(--font-display);font-size:15px">Evening Ritual</span>
-        </div>
-        <span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#7F77DD18;color:#7F77DD" id="pm-badge">0/5</span>
-      </div>
-      <div style="padding:8px 14px 6px;flex:1;display:flex;flex-direction:column;min-height:0">
-        <div class="ritual-progress" id="pm-progress" style="flex-shrink:0"></div>
-        <div class="ritual-progress-bar" id="pm-prog-bar"><div class="ritual-progress-fill" id="pm-prog-fill" style="background:var(--gold);width:0%"></div></div><div id="pm-steps" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:0"></div>
-        <div style="padding-top:6px;border-top:0.5px solid var(--charcoal-border);font-size:10px;color:var(--text-tertiary);font-style:italic;flex-shrink:0;margin-top:6px">Process → Reflect → Surrender → Release → Sleep</div>
-      </div>
-    </div>
-
+    <div class="fp-pillars-grid" id="fp-pillars-list"></div>
   </div>
 
   <!-- CALENDAR + DAY VIEW SIDE BY SIDE -->
@@ -1624,6 +1632,27 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div class="ep-btns">
         <button class="ep-btn cancel" onclick="closeEvPopup()">Cancel</button>
         <button class="ep-btn ok" onclick="saveEvPopup()">Add ✦</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Duration popup (appears after dropping a pillar task on the timeline) -->
+  <div class="dur-popup-overlay" id="dur-popup" onclick="if(event.target===this)closeDurPopup()">
+    <div class="dur-popup">
+      <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:4px">Adding to timeline at <span id="dp-time" style="color:var(--gold);font-weight:500"></span></div>
+      <div style="font-size:14px;color:var(--text-primary);margin-bottom:12px;font-weight:500;line-height:1.3" id="dp-task"></div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-tertiary);margin-bottom:6px">Choose duration</div>
+      <div class="dur-btns">
+        <button class="dur-btn" onclick="selectDuration(30)">30 min</button>
+        <button class="dur-btn" onclick="selectDuration(60)">1 hr</button>
+        <button class="dur-btn" onclick="selectDuration(120)">2 hr</button>
+      </div>
+      <div class="dur-custom-row">
+        <input class="dur-custom-input" id="dp-custom-input" type="number" placeholder="Custom (min)" min="5" max="480" onkeydown="if(event.key==='Enter')applyCustomDuration()"/>
+        <button class="ep-btn ok" style="padding:7px 12px;font-size:12px;flex-shrink:0" onclick="applyCustomDuration()">Add</button>
+      </div>
+      <div style="margin-top:10px">
+        <button class="ep-btn cancel" style="width:100%;padding:8px" onclick="closeDurPopup()">Cancel</button>
       </div>
     </div>
   </div>
@@ -2002,6 +2031,9 @@ function save(){try{localStorage.setItem('noornorth',JSON.stringify(data));}catc
 function load(){try{const s=localStorage.getItem('noornorth');if(s)data=JSON.parse(s);}catch(e){data={};}}
 function ensureDay(ds){
   if(!data[ds])data[ds]={am:{},pm:{},pillars:{}};
+  if(!data[ds].morningRitual)data[ds].morningRitual=new Array(AM_STEPS.length).fill(false);
+  if(!data[ds].eveningRitual)data[ds].eveningRitual=new Array(PM_STEPS.length).fill(false);
+  if(!data[ds].timedEvents)data[ds].timedEvents=[];
   if(!data.affirmations)data.affirmations=[...DEFAULT_AFFIRMATIONS];
   if(!data.notes)data.notes=[];
   if(!data.planning)data.planning={};
@@ -2088,7 +2120,7 @@ function renderDaily(){
   renderRitualNew('am',ds);
   renderRitualNew('pm',ds);
   renderDailyStats();
-  renderPillarsDaily(ds);
+  renderFivePillarsPanel(ds);
 }
 
 function goToday(){dayOffset=0;renderDaily();}
@@ -2393,9 +2425,9 @@ function toggleRitual(ds,session,idx){
 }
 function renderPillarsDaily(ds){
   let totalDone=0,totalAll=0;
-  // overall bar
+  // overall bar (legacy element — may not exist after card removal)
   const barCont=document.getElementById('pillars-overall-bar');
-  barCont.innerHTML=PILLARS.map(p=>{
+  if(barCont)barCont.innerHTML=PILLARS.map(p=>{
     const tasks=data[ds].pillars[p.id]||[];
     const d=tasks.filter(t=>t.done).length;
     const a=tasks.length;
@@ -2403,8 +2435,10 @@ function renderPillarsDaily(ds){
     const pct=a?Math.round(d/a*100):0;
     return `<div class="pillar-bar-seg" style="${a?'background:'+p.color+Math.round(pct/100*99+1).toString(16).padStart(2,'0'):''}"></div>`;
   }).join('');
-  document.getElementById('pillars-badge').textContent=totalDone+'/'+totalAll;
+  const badgeEl=document.getElementById('pillars-badge');
+  if(badgeEl)badgeEl.textContent=totalDone+'/'+totalAll;
   const cont=document.getElementById('pillars-list');
+  if(!cont)return;
   cont.innerHTML=PILLARS.map(p=>{
     const tasks=data[ds].pillars[p.id]||[];
     const done=tasks.filter(t=>t.done).length;
@@ -2447,18 +2481,17 @@ function addPillarTask(ds,pid){
   data[ds].pillars[pid].push({text,done:false});
   const pillar=PILLARS.find(p=>p.id===pid);
   if(pillar)showToast('Task added to '+pillar.name, pillar.color);
-  inp.value='';save();renderPillarsDaily(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
+  inp.value='';save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
 }
 function togglePillarTask(ds,pid,idx){
-  
   data[ds].pillars[pid][idx].done=!data[ds].pillars[pid][idx].done;
-  save();renderPillarsDaily(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
+  save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
 }
 function editPillarTask(ds,pid,idx,text){
   data[ds].pillars[pid][idx].text=text;save();
 }
 function deletePillarTask(ds,pid,idx){
-  data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);
+  data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);
 }
 
 // PLANNING
@@ -4357,11 +4390,9 @@ function initDayView() {
   const labelsEl = document.getElementById('day-time-labels');
   const slotsEl = document.getElementById('day-time-slots');
   if (!labelsEl || !slotsEl) {
-    // Elements not ready yet, retry
     setTimeout(initDayView, 200);
     return;
   }
-  // Always rebuild the grid
   let lHtml = '', sHtml = '';
   for (let h = 0; h < 24; h++) {
     const top = h * HOUR_H;
@@ -4377,13 +4408,15 @@ function initDayView() {
   if (!window._dvNowInterval) {
     window._dvNowInterval = setInterval(dvUpdateNow, 60000);
   }
-  // Scroll to current hour
+  // Scroll to current hour (or 4am if before 6am)
   const s = document.getElementById('day-view-scroll');
   if (s) {
     const now = new Date();
-    s.scrollTop = Math.max(0, (now.getHours() - 1) * HOUR_H);
+    const scrollHour = now.getHours() < 6 ? 4 : now.getHours() - 1;
+    s.scrollTop = Math.max(0, scrollHour * HOUR_H);
   }
   dvUpdateHeader();
+  setupTimelineDrop();
 }
 
 function dvUpdateHeader() {
@@ -4493,8 +4526,11 @@ function dvRenderEvents() {
   const slotsEl = document.getElementById('day-time-slots');
   if (!slotsEl) return;
   slotsEl.querySelectorAll('.day-event-block').forEach(e => e.remove());
+  slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e => e.remove());
   // Always (re)draw solar markers for the current date
   dvRenderSolarMarkers(dvDate);
+  // Ritual fixed blocks
+  dvRenderRitualBlocks(dvDate);
   const evs = (data.calendar && data.calendar[dvDate]) || [];
   evs.forEach(ev => {
     if (ev.startMin == null) {
@@ -4554,16 +4590,24 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseup', () => {
   if (dvDragState) {
-    const {id, el} = dvDragState;
+    const {id, el, isTimed} = dvDragState;
     el.classList.remove('dragging');
     const newStart = Math.round(parseInt(el.style.top) / (HOUR_H/60));
-    dvUpdateEventTime(id, newStart, null);
+    if (isTimed) {
+      dvUpdateTimedEventTime(id, newStart);
+    } else {
+      dvUpdateEventTime(id, newStart, null);
+    }
     dvDragState = null;
   }
   if (dvResizeState) {
-    const {id, el} = dvResizeState;
+    const {id, el, isTimed} = dvResizeState;
     const dur = Math.round(parseInt(el.style.height) / (HOUR_H/60));
-    dvUpdateEventDur(id, dur);
+    if (isTimed) {
+      dvUpdateTimedEventDur(id, dur);
+    } else {
+      dvUpdateEventDur(id, dur);
+    }
     dvResizeState = null;
   }
 });
@@ -4659,6 +4703,429 @@ function dayViewGoToday() {
   const s = document.getElementById('day-view-scroll');
   const now = new Date();
   if (s) s.scrollTop = Math.max(0,(now.getHours()-1)*HOUR_H);
+}
+
+// ══ FIVE PILLARS DRAG PANEL ══
+
+const fpPillarOpen = {};
+let fpDragData = null;
+
+function renderFivePillarsPanel(ds) {
+  ensureDay(ds);
+  const cont = document.getElementById('fp-pillars-list');
+  if (!cont) return;
+
+  let totalDone = 0, totalAll = 0;
+
+  cont.innerHTML = PILLARS.map(p => {
+    const tasks = data[ds].pillars[p.id] || [];
+    const done = tasks.filter(t => t.done).length;
+    totalDone += done; totalAll += tasks.length;
+    const isOpen = fpPillarOpen[p.id];
+
+    const tasksHtml = tasks.length === 0
+      ? '<div style="font-size:11px;color:var(--text-tertiary);padding:4px 0 2px">No tasks yet</div>'
+      : tasks.map((t, i) => `
+        <div class="fp-task-row${t.done ? ' fp-task-done-row' : ''}"
+          draggable="true"
+          id="fpt-${p.id}-${i}"
+          data-text="${t.text.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}"
+          data-pillar-id="${p.id}"
+          data-color="${p.color}"
+          data-task-idx="${i}"
+          data-pillar-name="${p.name.replace(/"/g,'&quot;')}">
+          <span class="fp-drag-handle">⠿</span>
+          <span class="fp-task-label${t.done ? ' fp-done' : ''}">${t.text}</span>
+        </div>`).join('');
+
+    return `<div class="fp-col" id="fpc-${p.id}">
+      <div class="fp-col-hdr" onclick="toggleFpPillar('${p.id}','${ds}')">
+        <div class="pillar-dot" style="background:${p.color}"></div>
+        <span style="font-size:12px;font-weight:500;flex:1;color:var(--text-primary)">${p.name}</span>
+        <span style="font-size:10px;color:var(--text-tertiary)">${done}/${tasks.length}</span>
+        <span id="fpchev-${p.id}" style="font-size:10px;color:var(--text-tertiary);transition:transform .2s;${isOpen?'transform:rotate(180deg)':''}">▾</span>
+      </div>
+      <div class="fp-col-body${isOpen ? ' fp-open' : ''}" id="fpb-${p.id}">
+        ${tasksHtml}
+        <div class="fp-add-row">
+          <input class="fp-add-input" id="fpadd-${p.id}" placeholder="Add task…"
+            onkeydown="if(event.key==='Enter')addFpTask('${ds}','${p.id}')"/>
+          <button class="fp-add-btn" onclick="addFpTask('${ds}','${p.id}')">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const badge = document.getElementById('fp-badge');
+  if (badge) badge.textContent = totalDone + '/' + totalAll;
+
+  // Wire drag events
+  cont.querySelectorAll('.fp-task-row[draggable]').forEach(row => {
+    row.addEventListener('dragstart', fpOnDragStart);
+    row.addEventListener('dragend', fpOnDragEnd);
+  });
+}
+
+function toggleFpPillar(pid, ds) {
+  fpPillarOpen[pid] = !fpPillarOpen[pid];
+  const body = document.getElementById('fpb-' + pid);
+  const chev = document.getElementById('fpchev-' + pid);
+  if (body) body.classList.toggle('fp-open', fpPillarOpen[pid]);
+  if (chev) chev.style.transform = fpPillarOpen[pid] ? 'rotate(180deg)' : '';
+}
+
+function addFpTask(ds, pid) {
+  const inp = document.getElementById('fpadd-' + pid);
+  const text = inp ? inp.value.trim() : '';
+  if (!text) return;
+  data[ds].pillars[pid].push({text, done: false});
+  if (inp) inp.value = '';
+  const pillar = PILLARS.find(p => p.id === pid);
+  if (pillar) showToast('Task added to ' + pillar.name, pillar.color);
+  fpPillarOpen[pid] = true;
+  save();
+  renderFivePillarsPanel(ds);
+  renderMiniCalendar();
+}
+
+function fpOnDragStart(e) {
+  const row = e.currentTarget;
+  fpDragData = {
+    text: row.dataset.text,
+    pillarId: row.dataset.pillarId,
+    color: row.dataset.color,
+    pillarName: row.dataset.pillarName,
+    taskIdx: parseInt(row.dataset.taskIdx)
+  };
+  e.dataTransfer.effectAllowed = 'copy';
+  e.dataTransfer.setData('text/plain', row.dataset.text);
+
+  // Custom ghost image
+  const ghost = document.createElement('div');
+  ghost.style.cssText = `position:fixed;top:0;left:-999px;background:${row.dataset.color}28;border-left:3px solid ${row.dataset.color};border-radius:6px;padding:6px 12px;font-size:12px;color:${row.dataset.color};font-family:Figtree,sans-serif;white-space:nowrap;box-shadow:0 4px 16px #00000050;`;
+  ghost.textContent = '⊕ ' + row.dataset.text;
+  document.body.appendChild(ghost);
+  e.dataTransfer.setDragImage(ghost, 10, 15);
+  window._fpGhost = ghost;
+  requestAnimationFrame(() => { if (window._fpGhost) window._fpGhost.remove(); window._fpGhost = null; });
+
+  row.classList.add('fp-dragging');
+}
+
+function fpOnDragEnd(e) {
+  e.currentTarget.classList.remove('fp-dragging');
+  if (window._fpGhost) { window._fpGhost.remove(); window._fpGhost = null; }
+  fpDragData = null;
+  const slotsEl = document.getElementById('day-time-slots');
+  if (slotsEl) slotsEl.classList.remove('timeline-drop-active');
+}
+
+// ══ TIMELINE DROP SETUP ══
+
+function setupTimelineDrop() {
+  const slotsEl = document.getElementById('day-time-slots');
+  if (!slotsEl || slotsEl._dropSetup) return;
+  slotsEl._dropSetup = true;
+
+  slotsEl.addEventListener('dragover', e => {
+    if (!fpDragData) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    slotsEl.classList.add('timeline-drop-active');
+  });
+
+  slotsEl.addEventListener('dragleave', e => {
+    if (!e.relatedTarget || !slotsEl.contains(e.relatedTarget)) {
+      slotsEl.classList.remove('timeline-drop-active');
+    }
+  });
+
+  slotsEl.addEventListener('drop', e => {
+    e.preventDefault();
+    slotsEl.classList.remove('timeline-drop-active');
+    if (!fpDragData) return;
+
+    const scrollEl = document.getElementById('day-view-scroll');
+    const rect = slotsEl.getBoundingClientRect();
+    const scrollTop = scrollEl ? scrollEl.scrollTop : 0;
+    const relY = e.clientY - rect.top + scrollTop;
+    const rawMin = relY / (HOUR_H / 60);
+    const snappedMin = Math.max(0, Math.min(Math.round(rawMin / 15) * 15, 23 * 60));
+
+    showDurPopup(snappedMin, fpDragData);
+    fpDragData = null;
+  });
+}
+
+// ══ DURATION POPUP ══
+
+let pendingDrop = null;
+
+function showDurPopup(startMin, dragData) {
+  pendingDrop = { startMin, dragData };
+  const popup = document.getElementById('dur-popup');
+  if (!popup) return;
+  const timeEl = document.getElementById('dp-time');
+  const taskEl = document.getElementById('dp-task');
+  if (timeEl) timeEl.textContent = dvMinToTime(startMin);
+  if (taskEl) taskEl.textContent = dragData.text;
+  const customInp = document.getElementById('dp-custom-input');
+  if (customInp) customInp.value = '';
+  popup.classList.add('open');
+  setTimeout(() => { if (customInp) customInp.focus(); }, 50);
+}
+
+function closeDurPopup() {
+  const popup = document.getElementById('dur-popup');
+  if (popup) popup.classList.remove('open');
+  pendingDrop = null;
+}
+
+function selectDuration(mins) {
+  if (!pendingDrop) return;
+  const { startMin, dragData } = pendingDrop;
+  const ds = dvDate;
+  ensureDay(ds);
+
+  const ev = {
+    id: Date.now() + '',
+    pillarId: dragData.pillarId,
+    text: dragData.text,
+    startTime: startMin,
+    duration: mins,
+    done: false
+  };
+  data[ds].timedEvents.push(ev);
+  save();
+  closeDurPopup();
+  dvRenderEvents();
+  const pillar = PILLARS.find(p => p.id === dragData.pillarId);
+  showToast('✦ ' + dragData.text + ' → timeline', pillar ? pillar.color : '#E8B84B');
+}
+
+function applyCustomDuration() {
+  const val = parseInt(document.getElementById('dp-custom-input').value);
+  if (isNaN(val) || val < 5) { showToast('Enter at least 5 min', '#E8733A'); return; }
+  selectDuration(val);
+}
+
+// ══ RITUAL TIMELINE BLOCKS ══
+
+const rtbExpanded = {};
+
+function dvRenderRitualBlocks(ds) {
+  ensureDay(ds);
+  const slotsEl = document.getElementById('day-time-slots');
+  if (!slotsEl) return;
+
+  // Morning Ritual: 4:00am – 5:00am
+  dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 4*60, 5*60,
+    'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
+
+  // Evening Ritual: 9:00pm – 10:00pm
+  dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 21*60, 22*60,
+    'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
+
+  // Pillar timed events
+  const timedEvs = data[ds].timedEvents || [];
+  timedEvs.forEach(ev => dvMakeTimedEventBlock(slotsEl, ev, ds));
+}
+
+function dvMakeRitualBlock(slotsEl, ds, key, startMin, endMin, label, icon, color, steps) {
+  ensureDay(ds);
+  if (!data[ds][key] || data[ds][key].length !== steps.length) {
+    data[ds][key] = new Array(steps.length).fill(false);
+  }
+  const state = data[ds][key];
+  const done = state.filter(Boolean).length;
+  const total = steps.length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+  const isExpanded = rtbExpanded[key] || false;
+
+  const baseH = (endMin - startMin) * (HOUR_H / 60);
+  const top = startMin * (HOUR_H / 60);
+
+  const el = document.createElement('div');
+  el.className = 'ritual-timeline-block';
+  el.id = 'rtb-' + key;
+  el.style.cssText = `top:${top}px;height:${isExpanded ? 'auto' : baseH + 'px'};background:${color}10;border-left-color:${color};overflow:${isExpanded ? 'visible' : 'hidden'};`;
+
+  const tasksHtml = steps.map((s, i) => {
+    const checked = state[i] || false;
+    return `<div class="rtb-task-row" onclick="toggleRitualTask('${ds}','${key}',${i},event)">
+      <div style="width:14px;height:14px;border-radius:4px;flex-shrink:0;border:1.5px solid ${checked ? color : 'var(--charcoal-border)'};background:${checked ? color : 'transparent'};display:flex;align-items:center;justify-content:center;transition:all .15s">
+        ${checked ? `<svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3L3 5L7 1" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>` : ''}
+      </div>
+      <span style="font-size:10px;flex:1;color:${checked ? 'var(--text-tertiary)' : 'var(--text-primary)'};${checked ? 'text-decoration:line-through;' : ''}line-height:1.3">${s.title}</span>
+      ${s.time && s.time !== '—' ? `<span style="font-size:9px;color:var(--text-tertiary);flex-shrink:0">${s.time}</span>` : ''}
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="rtb-header" style="background:${color}22" onclick="toggleRitualTimelineBlock('${key}','${ds}',${startMin},${endMin})">
+      <div style="display:flex;align-items:center;gap:5px">
+        <span style="color:${color};font-size:13px">${icon}</span>
+        <span style="color:${color};font-size:12px;font-weight:600">${label}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:10px;color:${color};background:${color}20;border-radius:10px;padding:1px 7px">${done}/${total}</span>
+        <span id="rtbchev-${key}" style="font-size:10px;color:${color}99">${isExpanded ? '▾' : '▸'}</span>
+      </div>
+    </div>
+    <div id="rtbtasks-${key}" style="display:${isExpanded ? 'block' : 'none'}" class="rtb-tasks">${tasksHtml}</div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:${color}20"><div style="height:100%;width:${pct}%;background:${color};border-radius:2px;transition:width .3s"></div></div>
+  `;
+
+  slotsEl.appendChild(el);
+}
+
+function toggleRitualTimelineBlock(key, ds, startMin, endMin) {
+  rtbExpanded[key] = !rtbExpanded[key];
+  const el = document.getElementById('rtb-' + key);
+  const tasks = document.getElementById('rtbtasks-' + key);
+  const chev = document.getElementById('rtbchev-' + key);
+  if (!el || !tasks) return;
+
+  if (rtbExpanded[key]) {
+    tasks.style.display = 'block';
+    if (chev) chev.textContent = '▾';
+    el.style.height = 'auto';
+    el.style.overflow = 'visible';
+    el.style.zIndex = '15';
+  } else {
+    tasks.style.display = 'none';
+    if (chev) chev.textContent = '▸';
+    const baseH = (endMin - startMin) * (HOUR_H / 60);
+    el.style.height = baseH + 'px';
+    el.style.overflow = 'hidden';
+    el.style.zIndex = '8';
+  }
+}
+
+function toggleRitualTask(ds, key, idx, e) {
+  if (e) e.stopPropagation();
+  ensureDay(ds);
+  const steps = key === 'morningRitual' ? AM_STEPS : PM_STEPS;
+  if (!data[ds][key] || data[ds][key].length !== steps.length) {
+    data[ds][key] = new Array(steps.length).fill(false);
+  }
+  data[ds][key][idx] = !data[ds][key][idx];
+  // Keep legacy am/pm in sync for empire stats
+  const session = key === 'morningRitual' ? 'am' : 'pm';
+  data[ds][session][idx] = data[ds][key][idx];
+  save();
+  // Re-render ritual blocks and timed events
+  const slotsEl = document.getElementById('day-time-slots');
+  if (slotsEl) {
+    slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e2 => e2.remove());
+    dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 4*60, 5*60, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
+    dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 21*60, 22*60, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
+    (data[ds].timedEvents || []).forEach(ev => dvMakeTimedEventBlock(slotsEl, ev, ds));
+    // Restore expanded state
+    ['morningRitual', 'eveningRitual'].forEach(k => {
+      if (rtbExpanded[k]) {
+        requestAnimationFrame(() => {
+          const el = document.getElementById('rtb-' + k);
+          const tasks = document.getElementById('rtbtasks-' + k);
+          const chev = document.getElementById('rtbchev-' + k);
+          if (el && tasks) {
+            tasks.style.display = 'block';
+            if (chev) chev.textContent = '▾';
+            el.style.height = 'auto';
+            el.style.overflow = 'visible';
+            el.style.zIndex = '15';
+          }
+        });
+      }
+    });
+  }
+  renderDailyStats();
+  showToast(data[ds][key][idx] ? '✦ Done' : 'Unchecked', key === 'morningRitual' ? '#1A9E8F' : '#7F77DD');
+}
+
+// ══ TIMED PILLAR EVENTS ══
+
+function dvMakeTimedEventBlock(slotsEl, ev, ds) {
+  const pillar = PILLARS.find(p => p.id === ev.pillarId) || { color: '#E8B84B', name: '' };
+  const startMin = ev.startTime;
+  const endMin = ev.startTime + (ev.duration || 60);
+  const top = startMin * (HOUR_H / 60);
+  const height = Math.max((endMin - startMin) * (HOUR_H / 60), 22);
+
+  const el = document.createElement('div');
+  el.className = 'day-event-block';
+  el.id = 'tev-' + ev.id;
+  el.style.cssText = `top:${top}px;height:${height}px;background:${pillar.color}22;border-left-color:${pillar.color};color:${pillar.color};${ev.done ? 'opacity:0.38;' : ''}`;
+
+  el.innerHTML = `
+    <button class="day-event-del" onclick="dvDeleteTimedEvent('${ev.id}','${ds}')">✕</button>
+    <div class="day-event-title" style="${ev.done ? 'text-decoration:line-through;opacity:.6' : ''}">${ev.text}</div>
+    <div class="day-event-time-label">${dvMinToTime(startMin)} – ${dvMinToTime(endMin)}</div>
+    <div class="day-event-resize-handle" data-tev-id="${ev.id}"></div>
+  `;
+
+  // Click to toggle done
+  el.addEventListener('click', e2 => {
+    if (e2.target.classList.contains('day-event-del') || e2.target.classList.contains('day-event-resize-handle')) return;
+    toggleTimedEventDone(ev.id, ds);
+  });
+
+  // Drag
+  el.addEventListener('mousedown', e2 => {
+    if (e2.target.classList.contains('day-event-resize-handle') || e2.target.classList.contains('day-event-del')) return;
+    e2.preventDefault();
+    dvDragState = { id: ev.id, startY: e2.clientY, origTop: parseInt(el.style.top), el, isTimed: true };
+    el.classList.add('dragging');
+  });
+
+  // Resize
+  const resizeHandle = el.querySelector('.day-event-resize-handle');
+  if (resizeHandle) {
+    resizeHandle.addEventListener('mousedown', e2 => {
+      e2.preventDefault(); e2.stopPropagation();
+      dvResizeState = { id: ev.id, startY: e2.clientY, origH: parseInt(el.style.height), el, isTimed: true };
+    });
+  }
+
+  slotsEl.appendChild(el);
+}
+
+function toggleTimedEventDone(id, ds) {
+  ensureDay(ds);
+  const ev = (data[ds].timedEvents || []).find(e => e.id === id);
+  if (!ev) return;
+  ev.done = !ev.done;
+  save();
+  dvRenderEvents();
+  showToast(ev.done ? '✦ Complete!' : 'Reopened', ev.done ? '#1A9E8F' : '#E8733A');
+}
+
+function dvDeleteTimedEvent(id, ds) {
+  ensureDay(ds);
+  data[ds].timedEvents = (data[ds].timedEvents || []).filter(e => e.id !== id);
+  save();
+  dvRenderEvents();
+  showToast('Event removed', '#E8733A');
+}
+
+function dvUpdateTimedEventTime(id, newStart) {
+  const ds = dvDate;
+  ensureDay(ds);
+  const ev = (data[ds].timedEvents || []).find(e => e.id === id);
+  if (!ev) return;
+  ev.startTime = newStart;
+  save();
+  dvRenderEvents();
+}
+
+function dvUpdateTimedEventDur(id, dur) {
+  const ds = dvDate;
+  ensureDay(ds);
+  const ev = (data[ds].timedEvents || []).find(e => e.id === id);
+  if (!ev) return;
+  ev.duration = dur;
+  save();
+  dvRenderEvents();
 }
 </script>
 </body>
