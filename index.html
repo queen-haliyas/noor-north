@@ -2322,6 +2322,51 @@ let currentNoteId=null;
 let currentAffIdx=0;
 let modalContext=null;
 
+// ── VARIABLE DECLARATIONS ──
+let arabellaMode = 'coach';
+let arabellaHistory = [];
+let mediaRecorder = null;
+let audioChunks = [];
+let recordingTimer = null;
+let recordingSeconds = 0;
+let isRecording = false;
+let currentNameIdx = 0;
+let reviewScore = 7;
+let _revSaveTimer = null;
+let miniCalYear = new Date().getFullYear();
+let miniCalMonth = new Date().getMonth();
+let miniSelectedDate = fmt(new Date());
+let miniSelectedColor = 'gold';
+let calYear = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+let calSelectedDate = fmt(new Date());
+let selectedEventColor = 'gold';
+const COLOR_MAP={
+  gold:   {bg:'#E8B84B20',text:'#E8B84B',hex:'#E8B84B'},
+  rose:   {bg:'#FB718520',text:'#FB7185',hex:'#FB7185'},
+  violet: {bg:'#A78BFA20',text:'#A78BFA',hex:'#A78BFA'},
+  sky:    {bg:'#38BDF820',text:'#38BDF8',hex:'#38BDF8'},
+  lime:   {bg:'#A3E63520',text:'#A3E635',hex:'#A3E635'},
+  pink:   {bg:'#F472B620',text:'#F472B6',hex:'#F472B6'},
+  amber:  {bg:'#FB923C20',text:'#FB923C',hex:'#FB923C'},
+  indigo: {bg:'#818CF820',text:'#818CF8',hex:'#818CF8'},
+  red:    {bg:'#F8717120',text:'#F87171',hex:'#F87171'},
+  cyan:   {bg:'#22D3EE20',text:'#22D3EE',hex:'#22D3EE'},
+  fuchsia:{bg:'#E879F920',text:'#E879F9',hex:'#E879F9'},
+  white:  {bg:'#FFFFFF15',text:'#E2DDD0',hex:'#E2DDD0'}
+};
+const originalSave = save;
+const HOUR_H = 60;
+let dvDate = fmt(new Date());
+let dvDragState = null;
+let dvResizeState = null;
+let dvPopupMin = 9*60;
+let solarCache = {};
+const fpPillarOpen = {};
+let fpDragData = null;
+let pendingDrop = null;
+const rtbExpanded = {};
+
 // UTILS
 function fmt(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
 function getDateStr(offset){const d=new Date();d.setDate(d.getDate()+offset);return fmt(d);}
@@ -3096,8 +3141,6 @@ function saveCurrentNote(){
 
 
 // ARABELLA AI
-let arabellaMode = 'coach';
-let arabellaHistory = [];
 
 const ARABELLA_SYSTEM = {
   coach: `You are Arabella, the personal AI life coach for Halima Yasmin 3.0, a British-Bangladeshi Muslim entrepreneur and architect based in the UK. You speak with warmth, directness, and spiritual grounding. You know her deeply:
@@ -3189,12 +3232,6 @@ function addArabellMessage(role, text, id) {
 }
 
 // VOICE MEMOS
-let mediaRecorder = null;
-let audioChunks = [];
-let recordingTimer = null;
-let recordingSeconds = 0;
-let isRecording = false;
-
 function toggleRecording() {
   if (isRecording) stopRecording();
   else startRecording();
@@ -3399,8 +3436,6 @@ const PILLAR_COLORS = {
   'CODE':'#E8B84B','DESIGN':'#C4983B','EARN':'#D4A843','TIGER & DRAGON':'#E8733A'
 };
 
-let currentNameIdx = 0;
-
 function todaysName(){
   const dayOfYear=Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/(1000*60*60*24));
   currentNameIdx=(dayOfYear-1)%99;
@@ -3499,9 +3534,6 @@ const GRANT_STEPS = [
   'People/Team (who to hire/fire/develop?)',
   'Money management (measuring surplus/overflow?)'
 ];
-
-let reviewScore = 7;
-let _revSaveTimer = null;
 
 function getWeekKey(){
   const now=new Date();
@@ -4114,10 +4146,6 @@ function renderDailyNameBanner() {
 }
 
 // MINI CALENDAR
-let miniCalYear = new Date().getFullYear();
-let miniCalMonth = new Date().getMonth();
-let miniSelectedDate = fmt(new Date());
-
 function changeMiniMonth(dir) {
   miniCalMonth += dir;
   if (miniCalMonth > 11) { miniCalMonth = 0; miniCalYear++; }
@@ -4204,8 +4232,6 @@ function renderDayDetail(dateStr) {
     </div>
   `;
 }
-
-let miniSelectedColor = 'gold';
 
 function selectMiniColor(el, dateStr) {
   document.querySelectorAll('.mini-color-dot').forEach(d => {
@@ -4339,27 +4365,6 @@ function renderMiniCalendar() {
 }
 
 // CALENDAR
-let calYear=new Date().getFullYear();
-let calMonth=new Date().getMonth();
-let calSelectedDate=fmt(new Date());
-let selectedEventColor='gold';
-
-const COLOR_MAP={
-  gold:   {bg:'#E8B84B20',text:'#E8B84B',hex:'#E8B84B'},
-  rose:   {bg:'#FB718520',text:'#FB7185',hex:'#FB7185'},
-  violet: {bg:'#A78BFA20',text:'#A78BFA',hex:'#A78BFA'},
-  sky:    {bg:'#38BDF820',text:'#38BDF8',hex:'#38BDF8'},
-  lime:   {bg:'#A3E63520',text:'#A3E635',hex:'#A3E635'},
-  pink:   {bg:'#F472B620',text:'#F472B6',hex:'#F472B6'},
-  amber:  {bg:'#FB923C20',text:'#FB923C',hex:'#FB923C'},
-  indigo: {bg:'#818CF820',text:'#818CF8',hex:'#818CF8'},
-  red:    {bg:'#F8717120',text:'#F87171',hex:'#F87171'},
-  cyan:   {bg:'#22D3EE20',text:'#22D3EE',hex:'#22D3EE'},
-  fuchsia:{bg:'#E879F920',text:'#E879F9',hex:'#E879F9'},
-  white:  {bg:'#FFFFFF15',text:'#E2DDD0',hex:'#E2DDD0'}
-};
-
-
 // TOAST NOTIFICATIONS
 function showToast(msg, color='#E8B84B') {
   const container = document.getElementById('toast-container');
@@ -5051,7 +5056,6 @@ async function loadFromSupabase() {
 }
 
 // DEBOUNCED SAVE
-const originalSave = save;
 window.save = function() {
   originalSave();
   clearTimeout(syncTimeout);
@@ -5146,12 +5150,6 @@ function logout() {
 
 
 // ══ DAY VIEW ENGINE ══
-const HOUR_H = 60;
-let dvDate = fmt(new Date());
-let dvDragState = null;
-let dvResizeState = null;
-let dvPopupMin = 9*60;
-
 function initDayView() {
   const labelsEl = document.getElementById('day-time-labels');
   const slotsEl = document.getElementById('day-time-slots');
@@ -5211,8 +5209,6 @@ function dvUpdateNow() {
 // ══ SOLAR PRAYER RHYTHM ══
 // Uses sunrise-sunset.org free API
 // Manchester Central Mosque coords: 53.4771°N, 2.2309°W
-let solarCache = {};
-
 async function fetchSolarData(dateStr) {
   if (solarCache[dateStr]) return solarCache[dateStr];
   try {
@@ -5473,9 +5469,6 @@ function dayViewGoToday() {
 
 // ══ FIVE PILLARS DRAG PANEL ══
 
-const fpPillarOpen = {};
-let fpDragData = null;
-
 function renderFivePillarsPanel(ds) {
   ensureDay(ds);
   const cont = document.getElementById('fp-pillars-list');
@@ -5625,8 +5618,6 @@ function setupTimelineDrop() {
 
 // ══ DURATION POPUP ══
 
-let pendingDrop = null;
-
 function showDurPopup(startMin, dragData) {
   pendingDrop = { startMin, dragData };
   const popup = document.getElementById('dur-popup');
@@ -5676,8 +5667,6 @@ function applyCustomDuration() {
 }
 
 // ══ RITUAL TIMELINE BLOCKS ══
-
-const rtbExpanded = {};
 
 function dvRenderRitualBlocks(ds) {
   ensureDay(ds);
