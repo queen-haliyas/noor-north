@@ -1191,7 +1191,7 @@ body{
 .mini-cal-title{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary);}
 .mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem;}
 .mini-cal-day-hdr{text-align:center;font-size:10px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;padding:4px 0;}
-.mini-cal-cell{min-height:0;height:70px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:5px;cursor:pointer;transition:all .15s;position:relative;}
+.mini-cal-cell{min-height:0;height:44px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:3px 4px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden;}
 .mini-cal-cell:hover{border-color:var(--gold);}
 .mini-cal-cell.today{border-color:var(--gold);background:#C4983B08;}
 .mini-cal-cell.selected{background:#C4983B12;border-color:var(--gold);}
@@ -1437,8 +1437,8 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 /* ══ GOOGLE CALENDAR DAY PLANNER ══ */
-.cal-planner-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1rem;align-items:start;}
-@media(max-width:1100px){.cal-planner-wrap{grid-template-columns:1fr;}}
+.cal-planner-wrap{display:grid;grid-template-columns:3fr 1fr;gap:16px;margin-bottom:1rem;align-items:start;}
+@media(max-width:768px){.cal-planner-wrap{grid-template-columns:1fr;}}
 .day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;}
 .day-view-header{padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
 .day-view-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);}
@@ -1894,20 +1894,20 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
     <!-- RIGHT: month calendar + day detail -->
     <div>
       <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border)">
-          <button class="day-nav-btn" onclick="changeMiniMonth(-1)">← prev</button>
-          <div style="font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
-          <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Today</button>
-          <button class="day-nav-btn" onclick="changeMiniMonth(1)">next →</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
+          <button class="day-nav-btn" onclick="changeMiniMonth(-1)">‹</button>
+          <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+          <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
+          <button class="day-nav-btn" onclick="changeMiniMonth(1)">›</button>
         </div>
-        <div style="padding:8px 12px">
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px">
-            <div class="mini-cal-day-hdr">Mon</div><div class="mini-cal-day-hdr">Tue</div>
-            <div class="mini-cal-day-hdr">Wed</div><div class="mini-cal-day-hdr">Thu</div>
-            <div class="mini-cal-day-hdr">Fri</div><div class="mini-cal-day-hdr">Sat</div>
-            <div class="mini-cal-day-hdr">Sun</div>
+        <div style="padding:6px 8px">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
+            <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
+            <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
+            <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
+            <div class="mini-cal-day-hdr">S</div>
           </div>
-          <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:70px;gap:4px"></div>
+          <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
         </div>
       </div>
       <div id="day-detail-panel" style="display:none"></div>
