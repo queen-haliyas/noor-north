@@ -2309,44 +2309,16 @@ const PLAN_LAYERS=[
   {id:'weekly',title:'Week 18',sub:'This week',color:'#E8B84B'}
 ];
 const DEFAULT_AFFIRMATIONS=[
-  'I am so deeply grateful that my relationship with Allah is the strongest it has ever been — my salah is consistent, my duas are answered, and my heart is at peace.',
-  'I am so thankful that my morning ritual of prayer, affirmation, and visualisation has become as natural as breathing, anchoring every day in purpose.',
-  'I am deeply grateful that I have built a life where Islamic principles and entrepreneurial ambition are not in conflict but in perfect harmony.',
-  'I am so grateful that my faith has become my most powerful business strategy — tawakkul has replaced anxiety, and shukr has replaced scarcity.',
-  'I am thankful that I give sadaqah with joy and ease, knowing that every pound I give returns to me multiplied in ways I could never predict.',
-  'I am so grateful that Fadlan and I have built a marriage that the world admires — a true partnership of equals, rooted in love, faith, and shared vision.',
-  'I am thankful beyond words that our Tiger and Dragon brand is thriving, and that our love story inspires thousands of couples to build together rather than apart.',
-  'I am so grateful that we have learned to navigate disagreements with grace, always choosing the relationship over being right.',
-  'I am so grateful that TigerFlow AI has grown from a bold idea to a category-defining AI platform serving hundreds of UK brokerages.',
-  'I am deeply thankful that I taught myself Python, built a technical team, and transformed TigerFlow from a white-label service into proprietary technology that I own.',
-  'I am so grateful that I proved every doubter wrong — a woman with an architecture degree built a technology company from scratch and made it extraordinary.',
-  'I am deeply grateful that TigerFlow generates seven-figure annual recurring revenue and that our retention rate is the envy of the industry.',
-  'I am so grateful that Halima Yasmin Architects has completed twenty-five extraordinary projects, each one a testament to the power of intentional design.',
-  'I am thankful that my architecture degree was never a detour — it taught me to see systems, to design with empathy, and to build what does not yet exist.',
-  'I am so grateful that the intersection of architecture and technology has become my superpower — I see patterns others miss because I think in both code and concrete.',
-  'I am deeply grateful that financial freedom has given me the most precious commodity of all: time. I choose how I spend every hour of every day.',
-  'I am so grateful that I understand money as a tool of impact, not a measure of worth — and that this mindset has made me wealthier than I ever imagined.',
-  'I am thankful that I can write a six-figure cheque to The Fathema Ali Trust every quarter without flinching — generosity at this scale is now my discipline.',
-  'I am resolving what needs resolution while building what demands creation. Allahs timing is perfect, and I am exactly where I need to be.',
-  'I build with faith, lead with love, and create with conviction.',
-  'I am Halima Yasmin 3.0 — principled, purposeful, and powerful.',
-  'My empire is built on foundations of faith and serves the greater good.',
-  'I attract abundance, opportunity, and divine guidance in all that I do.',
-  'I am deserving of every success Allah has written for me.',
-  'TigerFlow AI is transforming the UK property market through my vision.',
-  'I lead with elegance, act with boldness, and rest in divine trust.',
   'I honour my time and the time of others. Being early is an act of respect and self-discipline that reflects the leader I am becoming.',
   'I nourish my body with intention. Food is fuel for my mission, and I eat in a way that keeps my energy aligned with my ambitions.',
-  'Other people are mirrors, not enemies. When I notice a negative thought, it is information about what I need to heal within myself.',
+  'Other people are mirrors, not enemies. When I notice a negative thought about someone, it is information about what I need to heal within myself.',
   'True wealth is built through discipline, not display. Every pound I steward wisely is a seed for the empire I am building.',
+  'My body communicates what my mind has not yet processed. I listen to its signals and respond with care, not compulsion.',
   'I have a capable mind that works best with strong systems. I do not need to remember everything — I need to capture everything.',
   'My word is my bond. I commit only to what I can deliver, and I deliver everything I commit to.',
-  'I am intelligent, resourceful, and building something extraordinary. The voice that tells me otherwise is an echo of someone elses pain, not a reflection of my reality.',
+  'I am intelligent, resourceful, and building something extraordinary. The voice that tells me otherwise is an echo of someone else\'s pain, not a reflection of my reality.',
   'I am the master of my attention, not a passenger. Every minute I reclaim from scrolling is a minute invested in my legacy.',
   'True wisdom is knowing what I do not know. My willingness to learn is my greatest competitive advantage.',
-  'Building legacies, not just leads. Where faith meets force.',
-  'I am a billionaire in the making — guided by Allah, disciplined in action, unstoppable in vision.',
-  'Ya Allah, You are Al-Noor — the Light. Guide every step of this empire towards Your pleasure.',
 ];
 
 let dayOffset=0;
@@ -2494,7 +2466,7 @@ function renderAffirmationBar(){
   textEl.textContent='"'+affs[currentAffIdx]+'"';
   _renderAffDots(affs.length);
   if(_affTimer)clearInterval(_affTimer);
-  _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),8000);
+  _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),60000);
 }
 function jumpToAffirmation(idx){_affFadeTo(idx);}
 function prevAffirmation(){
