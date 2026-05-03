@@ -1501,6 +1501,33 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .fp-add-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:5px;padding:2px 7px;font-size:10px;cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);transition:all .15s;}
 .fp-add-btn:hover{border-color:var(--gold);color:var(--gold);}
 
+/* ── DV PILLARS SECTION inside day-view-card ── */
+.dv-pillars-section{flex-shrink:0;border-bottom:0.5px solid var(--charcoal-border);}
+.dv-pillars-section-hdr{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;background:linear-gradient(135deg,#1A1205,#2A1E08);transition:background .15s;user-select:none;}
+.dv-pillars-section-hdr:hover{background:#221909;}
+.dv-pillars-content{overflow-y:auto;max-height:220px;}
+.dv-pillars-content::-webkit-scrollbar{width:3px;}
+.dv-pillars-content::-webkit-scrollbar-thumb{background:var(--charcoal-border);border-radius:2px;}
+.dv-pl-row{border-bottom:0.5px solid var(--charcoal-border);}
+.dv-pl-row:last-child{border-bottom:none;}
+.dv-pl-hdr{display:flex;align-items:center;gap:7px;padding:6px 14px;cursor:pointer;transition:background .15s;user-select:none;}
+.dv-pl-hdr:hover{background:var(--charcoal-mid);}
+.dv-pl-body{padding:2px 14px 8px;display:none;}
+.dv-pl-body.open{display:block;}
+.dv-pl-task{display:flex;align-items:center;gap:6px;padding:4px 2px;border-bottom:0.5px solid var(--charcoal-border);border-radius:4px;cursor:grab;transition:background .1s;}
+.dv-pl-task:last-of-type{border-bottom:none;}
+.dv-pl-task:hover{background:var(--charcoal-mid);}
+.dv-pl-task.fp-dragging{opacity:.35;}
+.dv-pl-check{width:13px;height:13px;border-radius:3px;border:1px solid var(--charcoal-border);flex-shrink:0;cursor:pointer;font-size:9px;transition:all .15s;text-align:center;line-height:13px;}
+.dv-pl-drag{color:var(--text-tertiary);font-size:10px;flex-shrink:0;}
+.dv-pl-label{flex:1;font-size:11px;color:var(--text-primary);line-height:1.3;}
+.dv-pl-label.done{color:var(--text-tertiary);text-decoration:line-through;}
+.dv-pl-add{display:flex;gap:4px;margin-top:5px;padding-top:5px;border-top:0.5px solid var(--charcoal-border);}
+.dv-pl-add-inp{flex:1;background:none;border:none;outline:none;font-size:11px;color:var(--text-primary);font-family:var(--font-body);}
+.dv-pl-add-inp::placeholder{color:var(--text-tertiary);}
+.dv-pl-add-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:5px;padding:2px 7px;font-size:10px;cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);transition:all .15s;}
+.dv-pl-add-btn:hover{border-color:var(--gold);color:var(--gold);}
+
 /* Timeline drag-over highlight */
 .timeline-drop-active{box-shadow:inset 0 0 0 2px var(--gold);}
 
@@ -1649,8 +1676,8 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
 
 
-  <!-- FIVE PILLARS DRAG PANEL -->
-  <div class="fp-panel" id="fp-panel">
+  <!-- FIVE PILLARS DRAG PANEL (hidden — pillars live inside the timeline card now) -->
+  <div class="fp-panel" id="fp-panel" style="display:none">
     <div class="fp-panel-hdr">
       <div style="display:flex;align-items:center;gap:8px">
         <span style="color:var(--gold);font-size:16px">✦</span>
@@ -1672,6 +1699,17 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
           <div class="day-view-date-sub" id="day-view-date-sub"></div>
         </div>
         <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
+      </div>
+      <!-- Five Pillars — expandable task groups on the timeline card -->
+      <div class="dv-pillars-section" id="dv-pillars-section">
+        <div class="dv-pillars-section-hdr" onclick="dvTogglePlSection()">
+          <span style="color:var(--gold);font-size:13px">✦</span>
+          <span style="font-family:var(--font-display);font-size:13px;flex:1;color:var(--text-primary)">Five Pillars</span>
+          <span id="dv-fp-count" style="font-size:11px;color:var(--text-tertiary);background:var(--charcoal-mid);border-radius:10px;padding:1px 8px">0/0</span>
+          <span style="font-size:10px;color:var(--text-tertiary);font-style:italic;margin:0 8px">drag to schedule →</span>
+          <span id="dv-fp-chev" style="font-size:11px;color:var(--text-tertiary);transition:transform .2s">▾</span>
+        </div>
+        <div class="dv-pillars-content" id="dv-pillars-body" style="display:none"></div>
       </div>
       <div class="day-view-scroll" id="day-view-scroll">
         <div class="day-time-grid">
@@ -2361,6 +2399,8 @@ let dvPopupMin = 9*60;
 let solarCache = {};
 const fpPillarOpen = {};
 let fpDragData = null;
+const dvPlOpen = {};
+let dvPlSectionOpen = false;
 let pendingDrop = null;
 const rtbExpanded = {};
 
@@ -2500,6 +2540,7 @@ function renderDaily(){
   renderRitualNew('pm',ds);
   renderDailyStats();
   renderFivePillarsPanel(ds);
+  renderDvPillars(ds);
 }
 
 function goToday(){dayOffset=0;renderDaily();}
@@ -2864,7 +2905,8 @@ function addPillarTask(ds,pid){
 }
 function togglePillarTask(ds,pid,idx){
   data[ds].pillars[pid][idx].done=!data[ds].pillars[pid][idx].done;
-  save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
+  save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
+  syncPillarTasksToSupabase(ds);
 }
 function editPillarTask(ds,pid,idx,text){
   data[ds].pillars[pid][idx].text=text;save();
@@ -5530,6 +5572,152 @@ function toggleFpPillar(pid, ds) {
   if (chev) chev.style.transform = fpPillarOpen[pid] ? 'rotate(180deg)' : '';
 }
 
+// ══ DV PILLARS — expandable task groups inside timeline card ══
+
+function renderDvPillars(ds) {
+  ensureDay(ds);
+  const body = document.getElementById('dv-pillars-body');
+  if (!body) return;
+
+  let totalDone = 0, totalAll = 0;
+
+  body.innerHTML = PILLARS.map(p => {
+    const tasks = data[ds].pillars[p.id] || [];
+    const done = tasks.filter(t => t.done).length;
+    totalDone += done; totalAll += tasks.length;
+    const isOpen = dvPlOpen[p.id];
+
+    const tasksHtml = tasks.length === 0
+      ? `<div style="font-size:11px;color:var(--text-tertiary);padding:3px 0 2px">No tasks yet</div>`
+      : tasks.map((t, i) => `
+        <div class="dv-pl-task"
+          draggable="true"
+          data-text="${t.text.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}"
+          data-pillar-id="${p.id}"
+          data-color="${p.color}"
+          data-task-idx="${i}"
+          data-pillar-name="${p.name.replace(/"/g,'&quot;')}">
+          <span class="dv-pl-drag">⠿</span>
+          <span class="dv-pl-check"
+            onclick="event.stopPropagation();dvTogglePillarTask('${ds}','${p.id}',${i})"
+            style="border-color:${t.done ? p.color : 'var(--charcoal-border)'};background:${t.done ? p.color+'30' : 'transparent'};color:${t.done ? p.color : 'transparent'}"
+          >✓</span>
+          <span class="dv-pl-label${t.done ? ' done' : ''}">${t.text}</span>
+        </div>`).join('');
+
+    return `<div class="dv-pl-row" id="dvplrow-${p.id}">
+      <div class="dv-pl-hdr" onclick="dvTogglePl('${p.id}','${ds}')">
+        <div class="pillar-dot" style="background:${p.color}"></div>
+        <span style="font-size:12px;font-weight:500;flex:1;color:var(--text-primary)">${p.name}</span>
+        <span style="font-size:10px;color:var(--text-tertiary)">${done}/${tasks.length}</span>
+        <span id="dvplchev-${p.id}" style="font-size:10px;color:var(--text-tertiary);transition:transform .2s;display:inline-block${isOpen?';transform:rotate(180deg)':''}">▾</span>
+      </div>
+      <div class="dv-pl-body${isOpen ? ' open' : ''}" id="dvplbody-${p.id}">
+        ${tasksHtml}
+        <div class="dv-pl-add">
+          <input class="dv-pl-add-inp" id="dvpladd-${p.id}" placeholder="+ Add task…"
+            onkeydown="if(event.key==='Enter')addDvPlTask('${ds}','${p.id}')"/>
+          <button class="dv-pl-add-btn" onclick="addDvPlTask('${ds}','${p.id}')">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const countEl = document.getElementById('dv-fp-count');
+  if (countEl) countEl.textContent = totalDone + '/' + totalAll;
+
+  body.querySelectorAll('.dv-pl-task[draggable]').forEach(row => {
+    row.addEventListener('dragstart', fpOnDragStart);
+    row.addEventListener('dragend', fpOnDragEnd);
+  });
+}
+
+function dvTogglePlSection() {
+  dvPlSectionOpen = !dvPlSectionOpen;
+  const bodyEl = document.getElementById('dv-pillars-body');
+  const chevEl = document.getElementById('dv-fp-chev');
+  if (bodyEl) bodyEl.style.display = dvPlSectionOpen ? '' : 'none';
+  if (chevEl) chevEl.style.transform = dvPlSectionOpen ? 'rotate(180deg)' : '';
+}
+
+function dvTogglePl(pid, ds) {
+  dvPlOpen[pid] = !dvPlOpen[pid];
+  const body = document.getElementById('dvplbody-' + pid);
+  const chev = document.getElementById('dvplchev-' + pid);
+  if (body) body.classList.toggle('open', dvPlOpen[pid]);
+  if (chev) chev.style.transform = dvPlOpen[pid] ? 'rotate(180deg)' : '';
+}
+
+function dvTogglePillarTask(ds, pid, idx) {
+  data[ds].pillars[pid][idx].done = !data[ds].pillars[pid][idx].done;
+  save();
+  renderDvPillars(ds);
+  renderFivePillarsPanel(ds);
+  renderMiniCalendar();
+  if (typeof miniSelectedDate !== 'undefined' && miniSelectedDate === ds) renderDayDetail(ds);
+  syncPillarTasksToSupabase(ds);
+}
+
+function addDvPlTask(ds, pid) {
+  const inp = document.getElementById('dvpladd-' + pid);
+  const text = inp ? inp.value.trim() : '';
+  if (!text) return;
+  data[ds].pillars[pid].push({text, done: false});
+  if (inp) inp.value = '';
+  const pillar = PILLARS.find(p => p.id === pid);
+  if (pillar) showToast('Task added to ' + pillar.name, pillar.color);
+  dvPlOpen[pid] = true;
+  save();
+  renderDvPillars(ds);
+  renderFivePillarsPanel(ds);
+  renderMiniCalendar();
+  syncPillarTasksToSupabase(ds);
+}
+
+async function syncPillarTasksToSupabase(ds) {
+  if (!USER_ID) return;
+  ensureDay(ds);
+  const rows = [];
+  PILLARS.forEach(p => {
+    (data[ds].pillars[p.id] || []).forEach((t, i) => {
+      rows.push({
+        id: USER_ID + '_' + ds + '_' + p.id + '_' + i,
+        user_id: USER_ID,
+        pillar_name: p.name,
+        task_title: t.text,
+        scheduled_time: null,
+        completed: t.done,
+        date: ds
+      });
+    });
+  });
+  (data[ds].timedEvents || []).forEach(ev => {
+    const pillar = PILLARS.find(p => p.id === ev.pillarId);
+    rows.push({
+      id: USER_ID + '_ev_' + ev.id,
+      user_id: USER_ID,
+      pillar_name: pillar ? pillar.name : ev.pillarId,
+      task_title: ev.text,
+      scheduled_time: dvMinToTime(ev.startTime),
+      completed: ev.done,
+      date: ds
+    });
+  });
+  if (!rows.length) return;
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/pillar_tasks', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(rows)
+    });
+  } catch(e) {}
+}
+
 function addFpTask(ds, pid) {
   const inp = document.getElementById('fpadd-' + pid);
   const text = inp ? inp.value.trim() : '';
@@ -5541,7 +5729,9 @@ function addFpTask(ds, pid) {
   fpPillarOpen[pid] = true;
   save();
   renderFivePillarsPanel(ds);
+  renderDvPillars(ds);
   renderMiniCalendar();
+  syncPillarTasksToSupabase(ds);
 }
 
 function fpOnDragStart(e) {
@@ -5653,6 +5843,7 @@ function selectDuration(mins) {
   save();
   closeDurPopup();
   dvRenderEvents();
+  syncPillarTasksToSupabase(ds);
   const pillar = PILLARS.find(p => p.id === dragData.pillarId);
   showToast('✦ ' + dragData.text + ' → timeline', pillar ? pillar.color : '#E8B84B');
 }
