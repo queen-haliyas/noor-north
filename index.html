@@ -1161,6 +1161,74 @@ body{
 .eb-stream-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;white-space:nowrap;}
 .eb-stream-tag.active{background:rgba(26,158,143,0.15);color:#1A9E8F;border:0.5px solid rgba(26,158,143,0.3);}
 .eb-stream-tag.future{background:rgba(232,184,75,0.1);color:var(--gold);border:0.5px solid rgba(232,184,75,0.2);}
+/* The Twenty Tracker */
+.twenty-header-card{background:linear-gradient(135deg,rgba(15,11,3,0.98),rgba(24,18,4,0.98));border:0.5px solid rgba(232,184,75,0.35);border-radius:var(--radius);padding:1.6rem 1.8rem;margin-bottom:1rem;text-align:center;}
+.twenty-title{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--gold);letter-spacing:.12em;margin-bottom:4px;}
+.twenty-sub{font-size:12px;color:var(--text-tertiary);letter-spacing:.04em;margin-bottom:1.4rem;}
+.twenty-counter-wrap{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:.6rem;}
+.twenty-count-num{font-family:var(--font-display);font-size:68px;font-weight:200;color:var(--gold);line-height:1;}
+.twenty-count-denom{font-family:var(--font-display);font-size:30px;font-weight:200;color:rgba(232,184,75,0.3);}
+.twenty-countdown{font-size:12px;color:var(--text-tertiary);margin-bottom:1rem;}
+.twenty-progress-wrap{background:rgba(232,184,75,0.08);border-radius:20px;height:5px;overflow:hidden;max-width:280px;margin:0 auto;}
+.twenty-progress-bar{height:100%;background:var(--gold);border-radius:20px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.twenty-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:1rem;}
+.brok-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:border-color .15s;}
+.brok-card:hover{border-color:rgba(232,184,75,0.25);}
+.brok-card.signed-card{border-color:rgba(26,158,143,0.4);}
+.brok-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;}
+.brok-name{font-size:13px;font-weight:500;color:var(--text-primary);}
+.brok-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
+.brok-tier-badge{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;background:rgba(232,184,75,0.1);color:var(--gold);border:0.5px solid rgba(232,184,75,0.2);}
+.brok-class-badge{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;background:var(--charcoal-mid);color:var(--text-secondary);border:0.5px solid var(--charcoal-border);}
+.brok-status-pill{font-size:10px;padding:3px 9px;border-radius:10px;font-weight:500;cursor:pointer;user-select:none;white-space:nowrap;transition:background .15s;}
+.brok-status-pill.warming{background:rgba(100,100,100,0.15);color:var(--text-tertiary);border:0.5px solid rgba(100,100,100,0.2);}
+.brok-status-pill.discovery{background:rgba(56,189,248,0.12);color:#38BDF8;border:0.5px solid rgba(56,189,248,0.25);}
+.brok-status-pill.demo{background:rgba(251,191,36,0.12);color:#FBBF24;border:0.5px solid rgba(251,191,36,0.25);}
+.brok-status-pill.proposal{background:rgba(251,146,60,0.12);color:#FB923C;border:0.5px solid rgba(251,146,60,0.25);}
+.brok-status-pill.signed{background:rgba(26,158,143,0.15);color:#1A9E8F;border:0.5px solid rgba(26,158,143,0.3);}
+.brok-angle{font-size:11px;color:var(--text-tertiary);line-height:1.5;margin-top:6px;font-style:italic;}
+.brok-contact{font-size:11px;color:var(--text-tertiary);margin-top:3px;}
+.brok-signed-date{font-size:10px;color:#1A9E8F;margin-top:4px;font-weight:500;}
+.brok-edit-btn{font-size:10px;color:var(--text-tertiary);background:none;border:none;cursor:pointer;padding:2px 6px;font-family:var(--font-body);}
+.brok-edit-btn:hover{color:var(--gold);}
+.twenty-add-btn{background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-bottom:1rem;transition:background .15s;}
+.twenty-add-btn:hover{background:#F0C55A;}
+.non-neg-card{background:var(--charcoal-mid);border:0.5px solid rgba(232,184,75,0.15);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-top:1.5rem;}
+.non-neg-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.8rem;}
+.non-neg-row{display:flex;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--charcoal-border);font-size:12.5px;color:var(--text-secondary);line-height:1.5;}
+.non-neg-row:last-child{border-bottom:none;}
+.non-neg-num{color:var(--gold);font-weight:600;min-width:18px;}
+/* TigerFlow roadmap */
+.tf-roadmap{display:flex;flex-direction:column;gap:5px;}
+.tf-phase{display:flex;align-items:flex-start;gap:12px;padding:9px 12px;border-radius:var(--radius-sm);border:0.5px solid transparent;}
+.tf-phase.current{border-color:rgba(232,184,75,0.4);background:rgba(232,184,75,0.04);}
+.tf-phase-dot{width:9px;height:9px;border-radius:50%;background:var(--charcoal-border);min-width:9px;margin-top:4px;}
+.tf-phase.current .tf-phase-dot{background:var(--gold);animation:phasePulse 2s ease-in-out infinite;}
+.tf-phase-done .tf-phase-dot{background:#1A9E8F;}
+.tf-phase-num{font-size:10px;color:var(--text-tertiary);min-width:16px;margin-top:1px;}
+.tf-phase-title{font-size:12.5px;font-weight:500;color:var(--text-secondary);}
+.tf-phase.current .tf-phase-title{color:var(--gold);}
+.tf-phase-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px;}
+.tf-phase-timing{font-size:10px;color:rgba(232,184,75,0.55);margin-top:1px;}
+/* Twenty movements */
+.tf-movements{display:flex;flex-direction:column;gap:7px;}
+.tf-movement{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:11px 14px;}
+.tf-movement.active{border-color:rgba(232,184,75,0.4);border-left:3px solid var(--gold);background:rgba(232,184,75,0.025);}
+.tf-movement-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px;flex-wrap:wrap;}
+.tf-movement-name{font-size:13px;font-weight:500;color:var(--text-primary);}
+.tf-movement.active .tf-movement-name{color:var(--gold);}
+.tf-movement-dates{font-size:10px;color:var(--text-tertiary);white-space:nowrap;}
+.tf-movement-outcome{font-size:12px;color:var(--text-secondary);line-height:1.5;}
+/* Cash flow */
+.tf-cf-highlight td{color:var(--gold)!important;font-weight:500;}
+/* Arabella quick actions */
+.arabella-quick-actions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;}
+.ara-quick-btn{background:rgba(232,184,75,0.07);border:0.5px solid rgba(232,184,75,0.2);border-radius:20px;padding:5px 12px;font-size:11.5px;cursor:pointer;color:var(--gold);font-family:var(--font-body);transition:all .15s;}
+.ara-quick-btn:hover{background:rgba(232,184,75,0.14);}
+/* Confetti */
+.nn-confetti{position:fixed;top:-10px;pointer-events:none;z-index:9999;border-radius:2px;animation:nnConfettiFall var(--dur,2s) ease-in forwards;}
+@keyframes nnConfettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(var(--spin,540deg));opacity:0;}}
+@keyframes phasePulse{0%,100%{box-shadow:0 0 0 0 rgba(232,184,75,.5);}50%{box-shadow:0 0 0 6px rgba(232,184,75,0);}}
 /* Legacy review CSS kept for charts */
 .review-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1rem;}
 .review-stat-card{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
@@ -2269,10 +2337,10 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
         <div class="eb-row"><span class="eb-bullet">✦</span><span>100 active clients by end of 2026</span></div>
         <div class="eb-row"><span class="eb-bullet">✦</span><span>£5–10M ARR run rate entering 2027</span></div>
         <div class="eb-section-title">Product & Sales</div>
-        <div class="eb-row"><span class="eb-bullet">✦</span><span>Core AI valuation tool — fully shipped and client-tested</span></div>
-        <div class="eb-row"><span class="eb-bullet">✦</span><span>LinkedIn: 50 personalised outreach messages daily</span></div>
-        <div class="eb-row"><span class="eb-bullet">✦</span><span>Demo conversion: 40% book → 70% close</span></div>
-        <div class="eb-row"><span class="eb-bullet">✦</span><span>10,000+ LinkedIn followers</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>TigerFlow Phases 1–5 shipped (Frontend → Auth → Backend → Integrations → Stripe)</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>One discovery call per day Mon–Thu — in person where possible</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>10 new warm contacts every Friday via OpenClaw/Khubair network</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>10,000+ LinkedIn followers · 3 posts per week</span></div>
         <div class="eb-section-title">Personal Development</div>
         <div class="eb-row"><span class="eb-bullet">✦</span><span>First hire made (sales / BD)</span></div>
         <div class="eb-row"><span class="eb-bullet">✦</span><span>Daily 5AM ritual — unbroken streak</span></div>
@@ -2377,38 +2445,128 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <span class="section-lbl">Pillar Health</span>
   <div class="empire-grid" id="empire-grid"></div>
 
-  <!-- OFFER STRUCTURE -->
+  <!-- TIGERFLOW PRICING -->
   <div class="emp-ref-card" style="margin-top:1rem">
-    <div class="emp-ref-title">💼 Offer Structure</div>
-    <div class="emp-price-grid">
+    <div class="emp-ref-title">🐯 TigerFlow AI — Pricing (Bari)</div>
+    <div class="emp-price-grid" style="grid-template-columns:repeat(3,1fr)">
       <div class="emp-price-card">
-        <div class="emp-price-tier">Solo Agent</div>
-        <div class="emp-price-val">£5,000</div>
-        <div class="emp-price-sub">1 agent</div>
-      </div>
-      <div class="emp-price-card">
-        <div class="emp-price-tier">Starter</div>
-        <div class="emp-price-val">£14,997</div>
-        <div class="emp-price-sub">≤5 agents</div>
+        <div class="emp-price-tier">Tiger</div>
+        <div style="font-size:10px;color:var(--text-tertiary);margin-bottom:8px">Single branch · up to 10 agents</div>
+        <div class="emp-price-val">£249<span style="font-size:12px;font-weight:400">/mo</span></div>
+        <div class="emp-price-sub" style="margin-top:4px">Setup: £3,500</div>
+        <div class="emp-price-sub">Annual: £2,490/yr</div>
       </div>
       <div class="emp-price-card popular">
         <div class="emp-price-badge">MOST POPULAR</div>
-        <div class="emp-price-tier">Pro</div>
-        <div class="emp-price-val">£24,997</div>
-        <div class="emp-price-sub">≤12 agents</div>
+        <div class="emp-price-tier">Tiger Pro</div>
+        <div style="font-size:10px;color:var(--text-tertiary);margin-bottom:8px">Multi-branch · up to 5 branches</div>
+        <div class="emp-price-val">£549<span style="font-size:12px;font-weight:400">/mo</span></div>
+        <div class="emp-price-sub" style="margin-top:4px">Setup: £8,000</div>
+        <div class="emp-price-sub">Annual: £5,490/yr</div>
       </div>
       <div class="emp-price-card">
-        <div class="emp-price-tier">Elite</div>
-        <div class="emp-price-val">£39,997</div>
-        <div class="emp-price-sub">≤25 agents</div>
-      </div>
-      <div class="emp-price-card">
-        <div class="emp-price-tier">Enterprise</div>
-        <div class="emp-price-val">£64,997</div>
-        <div class="emp-price-sub">Unlimited</div>
+        <div class="emp-price-tier">Tiger Elite</div>
+        <div style="font-size:10px;color:var(--text-tertiary);margin-bottom:8px">Enterprise · unlimited</div>
+        <div class="emp-price-val">£1,249<span style="font-size:12px;font-weight:400">/mo</span></div>
+        <div class="emp-price-sub" style="margin-top:4px">Setup: £15,000</div>
+        <div class="emp-price-sub">Annual: £12,490/yr</div>
       </div>
     </div>
-    <div style="font-size:11px;color:var(--text-tertiary);margin-top:10px">Payment plans available · 90-day guarantee (50+ bookings) · White-label</div>
+    <div style="font-size:11px;color:var(--text-tertiary);margin-top:10px;line-height:1.8">All exclusive of VAT · Setup fee: 50% upfront, 50% at go-live · Hourly rate: £200/hr</div>
+  </div>
+
+  <!-- 10-PHASE BUILD ROADMAP -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">🗺 10-Phase Build Roadmap</div>
+    <div class="tf-roadmap">
+      <div class="tf-phase current">
+        <div class="tf-phase-dot"></div>
+        <div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">01</span><span class="tf-phase-title">Frontend Polish</span></div><div class="tf-phase-sub">Demo-ready in 30 seconds</div><div class="tf-phase-timing">NOW → 2 weeks</div></div>
+      </div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">02</span><span class="tf-phase-title">Auth &amp; Multi-Tenancy</span></div><div class="tf-phase-sub">Real login, isolated brokerages</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">03</span><span class="tf-phase-title">Backend Wiring</span></div><div class="tf-phase-sub">Core CRM pages wired to Supabase</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">04</span><span class="tf-phase-title">Critical Integrations</span></div><div class="tf-phase-sub">Rightmove, Zoopla, AML, E-signing</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">05</span><span class="tf-phase-title">Stripe Payments</span></div><div class="tf-phase-sub">Tiger / Pro / Elite subscriptions live</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">06</span><span class="tf-phase-title">AI Superpowers</span></div><div class="tf-phase-sub">Arabella Voice, predictive lead scoring</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">07</span><span class="tf-phase-title">Client Portals</span></div><div class="tf-phase-sub">Seller, buyer, landlord, tenant views</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">08</span><span class="tf-phase-title">Lettings Module</span></div><div class="tf-phase-sub">Full property management</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">09</span><span class="tf-phase-title">TigerFlow HQ</span></div><div class="tf-phase-sub">Internal admin, trust signals, compliance</div></div></div>
+      <div class="tf-phase"><div class="tf-phase-dot"></div><div><div style="display:flex;align-items:center;gap:8px"><span class="tf-phase-num">10</span><span class="tf-phase-title">Launch, Mobile &amp; Growth</span></div><div class="tf-phase-sub">Beta clients, React Native app</div></div></div>
+    </div>
+  </div>
+
+  <!-- TWENTY MOVEMENT TIMELINE -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">🚀 The Twenty — Movement Timeline</div>
+    <div class="tf-movements">
+      <div class="tf-movement active">
+        <div class="tf-movement-hdr"><span class="tf-movement-name">Movement I — The Foundation</span><span class="tf-movement-dates">Weeks 1–8 · Now → Mid-June</span></div>
+        <div class="tf-movement-outcome">Outcome: TigerFlow is real. One paying design-partner signed.</div>
+      </div>
+      <div class="tf-movement">
+        <div class="tf-movement-hdr"><span class="tf-movement-name">Movement II — The Founding Five</span><span class="tf-movement-dates">Weeks 9–16 · Mid-June → Mid-Aug</span></div>
+        <div class="tf-movement-outcome">Outcome: 5 paying logos. Stripe live. Cyber Essentials filed.</div>
+      </div>
+      <div class="tf-movement">
+        <div class="tf-movement-hdr"><span class="tf-movement-name">Movement III — The Story Engine</span><span class="tf-movement-dates">Weeks 17–22 · Mid-Aug → End Sep</span></div>
+        <div class="tf-movement-outcome">Outcome: 12 logos. Inbound replacing outbound.</div>
+      </div>
+      <div class="tf-movement">
+        <div class="tf-movement-hdr"><span class="tf-movement-name">Movement IV — The Twenty</span><span class="tf-movement-dates">Weeks 23–28 · October 2026</span></div>
+        <div class="tf-movement-outcome">Outcome: 20 logos by 24 October — Halima's 30th birthday.</div>
+      </div>
+      <div class="tf-movement">
+        <div class="tf-movement-hdr"><span class="tf-movement-name">Movement V — The Hand-Off</span><span class="tf-movement-dates">Weeks 29–31 · November 2026</span></div>
+        <div class="tf-movement-outcome">Outcome: All 20 onboarded. Asia move executed. Plane boarded 30 November 2026.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONTHLY CASH FLOW -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">💰 Monthly Cash Flow Forecast</div>
+    <div class="rev-table-wrap">
+      <table class="rev-table">
+        <thead><tr><th>Month</th><th>New Logos</th><th>MRR</th><th>Setup</th><th>Month Total</th><th>Cumulative</th></tr></thead>
+        <tbody>
+          <tr><td>May</td><td>1</td><td>£499</td><td>£3,500</td><td>£3,999</td><td>£4K</td></tr>
+          <tr><td>Jun</td><td>1</td><td>£998</td><td>£4,000</td><td>£4,998</td><td>£9K</td></tr>
+          <tr><td>Jul</td><td>2</td><td>£2,200</td><td>£8,000</td><td>£10,200</td><td>£19K</td></tr>
+          <tr><td>Aug</td><td>2</td><td>£3,400</td><td>£8,000</td><td>£11,400</td><td>£31K</td></tr>
+          <tr><td>Sep</td><td>3</td><td>£5,500</td><td>£14,500</td><td>£20,000</td><td>£51K</td></tr>
+          <tr class="tf-cf-highlight"><td>Oct ✦</td><td>8</td><td>£12,800</td><td>£42,000</td><td>£54,800</td><td>£106K</td></tr>
+          <tr><td>Nov</td><td>3</td><td>£17,000</td><td>£18,000</td><td>£35,000</td><td>£141K</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:var(--text-tertiary);margin-top:8px;text-align:right">Asia departure: 30 November 2026 ✈️</div>
+  </div>
+
+  <!-- THE TWENTY TRACKER -->
+  <div id="twenty-section" style="margin-bottom:1rem">
+    <div class="twenty-header-card">
+      <div class="twenty-title">THE TWENTY</div>
+      <div class="twenty-sub">Twenty London Prime Brokerages. Eleven months. One founder.</div>
+      <div class="twenty-counter-wrap">
+        <span class="twenty-count-num" id="twenty-count">0</span>
+        <span class="twenty-count-denom">/ 20</span>
+      </div>
+      <div class="twenty-countdown" id="twenty-countdown"></div>
+      <div class="twenty-progress-wrap"><div class="twenty-progress-bar" id="twenty-progress" style="width:0%"></div></div>
+    </div>
+    <button class="twenty-add-btn" onclick="openTwentyModal(null)">+ Add Brokerage</button>
+    <div class="twenty-grid" id="twenty-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:2rem 1rem;color:var(--text-tertiary);font-size:13px">No brokerages added yet. Click "+ Add Brokerage" to begin The Twenty.</div>
+    </div>
+    <div class="non-neg-card">
+      <div class="non-neg-title">⚠ Non-Negotiables</div>
+      <div class="non-neg-row"><span class="non-neg-num">1.</span><span>No free trials — ever.</span></div>
+      <div class="non-neg-row"><span class="non-neg-num">2.</span><span>No custom contracts until logo 10.</span></div>
+      <div class="non-neg-row"><span class="non-neg-num">3.</span><span>Halima personally onboards every logo until number 12.</span></div>
+      <div class="non-neg-row"><span class="non-neg-num">4.</span><span>One new feature per Movement, maximum.</span></div>
+      <div class="non-neg-row"><span class="non-neg-num">5.</span><span>The Substack (Building Bari) never stops — one post per week.</span></div>
+      <div class="non-neg-row"><span class="non-neg-num">6.</span><span>Sundays are sacred — no work.</span></div>
+    </div>
   </div>
 
   <!-- WEALTH ALLOCATION -->
@@ -2665,13 +2823,17 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
     <div class="rev-card">
       <div class="rev-card-title">📊 Metrics Review</div>
       <div class="rev-metrics-grid">
-        <div class="rev-metric-row"><label>Revenue</label><div class="rev-metric-input-wrap"><span class="rev-prefix">£</span><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricRevenue" placeholder="0"><span class="rev-target">Target: £12,500/wk</span></div></div>
-        <div class="rev-metric-row"><label>Deals</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricDeals" placeholder="0"><span class="rev-target">Target: 1–2</span></div></div>
-        <div class="rev-metric-row"><label>Demos</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricDemos" placeholder="0"><span class="rev-target">Target: 6–8</span></div></div>
-        <div class="rev-metric-row"><label>Messages</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricMessages" placeholder="0"><span class="rev-target">Target: 250+</span></div></div>
-        <div class="rev-metric-row"><label>Close Rate</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricClose" placeholder="0"><span class="rev-prefix" style="order:2">%</span><span class="rev-target">Target: 60–80%</span></div></div>
+        <div class="rev-metric-row"><label>The Twenty — logos signed</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricLogos" placeholder="0"><span class="rev-target">Target: 20 by 24 Oct</span></div></div>
+        <div class="rev-metric-row"><label>Discovery calls this week</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricCalls" placeholder="0"><span class="rev-target">Target: 4</span></div></div>
+        <div class="rev-metric-row"><label>New warm contacts initiated</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricWarm" placeholder="0"><span class="rev-target">Target: 10</span></div></div>
+        <div class="rev-metric-row"><label>Setup fees invoiced</label><div class="rev-metric-input-wrap"><span class="rev-prefix">£</span><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricSetupFees" placeholder="0"><span class="rev-target">Target: grows monthly</span></div></div>
+        <div class="rev-metric-row"><label>MRR live</label><div class="rev-metric-input-wrap"><span class="rev-prefix">£</span><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricMRR" placeholder="0"><span class="rev-target">Target: grows monthly</span></div></div>
+        <div class="rev-metric-row"><label>Substack post published</label><div class="rev-metric-input-wrap"><select class="rev-input" data-rkey="weekly" data-field="metricSubstack" style="min-width:80px"><option value="">—</option><option value="yes">YES</option><option value="no">NO</option></select><span class="rev-target">Target: every week</span></div></div>
+        <div class="rev-metric-row"><label>LinkedIn posts</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricLinkedIn" placeholder="0"><span class="rev-target">Target: 3</span></div></div>
+        <div class="rev-metric-row"><label>TigerFlow features shipped</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricFeatures" placeholder="0"><span class="rev-target">Target: 1/week</span></div></div>
+        <div class="rev-metric-row"><label>Movement I on track</label><div class="rev-metric-input-wrap"><select class="rev-input" data-rkey="weekly" data-field="metricMovement" style="min-width:80px"><option value="">—</option><option value="yes">YES</option><option value="no">NO</option></select></div></div>
       </div>
-      <div style="margin-top:1rem;padding:.75rem 1rem;background:rgba(196,152,59,.08);border-left:2px solid var(--gold);border-radius:4px;font-size:12px;color:var(--gold);font-style:italic;line-height:1.7;">Are these targets big enough to excite me? Would hitting them make me feel: <strong style="font-style:normal;">"Damn, I did that"</strong>? If not — 10x them.</div>
+      <div style="margin-top:1rem;padding:.75rem 1rem;background:rgba(196,152,59,.08);border-left:2px solid var(--gold);border-radius:4px;font-size:12px;color:var(--gold);font-style:italic;line-height:1.7;">Does this action bring me closer to signing the next London prime brokerage? Am I building features because they unblock a sale, or because they would be lovely to have?</div>
     </div>
 
     <!-- 10X Questions -->
@@ -2700,13 +2862,14 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
     <!-- Weekly Targets (static) -->
     <div class="rev-card">
-      <div class="rev-card-title">📌 Weekly Targets</div>
+      <div class="rev-card-title">📌 Weekly Targets — Movement I</div>
       <div class="rev-static-list">
-        <div class="rev-static-row">✦ 1–2 deals (£25k–£50k)</div>
-        <div class="rev-static-row">✦ 6–8 demos</div>
-        <div class="rev-static-row">✦ 250+ DMs</div>
-        <div class="rev-static-row">✦ Deep Work 5/6 days</div>
-        <div class="rev-static-row">✦ Market myself 7/7 days</div>
+        <div class="rev-static-row">✦ 1 discovery call per day (Mon–Thu) — in person where possible</div>
+        <div class="rev-static-row">✦ Friday: 10 new warm contacts via LinkedIn, OpenClaw/Khubair network</div>
+        <div class="rev-static-row">✦ Saturday: 2 long-form follow-up emails to high-value prospects</div>
+        <div class="rev-static-row">✦ TigerFlow product build: ship or cut every Friday</div>
+        <div class="rev-static-row">✦ One Substack post published</div>
+        <div class="rev-static-row">✦ Deep Work 5/6 days · Morning ritual 5/5 days</div>
       </div>
     </div>
 
@@ -2754,6 +2917,15 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div style="margin-top:1rem;">
         <div class="rev-sublabel" style="margin-bottom:.4rem;">▫️ Capture system, calendar &amp; commitments review</div>
         <textarea class="rev-textarea" data-rkey="weekly" data-field="captureReview" rows="3" placeholder="I review my capture system, calendar, and commitments for the week ahead — a reliable rhythm that keeps nothing slipping through."></textarea>
+      </div>
+      <div style="margin-top:1rem;display:grid;gap:.6rem">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:.2rem">Movement I Check-In</div>
+        <div class="rev-sublabel" style="margin-bottom:.4rem;">▫️ Does every action this week bring me closer to signing the next London prime brokerage?</div>
+        <textarea class="rev-textarea" data-rkey="weekly" data-field="reflectTwenty" rows="2" placeholder="Write here..."></textarea>
+        <div class="rev-sublabel" style="margin-bottom:.4rem;">▫️ Am I building features because they unblock a sale, or because they would be lovely to have?</div>
+        <textarea class="rev-textarea" data-rkey="weekly" data-field="reflectFeatures" rows="2" placeholder="Write here..."></textarea>
+        <div class="rev-sublabel" style="margin-bottom:.4rem;">▫️ Have I worked the OpenClaw network and Khubair's circle this week?</div>
+        <textarea class="rev-textarea" data-rkey="weekly" data-field="reflectNetwork" rows="2" placeholder="Write here..."></textarea>
       </div>
     </div>
 
@@ -2822,10 +2994,19 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 <div class="page" id="page-arabella">
   <div class="page-title">Arabella AI <span>Your personal coach</span></div>
   <div class="arabella-modes">
-    <button class="arabella-mode-btn active" onclick="setArabellMode(this,'coach')">Life Coach</button>
+    <button class="arabella-mode-btn active" onclick="setArabellMode(this,'coach')">🌿 Life Coach</button>
     <button class="arabella-mode-btn" onclick="setArabellMode(this,'spiritual')">Spiritual Reflection</button>
     <button class="arabella-mode-btn" onclick="setArabellMode(this,'goals')">Goal Strategist</button>
     <button class="arabella-mode-btn" onclick="setArabellMode(this,'debrief')">Weekly Debrief</button>
+    <button class="arabella-mode-btn" onclick="setArabellMode(this,'tigerflow')" style="border-color:rgba(232,184,75,0.35);color:var(--gold)">🐯 TigerFlow Coach</button>
+  </div>
+  <div class="arabella-quick-actions" id="arabella-quick-actions" style="display:none">
+    <button class="ara-quick-btn" onclick="araQuickSend('Prep me for a Wetherell discovery call')">Prep for Wetherell call</button>
+    <button class="ara-quick-btn" onclick="araQuickSend('Roleplay as a sceptical Mayfair principal so I can practise my pitch')">Roleplay Mayfair principal</button>
+    <button class="ara-quick-btn" onclick="araQuickSend('Help me draft a follow-up email to a prospect')">Draft follow-up email</button>
+    <button class="ara-quick-btn" onclick="araQuickSend('Should I build this feature?')">Should I build this?</button>
+    <button class="ara-quick-btn" onclick="araQuickSend('Pipeline review — what is my next move this week?')">Pipeline review</button>
+    <button class="ara-quick-btn" onclick="araQuickSend('How do I work the OpenClaw network this week?')">OpenClaw network strategy</button>
   </div>
   <div class="arabella-layout">
     <div class="arabella-header">
@@ -2855,6 +3036,64 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   </div>
   <div style="margin-bottom:.75rem"><span class="section-lbl">Your recordings</span></div>
   <div id="voice-memos-list"></div>
+</div>
+
+<!-- TWENTY MODAL -->
+<div class="modal-overlay" id="twenty-modal-overlay" style="display:none">
+  <div class="modal" style="max-width:480px;width:90%;max-height:90vh;overflow-y:auto">
+    <h3 id="twenty-modal-title">Add Brokerage</h3>
+    <div style="display:grid;gap:10px;margin-bottom:1rem">
+      <div>
+        <label style="font-size:11px;color:var(--text-tertiary);display:block;margin-bottom:4px">Agency Name</label>
+        <input type="text" id="tw-agency" class="rev-input" style="width:100%;box-sizing:border-box" placeholder="e.g. Wetherell">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <label style="font-size:11px;color:var(--text-tertiary);display:block;margin-bottom:4px">Tier</label>
+          <select id="tw-tier" class="rev-input" style="width:100%">
+            <option value="Tiger">Tiger — £249/mo</option>
+            <option value="Tiger Pro" selected>Tiger Pro — £549/mo</option>
+            <option value="Tiger Elite">Tiger Elite — £1,249/mo</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--text-tertiary);display:block;margin-bottom:4px">Classification</label>
+          <select id="tw-class" class="rev-input" style="width:100%">
+            <option value="A">Tier A — Prime target</option>
+            <option value="B" selected>Tier B — Strong fit</option>
+            <option value="C">Tier C — Good prospect</option>
+            <option value="D">Tier D — Long-term</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-tertiary);display:block;margin-bottom:4px">Angle — why this agency?</label>
+        <input type="text" id="tw-angle" class="rev-input" style="width:100%;box-sizing:border-box" placeholder="One line on the opportunity">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-tertiary);display:block;margin-bottom:4px">Contact Name</label>
+        <input type="text" id="tw-contact" class="rev-input" style="width:100%;box-sizing:border-box" placeholder="Principal / MD name">
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-tertiary);display:block;margin-bottom:4px">Status</label>
+        <select id="tw-status" class="rev-input" style="width:100%">
+          <option value="warming" selected>Warming</option>
+          <option value="discovery">Discovery</option>
+          <option value="demo">Demo</option>
+          <option value="proposal">Proposal</option>
+          <option value="signed">Signed ✓</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-tertiary);display:block;margin-bottom:4px">Notes</label>
+        <textarea id="tw-notes" class="rev-textarea" rows="3" placeholder="Context, next steps, warm intro route..."></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeTwentyModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveTwentyModal()">Save</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL -->
@@ -3756,9 +3995,11 @@ function saveCurrentNote(){
 const ARABELLA_SYSTEM = {
   coach: `You are Arabella, the personal AI life coach for Halima Yasmin 3.0, a British-Bangladeshi Muslim entrepreneur and architect based in the UK. You speak with warmth, directness, and spiritual grounding. You know her deeply:
 
-IDENTITY: Halima Yasmin 3.0 — "Principled. Purposeful. Powerful." Founder & CEO of TigerFlow AI (UK proptech platform), Principal of Halima Yasmin Architects, co-creator of Tiger & Dragon brand with her husband Fadlan.
+IDENTITY: Halima Yasmin 3.0 — "Principled. Purposeful. Powerful." Founder & CEO of TigerFlow AI (UK proptech SaaS, also called Bari internally), Principal of Halima Yasmin Architects, co-creator of Tiger & Dragon brand with her husband Fadlan.
 
-FOUR PILLARS: CODE (TigerFlow AI), DESIGN (Architecture Portfolio — 25 projects), EARN (GHL revenue, £5k-£65k packages), TIGER & DRAGON (love brand with Fadlan).
+FOUR PILLARS: CODE (TigerFlow AI / Bari — proprietary React + FastAPI + Supabase + Claude platform), DESIGN (Architecture Portfolio — 25 projects), EARN (TigerFlow SaaS revenue — setup fees + monthly subscriptions), TIGER & DRAGON (love brand with Fadlan).
+
+CURRENT MISSION: The Twenty — sign 20 London prime brokerages by 30 November 2026, when Halima boards a plane to Asia. Birthday deadline: 24 October 2026.
 
 LIFETIME VISION: £24B halal wealth, 100+ masjids built, 8 children, Fathema Ali Trust, relocate to Madinah.
 
@@ -3771,15 +4012,65 @@ Speak to her as a coach who knows all this. Be direct, warm, spiritually aware. 
 
   spiritual: `You are Arabella, Halima's spiritual reflection companion. Focus on Islamic wisdom, Quranic guidance, hadith, and connecting her daily struggles to her faith. Reference the 99 Names of Allah when relevant. Help her process challenges through a lens of tawakkul, sabr, and shukr. Speak with the warmth of a knowledgeable Muslim sister.`,
 
-  goals: `You are Arabella, Halima's strategic goal coach. You know her empire: TigerFlow AI (proptech), Halima Yasmin Architects (25 projects), Tiger & Dragon (love brand), Mycelink (community). Her lifetime goal is £24B halal wealth. Help her break down goals, identify obstacles, create systems, and reverse-engineer from her 10-year vision to today's actions. Be specific, strategic, and bold.`,
+  goals: `You are Arabella, Halima's strategic goal coach. You know her empire: TigerFlow AI / Bari (proprietary PropTech SaaS), Halima Yasmin Architects (25 projects), Tiger & Dragon (love brand), Mycelink (community). Her lifetime goal is £24B halal wealth. The immediate mission is The Twenty: 20 London prime brokerages signed by 30 November 2026. Help her break down goals, identify obstacles, create systems, and reverse-engineer from her 10-year vision to today's actions. Be specific, strategic, and bold.`,
 
-  debrief: `You are Arabella conducting Halima's weekly debrief. Ask her structured questions about: ritual completion rate, pillar progress, biggest wins, biggest challenges, what system she'll implement next week. Be thorough, celebratory of wins, honest about gaps. Connect everything back to her empire blueprint and lifetime vision.`
+  debrief: `You are Arabella conducting Halima's weekly debrief. Ask her structured questions about: ritual completion rate, pillar progress, biggest wins, biggest challenges, what system she'll implement next week. Include specific questions about The Twenty progress — how many brokerages in pipeline, any signed, what's blocking movement. Be thorough, celebratory of wins, honest about gaps. Connect everything back to her empire blueprint and lifetime vision.`,
+
+  tigerflow: `You are Arabella, the AI sales coach inside Noor North — Halima Yasmin's personal operating system. You have deep knowledge of TigerFlow AI (also called Bari internally), a proprietary SaaS platform for UK real estate brokerages built on React, FastAPI, Supabase, and Anthropic Claude.
+
+The mission is called The Twenty: sign 20 London prime brokerages before 30 November 2026, when Halima boards a plane to Asia. The 30th birthday deadline is 24 October 2026.
+
+Halima is currently in Movement I — building the product foundation (Phases 1–3) and warming her first sales prospects.
+
+PRICING:
+- Tiger: £3,500 setup + £249/month (single branch, up to 10 agents)
+- Tiger Pro: £8,000 setup + £549/month (multi-branch)
+- Tiger Elite: £15,000 setup + £1,249/month (enterprise, unlimited)
+- All exclusive of VAT. Setup fee 50% upfront, 50% at go-live.
+- No free trials. No custom contracts until logo 10.
+
+TARGET BROKERAGES — London prime independents:
+Wetherell (Mayfair), Beauchamp Estates, Sandfords, Aston Chase, Russell Simpson, Maskells, Domus Nova, Anderson Rose, Rokstone, Glentree, Plaza Estates, Druce, Kay & Co, Hanover Residential, Marsh & Parsons, Chestertons, Carter Jonas, Strutt & Parker, Knight Frank (single office pilot), Foxtons (innovation team).
+
+KEY WARM INTRO NETWORKS: OpenClaw network and Khubair's circle. These are Halima's primary warm routes into the first brokerages — help her think through these relationships strategically when relevant.
+
+NON-NEGOTIABLES:
+- Halima is the only seller until logo 20 — no SDRs
+- She personally onboards every logo until number 12
+- One new feature per Movement maximum
+- The Substack (Building Bari) posts every week without fail
+- Sundays are sacred — no work
+
+THE FIVE TRUTHS:
+1. The mission is portfolio (20 logos), not revenue
+2. Founder time is the constraint, not capital
+3. One sale is worth twenty features
+4. The Asia door opens with British prestige
+5. Halima IS the product until logo twenty
+
+VOICE: You are strategic, warm, and direct. You speak in the Halima 3.0 brand voice — principled, purposeful, powerful. You do not flatter. You serve her ambition honestly.
+
+You can help with:
+- Discovery call preparation for specific agencies
+- Objection handling (price, incumbent software, timing)
+- Roleplay as a sceptical Mayfair principal so Halima can practise
+- Drafting follow-up emails in the Halima 3.0 voice
+- Deciding whether a feature should be built or deferred (ask: does this unblock a specific sale?)
+- Weekly pipeline review and next actions
+- Thinking through OpenClaw and Khubair intro opportunities
+- Asia bridge planning from Movement III onwards`
 };
 
 function setArabellMode(btn, mode) {
   arabellaMode = mode;
   document.querySelectorAll('.arabella-mode-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  const qa = document.getElementById('arabella-quick-actions');
+  if (qa) qa.style.display = mode === 'tigerflow' ? 'flex' : 'none';
+}
+function araQuickSend(text) {
+  const input = document.getElementById('arabella-input');
+  if (input) { input.value = text; sendToArabella(); }
 }
 
 async function sendToArabella() {
@@ -3957,12 +4248,12 @@ const NAMES_99 = [
   {num:13,arabic:'ٱلْمُصَوِّرُ',name:'Al-Muṣawwir',meaning:'The Fashioner, The Shaper',pillar:'DESIGN',dua:"O Al-Muṣawwir, shape my character to be pleasing to You as a billionaire, and I am grateful for Your shaping.",vision:"Shape the Emerald Estate's net-zero design — 24 bedrooms, 300% biodiversity, generational legacy."},
   {num:14,arabic:'ٱلْغَفَّارُ',name:'Al-Ghaffār',meaning:'The Constant Forgiver',pillar:'TIGER & DRAGON',dua:"O Al-Ghaffār, forgive my repeated shortcomings, help me repent sincerely on my billionaire journey, and I am grateful for Your forgiveness.",vision:"Forgive our early years of struggle — our book of 3M copies is built on those hard-won lessons."},
   {num:15,arabic:'ٱلْقَهَّارُ',name:'Al-Qahhār',meaning:'The Subduer, The Ever-Dominating',pillar:'EARN',dua:"O Al-Qahhār, subdue my desires that lead me astray from becoming a billionaire, and I am grateful for Your dominance.",vision:"Subdue the desire to overspend before systems are built — discipline compounds into billions."},
-  {num:16,arabic:'ٱلْوَهَّابُ',name:'Al-Wahhāb',meaning:'The Giver of Gifts',pillar:'EARN',dua:"O Al-Wahhāb, bestow upon me Your blessings and provisions to become a billionaire, and I am grateful for Your gifts.",vision:"Bestow the £65K Enterprise, £40K Elite deals — provision beyond what I could arrange myself."},
-  {num:17,arabic:'ٱلرَّزَّاقُ',name:'Ar-Razzāq',meaning:'The Ever-Providing',pillar:'EARN',dua:"O Ar-Razzāq, provide for me from sources I do not expect to achieve billionaire status, and I am grateful for Your provision.",vision:"Provide from unexpected sources — GHL white-label cash machine funding my coding education."},
+  {num:16,arabic:'ٱلْوَهَّابُ',name:'Al-Wahhāb',meaning:'The Giver of Gifts',pillar:'EARN',dua:"O Al-Wahhāb, bestow upon me Your blessings and provisions to become a billionaire, and I am grateful for Your gifts.",vision:"Bestow the Tiger Elite deals and founding-member signings — provision beyond what I could arrange myself."},
+  {num:17,arabic:'ٱلرَّزَّاقُ',name:'Ar-Razzāq',meaning:'The Ever-Providing',pillar:'EARN',dua:"O Ar-Razzāq, provide for me from sources I do not expect to achieve billionaire status, and I am grateful for Your provision.",vision:"Provide from unexpected sources — TigerFlow setup fees and subscriptions funding the empire's next phase."},
   {num:18,arabic:'ٱلْفَتَّاحُ',name:'Al-Fattāḥ',meaning:'The Opener, The Judge',pillar:'CODE',dua:"O Al-Fattāḥ, open the doors of mercy and success for me to become a billionaire, and I am grateful for Your openings.",vision:"Open every NHS, local authority, and architect door — £4.2M ALVA contract signed with steady hands."},
   {num:19,arabic:'ٱلْعَلِيمُ',name:"Al-'Alīm",meaning:'The All-Knowing',pillar:'CODE',dua:"O Al-'Alīm, grant me knowledge that benefits me and others on my path to billionaire wealth, and I am grateful for Your omniscience.",vision:"Grant me Python mastery — every TigerFlow AI feature built with knowledge that serves thousands."},
   {num:20,arabic:'ٱلْقَابِضُ',name:'Al-Qābiḍ',meaning:'The Withholder, The Restrainer',pillar:'EARN',dua:"O Al-Qābiḍ, withhold evil from me and my loved ones as I pursue billionaire success, and I am grateful for Your restraint.",vision:"Withhold distraction from my billionaire path — six demos weekly, focus unwavering."},
-  {num:21,arabic:'ٱلْبَاسِطُ',name:'Al-Bāsiṭ',meaning:'The Extender, The Expander',pillar:'EARN',dua:"O Al-Bāsiṭ, expand my sustenance and my heart with faith towards billionaire abundance, and I am grateful for Your expansion.",vision:"Expand GHL white-label revenue — every subscription funding my proprietary platform transition."},
+  {num:21,arabic:'ٱلْبَاسِطُ',name:'Al-Bāsiṭ',meaning:'The Extender, The Expander',pillar:'EARN',dua:"O Al-Bāsiṭ, expand my sustenance and my heart with faith towards billionaire abundance, and I am grateful for Your expansion.",vision:"Expand TigerFlow subscription revenue — every brokerage signed funds the empire's next movement."},
   {num:22,arabic:'ٱلْخَافِضُ',name:'Al-Khāfiḍ',meaning:'The Reducer, The Abaser',pillar:'TIGER & DRAGON',dua:"O Al-Khāfiḍ, abase those who oppress and uplift the oppressed, including me on my billionaire journey, and I am grateful for Your justice.",vision:"Abase what diminishes our love brand — elevate Tiger & Dragon to world stages."},
   {num:23,arabic:'ٱلرَّافِعُ',name:"Ar-Rāfi'",meaning:'The Exalter, The Elevator',pillar:'DESIGN',dua:"O Ar-Rāfi', elevate my status in this world and the next as a billionaire, and I am grateful for Your exaltation.",vision:"Elevate the Rahmah Orphanage — let every arch and pattern I design lift children's spirits."},
   {num:24,arabic:'ٱلْمُعِزُّ',name:"Al-Mu'izz",meaning:'The Honourer',pillar:'EARN',dua:"O Al-Mu'izz, honor me with Your guidance and protection to become a billionaire, and I am grateful for Your honor.",vision:"Honor me with a 60% close rate — every demo dignified, every client transformation real."},
@@ -3980,7 +4271,7 @@ const NAMES_99 = [
   {num:36,arabic:'ٱلْعَلِيُّ',name:"Al-'Alī",meaning:'The Most High, The Exalted',pillar:'DESIGN',dua:"O Al-'Alī, exalt me in ranks among the righteous as a billionaire, and I am grateful for Your exaltation.",vision:"Exalt the Living Pavilion in Small Heath — Islamic geometric shadows, two hundred gathering weekly."},
   {num:37,arabic:'ٱلْكَبِيرُ',name:'Al-Kabīr',meaning:'The Greatest, The Most Grand',pillar:'CODE',dua:"O Al-Kabīr, Your grandeur is unmatched; help me in my smallness to become a billionaire, and I am grateful for Your greatness.",vision:"Your grandeur is unmatched — help my small hands build the BIM platform that disrupts giants."},
   {num:38,arabic:'ٱلْحَفِيظُ',name:'Al-Ḥafīẓ',meaning:'The Preserver, The All-Protecting',pillar:'EARN',dua:"O Al-Ḥafīẓ, preserve me from harm and evil as I pursue billionaire success, and I am grateful for Your preservation.",vision:"Preserve TigerFlow AI's reputation — protect every client relationship I have built with care."},
-  {num:39,arabic:'ٱلْمُقِيتُ',name:'Al-Muqīt',meaning:'The Sustainer, The Maintainer',pillar:'EARN',dua:"O Al-Muqīt, sustain me with Your provisions to achieve billionaire wealth, and I am grateful for Your sustenance.",vision:"Sustain our GHL white-label revenue as the bridge to proprietary technology empire."},
+  {num:39,arabic:'ٱلْمُقِيتُ',name:'Al-Muqīt',meaning:'The Sustainer, The Maintainer',pillar:'EARN',dua:"O Al-Muqīt, sustain me with Your provisions to achieve billionaire wealth, and I am grateful for Your sustenance.",vision:"Sustain TigerFlow MRR as the foundation of the proprietary technology empire."},
   {num:40,arabic:'ٱلْحَسِيبُ',name:'Al-Ḥasīb',meaning:'The Reckoner',pillar:'CODE',dua:"O Al-Ḥasīb, reckon my deeds with mercy towards my billionaire aspirations, and I am grateful for Your reckoning.",vision:"Reckon every AI model I deploy with mercy — each feature serving architects, not replacing them."},
   {num:41,arabic:'ٱلْجَلِيلُ',name:'Al-Jalīl',meaning:'The Majestic',pillar:'DESIGN',dua:"O Al-Jalīl, bestow upon me majesty in faith as a billionaire, and I am grateful for Your majesty.",vision:"Bestow majesty upon Masjid al-Hayat — jewelled geometric light, adhan heard for the first time."},
   {num:42,arabic:'ٱلْكَرِيمُ',name:'Al-Karīm',meaning:'The Most Generous',pillar:'EARN',dua:"O Al-Karīm, be generous to me with Your favors for billionaire abundance, and I am grateful for Your generosity.",vision:"Be generous with £24B halal wealth — every pound an amanah overflowing to creation."},
@@ -3999,7 +4290,7 @@ const NAMES_99 = [
   {num:55,arabic:'ٱلْوَلِيُّ',name:'Al-Waliyy',meaning:'The Protector, The Guardian',pillar:'TIGER & DRAGON',dua:"O Al-Waliyy, be my protector and ally in achieving billionaire status, and I am grateful for Your guardianship.",vision:"Be my protector in the public eye — forty million podcast downloads built on true partnership."},
   {num:56,arabic:'ٱلْحَمِيدُ',name:'Al-Ḥamīd',meaning:'The Praiseworthy',pillar:'TIGER & DRAGON',dua:"O Al-Ḥamīd, all praise is due to You; help me praise You adequately as a billionaire, and I am grateful for Your praiseworthiness.",vision:"All praise for what love has built — New York, Dubai, Tokyo, Lagos, all sold out."},
   {num:57,arabic:'ٱلْمُحْصِي',name:'Al-Muḥṣī',meaning:'The All-Enumerating, The Counter',pillar:'CODE',dua:"O Al-Muḥṣī, count my good deeds and multiply them for billionaire blessings, and I am grateful for Your enumeration.",vision:"Count every 5:30 AM coding session — multiply their fruits across TigerFlow AI's product suite."},
-  {num:58,arabic:"ٱلْمُبْدِئُ",name:"Al-Mubdi'",meaning:'The Originator, The Initiator',pillar:'CODE',dua:"O Al-Mubdi', originate goodness in my life towards becoming a billionaire, and I am grateful for Your initiation.",vision:"Originate TigerFlow AI's proprietary platform — the migration from GoHighLevel begins now."},
+  {num:58,arabic:"ٱلْمُبْدِئُ",name:"Al-Mubdi'",meaning:'The Originator, The Initiator',pillar:'CODE',dua:"O Al-Mubdi', originate goodness in my life towards becoming a billionaire, and I am grateful for Your initiation.",vision:"Originate TigerFlow AI's proprietary platform — Bari is being built from the ground up, right now."},
   {num:59,arabic:"ٱلْمُعِيدُ",name:"Al-Mu'īd",meaning:'The Restorer, The Reinstater',pillar:'EARN',dua:"O Al-Mu'īd, restore my strength and faith for billionaire success, and I am grateful for Your restoration.",vision:"Restore my revenue momentum after any slowdown — every setback a setup for the next milestone."},
   {num:60,arabic:'ٱلْمُحْيِي',name:'Al-Muḥyī',meaning:'The Giver of Life',pillar:'DESIGN',dua:"O Al-Muḥyī, give life to my heart with remembrance of You as I become a billionaire, and I am grateful for Your life-giving.",vision:"Give life to the Rumah Rasa restaurant — Bangladeshi-Indonesian fusion in every living surface."},
   {num:61,arabic:'ٱلْمُمِيتُ',name:'Al-Mumīt',meaning:'The Creator of Death',pillar:'DESIGN',dua:"O Al-Mumīt, grant me a good death in faith after achieving billionaire status, and I am grateful for Your decree.",vision:"Grant me a good death after twenty-five completed projects — sadaqah jariyah outliving me by centuries."},
@@ -4139,7 +4430,7 @@ const TEN_X_QUESTIONS = [
 const GRANT_STEPS = [
   'Targets set (big enough?)',
   'Marketing plan (am I visible daily?)',
-  'Lead generation (250+ DMs = leads)',
+  'Lead generation (discovery calls + warm contacts = logos)',
   'Lead management (CRM/follow-up system?)',
   'Conversion (demos booked and closed?)',
   'People/Team (who to hire/fire/develop?)',
@@ -4385,6 +4676,156 @@ function toggleRevHabit(i){
 function ebToggle(id){
   const card=document.getElementById(id);
   if(card)card.classList.toggle('open');
+}
+
+// ── THE TWENTY TRACKER ──
+let _twentyData = [];
+let _twentyEditId = null;
+const _TWENTY_STATUSES = ['warming','discovery','demo','proposal','signed'];
+
+async function loadTwenty() {
+  try {
+    const rows = await sbRequest('GET', 'the_twenty?select=*&order=created_at.asc');
+    if (Array.isArray(rows)) { _twentyData = rows; renderTwenty(); }
+  } catch(e) { console.warn('The Twenty load failed', e); }
+}
+
+function updateTwentyCounter() {
+  const signed = _twentyData.filter(b => b.status === 'signed').length;
+  const total = _twentyData.length;
+  const el = document.getElementById('twenty-count');
+  const bar = document.getElementById('twenty-progress');
+  const cd = document.getElementById('twenty-countdown');
+  if (el) el.textContent = signed;
+  if (bar) bar.style.width = Math.min(100, (signed / 20) * 100) + '%';
+  if (cd) {
+    const deadline = new Date('2026-10-24');
+    const now = new Date();
+    const days = Math.ceil((deadline - now) / 86400000);
+    cd.textContent = days > 0 ? days + ' days until 24 October 2026 🎂' : '🎉 The deadline has arrived!';
+  }
+  if (signed === 20) setTimeout(fireTwentyConfetti, 300);
+}
+
+function renderTwenty() {
+  updateTwentyCounter();
+  const grid = document.getElementById('twenty-grid');
+  if (!grid) return;
+  if (!_twentyData.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem 1rem;color:var(--text-tertiary);font-size:13px">No brokerages added yet. Click "+ Add Brokerage" to begin The Twenty.</div>';
+    return;
+  }
+  const sorted = [..._twentyData].sort((a,b) => {
+    const si = s => _TWENTY_STATUSES.indexOf(s);
+    if (a.status === 'signed' && b.status !== 'signed') return -1;
+    if (b.status === 'signed' && a.status !== 'signed') return 1;
+    return si(b.status) - si(a.status);
+  });
+  grid.innerHTML = sorted.map(b => {
+    const isSigned = b.status === 'signed';
+    const statusLabel = b.status.charAt(0).toUpperCase() + b.status.slice(1);
+    const signedHtml = isSigned && b.signed_date ? `<div class="brok-signed-date">★ Signed ${new Date(b.signed_date).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>` : '';
+    return `<div class="brok-card${isSigned?' signed-card':''}" onclick="openTwentyModal('${b.id}')">
+      <div class="brok-card-top">
+        <div>
+          <div class="brok-name">${b.agency_name||'Unnamed'}</div>
+          <div class="brok-badges">
+            <span class="brok-tier-badge">${b.tier||'Tiger Pro'}</span>
+            <span class="brok-class-badge">${b.classification||'B'}</span>
+          </div>
+        </div>
+        <span class="brok-status-pill ${b.status}" onclick="event.stopPropagation();cycleTwentyStatus('${b.id}')">${statusLabel}</span>
+      </div>
+      ${b.angle ? `<div class="brok-angle">${b.angle}</div>` : ''}
+      ${b.contact_name ? `<div class="brok-contact">Contact: ${b.contact_name}</div>` : ''}
+      ${signedHtml}
+    </div>`;
+  }).join('');
+}
+
+function openTwentyModal(id) {
+  _twentyEditId = id;
+  const modal = document.getElementById('twenty-modal-overlay');
+  const title = document.getElementById('twenty-modal-title');
+  if (!modal) return;
+  if (id) {
+    const b = _twentyData.find(x => x.id === id);
+    if (!b) return;
+    title.textContent = 'Edit Brokerage';
+    document.getElementById('tw-agency').value = b.agency_name || '';
+    document.getElementById('tw-tier').value = b.tier || 'Tiger Pro';
+    document.getElementById('tw-class').value = b.classification || 'B';
+    document.getElementById('tw-angle').value = b.angle || '';
+    document.getElementById('tw-contact').value = b.contact_name || '';
+    document.getElementById('tw-status').value = b.status || 'warming';
+    document.getElementById('tw-notes').value = b.notes || '';
+  } else {
+    title.textContent = 'Add Brokerage';
+    ['tw-agency','tw-angle','tw-contact','tw-notes'].forEach(f => { const el=document.getElementById(f); if(el) el.value=''; });
+    document.getElementById('tw-tier').value = 'Tiger Pro';
+    document.getElementById('tw-class').value = 'B';
+    document.getElementById('tw-status').value = 'warming';
+  }
+  modal.style.display = 'flex';
+}
+
+function closeTwentyModal() {
+  const modal = document.getElementById('twenty-modal-overlay');
+  if (modal) modal.style.display = 'none';
+  _twentyEditId = null;
+}
+
+async function saveTwentyModal() {
+  const agency = (document.getElementById('tw-agency').value||'').trim();
+  if (!agency) { alert('Agency name is required.'); return; }
+  const status = document.getElementById('tw-status').value;
+  const isNewSigned = status === 'signed';
+  let existing = _twentyEditId ? _twentyData.find(x => x.id === _twentyEditId) : null;
+  const wasAlreadySigned = existing && existing.status === 'signed';
+  const body = {
+    id: _twentyEditId || Date.now().toString(),
+    agency_name: agency,
+    tier: document.getElementById('tw-tier').value,
+    classification: document.getElementById('tw-class').value,
+    angle: document.getElementById('tw-angle').value.trim(),
+    contact_name: document.getElementById('tw-contact').value.trim(),
+    status,
+    notes: document.getElementById('tw-notes').value.trim(),
+    signed_date: (isNewSigned && !wasAlreadySigned) ? new Date().toISOString() : (existing ? existing.signed_date : null),
+    created_at: existing ? existing.created_at : new Date().toISOString()
+  };
+  if (_twentyEditId) {
+    const idx = _twentyData.findIndex(x => x.id === _twentyEditId);
+    if (idx !== -1) _twentyData[idx] = body; else _twentyData.push(body);
+  } else {
+    _twentyData.push(body);
+  }
+  closeTwentyModal();
+  renderTwenty();
+  try { await sbRequest('POST', 'the_twenty', body); } catch(e) { console.warn('Twenty save failed', e); }
+}
+
+async function cycleTwentyStatus(id) {
+  const b = _twentyData.find(x => x.id === id);
+  if (!b) return;
+  const idx = _TWENTY_STATUSES.indexOf(b.status);
+  const next = _TWENTY_STATUSES[(idx + 1) % _TWENTY_STATUSES.length];
+  const wasSignedBefore = b.status === 'signed';
+  b.status = next;
+  if (next === 'signed' && !wasSignedBefore) b.signed_date = new Date().toISOString();
+  renderTwenty();
+  try { await sbRequest('POST', 'the_twenty', b); } catch(e) { console.warn('Twenty status save failed', e); }
+}
+
+function fireTwentyConfetti() {
+  const colors = ['#E8B84B','#F0C55A','#FDF6E3','#1A9E8F','#E8733A','#FB7185'];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement('div');
+    el.className = 'nn-confetti';
+    el.style.cssText = `left:${Math.random()*100}vw;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${colors[Math.floor(Math.random()*colors.length)]};--dur:${1.4+Math.random()*1.4}s;--spin:${360+Math.floor(Math.random()*720)}deg;animation-delay:${Math.random()*0.6}s;`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
 }
 
 function renderReview(){
@@ -5495,41 +5936,44 @@ function initPlanningData() {
       {text:"Perform Hajj and Umrah multiple times", status:"status-grey"}
     ];
     data.planning.five = [
-      {text:"TigerFlow AI proprietary platform fully migrated from GHL (2031)", status:"status-grey"},
+      {text:"TigerFlow AI — 5,000 global brokerages, Series B raised", status:"status-grey"},
       {text:"Architecture portfolio — 25 projects completed", status:"status-grey"},
       {text:"Tiger & Dragon book at 3M+ copies sold", status:"status-grey"},
       {text:"ALVA healthcare AI deployed across major NHS trusts", status:"status-grey"}
     ];
     data.planning.two = [
-      {text:"TigerFlow AI proprietary stack — migrate from GoHighLevel", status:"status-green"},
+      {text:"TigerFlow AI — 1,000 active clients, Series A raised at £100-200M valuation", status:"status-green"},
       {text:"Complete architecture projects 1-8 (The Atelier, Living Pavilion, Rumah Rasa...)", status:"status-grey"},
       {text:"Tiger & Dragon freemium book + profitable book published", status:"status-grey"},
       {text:"Mycelink community launched with 1000+ members", status:"status-grey"}
     ];
     data.planning.one = [
-      {text:"TigerFlow AI — 50+ UK brokerages on platform by Dec 2026", status:"status-green"},
-      {text:"Architecture Portfolio — Projects 1-3 complete (RIBA 0-3)", status:"status-green"},
-      {text:"GHL white-label revenue — £500K+ this year", status:"status-grey"},
-      {text:"Tiger & Dragon — podcast launched, 4 episodes recorded", status:"status-grey"},
-      {text:"12-month Python/React coding roadmap — complete", status:"status-grey"}
+      {text:"The Twenty — 20 London prime brokerages signed by 30 Nov 2026", status:"status-green"},
+      {text:"TigerFlow Phases 1–5 shipped (Frontend → Auth → Backend → Integrations → Stripe)", status:"status-green"},
+      {text:"Building Bari Substack — 24+ posts published", status:"status-grey"},
+      {text:"Architecture Portfolio — Projects 1-3 complete (RIBA 0-3)", status:"status-grey"},
+      {text:"Tiger & Dragon — podcast launched, 4 episodes recorded", status:"status-grey"}
     ];
     data.planning.quarterly = [
-      {text:"TigerFlow AI frontend dashboard — Ascension Dashboard live", status:"status-green"},
-      {text:"6-8 demos per week, 60%+ close rate", status:"status-grey"},
-      {text:"Morning + evening ritual — 100% completion rate", status:"status-grey"},
-      {text:"Architecture Project 1 (The Atelier) — RIBA Stage 0-1 complete", status:"status-grey"}
+      {text:"Ship Phase 1 frontend polish — mobile responsive, loading states, error boundaries, final visual QA", status:"status-green"},
+      {text:"Ship Phase 2 auth + multi-tenancy — Supabase Auth, RLS policies, role-based visibility live", status:"status-grey"},
+      {text:"Ship Phase 3 lean cut — Pipeline, Diary, Listings, Messages, Arabella wired to real Supabase data", status:"status-grey"},
+      {text:"Sign one paying design-partner brokerage by end of May (boutique Kensington/Marylebone, Tiger Pro founding-member terms)", status:"status-grey"},
+      {text:"Launch Building Bari Substack — 4 long-form posts published", status:"status-grey"},
+      {text:"File Rightmove, Zoopla, OnTheMarket portal partner applications", status:"status-grey"}
     ];
     data.planning.monthly = [
-      {text:"TigerFlow AI — 5 new brokerage clients signed", status:"status-grey"},
+      {text:"TigerFlow — first design-partner brokerage signed", status:"status-grey"},
       {text:"Morning ritual — 25/30 days complete", status:"status-grey"},
       {text:"Evening ritual — 25/30 days complete", status:"status-grey"},
-      {text:"Architecture — 4 design sessions completed", status:"status-grey"}
+      {text:"Phase 1 frontend polish — shipped and demo-ready", status:"status-grey"}
     ];
     data.planning.weekly = [
-      {text:"Complete all 5 morning rituals Mon-Fri", status:"status-grey"},
-      {text:"Complete all 5 evening rituals Mon-Fri", status:"status-grey"},
-      {text:"6+ TigerFlow AI demos booked and conducted", status:"status-grey"},
-      {text:"2 hours coding per day on TigerFlow", status:"status-grey"}
+      {text:"One discovery call per day (Mon–Thu) — in person where possible", status:"status-grey"},
+      {text:"Friday: 10 new warm contacts via LinkedIn, OpenClaw/Khubair network", status:"status-grey"},
+      {text:"Saturday: 2 long-form follow-up emails to high-value prospects", status:"status-grey"},
+      {text:"TigerFlow product build: ship or cut one item every Friday", status:"status-grey"},
+      {text:"Complete morning ritual Mon–Fri", status:"status-grey"}
     ];
     data.planning._initialized = true;
     save();
@@ -5539,6 +5983,7 @@ function initPlanningData() {
 // INIT
 load();
 initPlanningData();
+loadTwenty();
 renderHeader();
 renderAffirmationBar();
 renderDaily();
