@@ -2392,8 +2392,6 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
   <!-- ── WEEKLY TAB ── -->
   <div class="rev-pane" id="rev-pane-weekly">
-    <div id="review-charts"></div>
-
     <!-- Opening Visualisation Frame -->
     <div class="rev-card" style="background:linear-gradient(135deg,#1A1205,#2A1E08);border-color:var(--gold);text-align:center;padding:1.6rem 1.4rem;">
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--gold);opacity:.6;margin-bottom:.6rem;">Before You Begin</div>
@@ -2402,6 +2400,8 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div style="font-size:13px;color:var(--text-secondary);font-style:italic;line-height:1.6;">"Build with faith, lead with love, create with conviction."</div>
       <div style="font-size:12px;color:var(--text-tertiary);margin-top:.5rem;line-height:1.6;">Progress is not linear. A setback is not a failure — it is data. Every time you notice a self-sabotaging pattern, you have already begun to change it.</div>
     </div>
+
+    <div id="review-charts"></div>
 
     <!-- Metrics Review -->
     <div class="rev-card">
@@ -2523,10 +2523,10 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       </div>
       <div class="rev-sublabel" style="margin-bottom:.6rem;">Daily Time-Block Commitments</div>
       <div style="display:grid;gap:.4rem;margin-bottom:1.2rem;" id="rev-timeblock-checks">
-        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Marketing time — non-negotiable</label>
-        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Deep work blocks — protected</label>
-        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Family time — protected</label>
-        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Health time — protected</label>
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);" data-rkey="weekly" data-field="tbMarketing"> Marketing time — non-negotiable</label>
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);" data-rkey="weekly" data-field="tbDeepWork"> Deep work blocks — protected</label>
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);" data-rkey="weekly" data-field="tbFamily"> Family time — protected</label>
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);" data-rkey="weekly" data-field="tbHealth"> Health time — protected</label>
       </div>
       <div class="rev-sublabel" style="margin-bottom:.4rem;">Anticipate Obstacles</div>
       <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:.4rem;">▫️ What break points might I hit? &nbsp;▫️ Who can I reach out to for mentorship?</div>
@@ -4005,6 +4005,9 @@ function revBind(container,tab){
     } else if(el.tagName==='TEXTAREA'||el.type==='text'||el.type==='number'){
       if(rd[field]!==undefined)el.value=rd[field];
       el.oninput=function(){rd[field]=this.value;revSaveDebouce();};
+    } else if(el.type==='checkbox'){
+      if(rd[field]!==undefined)el.checked=!!rd[field];
+      el.onchange=function(){rd[field]=this.checked;revSaveDebouce();};
     }
   });
   container.querySelectorAll('.rev-grant-cb').forEach(cb=>{
