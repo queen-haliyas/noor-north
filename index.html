@@ -1118,6 +1118,49 @@ body{
 .emp-rev-row:last-child{border-bottom:none;}
 .emp-rev-date{color:var(--text-secondary);}
 .emp-rev-amount{color:var(--gold);font-weight:500;}
+/* Empire Blueprint */
+.eb-layers-wrap{margin-top:1.5rem;}
+.eb-layer-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+.eb-layer-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;transition:background .15s;}
+.eb-layer-hdr:hover{background:rgba(232,184,75,0.04);}
+.eb-layer-hdr-left{display:flex;align-items:center;gap:10px;}
+.eb-layer-icon{font-size:18px;min-width:24px;text-align:center;}
+.eb-layer-title{font-size:14px;font-weight:500;color:var(--text-primary);}
+.eb-layer-sub{font-size:11px;color:var(--text-tertiary);}
+.eb-layer-chev{font-size:11px;color:var(--text-tertiary);transition:transform .2s;}
+.eb-layer-card.open .eb-layer-chev{transform:rotate(180deg);}
+.eb-layer-body{display:none;padding:0 16px 16px;}
+.eb-layer-card.open .eb-layer-body{display:block;}
+.eb-section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);margin:14px 0 8px;}
+.eb-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--charcoal-border);font-size:12.5px;color:var(--text-secondary);line-height:1.6;}
+.eb-row:last-child{border-bottom:none;}
+.eb-bullet{color:var(--gold);font-size:10px;min-width:14px;padding-top:3px;}
+.eb-identity-block{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.eb-identity-pill{background:rgba(232,184,75,0.07);border:0.5px solid rgba(232,184,75,0.15);border-radius:20px;padding:7px 12px;font-size:12px;color:var(--text-secondary);text-align:center;}
+.eb-compass-q{background:var(--charcoal-mid);border-left:2px solid rgba(232,184,75,0.4);border-radius:0 6px 6px 0;padding:9px 12px;margin-bottom:6px;font-size:12.5px;color:var(--text-secondary);line-height:1.6;font-style:italic;}
+.eb-book-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--charcoal-border);font-size:12.5px;}
+.eb-book-row:last-child{border-bottom:none;}
+.eb-book-num{color:var(--gold);font-weight:600;min-width:20px;font-size:11px;}
+.eb-book-title{color:var(--text-primary);font-weight:500;}
+.eb-book-author{color:var(--text-tertiary);font-size:11px;}
+.eb-give-row{display:grid;grid-template-columns:100px 1fr;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--charcoal-border);font-size:12.5px;}
+.eb-give-row:last-child{border-bottom:none;}
+.eb-give-type{color:var(--gold);font-weight:500;}
+.eb-give-desc{color:var(--text-secondary);line-height:1.5;}
+.eb-closing-card{background:linear-gradient(135deg,rgba(15,11,3,0.97),rgba(24,18,4,0.97));border:0.5px solid rgba(232,184,75,0.2);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1rem;text-align:center;}
+.eb-closing-title{font-family:var(--font-display);font-size:15px;font-weight:300;color:var(--gold);letter-spacing:.06em;margin-bottom:14px;}
+.eb-closing-text{font-size:13px;color:var(--text-secondary);line-height:2;font-style:italic;}
+.eb-closing-sig{font-size:10px;color:rgba(232,184,75,0.45);margin-top:14px;letter-spacing:.12em;}
+.eb-brand-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.eb-brand-pill{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;}
+.eb-brand-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);margin-bottom:4px;}
+.eb-brand-val{font-size:13px;color:var(--text-primary);line-height:1.5;}
+.eb-stream-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--charcoal-border);font-size:12.5px;}
+.eb-stream-row:last-child{border-bottom:none;}
+.eb-stream-name{color:var(--text-secondary);}
+.eb-stream-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:500;white-space:nowrap;}
+.eb-stream-tag.active{background:rgba(26,158,143,0.15);color:#1A9E8F;border:0.5px solid rgba(26,158,143,0.3);}
+.eb-stream-tag.future{background:rgba(232,184,75,0.1);color:var(--gold);border:0.5px solid rgba(232,184,75,0.2);}
 /* Legacy review CSS kept for charts */
 .review-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1rem;}
 .review-stat-card{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
@@ -2104,6 +2147,139 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   </div>
   <span class="section-lbl">All Planning Layers</span>
   <div class="planning-grid" id="planning-grid"></div>
+
+  <div class="eb-layers-wrap">
+    <span class="section-lbl">Empire Blueprint — 5 Strategic Horizons</span>
+
+    <div class="eb-layer-card" id="eb-layer-lifetime">
+      <div class="eb-layer-hdr" onclick="ebToggle('eb-layer-lifetime')">
+        <div class="eb-layer-hdr-left">
+          <span class="eb-layer-icon">∞</span>
+          <div>
+            <div class="eb-layer-title">Lifetime Vision</div>
+            <div class="eb-layer-sub">The ultimate empire — beyond wealth</div>
+          </div>
+        </div>
+        <span class="eb-layer-chev">▼</span>
+      </div>
+      <div class="eb-layer-body">
+        <div class="eb-section-title">The Mission</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Build a £24 billion global PropTech empire that transforms how property is bought, sold, and managed</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Fund 7 masjids and 7 schools across the UK, Africa, and South Asia</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Give free AI tools to Muslim-owned small businesses and non-profits worldwide</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Lift 1 million families from poverty through direct giving and job creation</span></div>
+        <div class="eb-section-title">The Legacy</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Prove that a Muslim woman can build the biggest thing in the room — with full faith, full integrity, and full ambition</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Every system built to outlast you — the empire runs without you being present</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Documented principles and a book for the next generation of Muslim founders</span></div>
+      </div>
+    </div>
+
+    <div class="eb-layer-card" id="eb-layer-10yr">
+      <div class="eb-layer-hdr" onclick="ebToggle('eb-layer-10yr')">
+        <div class="eb-layer-hdr-left">
+          <span class="eb-layer-icon">🌍</span>
+          <div>
+            <div class="eb-layer-title">10-Year Plan</div>
+            <div class="eb-layer-sub">By 2035 — IPO + global platform</div>
+          </div>
+        </div>
+        <span class="eb-layer-chev">▼</span>
+      </div>
+      <div class="eb-layer-body">
+        <div class="eb-section-title">Business</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>IPO complete at £24B+ valuation</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>50,000+ brokerages across UK, EU, US, Australia, Canada</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Second product line launched (mortgage / insurance AI)</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Team of 500+ across 10+ countries</span></div>
+        <div class="eb-section-title">Wealth & Giving</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Personal net worth: £1B+ in halal investments</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Charitable foundation endowed with £500M+</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>All 7 masjids and 7 schools operational</span></div>
+        <div class="eb-section-title">Life</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Speaking at global platforms: TED, WEF, Forbes</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Book published — the Muslim founder's playbook</span></div>
+      </div>
+    </div>
+
+    <div class="eb-layer-card" id="eb-layer-5yr">
+      <div class="eb-layer-hdr" onclick="ebToggle('eb-layer-5yr')">
+        <div class="eb-layer-hdr-left">
+          <span class="eb-layer-icon">🚀</span>
+          <div>
+            <div class="eb-layer-title">5-Year Plan</div>
+            <div class="eb-layer-sub">By 2030 — £1–3B valuation, 5,000 brokerages</div>
+          </div>
+        </div>
+        <span class="eb-layer-chev">▼</span>
+      </div>
+      <div class="eb-layer-body">
+        <div class="eb-section-title">Business Targets</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>£1–3B valuation achieved</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>5,000 global brokerages active</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Series B or C raised — £100M+</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Full product suite: CRM + AI valuation + analytics + reporting</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>UK → Ireland → Australia → Canada expansion complete</span></div>
+        <div class="eb-section-title">Personal</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Team of 100+</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Own property in every city we operate in</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Hajj completed and annual Umrah maintained</span></div>
+      </div>
+    </div>
+
+    <div class="eb-layer-card" id="eb-layer-2yr">
+      <div class="eb-layer-hdr" onclick="ebToggle('eb-layer-2yr')">
+        <div class="eb-layer-hdr-left">
+          <span class="eb-layer-icon">💎</span>
+          <div>
+            <div class="eb-layer-title">2-Year Plan</div>
+            <div class="eb-layer-sub">By 2028 — Series A, 1,000 clients</div>
+          </div>
+        </div>
+        <span class="eb-layer-chev">▼</span>
+      </div>
+      <div class="eb-layer-body">
+        <div class="eb-section-title">Milestones</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>£100–200M valuation at Series A raise</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>1,000 active paying clients</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>£5M+ ARR achieved</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Full product suite live: CRM + AI + analytics</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>First international market entered (Ireland or Australia)</span></div>
+        <div class="eb-section-title">Team & Systems</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Team of 20+ (sales, product, ops, customer success)</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Documented SOPs for every function</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Revenue operations fully systematised</span></div>
+      </div>
+    </div>
+
+    <div class="eb-layer-card" id="eb-layer-1yr">
+      <div class="eb-layer-hdr" onclick="ebToggle('eb-layer-1yr')">
+        <div class="eb-layer-hdr-left">
+          <span class="eb-layer-icon">⚡</span>
+          <div>
+            <div class="eb-layer-title">1-Year Plan</div>
+            <div class="eb-layer-sub">2026 — Prove the model, £150k+</div>
+          </div>
+        </div>
+        <span class="eb-layer-chev">▼</span>
+      </div>
+      <div class="eb-layer-body">
+        <div class="eb-section-title">Revenue Goals</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>£150,000+ cumulative by Q1 2026</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>100 active clients by end of 2026</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>£5–10M ARR run rate entering 2027</span></div>
+        <div class="eb-section-title">Product & Sales</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Core AI valuation tool — fully shipped and client-tested</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>LinkedIn: 50 personalised outreach messages daily</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Demo conversion: 40% book → 70% close</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>10,000+ LinkedIn followers</span></div>
+        <div class="eb-section-title">Personal Development</div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>First hire made (sales / BD)</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Daily 5AM ritual — unbroken streak</span></div>
+        <div class="eb-row"><span class="eb-bullet">✦</span><span>Read 24 books this year</span></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -2283,6 +2459,64 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       <div class="rev-static-row">✦ Expansion: UK → Ireland → Australia → Canada</div>
     </div>
   </div>
+
+  <!-- BRAND ARCHITECTURE -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">◈ Brand Architecture</div>
+    <div class="eb-brand-grid">
+      <div class="eb-brand-pill"><div class="eb-brand-lbl">Positioning</div><div class="eb-brand-val">The AI Brain Behind Britain's Best Brokerages</div></div>
+      <div class="eb-brand-pill"><div class="eb-brand-lbl">Brand Voice</div><div class="eb-brand-val">Precise · Confident · Warm · Visionary</div></div>
+      <div class="eb-brand-pill"><div class="eb-brand-lbl">Core Promise</div><div class="eb-brand-val">More valuations. More conversions. Less time.</div></div>
+      <div class="eb-brand-pill"><div class="eb-brand-lbl">Target Market</div><div class="eb-brand-val">UK property brokerages — 50–500 agents</div></div>
+    </div>
+    <div class="eb-section-title">Brand Values</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <span class="eb-identity-pill" style="font-size:11px">Excellence</span>
+      <span class="eb-identity-pill" style="font-size:11px">Transparency</span>
+      <span class="eb-identity-pill" style="font-size:11px">Faith-Driven</span>
+      <span class="eb-identity-pill" style="font-size:11px">Innovation</span>
+      <span class="eb-identity-pill" style="font-size:11px">Long-term Thinking</span>
+      <span class="eb-identity-pill" style="font-size:11px">Results-Obsessed</span>
+    </div>
+  </div>
+
+  <!-- REVENUE STREAMS -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">⚡ Revenue Streams</div>
+    <div class="eb-stream-row"><span class="eb-stream-name">SaaS Subscriptions (core product)</span><span class="eb-stream-tag active">Active</span></div>
+    <div class="eb-stream-row"><span class="eb-stream-name">Implementation &amp; Onboarding Fees</span><span class="eb-stream-tag active">Active</span></div>
+    <div class="eb-stream-row"><span class="eb-stream-name">Training Workshops &amp; Bootcamps</span><span class="eb-stream-tag active">Active</span></div>
+    <div class="eb-stream-row"><span class="eb-stream-name">Strategic Consulting Retainers</span><span class="eb-stream-tag active">Active</span></div>
+    <div class="eb-stream-row"><span class="eb-stream-name">API Licensing (to aggregators)</span><span class="eb-stream-tag future">Future</span></div>
+    <div class="eb-stream-row"><span class="eb-stream-name">White-Label Product</span><span class="eb-stream-tag future">Future</span></div>
+    <div class="eb-stream-row"><span class="eb-stream-name">Halal Investment Income</span><span class="eb-stream-tag future">Future</span></div>
+    <div class="eb-stream-row"><span class="eb-stream-name">Book / Course / Community</span><span class="eb-stream-tag future">Future</span></div>
+  </div>
+
+  <!-- GIVING STRATEGY -->
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">🤲 Giving Strategy</div>
+    <div class="eb-give-row"><span class="eb-give-type">Zakat</span><span class="eb-give-desc">2.5% of nisab — calculated and paid annually, from day one regardless of growth stage</span></div>
+    <div class="eb-give-row"><span class="eb-give-type">Sadaqah</span><span class="eb-give-desc">Monthly amount scales with revenue — starts small, grows as the empire grows</span></div>
+    <div class="eb-give-row"><span class="eb-give-type">7 Masjids</span><span class="eb-give-desc">Fund construction of 7 mosques: UK, Nigeria, Bangladesh, Pakistan, Somalia, Indonesia, Palestine</span></div>
+    <div class="eb-give-row"><span class="eb-give-type">7 Schools</span><span class="eb-give-desc">Build 7 free schools in underserved Muslim communities — secular + Islamic education combined</span></div>
+    <div class="eb-give-row"><span class="eb-give-type">Tech for Good</span><span class="eb-give-desc">Free AI tools granted to Muslim non-profits and small businesses with under £500k revenue</span></div>
+    <div class="eb-give-row"><span class="eb-give-type">Target 2035</span><span class="eb-give-desc" style="color:var(--gold);font-weight:500">£500M+ to charity — the largest single Muslim female philanthropist in UK history</span></div>
+  </div>
+
+  <!-- CLOSING AFFIRMATION -->
+  <div class="eb-closing-card">
+    <div class="eb-closing-title">✦ The Empire Builder's Oath ✦</div>
+    <div class="eb-closing-text">
+      I build not to prove myself, but to fulfil the purpose I was created for.<br>
+      Every deal closed is a step toward a masjid built.<br>
+      Every system built is a gift to the next generation.<br>
+      I do not chase money — I build value so great that money chases me.<br>
+      I fear only Allah, and that fear frees me from every other fear.<br><br>
+      I am the empire. The empire is mine to build.
+    </div>
+    <div class="eb-closing-sig">QUEEN HALIYA YASMIN · NOOR NORTH · بسم الله الرحمن الرحيم</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -2337,6 +2571,40 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <div class="page-title">Daily Affirmations</div>
   <div class="affirmations-grid" id="affirmations-grid"></div>
   <button class="add-affirmation-btn" onclick="addAffirmation()">+ Add Affirmation</button>
+
+  <div class="emp-ref-card" style="margin-top:1.5rem">
+    <div class="emp-ref-title">◎ Core Identity Beliefs</div>
+    <div class="eb-identity-block">
+      <div class="eb-identity-pill">I am a £24 billion founder</div>
+      <div class="eb-identity-pill">I am disciplined and unstoppable</div>
+      <div class="eb-identity-pill">I am Allah's vessel for wealth</div>
+      <div class="eb-identity-pill">I solve industry-changing problems</div>
+      <div class="eb-identity-pill">I am worthy of extraordinary success</div>
+      <div class="eb-identity-pill">Money flows because I create value</div>
+      <div class="eb-identity-pill">I lead with faith and full ambition</div>
+      <div class="eb-identity-pill">I am the Queen of PropTech</div>
+    </div>
+  </div>
+
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">🧭 Daily Compass Questions</div>
+    <div class="eb-compass-q">What is the ONE thing I must do today that my future self will thank me for?</div>
+    <div class="eb-compass-q">Am I moving closer to my vision — or further away?</div>
+    <div class="eb-compass-q">What would a £24 billion founder do right now, in this moment?</div>
+    <div class="eb-compass-q">Have I made my intentions pure and my gratitude real today?</div>
+    <div class="eb-compass-q">What belief am I reinforcing with today's actions?</div>
+    <div class="eb-compass-q">If I knew I could not fail — what would I do today?</div>
+  </div>
+
+  <div class="emp-ref-card">
+    <div class="emp-ref-title">📚 Books Reading Stack</div>
+    <div class="eb-book-row"><span class="eb-book-num">01</span><div><div class="eb-book-title">The 10X Rule</div><div class="eb-book-author">Grant Cardone</div></div></div>
+    <div class="eb-book-row"><span class="eb-book-num">02</span><div><div class="eb-book-title">$100M Offers</div><div class="eb-book-author">Alex Hormozi</div></div></div>
+    <div class="eb-book-row"><span class="eb-book-num">03</span><div><div class="eb-book-title">Thinking, Fast and Slow</div><div class="eb-book-author">Daniel Kahneman</div></div></div>
+    <div class="eb-book-row"><span class="eb-book-num">04</span><div><div class="eb-book-title">The Alchemist</div><div class="eb-book-author">Paulo Coelho</div></div></div>
+    <div class="eb-book-row"><span class="eb-book-num">05</span><div><div class="eb-book-title">Zero to One</div><div class="eb-book-author">Peter Thiel</div></div></div>
+    <div class="eb-book-row"><span class="eb-book-num">06</span><div><div class="eb-book-title">The Hard Thing About Hard Things</div><div class="eb-book-author">Ben Horowitz</div></div></div>
+  </div>
 </div>
 
 </div>
@@ -4113,6 +4381,10 @@ function renderWeeklyTabInputs(){
 function toggleRevHabit(i){
   const el=document.getElementById('rev-habit-'+i);
   if(el)el.classList.toggle('open');
+}
+function ebToggle(id){
+  const card=document.getElementById(id);
+  if(card)card.classList.toggle('open');
 }
 
 function renderReview(){
