@@ -1436,13 +1436,11 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 /* ══ GOOGLE CALENDAR DAY PLANNER ══ */
 .cal-planner-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1rem;align-items:start;}
 @media(max-width:1100px){.cal-planner-wrap{grid-template-columns:1fr;}}
-.day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;height:620px;}
+.day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;}
 .day-view-header{padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
 .day-view-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);}
 .day-view-date-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px;}
-.day-view-scroll{flex:1;overflow-y:auto;position:relative;}
-.day-view-scroll::-webkit-scrollbar{width:4px;}
-.day-view-scroll::-webkit-scrollbar-thumb{background:var(--charcoal-border);border-radius:2px;}
+.day-view-scroll{position:relative;}
 .day-time-grid{display:grid;grid-template-columns:48px 1fr;min-height:1440px;position:relative;}
 .time-label{position:absolute;right:6px;font-size:9px;color:var(--text-tertiary);transform:translateY(-50%);white-space:nowrap;}
 .time-slots-col{position:relative;border-left:0.5px solid var(--charcoal-border);}
@@ -5211,13 +5209,6 @@ function initDayView() {
   if (!window._dvNowInterval) {
     window._dvNowInterval = setInterval(dvUpdateNow, 60000);
   }
-  // Scroll to current hour (or 4am if before 6am)
-  const s = document.getElementById('day-view-scroll');
-  if (s) {
-    const now = new Date();
-    const scrollHour = now.getHours() < 6 ? 4 : now.getHours() - 1;
-    s.scrollTop = Math.max(0, scrollHour * HOUR_H);
-  }
   dvUpdateHeader();
   setupTimelineDrop();
 }
@@ -5501,9 +5492,6 @@ function dvGoToDate(dateStr) {
 function dayViewGoToday() {
   dvDate = fmt(new Date());
   dvRenderEvents(); dvUpdateNow(); dvUpdateHeader();
-  const s = document.getElementById('day-view-scroll');
-  const now = new Date();
-  if (s) s.scrollTop = Math.max(0,(now.getHours()-1)*HOUR_H);
 }
 
 // ══ FIVE PILLARS DRAG PANEL ══
