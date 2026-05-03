@@ -1791,6 +1791,51 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .rtb-ritual-open-btn{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:#C4983B;background:rgba(196,152,59,0.08);border:0.5px solid rgba(196,152,59,0.28);border-radius:4px;padding:2px 8px;cursor:pointer;font-family:var(--font-body);transition:all .15s;flex-shrink:0;line-height:1.5;}
 .rtb-ritual-open-btn:hover{background:rgba(196,152,59,0.18);border-color:rgba(196,152,59,0.58);}
 
+/* ── NIGHT RITUAL MODAL ── */
+.nrm-overlay{position:fixed;inset:0;z-index:9500;background:#080812;display:flex;flex-direction:column;overflow:hidden;}
+.nrm-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;flex-shrink:0;border-bottom:0.5px solid rgba(196,152,59,0.12);}
+.nrm-title{font-family:'Poppins',sans-serif;font-size:15px;font-style:italic;font-weight:400;color:#C4983B;letter-spacing:0.05em;}
+.nrm-close-btn{background:none;border:0.5px solid rgba(196,152,59,0.25);border-radius:50%;width:30px;height:30px;color:rgba(196,152,59,0.6);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.nrm-close-btn:hover{border-color:#C4983B;color:#C4983B;}
+.nrm-body{flex:1;overflow-y:auto;padding:0 22px 40px;scroll-behavior:smooth;}
+.nrm-body::-webkit-scrollbar{width:3px;}
+.nrm-body::-webkit-scrollbar-track{background:transparent;}
+.nrm-body::-webkit-scrollbar-thumb{background:rgba(196,152,59,0.3);border-radius:2px;}
+.nrm-footer{padding:12px 20px;flex-shrink:0;border-top:0.5px solid rgba(196,152,59,0.12);display:flex;justify-content:center;}
+.nrm-complete-btn{font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;letter-spacing:0.06em;padding:10px 36px;border-radius:8px;cursor:not-allowed;transition:all .3s;border:1.5px solid rgba(196,152,59,0.2);background:rgba(196,152,59,0.04);color:rgba(196,152,59,0.3);}
+.nrm-complete-btn.unlocked{border-color:#C4983B;background:rgba(196,152,59,0.1);color:#C4983B;cursor:pointer;animation:mrmBtnGlow 2s ease-in-out infinite;}
+.nrm-complete-btn.unlocked:hover{background:rgba(196,152,59,0.2);transform:scale(1.02);}
+.nrm-section{margin:30px 0;}
+.nrm-section-heading{font-family:'Poppins',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#C4983B;text-align:center;margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.nrm-section-heading::before,.nrm-section-heading::after{content:'';flex:1;height:0.5px;background:rgba(196,152,59,0.18);}
+.nrm-body-text{color:#F0EDE8;font-family:'Poppins',sans-serif;font-size:17px;font-weight:300;line-height:1.8;text-align:center;}
+.nrm-arabic{color:#9B8FD4;font-family:'Poppins',sans-serif;font-size:18px;font-weight:500;font-style:italic;display:block;text-align:center;margin-bottom:2px;}
+.nrm-divider{text-align:center;color:#C4983B;font-size:12px;letter-spacing:0.55em;margin:26px 0;opacity:0.45;}
+.nrm-pillar-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;padding:11px 14px;background:rgba(155,143,212,0.04);border-radius:8px;border-left:2px solid rgba(155,143,212,0.2);}
+.nrm-pillar-num{font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:#C4983B;flex-shrink:0;line-height:1.8;min-width:24px;}
+.nrm-pillar-name{font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;color:#F0EDE8;letter-spacing:0.07em;display:block;margin-bottom:3px;}
+.nrm-pillar-desc{font-family:'Poppins',sans-serif;font-size:14px;font-weight:300;color:rgba(240,237,232,0.62);line-height:1.65;}
+.nrm-aff-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:13px;}
+.nrm-aff-num{font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;color:#C4983B;flex-shrink:0;line-height:1.8;min-width:24px;}
+.nrm-aff-text{font-family:'Poppins',sans-serif;font-size:16px;font-weight:300;color:#F0EDE8;line-height:1.75;}
+.nrm-quote-block{background:rgba(100,90,180,0.06);border-radius:10px;padding:18px 20px;border:0.5px solid rgba(155,143,212,0.18);text-align:center;}
+.nrm-quote-text{font-family:'Poppins',sans-serif;font-size:17px;font-weight:300;font-style:italic;line-height:1.85;color:#F0EDE8;display:block;margin-bottom:10px;}
+.nrm-quote-sub{font-family:'Poppins',sans-serif;font-size:13px;font-weight:300;color:rgba(196,152,59,0.6);letter-spacing:0.05em;}
+@keyframes nrmBreathing{0%{transform:scale(0.7);box-shadow:0 0 12px 4px rgba(100,90,200,0.15);}21.05%{transform:scale(1);box-shadow:0 0 34px 14px rgba(100,90,200,0.42);}57.89%{transform:scale(1);box-shadow:0 0 34px 14px rgba(100,90,200,0.42);}100%{transform:scale(0.7);box-shadow:0 0 12px 4px rgba(100,90,200,0.15);}}
+@keyframes nrmBreathOuter{0%{transform:scale(0.7);opacity:0;}21.05%{transform:scale(1.1);opacity:1;}57.89%{transform:scale(1.1);opacity:1;}100%{transform:scale(0.7);opacity:0;}}
+.nrm-breathe-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;padding:10px 0 18px;}
+.nrm-breathe-ring{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle,rgba(100,90,200,0.16) 0%,rgba(100,90,200,0.04) 70%);border:1.5px solid rgba(155,143,212,0.5);display:flex;align-items:center;justify-content:center;animation:nrmBreathing 19s ease-in-out infinite;position:relative;}
+.nrm-breathe-ring::after{content:'';position:absolute;inset:-9px;border-radius:50%;border:0.5px solid rgba(155,143,212,0.18);animation:nrmBreathOuter 19s ease-in-out infinite;}
+.nrm-breathe-dot{width:9px;height:9px;border-radius:50%;background:rgba(155,143,212,0.75);}
+.nrm-breathe-label{font-family:'Poppins',sans-serif;font-size:15px;font-weight:300;font-style:italic;color:#9B8FD4;min-height:24px;text-align:center;letter-spacing:0.07em;transition:opacity .35s;}
+.nrm-breathe-hint{font-family:'Poppins',sans-serif;font-size:13px;font-weight:300;font-style:italic;color:rgba(240,237,232,0.45);text-align:center;}
+.nrm-decisions-hint{font-family:'Poppins',sans-serif;font-size:13px;font-weight:300;font-style:italic;color:rgba(240,237,232,0.5);text-align:center;margin-bottom:14px;line-height:1.7;}
+.nrm-decisions-wrap{display:flex;flex-direction:column;gap:0;}
+.nrm-decision-row{display:flex;align-items:baseline;gap:10px;border-bottom:0.5px solid rgba(196,152,59,0.18);padding:6px 0;}
+.nrm-decision-num{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:rgba(196,152,59,0.55);flex-shrink:0;min-width:18px;}
+.nrm-decision-inp{flex:1;border:none;outline:none;background:transparent;font-family:'Caveat',cursive;font-size:18px;color:#F0EDE8;padding:2px 0;line-height:1.5;caret-color:#9B8FD4;}
+.nrm-decision-inp::placeholder{color:rgba(155,143,212,0.3);font-style:italic;}
+
 </style>
 </head>
 <body>
@@ -6175,6 +6220,15 @@ function dvMakeRitualBlock(slotsEl, ds, key, startMin, endMin, label, icon, colo
         ${s.time && s.time !== '—' ? `<span style="font-size:9px;color:var(--text-tertiary);flex-shrink:0">${s.time}</span>` : ''}
       </div>`;
     }
+    if (s.title === 'Read Night Ritual' && key === 'eveningRitual') {
+      return `<div class="rtb-task-row" style="cursor:pointer" onclick="openNightRitualModal('${ds}',event)">
+        <div style="width:14px;height:14px;border-radius:4px;flex-shrink:0;border:1.5px solid ${checked ? color : 'var(--charcoal-border)'};background:${checked ? color : 'transparent'};display:flex;align-items:center;justify-content:center;transition:all .15s;pointer-events:none">
+          ${checked ? `<svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3L3 5L7 1" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>` : ''}
+        </div>
+        <button class="rtb-ritual-open-btn" onclick="openNightRitualModal('${ds}',event)">📖 Read Night Ritual</button>
+        ${s.time && s.time !== '—' ? `<span style="font-size:9px;color:var(--text-tertiary);flex-shrink:0">${s.time}</span>` : ''}
+      </div>`;
+    }
     return `<div class="rtb-task-row" onclick="toggleRitualTask('${ds}','${key}',${i},event)">
       <div style="width:14px;height:14px;border-radius:4px;flex-shrink:0;border:1.5px solid ${checked ? color : 'var(--charcoal-border)'};background:${checked ? color : 'transparent'};display:flex;align-items:center;justify-content:center;transition:all .15s">
         ${checked ? `<svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3L3 5L7 1" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>` : ''}
@@ -6361,6 +6415,128 @@ function _mrmTickBreath() {
 function _mrmStopBreathing() {
   clearTimeout(_mrmBreathTimer);
   _mrmBreathTimer = null;
+}
+
+// ══ NIGHT RITUAL MODAL ══
+
+let _nrmDs = null;
+let _nrmBreathTimer = null;
+let _nrmBreathPhase = 0;
+const _NRM_BREATH = [
+  {label:'Inhale…',  dur:4000},
+  {label:'Hold…',    dur:7000},
+  {label:'Exhale…',  dur:8000},
+];
+
+function openNightRitualModal(ds, e) {
+  if (e) e.stopPropagation();
+  _nrmDs = ds;
+  const overlay = document.getElementById('nrm-overlay');
+  const body    = document.getElementById('nrm-body');
+  const prog    = document.getElementById('nrm-progress');
+  const btn     = document.getElementById('nrm-complete-btn');
+  if (!overlay) return;
+  overlay.style.display = 'flex';
+  if (body)  body.scrollTop = 0;
+  if (prog)  prog.style.width = '0%';
+  if (btn)   btn.classList.remove('unlocked');
+  document.body.style.overflow = 'hidden';
+  // Load saved decisions for this date
+  ensureDay(ds);
+  const saved = data[ds].promptDecisions || ['','',''];
+  const d1 = document.getElementById('nrm-dec-1');
+  const d2 = document.getElementById('nrm-dec-2');
+  const d3 = document.getElementById('nrm-dec-3');
+  if (d1) d1.value = saved[0] || '';
+  if (d2) d2.value = saved[1] || '';
+  if (d3) d3.value = saved[2] || '';
+  _nrmBreathPhase = 0;
+  _nrmStopBreathing();
+  _nrmTickBreath();
+}
+
+function closeNightRitualModal() {
+  const overlay = document.getElementById('nrm-overlay');
+  if (overlay) overlay.style.display = 'none';
+  _nrmStopBreathing();
+  document.body.style.overflow = '';
+}
+
+function completeNightRitual() {
+  const btn = document.getElementById('nrm-complete-btn');
+  if (!btn || !btn.classList.contains('unlocked') || !_nrmDs) return;
+
+  // Save prompt decisions
+  const d1 = document.getElementById('nrm-dec-1');
+  const d2 = document.getElementById('nrm-dec-2');
+  const d3 = document.getElementById('nrm-dec-3');
+  ensureDay(_nrmDs);
+  data[_nrmDs].promptDecisions = [
+    d1 ? d1.value : '',
+    d2 ? d2.value : '',
+    d3 ? d3.value : '',
+  ];
+
+  // Tick the "Read Night Ritual" task
+  const idx = PM_STEPS.findIndex(s => s.title === 'Read Night Ritual');
+  if (idx !== -1) {
+    if (!data[_nrmDs].eveningRitual || data[_nrmDs].eveningRitual.length !== PM_STEPS.length)
+      data[_nrmDs].eveningRitual = new Array(PM_STEPS.length).fill(false);
+    data[_nrmDs].eveningRitual[idx] = true;
+    if (!data[_nrmDs].pm) data[_nrmDs].pm = new Array(PM_STEPS.length).fill(false);
+    data[_nrmDs].pm[idx] = true;
+  }
+
+  save();
+
+  // Re-render ritual blocks
+  const slotsEl = document.getElementById('day-time-slots');
+  if (slotsEl) {
+    slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e => e.remove());
+    dvMakeRitualBlock(slotsEl, _nrmDs, 'morningRitual', 4*60, 5*60, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
+    dvMakeRitualBlock(slotsEl, _nrmDs, 'eveningRitual', 21*60, 22*60, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
+    (data[_nrmDs].timedEvents || []).forEach(ev => dvMakeTimedEventBlock(slotsEl, ev, _nrmDs));
+    ['morningRitual','eveningRitual'].forEach(k => {
+      if (rtbExpanded[k]) requestAnimationFrame(() => {
+        const el = document.getElementById('rtb-'+k);
+        const tasks = document.getElementById('rtbtasks-'+k);
+        const chev  = document.getElementById('rtbchev-'+k);
+        if (el && tasks) { tasks.style.display='block'; if(chev) chev.textContent='▾'; el.style.height='auto'; el.style.overflow='visible'; el.style.zIndex='15'; }
+      });
+    });
+  }
+  renderDailyStats();
+  closeNightRitualModal();
+  showToast('✦ Night Ritual Complete', '#7F77DD');
+}
+
+function nrmOnScroll() {
+  const body = document.getElementById('nrm-body');
+  const prog = document.getElementById('nrm-progress');
+  const btn  = document.getElementById('nrm-complete-btn');
+  if (!body || !prog) return;
+  const pct = body.scrollHeight - body.clientHeight > 0
+    ? Math.min(100, Math.round(body.scrollTop / (body.scrollHeight - body.clientHeight) * 100))
+    : 100;
+  prog.style.width = pct + '%';
+  if (pct >= 98 && btn && !btn.classList.contains('unlocked')) btn.classList.add('unlocked');
+}
+
+function _nrmTickBreath() {
+  const lbl = document.getElementById('nrm-breathe-label');
+  if (!lbl) return;
+  const phase = _NRM_BREATH[_nrmBreathPhase];
+  lbl.style.opacity = '0';
+  setTimeout(() => { if (lbl) { lbl.textContent = phase.label; lbl.style.opacity = '1'; } }, 200);
+  _nrmBreathTimer = setTimeout(() => {
+    _nrmBreathPhase = (_nrmBreathPhase + 1) % _NRM_BREATH.length;
+    _nrmTickBreath();
+  }, phase.dur);
+}
+
+function _nrmStopBreathing() {
+  clearTimeout(_nrmBreathTimer);
+  _nrmBreathTimer = null;
 }
 
 // ══ TIMED PILLAR EVENTS ══
@@ -6863,6 +7039,126 @@ async function loadDiary() {
   await Promise.all([_diaryFetchEntries(), _diaryLoadStreak()]);
 }
 </script>
+<!-- NIGHT RITUAL MODAL -->
+<div class="nrm-overlay" id="nrm-overlay" style="display:none">
+  <div class="mrm-progress-wrap"><div class="mrm-progress-fill" id="nrm-progress"></div></div>
+  <div class="nrm-header">
+    <div class="nrm-title">◑ Night Ritual — Reflect → Release → Rest</div>
+    <button class="nrm-close-btn" onclick="closeNightRitualModal()">✕</button>
+  </div>
+  <div class="nrm-body" id="nrm-body" onscroll="nrmOnScroll()">
+
+    <!-- § 1 RELEASE -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">I — Release</div>
+      <div class="nrm-breathe-wrap">
+        <div class="nrm-breathe-ring"><div class="nrm-breathe-dot"></div></div>
+        <div class="nrm-breathe-label" id="nrm-breathe-label">Inhale…</div>
+        <div class="nrm-breathe-hint">Inhale for 4 › Hold for 7 › Exhale for 8 — Repeat three times. Let each exhale carry away the day.</div>
+      </div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 2 NIGHT DU'AS -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">II — Night Du'as</div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span class="nrm-arabic">Bismillah ar-Rahman ar-Rahim</span>
+        <span class="nrm-arabic">Allahumma bismika amutu wa ahya</span>
+        <span class="nrm-arabic">Allahumma qini 'adhabaka yawma tab'athu 'ibadak</span>
+        <span class="nrm-arabic">Allahumma inni aslamtu nafsi ilayk, wa fawwadtu amri ilayk</span>
+      </div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 3 YĀ ALLAH -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">III — Yā Allah</div>
+      <div class="nrm-body-text" style="line-height:2.3">
+        Yā Rabb &nbsp;•&nbsp; Yā Al-Mujīb &nbsp;•&nbsp; Yā Al-Fattāḥ &nbsp;•&nbsp; Yā Al-Walī &nbsp;•&nbsp; Yā As-Salām<br>
+        Yā Ash-Shāfī &nbsp;•&nbsp; Yā Al-Qayyūm &nbsp;•&nbsp; Yā Al-Bāsiṭ &nbsp;•&nbsp; Yā Al-Baṣīr &nbsp;•&nbsp; Yā Al-Ḥayy<br>
+        Yā As-Samī' &nbsp;•&nbsp; Yā Al-Hādī &nbsp;•&nbsp; Yā Al-Qarīb &nbsp;•&nbsp; Yā Ar-Razzāq &nbsp;•&nbsp; Yā Aṣ-Ṣabūr
+      </div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 4 GRATITUDE -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">IV — Gratitude</div>
+      <div class="nrm-quote-block">
+        <span class="nrm-quote-text">Alhamdulillah for this day — every breath, a gift bestowed; every moment, divinely inscribed.</span>
+        <span class="nrm-quote-text">I am grateful for my faith. I am grateful for Fadlan — my partner, my peace, and my co-author in this extraordinary chapter. I am grateful for TigerFlow AI. I am grateful for my health, my home, and for each quiet mercy that passed through my day.</span>
+        <span class="nrm-quote-text" style="margin-bottom:0">I release myself from the weight of all that was left undone. Tomorrow arrives as it always does — a fresh mercy from Allah, waiting to be unwrapped.</span>
+      </div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 5 FIVE PILLARS (night closure) -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">V — The Five Pillars</div>
+      <div class="nrm-pillar-row"><span class="nrm-pillar-num">01</span><div><span class="nrm-pillar-name">ME LIFE</span><span class="nrm-pillar-desc">I tracked my goals today, honoured my health, and protected my spiritual centre.</span></div></div>
+      <div class="nrm-pillar-row"><span class="nrm-pillar-num">02</span><div><span class="nrm-pillar-name">TIGERFLOW AI</span><span class="nrm-pillar-desc">Every line of code I shipped today was a tool for good. Through intelligent automation, I return time to people.</span></div></div>
+      <div class="nrm-pillar-row"><span class="nrm-pillar-num">03</span><div><span class="nrm-pillar-name">TIGER + DRAGON</span><span class="nrm-pillar-desc">Me and Fadlan's book, course, and talk show: How to Find Love in a Post-Covid Single Pandemic.</span></div></div>
+      <div class="nrm-pillar-row"><span class="nrm-pillar-num">04</span><div><span class="nrm-pillar-name">MYCELINK</span><span class="nrm-pillar-desc">A Wealth Network and Meditation Playlist on Spotify. Those who grow together, compound together.</span></div></div>
+      <div class="nrm-pillar-row"><span class="nrm-pillar-num">05</span><div><span class="nrm-pillar-name">ARCHITECTURE PORTFOLIO</span><span class="nrm-pillar-desc">I advanced the VR Experience of a building I created in Revit today.</span></div></div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 6 AFFIRMATIONS -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">VI — 10 Affirmations</div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">01.</span><span class="nrm-aff-text">I honour my time and the time of others. Being early is an act of respect and self-discipline that reflects the leader I am becoming.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">02.</span><span class="nrm-aff-text">I nourish my body with intention. Food is fuel for my mission.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">03.</span><span class="nrm-aff-text">Other people are mirrors, not enemies. When I notice a negative thought about someone, it is information about what I need to heal.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">04.</span><span class="nrm-aff-text">True wealth is built through discipline, not display. Every pound I steward wisely is a seed for the empire I am building.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">05.</span><span class="nrm-aff-text">My body communicates what my mind has not yet processed. I listen with care, not compulsion.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">06.</span><span class="nrm-aff-text">I have a capable mind that works best with strong systems. I do not need to remember everything — I need to capture everything.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">07.</span><span class="nrm-aff-text">My word is my bond. I commit only to what I can deliver, and I deliver everything I commit to.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">08.</span><span class="nrm-aff-text">I am intelligent, resourceful, and building something extraordinary. The voice that tells me otherwise is an echo of someone else's pain.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">09.</span><span class="nrm-aff-text">I am the master of my attention, not a passenger. Every minute I reclaim from scrolling is a minute invested in my legacy.</span></div>
+      <div class="nrm-aff-row"><span class="nrm-aff-num">10.</span><span class="nrm-aff-text">True wisdom is knowing what I do not know. My willingness to learn is my greatest competitive advantage.</span></div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 7 THE WOMAN I AM -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">VII — The Woman I Am</div>
+      <div class="nrm-quote-block">
+        <span class="nrm-quote-text">I speak with honesty, love, and deliberate precision. I stand with serene certainty, knowing exactly who I am and Whose I am.</span>
+        <span class="nrm-quote-text">I treat time as sacred — investing every minute, never merely spending it.</span>
+        <span class="nrm-quote-text" style="margin-bottom:0">I am already a billionaire in spirit. Alhamdulillah! AMEEN!</span>
+      </div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 8 PROMPT DECISIONS -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">VIII — Prompt Decisions for Tomorrow</div>
+      <div class="nrm-decisions-hint">"Write 1–3 specific, actionable decisions that will move your vision forward tomorrow. These are not hopes. These are decisions."</div>
+      <div class="nrm-decisions-wrap">
+        <div class="nrm-decision-row"><span class="nrm-decision-num">1.</span><input class="nrm-decision-inp" id="nrm-dec-1" placeholder="I will decide to…"/></div>
+        <div class="nrm-decision-row"><span class="nrm-decision-num">2.</span><input class="nrm-decision-inp" id="nrm-dec-2" placeholder="I will decide to…"/></div>
+        <div class="nrm-decision-row"><span class="nrm-decision-num">3.</span><input class="nrm-decision-inp" id="nrm-dec-3" placeholder="I will decide to…"/></div>
+      </div>
+    </div>
+    <div class="nrm-divider">•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+
+    <!-- § 9 CLOSE -->
+    <div class="nrm-section">
+      <div class="nrm-section-heading">IX — Close</div>
+      <div class="nrm-quote-block">
+        <span class="nrm-quote-text" style="font-size:19px;color:#C4983B;font-style:normal">"Alhamdulillah. Bismillah. Rest now. 🌙"</span>
+        <span class="nrm-quote-text">"And He found you lost and guided you." — Surah Ad-Duha (93:7)</span>
+        <span class="nrm-quote-sub">Principled. Purposeful. Powerful.</span>
+      </div>
+    </div>
+
+  </div><!-- /nrm-body -->
+  <div class="nrm-footer">
+    <button class="nrm-complete-btn" id="nrm-complete-btn" onclick="completeNightRitual()">Mark Complete ✓</button>
+  </div>
+</div><!-- /nrm-overlay -->
+
 <!-- MORNING RITUAL MODAL -->
 <div class="mrm-overlay" id="mrm-overlay" style="display:none">
   <div class="mrm-progress-wrap"><div class="mrm-progress-fill" id="mrm-progress"></div></div>
