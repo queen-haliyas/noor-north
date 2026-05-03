@@ -1143,30 +1143,6 @@ body{
 .review-history-item{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:8px;}
 .review-history-date{font-size:12px;color:var(--gold);margin-bottom:6px;font-weight:500;}
 .review-history-text{font-size:12px;color:var(--text-secondary);line-height:1.6;}
-/* ── REVIEW NEW SECTIONS ── */
-.rev-opening-card{background:linear-gradient(135deg,rgba(15,11,3,0.97),rgba(24,18,4,0.97));border:0.5px solid rgba(232,184,75,0.2);}
-.rev-viz-prompt{font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:300;color:#FDF6E3;font-style:italic;line-height:1.95;text-align:center;padding:4px 8px 12px;}
-.rev-gold-divider{height:0.5px;background:linear-gradient(to right,transparent,rgba(232,184,75,0.35),transparent);margin:10px 0;}
-.rev-frame-label{font-family:'Poppins',sans-serif;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;text-align:center;margin-bottom:8px;}
-.rev-frame-body{font-family:'Poppins',sans-serif;font-size:12px;font-weight:300;color:var(--text-secondary);line-height:1.85;font-style:italic;text-align:center;}
-.rev-callout{background:rgba(232,184,75,0.055);border-left:2px solid rgba(232,184,75,0.28);border-radius:0 6px 6px 0;padding:10px 14px;margin:-4px 0 14px;font-family:'Poppins',sans-serif;font-size:11.5px;font-weight:300;color:var(--text-secondary);font-style:italic;line-height:1.7;}
-.rev-coll-hdr{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;margin-bottom:0;}
-.rev-coll-hdr .rev-card-title{margin-bottom:0;flex:1;}
-.rev-coll-chev{font-size:10px;color:var(--gold);transition:transform .25s;flex-shrink:0;margin-left:8px;}
-.rev-coll-body{margin-top:1rem;}
-.rev-coll-body.closed{display:none;}
-.rev-plan-sublabel{font-family:'Poppins',sans-serif;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin:14px 0 8px;}
-.rev-timeblock-list{display:flex;flex-direction:column;gap:9px;margin-bottom:4px;}
-.rev-timeblock-item{display:flex;align-items:center;gap:9px;}
-.rev-tb-cb{width:15px;height:15px;accent-color:var(--gold);flex-shrink:0;cursor:pointer;}
-.rev-tb-lbl{font-family:'Poppins',sans-serif;font-size:12px;font-weight:300;color:var(--text-primary);}
-.rev-obstacle-list{display:flex;flex-direction:column;gap:8px;}
-.rev-obstacle-item{display:flex;align-items:flex-start;gap:8px;}
-.rev-obstacle-dot{color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
-.rev-imag-prompts{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
-.rev-imag-prompt{font-family:'Poppins',sans-serif;font-size:12px;font-weight:300;color:var(--text-secondary);padding-left:16px;position:relative;line-height:1.6;}
-.rev-imag-prompt::before{content:'▫';position:absolute;left:0;color:var(--gold);font-size:10px;top:1px;}
-.rev-reflection-reminder{background:var(--charcoal-mid);border-radius:var(--radius-sm);padding:10px 12px;font-family:'Poppins',sans-serif;font-size:11.5px;font-weight:300;color:var(--text-secondary);font-style:italic;line-height:1.75;margin-top:8px;}
 
 
 /* ── ARABELLA AI ── */
@@ -2416,15 +2392,17 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
   <!-- ── WEEKLY TAB ── -->
   <div class="rev-pane" id="rev-pane-weekly">
-    <!-- Opening Frame + Visualisation -->
-    <div class="rev-card rev-opening-card">
-      <div class="rev-viz-prompt">"Visualise yourself at the helm of a £24B empire — boardrooms, acquisitions, global impact. Feel it viscerally. Then open this review and begin."</div>
-      <div class="rev-gold-divider"></div>
-      <div class="rev-frame-label">Build with faith · Lead with love · Create with conviction</div>
-      <div class="rev-frame-body">"Progress is not linear. A setback is not a failure — it is data. Every time you notice a self-sabotaging pattern, you have already begun to change it."</div>
+    <div id="review-charts"></div>
+
+    <!-- Opening Visualisation Frame -->
+    <div class="rev-card" style="background:linear-gradient(135deg,#1A1205,#2A1E08);border-color:var(--gold);text-align:center;padding:1.6rem 1.4rem;">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--gold);opacity:.6;margin-bottom:.6rem;">Before You Begin</div>
+      <div style="font-family:var(--font-display);font-size:16px;font-style:italic;color:var(--gold);line-height:1.7;margin-bottom:.8rem;">"Visualise yourself at the helm of a £24B empire — boardrooms, acquisitions, global impact. Feel it viscerally. Then open this review and begin."</div>
+      <div style="width:40px;height:1px;background:var(--gold);opacity:.3;margin:0 auto .8rem;"></div>
+      <div style="font-size:13px;color:var(--text-secondary);font-style:italic;line-height:1.6;">"Build with faith, lead with love, create with conviction."</div>
+      <div style="font-size:12px;color:var(--text-tertiary);margin-top:.5rem;line-height:1.6;">Progress is not linear. A setback is not a failure — it is data. Every time you notice a self-sabotaging pattern, you have already begun to change it.</div>
     </div>
 
-    <div id="review-charts"></div>
     <!-- Metrics Review -->
     <div class="rev-card">
       <div class="rev-card-title">📊 Metrics Review</div>
@@ -2435,18 +2413,13 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
         <div class="rev-metric-row"><label>Messages</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricMessages" placeholder="0"><span class="rev-target">Target: 250+</span></div></div>
         <div class="rev-metric-row"><label>Close Rate</label><div class="rev-metric-input-wrap"><input type="number" class="rev-input rev-w-num" data-rkey="weekly" data-field="metricClose" placeholder="0"><span class="rev-prefix" style="order:2">%</span><span class="rev-target">Target: 60–80%</span></div></div>
       </div>
+      <div style="margin-top:1rem;padding:.75rem 1rem;background:rgba(196,152,59,.08);border-left:2px solid var(--gold);border-radius:4px;font-size:12px;color:var(--gold);font-style:italic;line-height:1.7;">Are these targets big enough to excite me? Would hitting them make me feel: <strong style="font-style:normal;">"Damn, I did that"</strong>? If not — 10x them.</div>
     </div>
-    <div class="rev-callout">"Are these targets big enough to excite me? Would hitting them make me feel: 'Damn, I did that'? If not — 10x them."</div>
 
     <!-- 10X Questions -->
     <div class="rev-card">
-      <div class="rev-coll-hdr" onclick="toggleRevCollapse(this)">
-        <div class="rev-card-title">🔥 The 10X Questions — Ask These Every Week</div>
-        <span class="rev-coll-chev">▲</span>
-      </div>
-      <div class="rev-coll-body">
-        <div class="rev-q-list" id="rev-10x-questions"></div>
-      </div>
+      <div class="rev-card-title">⚡ The 10X Questions</div>
+      <div class="rev-q-list" id="rev-10x-questions"></div>
     </div>
 
     <!-- Grant's 7-Step -->
@@ -2457,34 +2430,14 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
     <!-- Target Manifestation -->
     <div class="rev-card">
-      <div class="rev-card-title">🌟 Target Manifestation (Write as if already done)</div>
+      <div class="rev-card-title">🌟 Target Manifestation</div>
       <div class="rev-manif-grid" id="rev-manif"></div>
     </div>
 
-    <!-- Imagination Session -->
+    <!-- Top 3 Objectives -->
     <div class="rev-card">
-      <div class="rev-coll-hdr" onclick="toggleRevCollapse(this)">
-        <div class="rev-card-title">💡 Imagination Session (60 min)</div>
-        <span class="rev-coll-chev">▲</span>
-      </div>
-      <div class="rev-coll-body">
-        <div class="rev-imag-prompts">
-          <div class="rev-imag-prompt">What can I borrow from other industries?</div>
-          <div class="rev-imag-prompt">Write "How I Hit £1M" — as if already done</div>
-          <div class="rev-imag-prompt">System check: Do I have a system that runs without me?</div>
-          <div class="rev-imag-prompt">What can I delegate this week?</div>
-          <div class="rev-imag-prompt">Turn best ideas into action steps below:</div>
-        </div>
-        <textarea class="rev-textarea" data-rkey="weekly" data-field="imaginationNotes" rows="5" placeholder="Ideas, action steps, sparks..."></textarea>
-      </div>
-    </div>
-
-    <!-- Plan Next Week -->
-    <div class="rev-card">
-      <div class="rev-card-title">📅 Plan Next Week</div>
-      <div class="rev-plan-sublabel">Top 3 Objectives</div>
+      <div class="rev-card-title">🎯 Top 3 Objectives This Week</div>
       <div class="rev-obj-list" id="rev-objectives"></div>
-      <div id="rev-plan-extra"></div>
     </div>
 
     <!-- Weekly Targets (static) -->
@@ -2531,16 +2484,55 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
       </div>
     </div>
 
-    <!-- Weekly Reflection -->
+    <!-- Reflection -->
     <div class="rev-card">
       <div class="rev-card-title">🔄 Weekly Reflection</div>
+      <div style="font-size:12px;color:var(--text-tertiary);font-style:italic;margin-bottom:1rem;">Read this week's information and adjust next week accordingly with the 10 habits and by scheduling &amp; organising.</div>
       <div class="rev-3col">
-        <div><div class="rev-sublabel">What was great about this week?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="wentWell" rows="4" placeholder="Write here..."></textarea></div>
-        <div><div class="rev-sublabel">What wasn't so great — and how could I improve it?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="challenges" rows="4" placeholder="Write here..."></textarea></div>
-        <div><div class="rev-sublabel">What needs adjustment?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="adjustments" rows="4" placeholder="Write here..."></textarea></div>
+        <div><div class="rev-sublabel">▫️ What was great about this week?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="wentWell" rows="4" placeholder="Write here..."></textarea></div>
+        <div><div class="rev-sublabel">▫️ What wasn't so great — and how could I improve it?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="challenges" rows="4" placeholder="Write here..."></textarea></div>
+        <div><div class="rev-sublabel">▫️ What needs adjustment next week?</div><textarea class="rev-textarea" data-rkey="weekly" data-field="adjustments" rows="4" placeholder="Write here..."></textarea></div>
       </div>
-      <div class="rev-reflection-reminder">▫ Read this week's information and adjust next week accordingly with the 10 habits and by scheduling &amp; organising.</div>
-      <div class="rev-reflection-reminder" style="margin-top:6px;">▫ I review my capture system, calendar, and commitments for the week ahead — a reliable rhythm that keeps nothing slipping through.</div>
+      <div style="margin-top:1rem;">
+        <div class="rev-sublabel" style="margin-bottom:.4rem;">▫️ Capture system, calendar &amp; commitments review</div>
+        <textarea class="rev-textarea" data-rkey="weekly" data-field="captureReview" rows="3" placeholder="I review my capture system, calendar, and commitments for the week ahead — a reliable rhythm that keeps nothing slipping through."></textarea>
+      </div>
+    </div>
+
+    <!-- Imagination Session -->
+    <div class="rev-card">
+      <div class="rev-card-title">💡 Imagination Session <span style="font-size:11px;font-weight:400;color:var(--text-tertiary);margin-left:.5rem;">60 min</span></div>
+      <div style="display:grid;gap:.6rem;margin-bottom:1rem;">
+        <div style="font-size:12px;color:var(--text-secondary);padding:.5rem 0;border-bottom:0.5px solid var(--charcoal-border);">▫️ What can I borrow from other industries?</div>
+        <div style="font-size:12px;color:var(--text-secondary);padding:.5rem 0;border-bottom:0.5px solid var(--charcoal-border);">▫️ Write "How I Hit £1M" — as if already done</div>
+        <div style="font-size:12px;color:var(--text-secondary);padding:.5rem 0;border-bottom:0.5px solid var(--charcoal-border);">▫️ System check: Do I have a system that runs without me?</div>
+        <div style="font-size:12px;color:var(--text-secondary);padding:.5rem 0;border-bottom:0.5px solid var(--charcoal-border);">▫️ What can I delegate this week?</div>
+        <div style="font-size:12px;color:var(--text-secondary);padding:.5rem 0;">▫️ Turn best ideas into action steps below:</div>
+      </div>
+      <textarea class="rev-textarea" data-rkey="weekly" data-field="imaginationSession" rows="6" placeholder="Write your ideas and action steps here..."></textarea>
+    </div>
+
+    <!-- Plan Next Week -->
+    <div class="rev-card">
+      <div class="rev-card-title">📅 Plan Next Week</div>
+      <div class="rev-sublabel" style="margin-bottom:.8rem;">TOP 3 OBJECTIVES FOR NEXT WEEK</div>
+      <div style="display:grid;gap:.6rem;margin-bottom:1.2rem;">
+        <div style="display:flex;align-items:center;gap:.6rem;"><span style="color:var(--gold);font-size:13px;font-weight:600;min-width:18px;">1.</span><input type="text" class="rev-input" style="flex:1;border-bottom:0.5px solid var(--charcoal-border);background:transparent;padding:.4rem 0;font-size:13px;" data-rkey="weekly" data-field="nextObj1" placeholder="Objective 1"></div>
+        <div style="display:flex;align-items:center;gap:.6rem;"><span style="color:var(--gold);font-size:13px;font-weight:600;min-width:18px;">2.</span><input type="text" class="rev-input" style="flex:1;border-bottom:0.5px solid var(--charcoal-border);background:transparent;padding:.4rem 0;font-size:13px;" data-rkey="weekly" data-field="nextObj2" placeholder="Objective 2"></div>
+        <div style="display:flex;align-items:center;gap:.6rem;"><span style="color:var(--gold);font-size:13px;font-weight:600;min-width:18px;">3.</span><input type="text" class="rev-input" style="flex:1;border-bottom:0.5px solid var(--charcoal-border);background:transparent;padding:.4rem 0;font-size:13px;" data-rkey="weekly" data-field="nextObj3" placeholder="Objective 3"></div>
+      </div>
+      <div class="rev-sublabel" style="margin-bottom:.6rem;">Daily Time-Block Commitments</div>
+      <div style="display:grid;gap:.4rem;margin-bottom:1.2rem;" id="rev-timeblock-checks">
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Marketing time — non-negotiable</label>
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Deep work blocks — protected</label>
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Family time — protected</label>
+        <label style="display:flex;align-items:center;gap:.6rem;font-size:12px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" style="accent-color:var(--gold);"> Health time — protected</label>
+      </div>
+      <div class="rev-sublabel" style="margin-bottom:.4rem;">Anticipate Obstacles</div>
+      <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:.4rem;">▫️ What break points might I hit? &nbsp;▫️ Who can I reach out to for mentorship?</div>
+      <textarea class="rev-textarea" data-rkey="weekly" data-field="obstacles" rows="3" placeholder="Write here..."></textarea>
+      <div class="rev-sublabel" style="margin-top:1rem;margin-bottom:.4rem;">What does "exceptional" look like this week — not just decent?</div>
+      <textarea class="rev-textarea" data-rkey="weekly" data-field="exceptional" rows="3" placeholder="Define exceptional..."></textarea>
     </div>
 
     <!-- Gratitude -->
@@ -4013,9 +4005,6 @@ function revBind(container,tab){
     } else if(el.tagName==='TEXTAREA'||el.type==='text'||el.type==='number'){
       if(rd[field]!==undefined)el.value=rd[field];
       el.oninput=function(){rd[field]=this.value;revSaveDebouce();};
-    } else if(el.type==='checkbox'){
-      if(rd[field]!==undefined)el.checked=!!rd[field];
-      el.onchange=function(){rd[field]=this.checked;revSaveDebouce();};
     }
   });
   container.querySelectorAll('.rev-grant-cb').forEach(cb=>{
@@ -4087,37 +4076,16 @@ function renderWeeklyTabInputs(){
   // Manifestation
   const manif=document.getElementById('rev-manif');
   if(manif&&manif.innerHTML===''){
-    const manifItems=[
-      {field:'manifHealth',   prompt:'Health: "I am in the best shape of my life at _____"'},
-      {field:'manifBusiness', prompt:'Business: "I closed £_____ in revenue with _____ team members"'},
-      {field:'manifFamily',   prompt:'Family: "I spent quality time with family _____ times this week"'},
+    manif.innerHTML=[
+      {field:'manifHealth',prompt:'Health target: "I am in the best shape of my life at _____"'},
+      {field:'manifBusiness',prompt:'Business target: "I closed £_____ in revenue with _____ team members"'},
+      {field:'manifFamily',prompt:'Family target: "I spent quality time with family _____ times/week"'}
     ].map(m=>`<div class="rev-manif-item"><div class="rev-manif-prompt">${m.prompt}</div><textarea class="rev-textarea" data-rkey="weekly" data-field="${m.field}" rows="2" placeholder="Complete the statement..."></textarea></div>`).join('');
-    const visItem=`<div class="rev-manif-item"><div class="rev-manif-prompt">Visibility: "I posted ONE piece of content declaring my success"</div><label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:4px"><input type="checkbox" class="rev-grant-cb" data-rkey="weekly" data-field="manifVisibility" style="width:15px;height:15px;accent-color:var(--gold)"><span style="font-size:12px;color:var(--text-secondary)">Done ✓</span></label></div>`;
-    manif.innerHTML=manifItems+visItem;
   }
-  // Objectives + plan
+  // Objectives
   const obj=document.getElementById('rev-objectives');
   if(obj&&obj.innerHTML===''){
     obj.innerHTML=[1,2,3].map(n=>`<div class="rev-obj-item"><span class="rev-obj-num">${n}.</span><input type="text" class="rev-input rev-input-full" data-rkey="weekly" data-field="obj${n}" placeholder="Objective ${n}..."></div>`).join('');
-  }
-  const planExtra=document.getElementById('rev-plan-extra');
-  if(planExtra&&planExtra.innerHTML===''){
-    planExtra.innerHTML=`
-      <div class="rev-plan-sublabel">Daily Time-Block Commitments</div>
-      <div class="rev-timeblock-list">
-        <label class="rev-timeblock-item"><input type="checkbox" class="rev-tb-cb" data-rkey="weekly" data-field="tbMarketing"><span class="rev-tb-lbl">Marketing time — non-negotiable</span></label>
-        <label class="rev-timeblock-item"><input type="checkbox" class="rev-tb-cb" data-rkey="weekly" data-field="tbDeepWork"><span class="rev-tb-lbl">Deep work blocks — protected</span></label>
-        <label class="rev-timeblock-item"><input type="checkbox" class="rev-tb-cb" data-rkey="weekly" data-field="tbFamily"><span class="rev-tb-lbl">Family time — protected</span></label>
-        <label class="rev-timeblock-item"><input type="checkbox" class="rev-tb-cb" data-rkey="weekly" data-field="tbHealth"><span class="rev-tb-lbl">Health time — protected</span></label>
-      </div>
-      <div class="rev-plan-sublabel">Anticipate Obstacles</div>
-      <div class="rev-obstacle-list">
-        <div class="rev-obstacle-item"><span class="rev-obstacle-dot">▫</span><textarea class="rev-textarea" data-rkey="weekly" data-field="obstacleBreakpoints" rows="2" placeholder="What break points might I hit?"></textarea></div>
-        <div class="rev-obstacle-item"><span class="rev-obstacle-dot">▫</span><textarea class="rev-textarea" data-rkey="weekly" data-field="obstacleMentorship" rows="2" placeholder="Who can I reach out to for mentorship?"></textarea></div>
-      </div>
-      <div class="rev-plan-sublabel">Success Metrics</div>
-      <div class="rev-sublabel">"What does 'exceptional' look like this week — not just decent?"</div>
-      <textarea class="rev-textarea" data-rkey="weekly" data-field="successMetrics" rows="3" placeholder="Define exceptional for this week..."></textarea>`;
   }
   // Habits accordion
   const hab=document.getElementById('rev-habits-accordion');
@@ -4152,16 +4120,6 @@ function renderWeeklyTabInputs(){
 function toggleRevHabit(i){
   const el=document.getElementById('rev-habit-'+i);
   if(el)el.classList.toggle('open');
-}
-
-function toggleRevCollapse(hdrEl){
-  const card=hdrEl.closest('.rev-card');
-  if(!card)return;
-  const body=card.querySelector('.rev-coll-body');
-  const chev=hdrEl.querySelector('.rev-coll-chev');
-  if(!body)return;
-  const closed=body.classList.toggle('closed');
-  if(chev)chev.textContent=closed?'▼':'▲';
 }
 
 function renderReview(){
