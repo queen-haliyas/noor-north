@@ -6,6 +6,7 @@
 <title>Noor North — Personal OS</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
   --emerald: #C4983B;
@@ -1548,6 +1549,114 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .dur-custom-input{flex:1;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;}
 .dur-custom-input:focus{border-color:var(--gold);}
 
+/* ── DIARY BOOK ── */
+.diary-book-wrap{margin-top:12px;}
+.diary-book{
+  background:linear-gradient(160deg,#1C1208 0%,#251A08 60%,#1C1208 100%);
+  border-radius:10px;
+  padding:12px 10px;
+  box-shadow:0 12px 48px rgba(0,0,0,0.65),0 2px 8px rgba(0,0,0,0.35),inset 0 1px 0 rgba(255,255,255,0.04);
+  position:relative;
+}
+/* Stitched leather edge accents */
+.diary-book::before{
+  content:'';position:absolute;top:6px;bottom:6px;left:5px;width:2px;
+  border-left:1px dashed rgba(180,140,60,0.18);border-right:1px dashed rgba(180,140,60,0.18);
+}
+.diary-book::after{
+  content:'';position:absolute;top:6px;bottom:6px;right:5px;width:2px;
+  border-left:1px dashed rgba(180,140,60,0.18);border-right:1px dashed rgba(180,140,60,0.18);
+}
+.diary-pages{
+  display:grid;
+  grid-template-columns:1fr 18px 1fr;
+  min-height:300px;
+}
+.diary-page{
+  background:#F5F0E8;
+  position:relative;
+  overflow:hidden;
+}
+/* Aged paper gradient overlay */
+.diary-page::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 10%,rgba(255,252,235,0.55) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 90%,rgba(200,178,130,0.18) 0%,transparent 50%),
+    radial-gradient(ellipse at 60% 40%,rgba(240,228,195,0.12) 0%,transparent 60%);
+}
+.diary-page-left{
+  border-radius:6px 0 0 6px;
+  box-shadow:inset 6px 0 14px rgba(0,0,0,0.08),-3px 0 10px rgba(0,0,0,0.25);
+}
+.diary-page-right{
+  border-radius:0 6px 6px 0;
+  box-shadow:inset -6px 0 14px rgba(0,0,0,0.08),3px 0 10px rgba(0,0,0,0.25);
+}
+.diary-pg-inner{padding:14px 16px 18px;position:relative;z-index:1;}
+.diary-date-hdr{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:11px;font-style:italic;font-weight:400;
+  color:#8B6840;text-align:center;letter-spacing:0.07em;
+  margin-bottom:10px;padding-bottom:8px;
+  border-bottom:0.5px solid rgba(139,104,64,0.22);
+}
+/* Ruled lines via bg on the content areas */
+.diary-text-body,.diary-textarea{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:14.5px;line-height:28px;color:#2E1E0D;
+  background-image:repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    rgba(139,104,64,0.16) 27px,
+    rgba(139,104,64,0.16) 28px
+  );
+  background-size:100% 28px;
+  min-height:252px;
+}
+.diary-text-body{
+  white-space:pre-wrap;word-break:break-word;
+  padding:0 2px;
+}
+.diary-text-body.diary-placeholder{font-style:italic;color:#BBA98A;}
+.diary-textarea{
+  width:100%;border:none;outline:none;resize:none;
+  background-color:transparent;padding:0;
+  caret-color:#8B6840;display:block;
+  font-family:'Cormorant Garamond',Georgia,serif;
+}
+.diary-textarea::placeholder{font-style:italic;color:#BBA98A;}
+/* Centre spine / binding */
+.diary-spine{
+  background:linear-gradient(to right,rgba(0,0,0,0.18) 0%,rgba(0,0,0,0.04) 40%,rgba(0,0,0,0.04) 60%,rgba(0,0,0,0.18) 100%);
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.diary-spine::before{
+  content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(139,104,64,0.25) 20%,rgba(139,104,64,0.25) 80%,transparent);
+}
+.diary-saved-ind{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:9px;font-style:italic;color:#8B6840;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  white-space:nowrap;opacity:0;transition:opacity .4s;
+  user-select:none;
+}
+.diary-saved-ind.show{opacity:1;}
+/* Mobile: stack vertically */
+@media(max-width:900px){
+  .diary-pages{grid-template-columns:1fr;grid-template-rows:auto auto auto;}
+  .diary-page-left{border-radius:6px 6px 0 0;box-shadow:0 3px 10px rgba(0,0,0,0.2);}
+  .diary-page-right{border-radius:0 0 6px 6px;box-shadow:0 -3px 10px rgba(0,0,0,0.2);}
+  .diary-spine{
+    height:18px;width:auto;
+    background:linear-gradient(to bottom,rgba(0,0,0,0.18) 0%,rgba(0,0,0,0.04) 50%,rgba(0,0,0,0.18) 100%);
+  }
+  .diary-spine::before{top:50%;bottom:auto;left:10%;right:10%;width:auto;height:1px;}
+  .diary-saved-ind{writing-mode:horizontal-tb;font-size:9px;}
+}
+
 </style>
 </head>
 <body>
@@ -1736,6 +1845,31 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
         </div>
       </div>
       <div id="day-detail-panel" style="display:none"></div>
+      <!-- DIARY BOOK -->
+      <div class="diary-book-wrap" id="diary-book-wrap">
+        <div class="diary-book">
+          <div class="diary-pages">
+            <!-- Left page: Yesterday (read-only) -->
+            <div class="diary-page diary-page-left">
+              <div class="diary-pg-inner">
+                <div class="diary-date-hdr" id="diary-date-yest"></div>
+                <div class="diary-text-body diary-placeholder" id="diary-text-yest">Nothing written yesterday…</div>
+              </div>
+            </div>
+            <!-- Spine / binding -->
+            <div class="diary-spine">
+              <span class="diary-saved-ind" id="diary-saved-ind">saved ✓</span>
+            </div>
+            <!-- Right page: Today (editable) -->
+            <div class="diary-page diary-page-right">
+              <div class="diary-pg-inner">
+                <div class="diary-date-hdr" id="diary-date-today-diary"></div>
+                <textarea class="diary-textarea" id="diary-textarea" placeholder="Begin writing…" oninput="diaryOnInput()"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script>
     // Inline init - runs as soon as this HTML is parsed
@@ -2511,6 +2645,7 @@ function renderDaily(){
   renderDailyStats();
   renderFivePillarsPanel(ds);
   renderDvPillars(ds);
+  loadDiary();
 }
 
 function goToday(){dayOffset=0;renderDaily();}
@@ -6029,6 +6164,82 @@ function dvUpdateTimedEventDur(id, dur) {
   ev.duration = dur;
   save();
   dvRenderEvents();
+}
+
+// ══ DIARY ══
+
+let _diaryTimer = null;
+
+function _diaryFmtDate(ds) {
+  const d = new Date(ds + 'T12:00:00');
+  return d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+}
+
+function _diaryYesterday() {
+  const d = new Date(); d.setDate(d.getDate() - 1); return fmt(d);
+}
+
+async function loadDiary() {
+  const today = fmt(new Date());
+  const yesterday = _diaryYesterday();
+
+  const todayHdr = document.getElementById('diary-date-today-diary');
+  const yestHdr  = document.getElementById('diary-date-yest');
+  if (todayHdr) todayHdr.textContent = _diaryFmtDate(today);
+  if (yestHdr)  yestHdr.textContent  = _diaryFmtDate(yesterday);
+
+  try {
+    const userId = USER_ID || 'anon';
+    const rows = await sbRequest('GET',
+      `diary_entries?user_id=eq.${encodeURIComponent(userId)}&date=in.(${today},${yesterday})&select=date,content`
+    );
+    if (!Array.isArray(rows)) return;
+
+    const todayRow = rows.find(r => r.date === today);
+    const yestRow  = rows.find(r => r.date === yesterday);
+
+    const ta = document.getElementById('diary-textarea');
+    if (ta) ta.value = todayRow ? (todayRow.content || '') : '';
+
+    const yestEl = document.getElementById('diary-text-yest');
+    if (yestEl) {
+      if (yestRow && yestRow.content) {
+        yestEl.textContent = yestRow.content;
+        yestEl.classList.remove('diary-placeholder');
+      } else {
+        yestEl.textContent = 'Nothing written yesterday…';
+        yestEl.classList.add('diary-placeholder');
+      }
+    }
+  } catch(e) {}
+}
+
+function diaryOnInput() {
+  clearTimeout(_diaryTimer);
+  _diaryTimer = setTimeout(saveDiaryEntry, 1500);
+}
+
+async function saveDiaryEntry() {
+  const ta = document.getElementById('diary-textarea');
+  if (!ta) return;
+  const today = fmt(new Date());
+  const userId = USER_ID || 'anon';
+  try {
+    const res = await sbRequest('POST', 'diary_entries', {
+      id: userId + '_' + today,
+      user_id: userId,
+      date: today,
+      content: ta.value,
+      updated_at: new Date().toISOString()
+    });
+    if (res && res.ok) {
+      const ind = document.getElementById('diary-saved-ind');
+      if (ind) {
+        ind.classList.add('show');
+        setTimeout(() => ind.classList.remove('show'), 2200);
+      }
+    }
+  } catch(e) {}
 }
 </script>
 </body>
