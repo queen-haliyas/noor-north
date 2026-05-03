@@ -454,6 +454,68 @@ body{
   transition:all .15s;white-space:nowrap;flex-shrink:0;
 }
 .aff-edit-btn:hover{border-color:rgba(196,152,59,0.5);color:var(--gold);}
+.aff-card-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(232,184,75,0.55);font-family:var(--font-body);min-height:14px;}
+.aff-read-more-btn{background:none;border:none;color:rgba(232,184,75,0.65);font-size:11px;cursor:pointer;padding:0;font-family:var(--font-body);text-decoration:underline;vertical-align:baseline;}
+.aff-read-more-btn:hover{color:var(--gold);}
+/* Declarations library */
+.decl-library-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:.8rem;}
+.decl-library-sub{font-size:12px;color:var(--text-tertiary);font-style:italic;line-height:1.7;max-width:560px;margin-top:4px;}
+.decl-shuffle-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:7px 14px;font-size:12px;color:var(--text-secondary);cursor:pointer;font-family:var(--font-body);white-space:nowrap;transition:all .15s;flex-shrink:0;}
+.decl-shuffle-btn:hover{border-color:var(--gold);color:var(--gold);}
+.decl-search-wrap{margin-bottom:1rem;}
+.decl-search-input{width:100%;box-sizing:border-box;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;transition:border-color .15s;}
+.decl-search-input:focus{border-color:rgba(232,184,75,0.4);}
+.decl-section-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;}
+.decl-section-card.pillar{border-left:2.5px solid rgba(232,184,75,0.35);background:rgba(232,184,75,0.012);}
+.decl-section-hdr{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;user-select:none;}
+.decl-section-hdr:hover{background:rgba(232,184,75,0.03);}
+.decl-section-hdr-left{display:flex;align-items:center;gap:9px;}
+.decl-section-emoji{font-size:15px;}
+.decl-section-name{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);font-family:'Poppins',sans-serif;}
+.decl-section-count{font-size:10px;color:var(--text-tertiary);background:var(--charcoal-mid);border-radius:10px;padding:1px 7px;margin-left:4px;}
+.decl-section-chev{font-size:11px;color:var(--text-tertiary);transition:transform .2s;}
+.decl-section-card.open .decl-section-chev{transform:rotate(180deg);}
+.decl-section-body{display:none;padding:0 16px 12px;}
+.decl-section-card.open .decl-section-body{display:block;}
+.decl-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--charcoal-border);position:relative;}
+.decl-item:last-of-type{border-bottom:none;}
+.decl-num{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:var(--gold);min-width:24px;padding-top:3px;cursor:pointer;flex-shrink:0;}
+.decl-num:hover{opacity:.7;}
+.decl-text-wrap{flex:1;}
+.decl-text{font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:300;color:var(--text-secondary);line-height:1.9;}
+.decl-text mark{background:rgba(232,184,75,0.22);color:var(--text-primary);border-radius:2px;padding:0 1px;}
+.decl-edit-pencil{background:none;border:none;cursor:pointer;color:transparent;font-size:13px;padding:2px 4px;transition:color .15s;flex-shrink:0;margin-top:2px;font-family:var(--font-body);}
+.decl-item:hover .decl-edit-pencil{color:rgba(232,184,75,0.45);}
+.decl-edit-pencil:hover{color:var(--gold)!important;}
+.decl-edit-form{display:none;flex-direction:column;gap:8px;padding:8px 0 4px;}
+.decl-edit-form.active{display:flex;}
+.decl-edit-ta{width:100%;box-sizing:border-box;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:6px;padding:10px 12px;font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:300;color:var(--text-primary);resize:vertical;outline:none;line-height:1.9;min-height:80px;}
+.decl-edit-ta:focus{border-color:rgba(232,184,75,0.4);}
+.decl-edit-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.decl-save-btn{background:var(--gold);color:#1A1508;border:none;border-radius:4px;padding:5px 14px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font-body);}
+.decl-cancel-btn{background:none;border:0.5px solid var(--charcoal-border);color:var(--text-tertiary);border-radius:4px;padding:5px 12px;font-size:11px;cursor:pointer;font-family:var(--font-body);}
+.decl-delete-lnk{background:none;border:none;color:rgba(248,113,113,0.45);font-size:11px;cursor:pointer;font-family:var(--font-body);margin-left:auto;}
+.decl-delete-lnk:hover{color:#F87171;}
+.decl-saved-flash{font-size:11px;color:var(--gold);opacity:0;transition:opacity .3s;display:inline-block;}
+.decl-saved-flash.show{opacity:1;}
+.decl-add-btn{background:none;border:0.5px dashed var(--charcoal-border);border-radius:4px;width:100%;padding:8px;font-size:11.5px;color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);margin-top:8px;transition:all .15s;text-align:center;}
+.decl-add-btn:hover{border-color:var(--gold);color:var(--gold);}
+.decl-add-inline-form{display:none;flex-direction:column;gap:8px;padding:8px 0 4px;border-top:0.5px solid var(--charcoal-border);margin-top:4px;}
+.decl-add-inline-form.active{display:flex;}
+/* Declaration full-screen modal */
+.decl-modal-overlay{position:fixed;inset:0;background:rgba(14,14,26,0.97);z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:2rem;box-sizing:border-box;}
+.decl-modal-overlay.open{display:flex;}
+.decl-modal{max-width:620px;width:100%;position:relative;}
+.decl-modal-close{position:absolute;top:-2.5rem;right:0;background:none;border:none;color:var(--text-tertiary);font-size:22px;cursor:pointer;padding:4px 8px;font-family:var(--font-body);}
+.decl-modal-close:hover{color:var(--text-primary);}
+.decl-modal-section-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(232,184,75,0.55);font-family:'Poppins',sans-serif;margin-bottom:10px;}
+.decl-modal-num{font-family:'Poppins',sans-serif;font-size:52px;font-weight:200;color:var(--gold);line-height:1;margin-bottom:16px;}
+.decl-modal-text{font-family:'Poppins',sans-serif;font-size:16px;font-weight:300;color:#FDF6E3;line-height:1.9;margin-bottom:2rem;}
+.decl-modal-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.decl-modal-nav-btn{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:8px 20px;font-size:13px;color:var(--text-secondary);cursor:pointer;font-family:var(--font-body);transition:all .15s;}
+.decl-modal-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.decl-modal-edit-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:7px 14px;font-size:12px;color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);transition:all .15s;}
+.decl-modal-edit-btn:hover{border-color:var(--gold);color:var(--gold);}
 @media(max-width:700px){.aff-card{display:none;}}
 @media(max-width:700px){.site-header{margin-left:54px;}}
 .logo{display:flex;align-items:baseline;gap:10px;}
@@ -1875,9 +1937,8 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
     </div>
   </div>
   <div class="aff-card" id="aff-card">
-    <div class="aff-card-text" id="aff-card-text" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">
-      Loading your affirmation...
-    </div>
+    <div class="aff-card-label" id="aff-card-label"></div>
+    <div class="aff-card-text" id="aff-card-text">Loading...</div>
     <div class="aff-card-footer">
       <div class="aff-dots" id="aff-dots"></div>
       <button class="aff-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">✎ Edit</button>
@@ -2763,6 +2824,21 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
     <div class="eb-book-row"><span class="eb-book-num">05</span><div><div class="eb-book-title">Zero to One</div><div class="eb-book-author">Peter Thiel</div></div></div>
     <div class="eb-book-row"><span class="eb-book-num">06</span><div><div class="eb-book-title">The Hard Thing About Hard Things</div><div class="eb-book-author">Ben Horowitz</div></div></div>
   </div>
+
+  <!-- 100 DECLARATIONS LIBRARY -->
+  <div id="decl-library-section" style="margin-top:2.5rem">
+    <div class="decl-library-header">
+      <div>
+        <div style="font-family:var(--font-display);font-size:18px;font-weight:300;color:var(--text-primary);letter-spacing:.03em">100 Declarations of Gratitude &amp; Manifestation</div>
+        <div class="decl-library-sub">I speak these truths as already done. I feel them in my bones. I am grateful beyond measure.</div>
+      </div>
+      <button class="decl-shuffle-btn" onclick="shuffleDeclarations()">⇄ Shuffle</button>
+    </div>
+    <div class="decl-search-wrap">
+      <input type="text" id="decl-search" class="decl-search-input" placeholder="Search declarations..." oninput="declSearchFilter(this.value)">
+    </div>
+    <div id="decl-sections-container"></div>
+  </div>
 </div>
 
 </div>
@@ -3038,6 +3114,21 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <div id="voice-memos-list"></div>
 </div>
 
+<!-- DECLARATION MODAL -->
+<div class="decl-modal-overlay" id="decl-modal-overlay">
+  <div class="decl-modal">
+    <button class="decl-modal-close" onclick="closeDeclModal()">✕</button>
+    <div class="decl-modal-section-lbl" id="decl-modal-lbl"></div>
+    <div class="decl-modal-num" id="decl-modal-num"></div>
+    <div class="decl-modal-text" id="decl-modal-text"></div>
+    <div class="decl-modal-nav">
+      <button class="decl-modal-nav-btn" onclick="navDeclModal(-1)">← Prev</button>
+      <button class="decl-modal-edit-btn" onclick="editFromModal()">✎ Edit this declaration</button>
+      <button class="decl-modal-nav-btn" onclick="navDeclModal(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
 <!-- TWENTY MODAL -->
 <div class="modal-overlay" id="twenty-modal-overlay" style="display:none">
   <div class="modal" style="max-width:480px;width:90%;max-height:90vh;overflow-y:auto">
@@ -3148,6 +3239,120 @@ const PLAN_LAYERS=[
   {id:'monthly',title:'April 2026',sub:'This month',color:'#D85A30'},
   {id:'weekly',title:'Week 18',sub:'This week',color:'#E8B84B'}
 ];
+const DECLARATIONS_DEFAULT=[
+  // ─── 🕌 FAITH & SPIRITUAL LIFE (1–10) ───
+  {number:1,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am so grateful to Allah for waking me up this morning in full health, safety, and purpose — knowing that every breath is a gift I do not deserve but receive with full humility."},
+  {number:2,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am so deeply thankful that my faith is the foundation of everything I build — every line of code, every architectural drawing, every deal closed is an act of worship."},
+  {number:3,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am overwhelmed with gratitude for the gift of Fajr prayer — that I can stand before my Lord in the stillness of the morning before the world wakes up, and offer everything I have."},
+  {number:4,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am so grateful that my dua is answered — that Al-Mujeeb hears my every whisper and responds with wisdom, timing, and provisions I could never have engineered myself."},
+  {number:5,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am deeply thankful for the 99 Names of Allah and the roadmap they provide — my provision, my protection, my creativity, and my patience are all held within His attributes."},
+  {number:6,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am overwhelmed with gratitude for the gift of Islamic knowledge — that I live in a time where Quran, hadith, and scholarship are accessible from anywhere in the world."},
+  {number:7,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am so grateful for the clarity that comes after Tahajjud — that in the quiet hours of the night, my mind sharpens, my direction becomes clear, and my faith is renewed."},
+  {number:8,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am deeply thankful for every test Allah has placed in my path — knowing that every difficulty is designed to elevate me, not crush me, and that His plan is perfect."},
+  {number:9,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am overwhelmed with gratitude for the blessing of Ramadan — the annual reset that strips away distraction, intensifies worship, and reconnects me to my purpose."},
+  {number:10,section:'FAITH & SPIRITUAL LIFE',section_emoji:'🕌',pillar_number:null,text:"I am so grateful that I get to build my empire in the name of Allah — that my success is a demonstration that faith and ambition are not opposites but expressions of the same conviction."},
+  // ─── ❤️ MARRIAGE & LOVE (11–18) ───
+  {number:11,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am so grateful for Fadlan — the man who chose me, who believes in me unconditionally, and who makes every sacrifice worthwhile just by being in the room."},
+  {number:12,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am deeply thankful for a marriage built on tawakkul and teamwork — where we challenge each other to be better while wrapped in the safety of halal love."},
+  {number:13,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am overwhelmed with gratitude that we share a vision — that Tiger & Dragon is not just a brand but a covenant between two people who have chosen the same lifetime direction."},
+  {number:14,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am so grateful for the peace in our home — that our marriage is a sanctuary from the world, a place where I can take off every armour and simply be loved."},
+  {number:15,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am deeply thankful for every challenge we have worked through together — knowing that our communication grows stronger and more honest with every year that passes."},
+  {number:16,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am overwhelmed with gratitude for the gift of building a halal love story others can witness and be inspired by — a Muslim marriage that is simultaneously sacred and extraordinary."},
+  {number:17,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am so grateful that Fadlan supports my empire-building ambitions — that he sees the vision with me, holds it with me, and never asks me to shrink."},
+  {number:18,section:'MARRIAGE & LOVE',section_emoji:'❤️',pillar_number:null,text:"I am deeply thankful for the future family we are building — for the children who will one day call this empire home, and for the legacy of love we are laying down before they arrive."},
+  // ─── 🧠 PILLAR ONE: ME LIFE (19–26) ───
+  {number:19,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am so grateful for the woman I am becoming — that every day I shed another layer of fear and smallness and step more fully into Halima Yasmin 3.0: Principled. Purposeful. Powerful."},
+  {number:20,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am deeply thankful for my daily rituals — that Fajr, movement, journaling, and deep work are the structure my highest self lives inside of, every single day."},
+  {number:21,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am overwhelmed with gratitude for the body that carries my mission — two hands to build with, a mind that never stops creating, and a spirit that refuses to quit."},
+  {number:22,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am so grateful for emotional intelligence — that I have done the inner work to understand my patterns, my triggers, and my gifts, and that this self-knowledge is my competitive advantage."},
+  {number:23,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am deeply thankful for every book I have read — every idea that entered my mind through the written word and became part of how I see the world and build within it."},
+  {number:24,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am overwhelmed with gratitude for the healing I have received — that trauma does not define me, I have chosen curiosity over resentment, and my story is one of radical transformation."},
+  {number:25,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am so grateful for the clarity of my values — that I know what I stand for, what I will not compromise, and what kind of leader, partner, and human being I am committed to being."},
+  {number:26,section:'PILLAR ONE: ME LIFE',section_emoji:'🧠',pillar_number:'ONE',text:"I am deeply thankful for the gift of discipline — that I can sit with discomfort, do the unglamorous work, and trust that the compound interest of daily action builds something extraordinary."},
+  // ─── 🐯 PILLAR TWO: TIGERFLOW AI (27–38) ───
+  {number:27,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am so grateful that TigerFlow AI exists — that the vision that lived in my mind for years is now a real product, in a real codebase, solving a real problem for real people."},
+  {number:28,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am deeply thankful for Bari — the internal name that carries the soul of this platform, named with intention and building with integrity toward a standard no competitor can match."},
+  {number:29,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am overwhelmed with gratitude for the technology stack — React, FastAPI, Supabase, and Claude — that gives me the power to build a world-class SaaS without waiting for permission or investment."},
+  {number:30,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am so grateful for every line of code I have ever written — knowing that my technical skills grow daily and that the product I am building is mine, fully and completely."},
+  {number:31,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am deeply thankful for The Twenty mission — for the clarity, the urgency, and the audacity of signing 20 London prime brokerages by 30 November 2026 and boarding a plane to Asia."},
+  {number:32,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am overwhelmed with gratitude for every discovery call I have ever had — every conversation with a principal that taught me what this market needs, fears, and is ready to invest in."},
+  {number:33,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am so grateful for the proptech market — for the 22,000 UK estate agencies who need what I have built, and the 20 London prime brokerages who are about to become my founding logos."},
+  {number:34,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am deeply thankful for the pricing model I have designed — Tiger, Tiger Pro, Tiger Elite — structured so that every client is profitable from day one and every setup fee funds the next phase."},
+  {number:35,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am overwhelmed with gratitude for the OpenClaw network and Khubair's circle — the warm introductions that open doors no cold outreach could ever force, and the trust that precedes every conversation."},
+  {number:36,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am so grateful for Building Bari — the Substack that documents this journey in public, attracts the right brokerages, and builds credibility that no single LinkedIn post could create alone."},
+  {number:37,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am deeply thankful for Movement I — The Foundation — that I am in the earliest, most exciting phase of this mission, with the full journey still ahead and the first paying logo within reach."},
+  {number:38,section:'PILLAR TWO: TIGERFLOW AI',section_emoji:'🐯',pillar_number:'TWO',text:"I am overwhelmed with gratitude that I am building something that will outlive my presence at the helm — a platform that runs, scales, and serves long after I have moved on to the next frontier."},
+  // ─── 🐉 PILLAR THREE: TIGER + DRAGON (39–46) ───
+  {number:39,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am so grateful for the Tiger & Dragon brand — for the love story at its centre, the creative universe it contains, and the lives it will touch when it reaches the world it is meant for."},
+  {number:40,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am deeply thankful for the books we are writing — for the ideas that needed two minds to conceive and two voices to express, and the world-building that happens when we create together."},
+  {number:41,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am overwhelmed with gratitude for the podcast we are building — for the conversations that will spark in listeners, and the intimacy of two people who love each other deeply choosing to share that love in public."},
+  {number:42,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am so grateful for the Tiger & Dragon visual identity — for the duality it holds, the strength of the tiger and the grace of the dragon, and the way it captures everything we are together."},
+  {number:43,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am deeply thankful that our creative projects have no ceiling — that Tiger & Dragon is not a side hustle but a parallel empire, a vehicle for art, love, story, and impact."},
+  {number:44,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am overwhelmed with gratitude for the collaboration between us — that Fadlan brings what I cannot, I bring what he cannot, and together we make something neither could have made alone."},
+  {number:45,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am so grateful for the future community Tiger & Dragon will hold — the readers, listeners, and dreamers who will find permission in our story to build their own extraordinary life."},
+  {number:46,section:'PILLAR THREE: TIGER + DRAGON',section_emoji:'🐉',pillar_number:'THREE',text:"I am deeply thankful for the day Tiger & Dragon generates its first pound of revenue — not because of the money, but because it confirms that art, love, and commerce can coexist beautifully."},
+  // ─── 🌿 PILLAR FOUR: MYCELINK (47–52) ───
+  {number:47,section:'PILLAR FOUR: MYCELINK',section_emoji:'🌿',pillar_number:'FOUR',text:"I am so grateful for Mycelink — for the vision of a community where ambitious, purposeful people find each other, support each other, and build together."},
+  {number:48,section:'PILLAR FOUR: MYCELINK',section_emoji:'🌿',pillar_number:'FOUR',text:"I am deeply thankful for the people who will one day gather inside Mycelink — the founders, creators, spiritual seekers, and empire builders who are looking for their tribe."},
+  {number:49,section:'PILLAR FOUR: MYCELINK',section_emoji:'🌿',pillar_number:'FOUR',text:"I am overwhelmed with gratitude for the concept of network as infrastructure — that Mycelink is not just a platform but a living ecosystem, like mycelium beneath the soil connecting everything above ground."},
+  {number:50,section:'PILLAR FOUR: MYCELINK',section_emoji:'🌿',pillar_number:'FOUR',text:"I am so grateful for the patience required to build a community well — that I am learning to lead with service, listen before I speak, and create a space where belonging comes before commerce."},
+  {number:51,section:'PILLAR FOUR: MYCELINK',section_emoji:'🌿',pillar_number:'FOUR',text:"I am deeply thankful for every person who has ever made me feel part of something larger than myself — their generosity of spirit is the blueprint I am building Mycelink from."},
+  {number:52,section:'PILLAR FOUR: MYCELINK',section_emoji:'🌿',pillar_number:'FOUR',text:"I am overwhelmed with gratitude that Mycelink exists as a fourth pillar — proof that my ambition is not only economic but human, not only technological but deeply, irreducibly relational."},
+  // ─── 🏛 PILLAR FIVE: ARCHITECTURE PORTFOLIO (53–60) ───
+  {number:53,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am so grateful for my training as an architect — for the years of discipline, spatial thinking, and design rigour that trained my mind to see the world as a system of interrelated parts."},
+  {number:54,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am deeply thankful for every project in my portfolio — The Atelier, the Living Pavilion, Rumah Rasa, Masjid al-Hayat — each one a love letter to space, material, light, and human experience."},
+  {number:55,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am overwhelmed with gratitude for the RIBA framework — for the structured process that takes a building from dream to reality, and my ability to navigate every stage with confidence."},
+  {number:56,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am so grateful for the clients who trust me with their most intimate spaces — their homes, places of worship, and gathering places — knowing I will honour the weight of that trust."},
+  {number:57,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am deeply thankful for the intersection of faith and architecture — for sacred geometry, qibla orientation, and ablution rituals that inform how I design spaces for Muslim communities."},
+  {number:58,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am overwhelmed with gratitude for the 25 projects in my portfolio vision — each one a chance to leave a physical mark on the world that will outlive me by centuries."},
+  {number:59,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am so grateful for the skill of drawing by hand — for the intimacy of pencil on paper and the way a hand sketch can contain more soul than any digital rendering ever will."},
+  {number:60,section:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',section_emoji:'🏛',pillar_number:'FIVE',text:"I am deeply thankful that architecture and technology are not opposites in my life — that building software and building buildings have taught me the same truth: systems matter, beauty matters, people matter most."},
+  // ─── 💰 WEALTH & GENERATIONAL LEGACY (61–68) ───
+  {number:61,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am so grateful to be on the path to £24 billion — not for the number itself but for what it represents: a life of maximum contribution, maximum impact, and maximum trust in Allah's provision."},
+  {number:62,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am deeply thankful for my relationship with money — that I see it as a tool and never a master, that I spend with intention, save with purpose, and give with joy."},
+  {number:63,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am overwhelmed with gratitude for the clarity of my Wealth Allocation Table — knowing exactly how every pound I earn will be invested, protected, and multiplied for the generations who follow me."},
+  {number:64,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am so grateful for halal investing — for the growing ecosystem of Islamic finance that allows me to build wealth without compromising my deen, proving that integrity and prosperity are not in conflict."},
+  {number:65,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am deeply thankful for the concept of generational wealth — that I am building not just for myself but for my children's children, and that every discipline I practise today is a gift to people not yet born."},
+  {number:66,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am overwhelmed with gratitude for the property I will own — the homes in every city I operate in, the assets that generate income while I sleep, and the security of building on solid ground."},
+  {number:67,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am so grateful for every setup fee, every monthly subscription, and every annual contract — knowing that these recurring, compounding flows of income are the engine of everything the empire will become."},
+  {number:68,section:'WEALTH & GENERATIONAL LEGACY',section_emoji:'💰',pillar_number:null,text:"I am deeply thankful for the financial discipline I have cultivated — the budget, the targets, the cash flow forecast — and for the peace of mind that comes from knowing exactly where I stand and where I am going."},
+  // ─── 🌍 IMPACT & PHILANTHROPY (69–76) ───
+  {number:69,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am so grateful for the 7 masjids I will build — for the communities of worshippers who will stand on those floors, make sujood on those tiles, and carry du'a into the air of spaces I designed for them."},
+  {number:70,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am deeply thankful for the 7 schools I will fund — for the children who will sit in those classrooms, receive education as a right not a privilege, and go on to do things I cannot yet imagine."},
+  {number:71,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am overwhelmed with gratitude for zakat — for the obligation that keeps my wealth in relationship with those who need it most, and for the spiritual protection that giving provides."},
+  {number:72,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am so grateful for the Fathema Ali Trust — for the mission of bringing medical care to those who cannot access it, and for carrying my mother's name as a permanent act of sadaqah jariyah."},
+  {number:73,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am deeply thankful for the free AI tools I will provide to Muslim-owned small businesses — knowing that technology, when accessible, is one of the greatest levellers of all time."},
+  {number:74,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am overwhelmed with gratitude for the million families I intend to lift — not as an abstraction but as a concrete commitment, one decision, one hiring choice, one donation at a time."},
+  {number:75,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am so grateful for the example I am setting — that every Muslim woman watching me build understands that faith, ambition, and generosity are not in competition but in profound alignment."},
+  {number:76,section:'IMPACT & PHILANTHROPY',section_emoji:'🌍',pillar_number:null,text:"I am deeply thankful for the legacy of impact over ego — that when I am gone, what I will be remembered for is what I gave, not what I accumulated."},
+  // ─── 👑 PERSONAL GROWTH & IDENTITY (77–84) ───
+  {number:77,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am so grateful to be Halima Yasmin 3.0 — not the version shaped by others' expectations, not the version carrying old wounds, but the version who has done the work and chosen who she is."},
+  {number:78,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am deeply thankful for the identity of a Muslim founder — for the way my faith disciplines my ambition, my ambition funds my mission, and my mission returns me always to gratitude."},
+  {number:79,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am overwhelmed with gratitude for the courage to be seen — to build in public, post on LinkedIn, write on Substack, and stand before a sceptical Mayfair principal and pitch with full conviction."},
+  {number:80,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am so grateful for failure — for every pitch that didn't land, every build that didn't ship, every plan that needed to change — knowing each was a necessary step toward the right outcome."},
+  {number:81,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am deeply thankful for the habit of reading — that I have never wished I had read less, and that every book I finish makes me a better founder, leader, wife, and human being."},
+  {number:82,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am overwhelmed with gratitude for my curiosity — that I find everything interesting, I am never bored, and the world is inexhaustibly fascinating and full of lessons dressed as ordinary moments."},
+  {number:83,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am so grateful for the decision to move to Asia — for the audacity of choosing a departure date, and making the rest of the year the most focused, intentional sprint of my life."},
+  {number:84,section:'PERSONAL GROWTH & IDENTITY',section_emoji:'👑',pillar_number:null,text:"I am deeply thankful for the woman I have been — for every version of me that survived, adapted, and kept going — because without her I could not be here, and without here I cannot become what is coming next."},
+  // ─── ✨ LIFESTYLE & LEGACY (85–100) ───
+  {number:85,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am so grateful for the life I am designing — not waiting for it to happen, not fitting into someone else's template, but consciously constructing a life that looks and feels like me."},
+  {number:86,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am deeply thankful for the mornings — for the stillness before sunrise, the ritual that grounds me, and the knowledge that how I start the day is how I build the empire."},
+  {number:87,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am overwhelmed with gratitude for great food eaten with intention — for the joy of nourishment, the pleasure of a meal shared, and the discipline of eating in a way that honours my body."},
+  {number:88,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am so grateful for travel — for every country I will stand in, every culture I will learn from, every landscape that reminds me how vast the world is and how many people need what I am building."},
+  {number:89,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am deeply thankful for the Asia chapter — for Singapore, Malaysia, the food, the pace, the Muslim community in a gleaming city — and for the clarity that will come when I arrive with twenty logos signed."},
+  {number:90,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am overwhelmed with gratitude for beautiful spaces — for the homes, cafés, hotels, and prayer rooms that remind me why great design matters and what I am trying to create through architecture."},
+  {number:91,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am so grateful for the Sundays I protect — for the deliberate decision to rest, reconnect, and remember that I am not only a founder but a human being with a spirit that needs stillness to stay strong."},
+  {number:92,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am deeply thankful for music that moves me, art that stops me, and poetry that articulates what I have felt but not yet found words for — the full sensory richness of being alive."},
+  {number:93,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am overwhelmed with gratitude for the friends who see me clearly — the ones who know my dreams, challenge my reasoning, and celebrate my wins as if they were their own."},
+  {number:94,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am so grateful for the body of work I am creating — for the day I look back and see TigerFlow, Tiger & Dragon, Mycelink, 25 buildings, 7 masjids, 7 schools, and say: I did not waste this life."},
+  {number:95,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am deeply thankful for Noor North — this personal operating system that holds my rituals, plans, declarations, memories, and the entire architecture of who I am and who I am becoming."},
+  {number:96,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am overwhelmed with gratitude for the clarity of my mission — for knowing, with full certainty, why I am here, what I am building, and who I am building it for."},
+  {number:97,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am so grateful for the plane ticket to Asia on 30 November 2026 — for the deadline that focuses everything, the departure that rewards everything, and the new chapter that awaits on the other side."},
+  {number:98,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am deeply thankful for the unshakeable conviction that I will complete The Twenty — that 20 logos will be signed, onboarded, and thriving before I board that plane, and the empire will continue without me in every room."},
+  {number:99,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am overwhelmed with gratitude for the life ahead of me — for the versions of Halima who will exist in 5, 10, and 50 years — and for the honour of building the foundation they will stand on."},
+  {number:100,section:'LIFESTYLE & LEGACY',section_emoji:'✨',pillar_number:null,text:"I am so grateful for this exact moment — this breath, this day, this declaration — knowing that gratitude is not just a practice but a portal, and that through it I receive everything I have asked for and more."},
+];
+
 const DEFAULT_AFFIRMATIONS=[
   'I honour my time and the time of others. Being early is an act of respect and self-discipline that reflects the leader I am becoming.',
   'I nourish my body with intention. Food is fuel for my mission, and I eat in a way that keeps my energy aligned with my ambitions.',
@@ -3161,6 +3366,9 @@ const DEFAULT_AFFIRMATIONS=[
   'True wisdom is knowing what I do not know. My willingness to learn is my greatest competitive advantage.',
 ];
 
+let _declData = [];
+let _affPool = [];
+let _declModalIdx = 0;
 let dayOffset=0;
 let data={};
 let currentNoteId=null;
@@ -3262,7 +3470,7 @@ function showPage(id,btn){
   if(id==='planning'){renderPlanning();renderPlanningTimeline();}
   if(id==='empire'){renderEmpire();renderStackedBar();renderPolarGrid();}
   if(id==='notes')renderNotes();
-  if(id==='affirmations')renderAffirmations();
+  if(id==='affirmations'){renderAffirmations();renderDeclarationsLibrary();}
   if(id==='calendar'){renderCalendar();}
   if(id==='names'){todaysName();renderNamesGrid();renderNamesSunburst();}
   if(id==='review'){switchRevTab('weekly',document.querySelector('.rev-tab'));}
@@ -3270,19 +3478,44 @@ function showPage(id,btn){
   if(id==='voice'){renderVoiceMemos();}
 }
 
-// AFFIRMATIONS
+// AFFIRMATIONS + DECLARATIONS UNIFIED BANNER
 let _affTimer=null;
+const _DECL_MAX_CHARS=180;
+
+function _buildAffPool(){
+  const affs=(data.affirmations||DEFAULT_AFFIRMATIONS).map(t=>({text:t,label:'🌱 Daily Affirmation',type:'affirmation',num:null}));
+  const decls=(_declData.length?_declData:DECLARATIONS_DEFAULT).map(d=>({text:d.text,label:d.section_emoji+' '+d.section,type:'declaration',num:d.number}));
+  const all=[...affs,...decls];
+  for(let i=all.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[all[i],all[j]]=[all[j],all[i]];}
+  return all;
+}
+function _affSetContent(item){
+  const lbl=document.getElementById('aff-card-label');
+  const textEl=document.getElementById('aff-card-text');
+  if(!textEl)return;
+  if(lbl)lbl.textContent=item.label||'';
+  const isLong=item.text.length>_DECL_MAX_CHARS;
+  const displayText=isLong?item.text.slice(0,_DECL_MAX_CHARS)+'…':'"'+item.text+'"';
+  if(isLong&&item.num!=null){
+    textEl.innerHTML=_escHtml(displayText)+' <button class="aff-read-more-btn" onclick="openDeclModal('+item.num+')">Read more</button>';
+  } else {
+    textEl.textContent=displayText;
+  }
+}
+function _escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function _affFadeTo(idx){
-  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
-  if(!affs.length)return;
-  currentAffIdx=((idx%affs.length)+affs.length)%affs.length;
+  if(!_affPool.length)return;
+  currentAffIdx=((idx%_affPool.length)+_affPool.length)%_affPool.length;
   const textEl=document.getElementById('aff-card-text');
   if(!textEl)return;
   textEl.classList.add('aff-fading');
+  const lbl=document.getElementById('aff-card-label');
+  if(lbl)lbl.style.opacity='0';
   setTimeout(()=>{
-    textEl.textContent='"'+affs[currentAffIdx]+'"';
+    _affSetContent(_affPool[currentAffIdx]);
     textEl.classList.remove('aff-fading');
-    _renderAffDots(affs.length);
+    if(lbl)lbl.style.opacity='1';
+    _renderAffDots(_affPool.length);
   },1200);
 }
 function _renderAffDots(total){
@@ -3293,26 +3526,21 @@ function _renderAffDots(total){
   for(let i=0;i<max;i++){
     const b=document.createElement('button');
     b.className='aff-dot'+(i===currentAffIdx?' active':'');
-    b.onclick=(e=>{e.stopPropagation();jumpToAffirmation(i);});
+    b.onclick=(e=>{e.stopPropagation();_affFadeTo(i);});
     dots.appendChild(b);
   }
 }
 function renderAffirmationBar(){
-  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
-  if(!affs.length)return;
-  if(currentAffIdx>=affs.length)currentAffIdx=0;
-  const textEl=document.getElementById('aff-card-text');
-  if(!textEl)return;
-  textEl.textContent='"'+affs[currentAffIdx]+'"';
-  _renderAffDots(affs.length);
+  _affPool=_buildAffPool();
+  if(!_affPool.length)return;
+  if(currentAffIdx>=_affPool.length)currentAffIdx=0;
+  _affSetContent(_affPool[currentAffIdx]);
+  _renderAffDots(_affPool.length);
   if(_affTimer)clearInterval(_affTimer);
-  _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),60000);
+  _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),90000);
 }
 function jumpToAffirmation(idx){_affFadeTo(idx);}
-function prevAffirmation(){
-  const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
-  _affFadeTo(currentAffIdx-1+affs.length);
-}
+function prevAffirmation(){_affFadeTo(currentAffIdx-1+(_affPool.length||1));}
 function nextAffirmation(){_affFadeTo(currentAffIdx+1);}
 function renderAffirmations(){
   const affs=data.affirmations||DEFAULT_AFFIRMATIONS;
@@ -3335,6 +3563,218 @@ function addAffirmation(){
 }
 function deleteAffirmation(idx){
   data.affirmations.splice(idx,1);save();renderAffirmations();renderAffirmationBar();
+}
+
+// ── DECLARATIONS ──
+const _DECL_SECTIONS=[
+  {key:'FAITH & SPIRITUAL LIFE',emoji:'🕌',pillar:false},
+  {key:'MARRIAGE & LOVE',emoji:'❤️',pillar:false},
+  {key:'PILLAR ONE: ME LIFE',emoji:'🧠',pillar:true},
+  {key:'PILLAR TWO: TIGERFLOW AI',emoji:'🐯',pillar:true},
+  {key:'PILLAR THREE: TIGER + DRAGON',emoji:'🐉',pillar:true},
+  {key:'PILLAR FOUR: MYCELINK',emoji:'🌿',pillar:true},
+  {key:'PILLAR FIVE: ARCHITECTURE PORTFOLIO',emoji:'🏛',pillar:true},
+  {key:'WEALTH & GENERATIONAL LEGACY',emoji:'💰',pillar:false},
+  {key:'IMPACT & PHILANTHROPY',emoji:'🌍',pillar:false},
+  {key:'PERSONAL GROWTH & IDENTITY',emoji:'👑',pillar:false},
+  {key:'LIFESTYLE & LEGACY',emoji:'✨',pillar:false},
+];
+
+async function loadDeclarations(){
+  try{
+    const rows=await sbRequest('GET','declarations?select=*&order=number.asc');
+    if(Array.isArray(rows)&&rows.length>0){
+      _declData=rows;
+    } else if(Array.isArray(rows)&&rows.length===0){
+      _declData=[...DECLARATIONS_DEFAULT];
+      seedDeclarations();
+    } else {
+      _declData=[...DECLARATIONS_DEFAULT];
+    }
+  }catch(e){_declData=[...DECLARATIONS_DEFAULT];}
+  renderAffirmationBar();
+  if(document.getElementById('page-affirmations')&&document.getElementById('page-affirmations').classList.contains('active'))renderDeclarationsLibrary();
+}
+
+async function seedDeclarations(){
+  try{
+    for(const d of DECLARATIONS_DEFAULT){
+      await sbRequest('POST','declarations',{...d,id:undefined,updated_at:new Date().toISOString()});
+    }
+  }catch(e){console.warn('Seed failed',e);}
+}
+
+function _getDeclList(){return _declData.length?_declData:DECLARATIONS_DEFAULT;}
+
+function renderDeclarationsLibrary(searchQuery){
+  const container=document.getElementById('decl-sections-container');
+  if(!container)return;
+  const list=_getDeclList();
+  const q=(searchQuery||'').toLowerCase().trim();
+  container.innerHTML=_DECL_SECTIONS.map((sec,si)=>{
+    let items=list.filter(d=>d.section===sec.key);
+    if(q)items=items.filter(d=>d.text.toLowerCase().includes(q)||String(d.number).includes(q));
+    if(q&&!items.length)return'';
+    const openClass=q?'open':'';
+    return`<div class="decl-section-card${sec.pillar?' pillar':''} ${openClass}" id="decl-sec-${si}">
+      <div class="decl-section-hdr" onclick="toggleDeclSection(${si})">
+        <div class="decl-section-hdr-left">
+          <span class="decl-section-emoji">${sec.emoji}</span>
+          <span class="decl-section-name">${sec.key}</span>
+          <span class="decl-section-count">${items.length}</span>
+        </div>
+        <span class="decl-section-chev">▼</span>
+      </div>
+      <div class="decl-section-body">
+        ${items.map(d=>{
+          const txt=q?d.text.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>'):_escHtml(d.text);
+          return`<div class="decl-item" id="decl-item-${d.number}">
+            <span class="decl-num" onclick="openDeclModal(${d.number})">${d.number}.</span>
+            <div class="decl-text-wrap">
+              <div class="decl-text">${q?txt:_escHtml(d.text)}</div>
+              <div class="decl-edit-form" id="decl-edit-form-${d.number}">
+                <textarea class="decl-edit-ta" id="decl-edit-ta-${d.number}" rows="3">${_escHtml(d.text)}</textarea>
+                <div class="decl-edit-actions">
+                  <button class="decl-save-btn" onclick="saveDeclEdit(${d.number})">Save</button>
+                  <button class="decl-cancel-btn" onclick="cancelDeclEdit(${d.number})">Cancel</button>
+                  <span class="decl-saved-flash" id="decl-saved-${d.number}">✓ Saved</span>
+                  <button class="decl-delete-lnk" onclick="confirmDeleteDecl(${d.number})" id="decl-del-btn-${d.number}">Delete</button>
+                </div>
+              </div>
+            </div>
+            <button class="decl-edit-pencil" onclick="startDeclEdit(${d.number})" title="Edit">✎</button>
+          </div>`;
+        }).join('')}
+        <button class="decl-add-btn" onclick="toggleDeclAddForm(${si})">+ Add declaration to this section</button>
+        <div class="decl-add-inline-form" id="decl-add-form-${si}">
+          <textarea class="decl-edit-ta" id="decl-add-ta-${si}" rows="3" placeholder="I am so grateful that..."></textarea>
+          <div class="decl-edit-actions">
+            <button class="decl-save-btn" onclick="saveNewDecl(${si},'${sec.key}','${sec.emoji}')">Save</button>
+            <button class="decl-cancel-btn" onclick="toggleDeclAddForm(${si})">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleDeclSection(si){
+  const card=document.getElementById('decl-sec-'+si);
+  if(card)card.classList.toggle('open');
+}
+function shuffleDeclarations(){
+  for(let i=_declData.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[_declData[i],_declData[j]]=[_declData[j],_declData[i]];}
+  renderDeclarationsLibrary();
+}
+function declSearchFilter(q){renderDeclarationsLibrary(q);}
+
+function startDeclEdit(num){
+  const form=document.getElementById('decl-edit-form-'+num);
+  const ta=document.getElementById('decl-edit-ta-'+num);
+  const d=_getDeclList().find(x=>x.number===num);
+  if(form){form.classList.add('active');}
+  if(ta&&d){ta.value=d.text;ta.focus();}
+}
+function cancelDeclEdit(num){
+  const form=document.getElementById('decl-edit-form-'+num);
+  if(form)form.classList.remove('active');
+}
+async function saveDeclEdit(num){
+  const ta=document.getElementById('decl-edit-ta-'+num);
+  if(!ta)return;
+  const newText=ta.value.trim();
+  if(!newText)return;
+  const idx=_declData.findIndex(x=>x.number===num);
+  if(idx===-1)return;
+  _declData[idx].text=newText;
+  _declData[idx].updated_at=new Date().toISOString();
+  cancelDeclEdit(num);
+  const textEl=document.querySelector('#decl-item-'+num+' .decl-text');
+  if(textEl)textEl.textContent=newText;
+  const flash=document.getElementById('decl-saved-'+num);
+  if(flash){flash.classList.add('show');setTimeout(()=>flash.classList.remove('show'),1500);}
+  renderAffirmationBar();
+  showSync();
+  try{await sbRequest('POST','declarations',{..._declData[idx]});showSyncOk();}catch(e){showSyncErr();}
+}
+function confirmDeleteDecl(num){
+  const btn=document.getElementById('decl-del-btn-'+num);
+  if(!btn)return;
+  if(btn.dataset.confirm){
+    deleteDeclaration(num);
+  } else {
+    btn.textContent='Confirm delete?';btn.style.color='#F87171';btn.dataset.confirm='1';
+    setTimeout(()=>{if(btn){btn.textContent='Delete';btn.style.color='';delete btn.dataset.confirm;}},3000);
+  }
+}
+async function deleteDeclaration(num){
+  _declData=_declData.filter(x=>x.number!==num);
+  renderDeclarationsLibrary();
+  renderAffirmationBar();
+  try{await sbRequest('DELETE','declarations?number=eq.'+num);}catch(e){console.warn('Delete failed',e);}
+}
+function toggleDeclAddForm(si){
+  const form=document.getElementById('decl-add-form-'+si);
+  if(form)form.classList.toggle('active');
+}
+async function saveNewDecl(si,section,emoji){
+  const ta=document.getElementById('decl-add-ta-'+si);
+  if(!ta)return;
+  const text=ta.value.trim();
+  if(!text)return;
+  const list=_getDeclList();
+  const newNum=(list.length?Math.max(...list.map(d=>d.number)):0)+1;
+  const newDecl={number:newNum,section,section_emoji:emoji,pillar_number:null,text,updated_at:new Date().toISOString()};
+  _declData.push(newDecl);
+  ta.value='';
+  toggleDeclAddForm(si);
+  renderDeclarationsLibrary();
+  renderAffirmationBar();
+  showSync();
+  try{await sbRequest('POST','declarations',newDecl);showSyncOk();}catch(e){showSyncErr();}
+}
+
+// Declaration modal
+function openDeclModal(num){
+  const list=_getDeclList();
+  const idx=list.findIndex(d=>d.number===num);
+  if(idx===-1)return;
+  _declModalIdx=idx;
+  _renderDeclModal(idx);
+  const overlay=document.getElementById('decl-modal-overlay');
+  if(overlay)overlay.classList.add('open');
+}
+function closeDeclModal(){
+  const overlay=document.getElementById('decl-modal-overlay');
+  if(overlay)overlay.classList.remove('open');
+}
+function navDeclModal(dir){
+  const list=_getDeclList();
+  _declModalIdx=((_declModalIdx+dir)+list.length)%list.length;
+  _renderDeclModal(_declModalIdx);
+}
+function _renderDeclModal(idx){
+  const d=_getDeclList()[idx];
+  if(!d)return;
+  const lbl=document.getElementById('decl-modal-lbl');
+  const num=document.getElementById('decl-modal-num');
+  const txt=document.getElementById('decl-modal-text');
+  if(lbl)lbl.textContent=d.section_emoji+' '+d.section;
+  if(num)num.textContent=d.number;
+  if(txt)txt.textContent=d.text;
+}
+function editFromModal(){
+  const d=_getDeclList()[_declModalIdx];
+  if(!d)return;
+  closeDeclModal();
+  showPage('affirmations',document.querySelectorAll('.nav-tab')[5]);
+  setTimeout(()=>{
+    const sec=_DECL_SECTIONS.findIndex(s=>s.key===d.section);
+    if(sec>-1){const card=document.getElementById('decl-sec-'+sec);if(card&&!card.classList.contains('open'))card.classList.add('open');}
+    startDeclEdit(d.number);
+    const item=document.getElementById('decl-item-'+d.number);
+    if(item)item.scrollIntoView({behavior:'smooth',block:'center'});
+  },200);
 }
 
 // DAILY FLOW
@@ -5984,6 +6424,7 @@ function initPlanningData() {
 load();
 initPlanningData();
 loadTwenty();
+loadDeclarations();
 renderHeader();
 renderAffirmationBar();
 renderDaily();
