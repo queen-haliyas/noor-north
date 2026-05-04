@@ -2130,6 +2130,19 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 
               <div class="dsp-rule"></div>
 
+              <!-- Daily Entry -->
+              <div class="dsp-prompt-block">
+                <div class="dsp-prompt-label">Daily Entry</div>
+                <textarea class="dsp-reflect-ta" id="dsp-entry-1" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+                <textarea class="dsp-reflect-ta" id="dsp-entry-2" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+                <textarea class="dsp-reflect-ta" id="dsp-entry-3" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+                <textarea class="dsp-reflect-ta" id="dsp-entry-4" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+                <textarea class="dsp-reflect-ta" id="dsp-entry-5" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+                <textarea class="dsp-reflect-ta" id="dsp-entry-6" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+              </div>
+
+              <div class="dsp-rule"></div>
+
               <!-- 9 Reflection prompts -->
               <div class="dsp-prompt-block">
                 <div class="dsp-prompt-label">Something good that happened today</div>
@@ -7816,7 +7829,9 @@ function _dspApply(row) {
 
   _dspStarred = false;
   ['dsp-grat-1','dsp-grat-2','dsp-grat-3','dsp-man-1','dsp-man-2','dsp-man-3',
-   'dsp-must-1','dsp-must-2','dsp-must-3','dsp-good','dsp-bad','dsp-system',
+   'dsp-must-1','dsp-must-2','dsp-must-3',
+   'dsp-entry-1','dsp-entry-2','dsp-entry-3','dsp-entry-4','dsp-entry-5','dsp-entry-6',
+   'dsp-good','dsp-bad','dsp-system',
    'dsp-evidence','dsp-wins','dsp-problems','dsp-ideas','dsp-skills','dsp-ram'
   ].forEach(id => setEl(id, ''));
   setEl('dsp-donated', false);
@@ -7827,6 +7842,10 @@ function _dspApply(row) {
     const gr = row.gratitude || {}; setEl('dsp-grat-1', gr.g1); setEl('dsp-grat-2', gr.g2); setEl('dsp-grat-3', gr.g3);
     const mn = row.manifest  || {}; setEl('dsp-man-1',  mn.m1); setEl('dsp-man-2',  mn.m2); setEl('dsp-man-3',  mn.m3);
     const ms = row.must_do   || {}; setEl('dsp-must-1', ms.t1); setEl('dsp-must-2', ms.t2); setEl('dsp-must-3', ms.t3);
+    if (row.daily_entry) {
+      const lines = row.daily_entry.split('\n');
+      for (let i = 0; i < 6; i++) setEl('dsp-entry-' + (i+1), lines[i] || '');
+    }
     setEl('dsp-good',     row.good_today);
     setEl('dsp-bad',      row.bad_today);
     setEl('dsp-system',   row.system_improvement);
@@ -7903,6 +7922,7 @@ async function saveDiaryEntry() {
     gratitude:          {g1: gv('dsp-grat-1'), g2: gv('dsp-grat-2'), g3: gv('dsp-grat-3')},
     manifest:           {m1: gv('dsp-man-1'),  m2: gv('dsp-man-2'),  m3: gv('dsp-man-3')},
     must_do:            {t1: gv('dsp-must-1'), t2: gv('dsp-must-2'), t3: gv('dsp-must-3')},
+    daily_entry:        [1,2,3,4,5,6].map(i => gv('dsp-entry-'+i)||'').join('\n'),
     good_today:         gv('dsp-good')     || '',
     bad_today:          gv('dsp-bad')      || '',
     system_improvement: gv('dsp-system')   || '',
