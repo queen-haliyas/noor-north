@@ -7317,8 +7317,8 @@ function dvRenderRitualBlocks(ds) {
   const slotsEl = document.getElementById('day-time-slots');
   if (!slotsEl) return;
 
-  // Morning Ritual: 4:00am – 5:00am
-  dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 4*60, 5*60,
+  // Morning Ritual: 4:30am – 5:10am
+  dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 4*60+30, 5*60+10,
     'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
 
   // Evening Ritual: 9:00pm – 10:00pm
