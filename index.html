@@ -2098,37 +2098,34 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
                 <div class="dsp-weather" id="dsp-weather"></div>
               </div>
 
-              <!-- Top Three grid: donate · gratitude · manifest · must-do -->
-              <div class="dsp-top-three">
-                <!-- Donate -->
-                <div class="dsp-card">
-                  <div class="dsp-card-label">Sadaqah</div>
-                  <label class="dsp-donate-row">
-                    <input type="checkbox" class="dsp-donate-check" id="dsp-donated" onchange="dspOnInput()"/>
-                    <span class="dsp-donate-lbl">Donated today</span>
-                  </label>
-                </div>
-                <!-- Gratitude -->
-                <div class="dsp-card">
-                  <div class="dsp-card-label">I am grateful for…</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-grat-2" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-grat-3" placeholder="…" oninput="dspOnInput()"/></div>
-                </div>
-                <!-- Manifest -->
-                <div class="dsp-card">
-                  <div class="dsp-card-label">I am manifesting…</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-man-1" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-man-2" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-man-3" placeholder="…" oninput="dspOnInput()"/></div>
-                </div>
-                <!-- Must-do -->
-                <div class="dsp-card" style="border-right:none">
-                  <div class="dsp-card-label">Must do today</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-must-1" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-must-2" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-must-3" placeholder="…" oninput="dspOnInput()"/></div>
-                </div>
+              <!-- Morning intentions: stacked full-width -->
+              <div class="dsp-prompt-block">
+                <div class="dsp-prompt-label">Sadaqah</div>
+                <label class="dsp-donate-row">
+                  <input type="checkbox" class="dsp-donate-check" id="dsp-donated" onchange="dspOnInput()"/>
+                  <span class="dsp-donate-lbl">Donated today ✓</span>
+                </label>
+              </div>
+              <div class="dsp-rule"></div>
+              <div class="dsp-prompt-block">
+                <div class="dsp-prompt-label">I am grateful for…</div>
+                <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput()"/></div>
+                <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-grat-2" placeholder="…" oninput="dspOnInput()"/></div>
+                <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-grat-3" placeholder="…" oninput="dspOnInput()"/></div>
+              </div>
+              <div class="dsp-rule"></div>
+              <div class="dsp-prompt-block">
+                <div class="dsp-prompt-label">I am manifesting…</div>
+                <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-man-1" placeholder="…" oninput="dspOnInput()"/></div>
+                <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-man-2" placeholder="…" oninput="dspOnInput()"/></div>
+                <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-man-3" placeholder="…" oninput="dspOnInput()"/></div>
+              </div>
+              <div class="dsp-rule"></div>
+              <div class="dsp-prompt-block">
+                <div class="dsp-prompt-label">Must do today</div>
+                <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-must-1" placeholder="…" oninput="dspOnInput()"/></div>
+                <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-must-2" placeholder="…" oninput="dspOnInput()"/></div>
+                <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-must-3" placeholder="…" oninput="dspOnInput()"/></div>
               </div>
 
               <div class="dsp-rule"></div>
