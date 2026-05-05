@@ -6597,6 +6597,7 @@ async function attemptLogin() {
     try { renderAffirmationBar(); } catch(e) {}
     try { renderDaily(); } catch(e) {}
     try { loadTwenty(); } catch(e) {}
+    try { loadTwenty(); } catch(e) {}
     setTimeout(() => {
       try { renderMiniCalendar(); } catch(e) {}
       try { renderDayDetail(fmt(new Date())); } catch(e) {}
@@ -6732,6 +6733,8 @@ async function fetchSolarData(dateStr) {
       astroTwilightStart: toLocalMin(r.astronomical_twilight_begin),
       astroTwilightEnd:   toLocalMin(r.astronomical_twilight_end),
       nautiTwilightStart: toLocalMin(r.nautical_twilight_begin),
+      nautiTwilightEnd:   toLocalMin(r.nautical_twilight_end),
+      nautiTwilightEnd:   toLocalMin(r.nautical_twilight_end),
       civilTwilightStart: toLocalMin(r.civil_twilight_begin),
       sunrise:            toLocalMin(r.sunrise),
       solarNoon:          toLocalMin(r.solar_noon),
@@ -6759,7 +6762,7 @@ async function dvRenderSolarMarkers(dateStr) {
     { min: sol.sunrise,            label: '☀ Sunrise — Ishraq'                   },
     { min: sol.solarNoon,          label: '◎ Solar Noon — Dhuhr'                 },
     { min: sol.sunset,             label: '◑ Sunset — Maghrib'                   },
-    { min: sol.astroTwilightEnd,   label: '☾ Isha — Astronomical Twilight'       },
+    { min: sol.nautiTwilightEnd,   label: '☾ Isha — Astronomical Twilight'       },
   ];
 
   // Subtle golden day band (sunrise → sunset)
@@ -7807,7 +7810,8 @@ async function _dspLoadForOffset() {
 }
 
 async function _dspFetch() {
-  const userId = USER_ID || 'anon';
+  if (!USER_ID) return;
+  const userId = USER_ID;
   try {
     const rows = await sbRequest('GET',
       `diary_entries?user_id=eq.${encodeURIComponent(userId)}&date=eq.${_dspDate}&select=*`
@@ -7909,7 +7913,8 @@ function dspOnInput() {
 
 async function saveDiaryEntry() {
   if (!_dspDate) return;
-  const userId = USER_ID || 'anon';
+  if (!USER_ID) return;
+  const userId = USER_ID;
   const gv = id => { const el = document.getElementById(id); return el ? (el.type === 'checkbox' ? el.checked : el.value) : null; };
   const body = {
     id: userId + '_' + _dspDate,
