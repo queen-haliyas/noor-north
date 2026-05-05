@@ -2005,12 +2005,11 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
       <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
-
-    </div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="day-nav-btn" onclick="changeDay(-1)">← prev</button>
-      <span class="day-label" id="daily-day-label"></span>
-      <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="day-nav-btn" onclick="changeDay(-1)">← prev</button>
+        <span class="day-label" id="daily-day-label"></span>
+        <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
+      </div>
     </div>
   </div>
 
@@ -6597,7 +6596,6 @@ async function attemptLogin() {
     try { renderAffirmationBar(); } catch(e) {}
     try { renderDaily(); } catch(e) {}
     try { loadTwenty(); } catch(e) {}
-    try { loadTwenty(); } catch(e) {}
     setTimeout(() => {
       try { renderMiniCalendar(); } catch(e) {}
       try { renderDayDetail(fmt(new Date())); } catch(e) {}
@@ -6642,7 +6640,6 @@ function logout() {
     try{renderHeader();}catch(e){}
     try{renderAffirmationBar();}catch(e){}
     try{renderDaily();}catch(e){}
-    try{loadTwenty();}catch(e){}
     setTimeout(()=>{
       try{renderMiniCalendar();}catch(e){}
       try{renderDayDetail(fmt(new Date()));}catch(e){}
@@ -6734,7 +6731,6 @@ async function fetchSolarData(dateStr) {
       astroTwilightStart: toLocalMin(r.astronomical_twilight_begin),
       astroTwilightEnd:   toLocalMin(r.astronomical_twilight_end),
       nautiTwilightStart: toLocalMin(r.nautical_twilight_begin),
-      nautiTwilightEnd:   toLocalMin(r.nautical_twilight_end),
       nautiTwilightEnd:   toLocalMin(r.nautical_twilight_end),
       civilTwilightStart: toLocalMin(r.civil_twilight_begin),
       sunrise:            toLocalMin(r.sunrise),
@@ -7811,8 +7807,7 @@ async function _dspLoadForOffset() {
 }
 
 async function _dspFetch() {
-  if (!USER_ID) return;
-  const userId = USER_ID;
+  const userId = USER_ID || 'anon';
   try {
     const rows = await sbRequest('GET',
       `diary_entries?user_id=eq.${encodeURIComponent(userId)}&date=eq.${_dspDate}&select=*`
@@ -7914,8 +7909,7 @@ function dspOnInput() {
 
 async function saveDiaryEntry() {
   if (!_dspDate) return;
-  if (!USER_ID) return;
-  const userId = USER_ID;
+  const userId = USER_ID || 'anon';
   const gv = id => { const el = document.getElementById(id); return el ? (el.type === 'checkbox' ? el.checked : el.value) : null; };
   const body = {
     id: userId + '_' + _dspDate,
