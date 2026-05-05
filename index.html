@@ -6642,6 +6642,7 @@ function logout() {
     try{renderHeader();}catch(e){}
     try{renderAffirmationBar();}catch(e){}
     try{renderDaily();}catch(e){}
+    try{loadTwenty();}catch(e){}
     setTimeout(()=>{
       try{renderMiniCalendar();}catch(e){}
       try{renderDayDetail(fmt(new Date()));}catch(e){}
