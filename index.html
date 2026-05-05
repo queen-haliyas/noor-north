@@ -6432,7 +6432,6 @@ function initPlanningData() {
 // INIT
 load();
 initPlanningData();
-loadTwenty();
 loadDeclarations();
 renderHeader();
 renderAffirmationBar();
@@ -6597,6 +6596,7 @@ async function attemptLogin() {
     try { renderHeader(); } catch(e) {}
     try { renderAffirmationBar(); } catch(e) {}
     try { renderDaily(); } catch(e) {}
+    try { loadTwenty(); } catch(e) {}
     setTimeout(() => {
       try { renderMiniCalendar(); } catch(e) {}
       try { renderDayDetail(fmt(new Date())); } catch(e) {}
@@ -6759,7 +6759,7 @@ async function dvRenderSolarMarkers(dateStr) {
     { min: sol.sunrise,            label: '☀ Sunrise — Ishraq'                   },
     { min: sol.solarNoon,          label: '◎ Solar Noon — Dhuhr'                 },
     { min: sol.sunset,             label: '◑ Sunset — Maghrib'                   },
-    { min: sol.astroTwilightEnd,   label: '☾ Isha — Night Begins'                },
+    { min: sol.astroTwilightStart, label: '☾ Isha — Astronomical Twilight'        },
   ];
 
   // Subtle golden day band (sunrise → sunset)
