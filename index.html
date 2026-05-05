@@ -7934,11 +7934,18 @@ async function saveDiaryEntry() {
   };
   try {
     const res = await sbRequest('POST', 'diary_entries', body);
+    const ind = document.getElementById('dsp-saved-ind');
     if (res && res.ok) {
-      const ind = document.getElementById('dsp-saved-ind');
-      if (ind) { ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 2200); }
+      if (ind) { ind.textContent = 'saved ✓'; ind.style.color = 'rgba(196,152,59,0.7)'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 2200); }
+    } else {
+      console.error('[Diary] Save failed — diary_entries table may not exist in Supabase. Status:', res && res.status);
+      if (ind) { ind.textContent = 'save failed ✗'; ind.style.color = '#E8733A'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 4000); }
     }
-  } catch(e) {}
+  } catch(e) {
+    console.error('[Diary] Save exception:', e);
+    const ind = document.getElementById('dsp-saved-ind');
+    if (ind) { ind.textContent = 'save failed ✗'; ind.style.color = '#E8733A'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 4000); }
+  }
 }
 
 function diaryToggleSearch() {
