@@ -671,8 +671,13 @@ body{
   font-family:var(--font-body);cursor:text;
 }
 .pillar-task-text.done{color:var(--text-tertiary);text-decoration:line-through;}
-.pillar-task-del{background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:12px;opacity:0;transition:opacity .15s;}
-.pillar-task:hover .pillar-task-del{opacity:1;}
+.pillar-task-actions{display:flex;align-items:center;gap:2px;opacity:0;transition:opacity .15s;flex-shrink:0;}
+.pillar-task:hover .pillar-task-actions{opacity:1;}
+.pillar-task-del,.pillar-task-edit,.pillar-task-tmr{background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:11px;padding:2px 4px;border-radius:3px;transition:color .15s,background .15s;line-height:1;}
+.pillar-task-del:hover{color:#e05c5c;background:rgba(224,92,92,0.1);}
+.pillar-task-edit:hover{color:var(--gold);background:rgba(196,152,59,0.1);}
+.pillar-task-tmr:hover{color:#7ecfa0;background:rgba(126,207,160,0.1);}
+.pillar-task-tmr{font-size:10px;}
 .pillar-add-row{display:flex;align-items:center;gap:6px;margin-top:8px;}
 .pillar-add-input{
   flex:1;background:none;border:none;outline:none;
@@ -4136,8 +4141,12 @@ function renderPillarsDaily(ds){
             <div class="pillar-task-check${t.done?' done':''}" onclick="togglePillarTask('${ds}','${p.id}',${i})" style="${t.done?'background:'+p.color+';border-color:'+p.color:'border-color:var(--charcoal-border)'}">
               <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 3L3 5L7 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="pillar-task-text${t.done?' done':''}" contenteditable="true" onblur="editPillarTask('${ds}','${p.id}',${i},this.textContent)">${t.text}</div>
-            <button class="pillar-task-del" onclick="deletePillarTask('${ds}','${p.id}',${i})">✕</button>
+            <div class="pillar-task-text${t.done?' done':''}" id="ptxt-${ds}-${p.id}-${i}" onclick="focusPillarTask(this)">${t.text}</div>
+            <div class="pillar-task-actions">
+              <button class="pillar-task-edit" title="Edit" onclick="focusPillarTask(document.getElementById('ptxt-${ds}-${p.id}-${i}'))">✎</button>
+              <button class="pillar-task-tmr" title="Move to tomorrow" onclick="movePillarTaskToTomorrow('${ds}','${p.id}',${i})">→ tmr</button>
+              <button class="pillar-task-del" title="Delete" onclick="deletePillarTask('${ds}','${p.id}',${i})">✕</button>
+            </div>
           </div>
         `).join('')}
         <div class="pillar-add-row">
@@ -4168,7 +4177,41 @@ function togglePillarTask(ds,pid,idx){
   syncPillarTasksToSupabase(ds);
 }
 function editPillarTask(ds,pid,idx,text){
-  data[ds].pillars[pid][idx].text=text;save();
+  data[ds].pillars[pid][idx].text=text.trim();save();
+}
+function focusPillarTask(el){
+  if(!el)return;
+  el.contentEditable='true';
+  el.focus();
+  // place cursor at end
+  const range=document.createRange();range.selectNodeContents(el);range.collapse(false);
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+  el.onblur=function(){
+    el.contentEditable='false';
+    // parse id: ptxt-{ds}-{pid}-{idx}
+    const parts=el.id.replace('ptxt-','').split('-');
+    // ds may contain hyphens (YYYY-MM-DD), pid is last part before idx, idx is last part
+    const idx=parseInt(parts[parts.length-1]);
+    const pid=parts[parts.length-2];
+    const ds=parts.slice(0,parts.length-2).join('-');
+    if(ds&&pid&&!isNaN(idx))editPillarTask(ds,pid,idx,el.textContent);
+  };
+  el.onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();el.blur();}};
+}
+function movePillarTaskToTomorrow(ds,pid,idx){
+  const task=data[ds].pillars[pid][idx];
+  if(!task)return;
+  // calculate tomorrow's date string
+  const d=new Date(ds+'T12:00:00');d.setDate(d.getDate()+1);
+  const tmr=d.toISOString().slice(0,10);
+  if(!data[tmr])data[tmr]={pillars:{},timeline:[],habits:{},gratitude:[],manifestations:[],mit:'',brainDump:'',eveningDone:false};
+  if(!data[tmr].pillars[pid])data[tmr].pillars[pid]=[];
+  data[tmr].pillars[pid].push({text:task.text,done:false});
+  data[ds].pillars[pid].splice(idx,1);
+  save();
+  renderPillarsDaily(ds);renderFivePillarsPanel(ds);
+  const pillar=PILLARS.find(p=>p.id===pid);
+  showToast((pillar?pillar.name+' task':'Task')+' moved to tomorrow','#7ecfa0');
 }
 function deletePillarTask(ds,pid,idx){
   data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);
