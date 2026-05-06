@@ -1904,6 +1904,129 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .nrm-decision-inp{flex:1;border:none;outline:none;background:transparent;font-family:'Caveat',cursive;font-size:18px;color:#F0EDE8;padding:2px 0;line-height:1.5;caret-color:#9B8FD4;}
 .nrm-decision-inp::placeholder{color:rgba(155,143,212,0.3);font-style:italic;}
 
+/* ══════════════════════════════════════
+   20 UI IMPROVEMENTS
+══════════════════════════════════════ */
+
+/* #1 Nav touch targets — ensure 44px min */
+.sidebar-btn{min-height:44px;height:auto;padding:8px 10px;}
+
+/* #2 Today at a glance */
+.glance-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
+.glance-chip{display:inline-flex;align-items:center;gap:5px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;padding:5px 13px;font-size:12px;color:var(--text-secondary);white-space:nowrap;flex-shrink:0;}
+.glance-chip-icon{font-size:13px;}
+.glance-chip-em{color:var(--text-primary);font-weight:500;}
+
+/* #3 Pillar progress bars — 8px, rounded */
+.pillar-prog-sm{height:8px !important;border-radius:4px !important;}
+.pillar-prog-fill{border-radius:4px !important;}
+
+/* #4 Swipe task actions */
+.swipe-wrapper{position:relative;overflow:hidden;border-radius:4px;}
+.swipe-bg-complete{position:absolute;left:0;top:0;bottom:0;width:72px;background:#22c55e30;display:flex;align-items:center;padding-left:14px;color:#22c55e;font-size:11px;pointer-events:none;}
+.swipe-bg-delete{position:absolute;right:0;top:0;bottom:0;width:72px;background:#ef444430;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;color:#ef4444;font-size:11px;pointer-events:none;}
+
+/* #5 Habit streak badge */
+.habit-streak{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--gold);background:var(--gold-dim);border-radius:8px;padding:2px 7px;margin-left:6px;flex-shrink:0;}
+
+/* #7 GHL Revenue thermometer */
+.thermometer-wrap{background:rgba(0,0,0,0.15);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px 16px;margin-top:8px;}
+.thermo-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-tertiary);margin-bottom:8px;}
+.thermo-track{height:10px;background:var(--charcoal-border);border-radius:5px;overflow:hidden;}
+.thermo-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#C4983B,#E8B84B);transition:width .6s ease;}
+.thermo-labels{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:var(--text-tertiary);}
+.thermo-current{font-size:16px;font-family:var(--font-display);font-weight:300;color:var(--gold);margin-bottom:6px;}
+
+/* #8 Card hover glow */
+.flow-col:hover,.pillar-item:hover,.plan-card:hover{box-shadow:0 0 0 1px rgba(196,152,59,0.3),0 4px 20px rgba(196,152,59,0.08);}
+.mini-cal-cell:hover{box-shadow:0 0 0 1px rgba(196,152,59,0.25),0 2px 10px rgba(196,152,59,0.06);}
+.flow-col,.pillar-item,.plan-card,.mini-cal-cell{transition:box-shadow .2s,border-color .15s;}
+
+/* #9 Page entrance animation */
+@keyframes pageEnter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.page.active{animation:pageEnter .2s ease both;}
+
+/* #12 Focus Now button + modal */
+.focus-now-btn{background:linear-gradient(135deg,#C4983B,#E8B84B);border:none;border-radius:var(--radius-sm);padding:9px 18px;font-size:13px;font-weight:600;color:#1A1508;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .2s;white-space:nowrap;min-height:44px;}
+.focus-now-btn:hover{box-shadow:0 0 20px rgba(232,184,75,0.4);transform:translateY(-1px);}
+.focus-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.focus-overlay.hidden{display:none;}
+.focus-box{background:var(--charcoal-light);border:0.5px solid rgba(196,152,59,0.35);border-radius:var(--radius);padding:28px;max-width:460px;width:90%;max-height:82vh;overflow-y:auto;}
+.focus-box-title{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--gold);margin-bottom:2px;}
+.focus-box-sub{font-size:11px;color:var(--text-tertiary);margin-bottom:20px;}
+.focus-sec-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-tertiary);margin:14px 0 8px;}
+.focus-task-row{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:0.5px solid var(--charcoal-border);}
+.focus-task-row:last-child{border-bottom:none;}
+.focus-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.focus-task-name{font-size:13px;color:var(--text-primary);}
+.focus-prayer-display{font-size:24px;font-family:var(--font-display);font-weight:300;color:var(--gold);text-align:center;padding:10px 0;}
+.focus-reframe{font-style:italic;font-size:13px;color:var(--gold);line-height:1.6;text-align:center;padding:12px;background:rgba(232,184,75,0.05);border-radius:var(--radius-sm);border-left:2px solid rgba(232,184,75,0.4);}
+.focus-close{width:100%;margin-top:18px;background:none;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px;font-size:13px;color:var(--text-secondary);cursor:pointer;transition:all .15s;min-height:44px;}
+.focus-close:hover{border-color:var(--gold);color:var(--gold);}
+
+/* #14 Sidebar search */
+.sidebar-search-wrap{width:100%;position:relative;margin-bottom:4px;}
+.sidebar-search{width:100%;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:7px 10px 7px 28px;font-size:11px;color:var(--text-primary);font-family:var(--font-body);outline:none;transition:border-color .15s;}
+.sidebar-search:focus{border-color:rgba(196,152,59,0.5);}
+.sidebar-search::placeholder{color:var(--text-tertiary);}
+.sidebar-search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-tertiary);pointer-events:none;}
+.search-dropdown{position:fixed;left:8px;width:174px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);z-index:400;max-height:260px;overflow-y:auto;display:none;box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+.search-result-item{padding:8px 12px;cursor:pointer;border-bottom:0.5px solid var(--charcoal-border);}
+.search-result-item:last-child{border-bottom:none;}
+.search-result-item:hover{background:var(--charcoal-mid);}
+.search-result-text{font-size:12px;color:var(--text-primary);}
+.search-result-meta{font-size:10px;color:var(--text-tertiary);margin-top:2px;}
+
+/* #15 Confetti */
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(60px) rotate(480deg);opacity:0}}
+.confetti-p{position:absolute;width:6px;height:6px;border-radius:1px;pointer-events:none;animation:confettiFall .7s ease forwards;}
+
+/* #16 Morning check-in */
+.checkin-overlay{position:fixed;inset:0;z-index:9600;background:rgba(26,21,8,0.97);display:flex;align-items:center;justify-content:center;}
+.checkin-overlay.hidden{display:none;}
+.checkin-box{max-width:420px;width:90%;padding:36px 28px;}
+.checkin-title{font-family:var(--font-display);font-size:24px;font-weight:300;color:var(--gold);margin-bottom:4px;}
+.checkin-date{font-size:12px;color:var(--text-tertiary);margin-bottom:28px;}
+.checkin-field{margin-bottom:20px;}
+.checkin-label{display:block;font-size:12px;color:var(--text-secondary);margin-bottom:8px;}
+.checkin-slider{width:100%;accent-color:var(--gold);}
+.checkin-slider-val{font-size:22px;font-family:var(--font-display);font-weight:300;color:var(--gold);text-align:center;margin:4px 0 0;}
+.checkin-input{width:100%;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;color:var(--text-primary);font-family:var(--font-body);outline:none;transition:border-color .15s;}
+.checkin-input:focus{border-color:rgba(196,152,59,0.5);}
+.checkin-submit{width:100%;background:linear-gradient(135deg,#C4983B,#E8B84B);border:none;border-radius:var(--radius-sm);padding:14px;font-size:15px;font-weight:600;color:#1A1508;cursor:pointer;transition:all .2s;margin-top:8px;min-height:44px;}
+.checkin-submit:hover{box-shadow:0 0 24px rgba(232,184,75,0.3);}
+
+/* #17 Dark/light mode toggle */
+.theme-toggle{background:none;border:0.5px solid var(--charcoal-border);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:12px;color:var(--text-secondary);transition:all .15s;flex-shrink:0;min-height:28px;}
+.theme-toggle:hover{border-color:var(--gold);color:var(--gold);}
+body.light-mode{--charcoal:#F5F0E8;--charcoal-mid:#EDE8DC;--charcoal-light:#E0DAC8;--charcoal-border:#C8BEAA;--text-primary:#1a1508;--text-secondary:#4a3e28;--text-tertiary:#8a7050;}
+body.light-mode #sidebar-nav{background:#EAE4D4;}
+
+/* #18 Affirmation progress bar */
+.aff-progress-track{height:2px;background:rgba(196,152,59,0.12);border-radius:1px;overflow:hidden;margin-top:4px;}
+.aff-progress-fill{height:100%;background:var(--gold);border-radius:1px;width:100%;}
+@keyframes affDrain{from{width:100%}to{width:0%}}
+
+/* #19 Back to top */
+.back-to-top{position:fixed;bottom:28px;right:28px;z-index:500;width:40px;height:40px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#1A1508;box-shadow:0 4px 14px rgba(232,184,75,0.35);opacity:0;pointer-events:none;transition:opacity .25s;line-height:1;}
+.back-to-top.visible{opacity:1;pointer-events:auto;}
+
+/* #20 Mobile responsive */
+@media(max-width:768px){
+  .sidebar-nav{display:none !important;}
+  .site-header{margin-left:0 !important;}
+  .page{margin-left:0 !important;padding:1rem 0.75rem;padding-bottom:68px !important;}
+  #page-notes{margin-left:0 !important;}
+  .mobile-tab-bar{display:flex;}
+  .cal-planner-wrap{grid-template-columns:1fr !important;}
+  .cal-layout{grid-template-columns:1fr !important;}
+  .rev-3col{grid-template-columns:1fr !important;}
+}
+.mobile-tab-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:#110E05;border-top:0.5px solid var(--charcoal-border);padding:4px 0 env(safe-area-inset-bottom,0px);}
+.mob-tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;padding:6px 4px;cursor:pointer;color:var(--text-tertiary);font-family:var(--font-body);font-size:9px;min-height:48px;transition:color .15s;}
+.mob-tab-btn.active{color:var(--gold);}
+.mob-tab-btn .mob-icon{font-size:17px;line-height:1;}
+
 </style>
 </head>
 <body>
@@ -1947,12 +2070,19 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <div class="aff-card" id="aff-card">
     <div class="aff-card-label" id="aff-card-label"></div>
     <div class="aff-card-text" id="aff-card-text">Loading...</div>
+    <div class="aff-progress-track"><div class="aff-progress-fill" id="aff-progress-fill"></div></div>
   </div>
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
 </header>
 
 <!-- SIDEBAR NAV -->
 <nav class="sidebar-nav" id="sidebar-nav">
   <div class="sidebar-logo" onclick="toggleSidebar()" title="Toggle sidebar">N</div>
+  <div class="sidebar-search-wrap">
+    <span class="sidebar-search-icon">⌕</span>
+    <input class="sidebar-search" id="sidebar-search" placeholder="Search tasks…" oninput="sidebarSearch(this.value)" onfocus="showSearchDrop()" autocomplete="off"/>
+  </div>
+  <div class="search-dropdown" id="search-dropdown"></div>
   <button class="sidebar-btn active" onclick="showPage('daily',this);setSidebarActive(this)" title="Daily Flow">
     <span>☽</span><span class="sidebar-label">Daily Flow</span>
   </button>
@@ -2007,7 +2137,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
   <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;flex-wrap:wrap;gap:10px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
       <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
       <div style="display:flex;align-items:center;gap:8px">
@@ -2016,6 +2146,13 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
         <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
       </div>
     </div>
+    <button class="focus-now-btn" onclick="openFocusNow()" title="See your top priorities now">✦ Focus Now</button>
+  </div>
+  <!-- #2 Today at a glance -->
+  <div class="glance-row" id="glance-row">
+    <div class="glance-chip" id="glance-fajr"><span class="glance-chip-icon">🌙</span><span>Fajr —</span></div>
+    <div class="glance-chip" id="glance-tasks"><span class="glance-chip-icon">✓</span><span id="glance-tasks-text">0/0 tasks</span></div>
+    <div class="glance-chip" id="glance-hijri"><span class="glance-chip-icon">📅</span><span id="glance-hijri-text">—</span></div>
   </div>
 
 
@@ -2518,6 +2655,9 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   </div>
   <span class="section-lbl">Pillar Health</span>
   <div class="empire-grid" id="empire-grid"></div>
+
+  <!-- #7 GHL REVENUE THERMOMETER -->
+  <div id="ghl-thermometer-wrap"></div>
 
   <!-- TIGERFLOW PRICING -->
   <div class="emp-ref-card" style="margin-top:1rem">
@@ -3808,6 +3948,7 @@ function renderDaily(){
   renderFivePillarsPanel(ds);
   renderDvPillars(ds);
   loadDiary();
+  try{renderGlance(ds);}catch(e){}
 }
 
 function goToday(){dayOffset=0;renderDaily();}
@@ -4178,6 +4319,12 @@ function togglePillarTask(ds,pid,idx){
   data[ds].pillars[pid][idx].done=!data[ds].pillars[pid][idx].done;
   save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
   syncPillarTasksToSupabase(ds);
+  // #15 confetti when all tasks in pillar done
+  const tasks=data[ds].pillars[pid]||[];
+  if(tasks.length>0&&tasks.every(t=>t.done)){
+    try{const anchor=document.getElementById('pi-'+pid)||document.getElementById('dvplrow-'+pid);fireConfetti(anchor);}catch(e){}
+  }
+  try{renderGlance(ds);}catch(e){}
 }
 function editPillarTask(ds,pid,idx,text){
   data[ds].pillars[pid][idx].text=text.trim();save();
@@ -4352,6 +4499,9 @@ function renderEmpire(){
   renderHeatmap();
   renderStackedBar();
   renderPolarGrid();
+
+  // #7 GHL thermometer
+  try{renderGHLThermometer('ghl-thermometer-wrap');}catch(e){}
 
   // pillar cards
   const grid=document.getElementById('empire-grid');
@@ -5010,9 +5160,22 @@ function renderWeeklyCharts(){
       <div class="pillar-week-row">
         ${PILLARS.map(p=>{let done=0,all=0;weekDays.forEach(d=>{const ds=fmt(d);if(data[ds]&&data[ds].pillars){const t=data[ds].pillars[p.id]||[];done+=t.filter(x=>x.done).length;all+=t.length;}});const pct=all?Math.round(done/all*100):0;const r=28,stroke=6,circ=2*Math.PI*r;const dash=pct/100*circ;return`<div class="pillar-ring-item"><svg width="72" height="72" viewBox="-36 -36 72 72"><circle cx="0" cy="0" r="${r}" fill="none" stroke="#2E2510" stroke-width="${stroke}"/><circle cx="0" cy="0" r="${r}" fill="none" stroke="${p.color}" stroke-width="${stroke}" stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"/><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="11" fill="${p.color}">${pct}%</text></svg><div class="pillar-ring-label">${p.name.split(' ')[0]}</div><div class="pillar-ring-label" style="color:var(--text-tertiary)">${done}/${all}</div></div>`;}).join('')}
       </div>
+    </div>
+    <div class="weekly-chart-wrap">
+      <div class="weekly-chart-title">🕸 Pillar Radar — This Week</div>
+      <div class="radar-wrap"><canvas id="pillar-radar-canvas" width="220" height="220"></canvas></div>
     </div>`;
   const chartEl=document.getElementById('review-charts');
-  if(chartEl)chartEl.innerHTML=chartHTML;
+  if(chartEl){
+    chartEl.innerHTML=chartHTML;
+    // Compute scores for radar
+    const radarScores=PILLARS.map(p=>{
+      let done=0,all=0;
+      weekDays.forEach(d=>{const ds2=fmt(d);if(data[ds2]&&data[ds2].pillars){const t=data[ds2].pillars[p.id]||[];done+=t.filter(x=>x.done).length;all+=t.length;}});
+      return all?Math.round(done/all*100):0;
+    });
+    setTimeout(()=>renderRadarChart('pillar-radar-canvas',radarScores),50);
+  }
 }
 
 function switchRevTab(tab, btn){
@@ -7140,6 +7303,35 @@ function renderDvPillars(ds) {
     row.addEventListener('dragstart', fpOnDragStart);
     row.addEventListener('dragend', fpOnDragEnd);
   });
+  // #4 Swipe actions on mobile
+  body.querySelectorAll('.dv-pl-task').forEach(row => addSwipeActions(row, ds));
+}
+
+// #4 Swipe task actions
+function addSwipeActions(row, ds){
+  let startX=0, startY=0, moved=false;
+  row.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY;moved=false;},{passive:true});
+  row.addEventListener('touchmove',e=>{
+    const dx=e.touches[0].clientX-startX;
+    const dy=Math.abs(e.touches[0].clientY-startY);
+    if(dy>10)return;
+    moved=true;
+    if(dx>10)row.style.background='rgba(34,197,94,0.12)';
+    else if(dx<-10)row.style.background='rgba(239,68,68,0.12)';
+    else row.style.background='';
+  },{passive:true});
+  row.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-startX;
+    row.style.background='';
+    if(!moved)return;
+    const pid=row.dataset.pillarId;
+    const idx=parseInt(row.dataset.taskIdx);
+    if(dx>60&&pid&&!isNaN(idx)){
+      dvTogglePillarTask(ds,pid,idx);
+    } else if(dx<-60&&pid&&!isNaN(idx)){
+      deletePillarTask(ds,pid,idx);
+    }
+  });
 }
 
 function dvTogglePlSection() {
@@ -8076,6 +8268,309 @@ async function loadDiary() {
   _dspLoadWeather();
   await _dspFetch();
 }
+
+/* ══════════════════════════════════════
+   20 UI IMPROVEMENTS — JS
+══════════════════════════════════════ */
+
+// #2 Today at a glance
+function renderGlance(ds){
+  try{
+    ensureDay(ds);
+    let done=0,total=0;
+    PILLARS.forEach(p=>{
+      const tasks=data[ds].pillars[p.id]||[];
+      total+=tasks.length;
+      done+=tasks.filter(t=>t.done).length;
+    });
+    const tasksEl=document.getElementById('glance-tasks-text');
+    if(tasksEl)tasksEl.innerHTML='<span class="glance-chip-em">'+done+'/'+total+'</span> tasks done';
+    // Hijri date
+    const hijriEl=document.getElementById('glance-hijri-text');
+    if(hijriEl){
+      try{
+        const h=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(new Date());
+        hijriEl.textContent=h;
+      }catch(e){hijriEl.textContent='Hijri date';}
+    }
+    // Fajr time from existing prayer data
+    const fajrEl=document.getElementById('glance-fajr');
+    if(fajrEl){
+      const fajrTime=document.getElementById('time-fajr');
+      if(fajrTime&&fajrTime.textContent&&fajrTime.textContent!=='--:--'){
+        fajrEl.innerHTML='<span class="glance-chip-icon">🌙</span>Fajr <span class="glance-chip-em">'+fajrTime.textContent+'</span>';
+      }
+    }
+  }catch(e){}
+}
+
+// #8 Progress bar for affirmation (8s rotation)
+let _affProgressTimer=null;
+function _startAffProgress(){
+  const fill=document.getElementById('aff-progress-fill');
+  if(!fill)return;
+  fill.style.animation='none';
+  fill.offsetHeight; // reflow
+  fill.style.animation='affDrain 8s linear forwards';
+}
+
+// Override renderAffirmationBar to use 8s and show progress
+function renderAffirmationBar(){
+  _affPool=_buildAffPool();
+  if(!_affPool.length)return;
+  if(currentAffIdx>=_affPool.length)currentAffIdx=0;
+  _affSetContent(_affPool[currentAffIdx]);
+  _startAffProgress();
+  if(_affTimer)clearInterval(_affTimer);
+  _affTimer=setInterval(()=>{_affFadeTo(currentAffIdx+1);setTimeout(_startAffProgress,1300);},8000);
+}
+
+// #9 Page transition — handled purely by CSS .page.active animation
+// (display:none resets animation state so it fires fresh on every page switch)
+
+// #12 Focus Now modal
+function openFocusNow(){
+  const ds=getDateStr(typeof dayOffset!=='undefined'?dayOffset:0);
+  ensureDay(ds);
+  // Top tasks — first undone task per pillar (up to 3)
+  const topTasks=[];
+  PILLARS.forEach(p=>{
+    if(topTasks.length>=3)return;
+    const task=(data[ds].pillars[p.id]||[]).find(t=>!t.done);
+    if(task)topTasks.push({text:task.text,color:p.color,pillar:p.name});
+  });
+  const listEl=document.getElementById('focus-tasks-list');
+  if(listEl){
+    if(topTasks.length===0){
+      listEl.innerHTML='<div style="font-size:13px;color:var(--text-tertiary);padding:6px 0">All tasks complete! 🎉</div>';
+    } else {
+      listEl.innerHTML=topTasks.map(t=>`<div class="focus-task-row"><div class="focus-dot" style="background:${t.color}"></div><div><div class="focus-task-name">${t.text}</div><div style="font-size:10px;color:var(--text-tertiary)">${t.pillar}</div></div></div>`).join('');
+    }
+  }
+  // Next prayer
+  const prayers=['fajr','dhuhr','asr','maghrib','isha'];
+  const now=new Date();
+  let nextPrayerName='—';
+  for(const p of prayers){
+    const el=document.getElementById('time-'+p);
+    if(el&&el.textContent&&el.textContent!=='--:--'){
+      const[h,m]=el.textContent.split(':').map(Number);
+      const pTime=new Date();pTime.setHours(h,m,0,0);
+      if(pTime>now){nextPrayerName=p.charAt(0).toUpperCase()+p.slice(1)+' at '+el.textContent;break;}
+    }
+  }
+  const pEl=document.getElementById('focus-prayer');
+  if(pEl)pEl.textContent=nextPrayerName;
+  // Random reframe
+  const rf=COGNITIVE_REFRAMES[Math.floor(Math.random()*COGNITIVE_REFRAMES.length)];
+  const rfEl=document.getElementById('focus-reframe');
+  if(rfEl)rfEl.textContent='"'+rf+'"';
+  document.getElementById('focus-overlay').classList.remove('hidden');
+}
+function closeFocusNow(){
+  document.getElementById('focus-overlay').classList.add('hidden');
+}
+
+// #14 Sidebar search
+function sidebarSearch(q){
+  const drop=document.getElementById('search-dropdown');
+  if(!drop)return;
+  if(!q||q.length<2){drop.style.display='none';return;}
+  const ds=getDateStr(typeof dayOffset!=='undefined'?dayOffset:0);
+  const results=[];
+  PILLARS.forEach(p=>{
+    (data[ds]&&data[ds].pillars[p.id]||[]).forEach((t,i)=>{
+      if(t.text.toLowerCase().includes(q.toLowerCase())){
+        results.push({text:t.text,meta:p.name+(t.done?' · done':''),color:p.color});
+      }
+    });
+  });
+  if(results.length===0){drop.style.display='none';return;}
+  drop.innerHTML=results.slice(0,8).map(r=>`
+    <div class="search-result-item">
+      <div class="search-result-text" style="display:flex;align-items:center;gap:6px">
+        <span style="width:6px;height:6px;border-radius:50%;background:${r.color};flex-shrink:0;display:inline-block"></span>${r.text}
+      </div>
+      <div class="search-result-meta">${r.meta}</div>
+    </div>`).join('');
+  // Position below search input
+  const inp=document.getElementById('sidebar-search');
+  if(inp){const rect=inp.getBoundingClientRect();drop.style.top=(rect.bottom+4)+'px';}
+  drop.style.display='block';
+}
+function showSearchDrop(){
+  const inp=document.getElementById('sidebar-search');
+  if(inp&&inp.value.length>=2)sidebarSearch(inp.value);
+}
+document.addEventListener('click',function(e){
+  const drop=document.getElementById('search-dropdown');
+  if(drop&&!drop.contains(e.target)&&e.target.id!=='sidebar-search')drop.style.display='none';
+});
+
+// #15 Confetti celebration
+function fireConfetti(anchorEl){
+  if(!anchorEl)return;
+  const rect=anchorEl.getBoundingClientRect();
+  const cx=rect.left+rect.width/2;
+  const cy=rect.top+rect.height/2;
+  const colors=[getComputedStyle(document.documentElement).getPropertyValue('--gold').trim(),'#22c55e','#E8733A','#5BC4C4'];
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='confetti-p';
+    p.style.cssText=`left:${cx+(Math.random()-0.5)*60}px;top:${cy}px;background:${colors[i%colors.length]};animation-delay:${Math.random()*0.3}s;position:fixed;`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),1100);
+  }
+}
+
+// #16 Morning check-in
+function initCheckin(){
+  const today=new Date().toISOString().slice(0,10);
+  const seen=localStorage.getItem('nn_checkin_'+today);
+  if(seen)return;
+  const overlay=document.getElementById('checkin-overlay');
+  if(!overlay)return;
+  const dateEl=document.getElementById('checkin-date');
+  if(dateEl)dateEl.textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  overlay.classList.remove('hidden');
+}
+function submitCheckin(){
+  const today=new Date().toISOString().slice(0,10);
+  const mood=document.getElementById('checkin-mood')?.value;
+  const mit=document.getElementById('checkin-mit')?.value.trim();
+  const gratitude=document.getElementById('checkin-gratitude')?.value.trim();
+  localStorage.setItem('nn_checkin_'+today,JSON.stringify({mood,mit,gratitude}));
+  // Store MIT in today's data if available
+  if(mit&&typeof data!=='undefined'&&typeof getDateStr==='function'){
+    const ds=getDateStr(0);
+    ensureDay(ds);
+    if(!data[ds].mit)data[ds].mit=mit;
+    save();
+  }
+  document.getElementById('checkin-overlay').classList.add('hidden');
+}
+
+// #17 Dark/light mode toggle
+function toggleTheme(){
+  const isLight=document.body.classList.toggle('light-mode');
+  localStorage.setItem('nn_theme',isLight?'light':'dark');
+  const btn=document.getElementById('theme-toggle');
+  if(btn)btn.textContent=isLight?'☀️':'🌙';
+}
+function initTheme(){
+  const saved=localStorage.getItem('nn_theme');
+  if(saved==='light'){document.body.classList.add('light-mode');const btn=document.getElementById('theme-toggle');if(btn)btn.textContent='☀️';}
+}
+
+// #19 Back to top
+(function(){
+  const btn=document.getElementById('back-to-top');
+  if(!btn)return;
+  window.addEventListener('scroll',()=>btn.classList.toggle('visible',window.scrollY>300),{passive:true});
+})();
+
+// #20 Mobile tab bar helper
+function setMobActive(btn){
+  document.querySelectorAll('.mob-tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+
+// #5 Habit streak counter
+function getHabitStreak(habitIdx){
+  let streak=0;
+  const today=new Date();
+  for(let i=0;i<365;i++){
+    const d=new Date(today);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const dayData=data[ds];
+    if(!dayData||!dayData.weeklyHabits)break;
+    if(dayData.weeklyHabits[habitIdx])streak++;
+    else break;
+  }
+  return streak;
+}
+
+// #6 Weekly radar chart
+function renderRadarChart(canvasId,scores){
+  const canvas=document.getElementById(canvasId);
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  const cx=W/2,cy=H/2,R=Math.min(W,H)/2-20;
+  const n=scores.length;
+  ctx.clearRect(0,0,W,H);
+  const gold='#E8B84B';
+  // Grid rings
+  for(let r=1;r<=4;r++){
+    ctx.beginPath();
+    for(let i=0;i<n;i++){
+      const a=(i/n)*Math.PI*2-Math.PI/2;
+      const x=cx+Math.cos(a)*R*(r/4);
+      const y=cy+Math.sin(a)*R*(r/4);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle='rgba(196,152,59,0.15)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+  // Axes + labels
+  const labels=PILLARS.map(p=>p.name.split(' ')[0]);
+  for(let i=0;i<n;i++){
+    const a=(i/n)*Math.PI*2-Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);
+    ctx.strokeStyle='rgba(196,152,59,0.2)';ctx.lineWidth=1;ctx.stroke();
+    // label
+    ctx.fillStyle='rgba(253,246,227,0.6)';
+    ctx.font='11px Figtree,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(labels[i],cx+Math.cos(a)*(R+14),cy+Math.sin(a)*(R+14));
+  }
+  // Data polygon
+  ctx.beginPath();
+  for(let i=0;i<n;i++){
+    const a=(i/n)*Math.PI*2-Math.PI/2;
+    const v=(scores[i]||0)/100;
+    const x=cx+Math.cos(a)*R*v;
+    const y=cy+Math.sin(a)*R*v;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle='rgba(232,184,75,0.15)';ctx.fill();
+  ctx.strokeStyle=gold;ctx.lineWidth=2;ctx.stroke();
+  // Dots
+  for(let i=0;i<n;i++){
+    const a=(i/n)*Math.PI*2-Math.PI/2;
+    const v=(scores[i]||0)/100;
+    ctx.beginPath();
+    ctx.arc(cx+Math.cos(a)*R*v,cy+Math.sin(a)*R*v,4,0,Math.PI*2);
+    ctx.fillStyle=gold;ctx.fill();
+  }
+}
+
+// #7 GHL thermometer render
+function renderGHLThermometer(containerId){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  const current=parseFloat(localStorage.getItem('nn_ghl_revenue')||'0');
+  const target=150000;
+  const pct=Math.min(100,Math.round(current/target*100));
+  el.innerHTML=`<div class="thermometer-wrap">
+    <div class="thermo-title">TigerFlow GHL Revenue — Q2 Target</div>
+    <div class="thermo-current">£${current.toLocaleString()} <span style="font-size:12px;color:var(--text-tertiary)">/ £150,000</span></div>
+    <div class="thermo-track"><div class="thermo-fill" style="width:${pct}%"></div></div>
+    <div class="thermo-labels"><span>£0</span><span>${pct}%</span><span>£150K</span></div>
+  </div>`;
+}
+
+// Init all new features on page load
+window.addEventListener('load',function(){
+  initTheme();
+  setTimeout(initCheckin,800);
+  setTimeout(()=>renderGlance(getDateStr(typeof dayOffset!=='undefined'?dayOffset:0)),600);
+});
 </script>
 <!-- NIGHT RITUAL MODAL -->
 <div class="nrm-overlay" id="nrm-overlay" style="display:none">
@@ -8295,6 +8790,55 @@ async function loadDiary() {
     <button class="mrm-complete-btn" id="mrm-complete-btn" onclick="completeMorningRitual()">Mark Complete ✓</button>
   </div>
 </div><!-- /mrm-overlay -->
+
+<!-- #16 Morning check-in modal -->
+<div class="checkin-overlay hidden" id="checkin-overlay">
+  <div class="checkin-box">
+    <div class="checkin-title">Good morning ✦</div>
+    <div class="checkin-date" id="checkin-date"></div>
+    <div class="checkin-field">
+      <label class="checkin-label">How are you feeling today? (1–10)</label>
+      <input type="range" class="checkin-slider" id="checkin-mood" min="1" max="10" value="7" oninput="document.getElementById('checkin-mood-val').textContent=this.value"/>
+      <div class="checkin-slider-val" id="checkin-mood-val">7</div>
+    </div>
+    <div class="checkin-field">
+      <label class="checkin-label">What is your MIT today? (Most Important Task)</label>
+      <input class="checkin-input" id="checkin-mit" type="text" placeholder="e.g. Close the TigerFlow demo call"/>
+    </div>
+    <div class="checkin-field">
+      <label class="checkin-label">One thing you're grateful for</label>
+      <input class="checkin-input" id="checkin-gratitude" type="text" placeholder="e.g. The health and clarity I woke up with"/>
+    </div>
+    <button class="checkin-submit" onclick="submitCheckin()">Let's go 🚀</button>
+  </div>
+</div>
+
+<!-- #12 Focus Now modal -->
+<div class="focus-overlay hidden" id="focus-overlay">
+  <div class="focus-box">
+    <div class="focus-box-title">✦ Focus Now</div>
+    <div class="focus-box-sub">Your top priorities for today</div>
+    <div class="focus-sec-label">Top tasks across pillars</div>
+    <div id="focus-tasks-list"></div>
+    <div class="focus-sec-label">Next prayer</div>
+    <div class="focus-prayer-display" id="focus-prayer"></div>
+    <div class="focus-sec-label">Cognitive reframe</div>
+    <div class="focus-reframe" id="focus-reframe"></div>
+    <button class="focus-close" onclick="closeFocusNow()">Close</button>
+  </div>
+</div>
+
+<!-- #19 Back to top -->
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- #20 Mobile bottom tab bar -->
+<div class="mobile-tab-bar" id="mobile-tab-bar">
+  <button class="mob-tab-btn active" onclick="showPage('daily',this);setMobActive(this)" title="Daily Flow"><span class="mob-icon">☽</span>Daily</button>
+  <button class="mob-tab-btn" onclick="showPage('planning',this);setMobActive(this)" title="Planning"><span class="mob-icon">◈</span>Plan</button>
+  <button class="mob-tab-btn" onclick="showPage('empire',this);setMobActive(this)" title="Empire"><span class="mob-icon">◆</span>Empire</button>
+  <button class="mob-tab-btn" onclick="showPage('review',this);setMobActive(this)" title="Reviews"><span class="mob-icon">◎</span>Review</button>
+  <button class="mob-tab-btn" onclick="showPage('arabella',this);setMobActive(this)" title="Arabella AI"><span class="mob-icon">✿</span>Arabella</button>
+</div>
 
 </body>
 </html>
