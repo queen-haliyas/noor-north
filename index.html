@@ -405,8 +405,8 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:1rem;
-  min-height:36px;
+  gap:2rem;
+  min-height:0;
   margin-left:190px;
   transition:margin-left .25s ease;
 }
@@ -417,13 +417,13 @@ body{
   background:rgba(0,0,0,0.2);
   border:0.5px solid rgba(196,152,59,0.25);
   border-radius:10px;
-  padding:12px 16px;
-  max-width:560px;
+  padding:6px 14px;
+  flex:1;
+  min-width:0;
   display:flex;
   flex-direction:column;
-  gap:7px;
+  gap:3px;
   transition:border-color .2s;
-  flex-shrink:0;
 }
 .aff-card:hover{border-color:rgba(196,152,59,0.5);}
 .aff-card-text{
@@ -432,7 +432,11 @@ body{
   font-size:13px;
   color:var(--gold);
   line-height:1.5;
-  display:block;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  text-overflow:ellipsis;
   cursor:pointer;
   opacity:1;
   transition:opacity 1.2s ease;
@@ -1943,10 +1947,6 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
   <div class="aff-card" id="aff-card">
     <div class="aff-card-label" id="aff-card-label"></div>
     <div class="aff-card-text" id="aff-card-text">Loading...</div>
-    <div class="aff-card-footer">
-      <div class="aff-dots" id="aff-dots"></div>
-      <button class="aff-edit-btn" onclick="showPage('affirmations',document.querySelectorAll('.nav-tab')[5])">✎ Edit</button>
-    </div>
   </div>
 </header>
 
@@ -3495,10 +3495,21 @@ function showPage(id,btn){
 let _affTimer=null;
 const _DECL_MAX_CHARS=180;
 
+const COGNITIVE_REFRAMES=[
+  "I honour my time and the time of others. Being early is an act of respect and self-discipline that reflects the leader I am becoming.",
+  "I nourish my body with intention. Food is fuel for my mission, and I eat in a way that keeps my energy aligned with my ambitions.",
+  "Other people are mirrors, not enemies. When I notice a negative thought about someone, it is information about what I need to heal within myself.",
+  "True wealth is built through discipline, not display. Every pound I steward wisely is a seed for the empire I am building and the charity I want to give.",
+  "My body communicates what my mind has not yet processed. I listen to its signals and respond with care, not compulsion.",
+  "I have a capable mind that works best with strong systems. I do not need to remember everything; I need to capture everything.",
+  "My word is my bond. I commit only to what I can deliver, and I deliver everything I commit to. Quality of commitment matters more than quantity.",
+  "I am intelligent, resourceful, and building something extraordinary. The voice that tells me otherwise is an echo of someone else's pain, not a reflection of my reality.",
+  "I am the master of my attention, not a passenger. Every minute I reclaim from scrolling is a minute invested in my legacy.",
+  "True wisdom is knowing what I do not know. My willingness to learn is my greatest competitive advantage."
+];
+
 function _buildAffPool(){
-  const affs=(data.affirmations||DEFAULT_AFFIRMATIONS).map(t=>({text:t,label:'🌱 Daily Affirmation',type:'affirmation',num:null}));
-  const decls=(_declData.length?_declData:DECLARATIONS_DEFAULT).map(d=>({text:d.text,label:d.section_emoji+' '+d.section,type:'declaration',num:d.number}));
-  const all=[...affs,...decls];
+  const all=COGNITIVE_REFRAMES.map(text=>({text,label:'COGNITIVE REFRAME',type:'reframe',num:null}));
   for(let i=all.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[all[i],all[j]]=[all[j],all[i]];}
   return all;
 }
@@ -3506,14 +3517,8 @@ function _affSetContent(item){
   const lbl=document.getElementById('aff-card-label');
   const textEl=document.getElementById('aff-card-text');
   if(!textEl)return;
-  if(lbl)lbl.textContent=item.label||'';
-  const isLong=item.text.length>_DECL_MAX_CHARS;
-  const displayText=isLong?item.text.slice(0,_DECL_MAX_CHARS)+'…':'"'+item.text+'"';
-  if(isLong&&item.num!=null){
-    textEl.innerHTML=_escHtml(displayText)+' <button class="aff-read-more-btn" onclick="openDeclModal('+item.num+')">Read more</button>';
-  } else {
-    textEl.textContent=displayText;
-  }
+  if(lbl)lbl.textContent='COGNITIVE REFRAME';
+  textEl.textContent=item.text;
 }
 function _escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function _affFadeTo(idx){
@@ -3528,7 +3533,6 @@ function _affFadeTo(idx){
     _affSetContent(_affPool[currentAffIdx]);
     textEl.classList.remove('aff-fading');
     if(lbl)lbl.style.opacity='1';
-    _renderAffDots(_affPool.length);
   },1200);
 }
 function _renderAffDots(total){
@@ -3548,7 +3552,6 @@ function renderAffirmationBar(){
   if(!_affPool.length)return;
   if(currentAffIdx>=_affPool.length)currentAffIdx=0;
   _affSetContent(_affPool[currentAffIdx]);
-  _renderAffDots(_affPool.length);
   if(_affTimer)clearInterval(_affTimer);
   _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),90000);
 }
