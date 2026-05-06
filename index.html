@@ -34,6 +34,10 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
+/* Font size levels */
+[data-font="small"] body{font-size:12px;}
+[data-font="medium"] body{font-size:14px;}
+[data-font="large"] body{font-size:16px;}
 body{
   font-family:var(--font-body);
   background:var(--charcoal);
@@ -1470,6 +1474,9 @@ body{
 
 /* Pillar rings */
 .pillar-rings-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:8px 0;}
+/* DV pillar donut mini-row */
+.dv-donut-row{display:flex;justify-content:space-around;align-items:center;padding:6px 4px 4px;border-bottom:0.5px solid var(--charcoal-border);margin-bottom:4px;}
+.dv-donut-item{display:flex;flex-direction:column;align-items:center;gap:1px;cursor:default;}
 
 /* Card hover glow */
 .flow-col:hover{box-shadow:0 0 0 1px var(--charcoal-border);transition:box-shadow .2s;}
@@ -1636,6 +1643,7 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .time-slot-line.half{border-top:0.5px dashed #2E2510;}
 .now-line{position:absolute;left:0;right:0;border-top:2px solid #E8733A;z-index:10;pointer-events:none;}
 .now-dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#E8733A;}
+.now-label{position:absolute;right:6px;top:-9px;font-size:9px;color:#E8733A;font-weight:600;letter-spacing:.04em;background:var(--charcoal);padding:0 3px;border-radius:3px;}
 .day-event-block{position:absolute;left:4px;right:4px;border-radius:6px;padding:4px 8px;font-size:11px;cursor:grab;user-select:none;overflow:hidden;box-shadow:0 2px 8px #00000030;border-left:3px solid rgba(255,255,255,0.3);z-index:5;transition:box-shadow .15s;}
 .day-event-block:hover{box-shadow:0 4px 16px #00000050;}
 .day-event-block.dragging{cursor:grabbing;opacity:.8;z-index:20;box-shadow:0 8px 24px #00000060;}
@@ -1702,8 +1710,10 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .dv-pl-task.fp-dragging{opacity:.35;}
 .dv-pl-check{width:13px;height:13px;border-radius:3px;border:1px solid var(--charcoal-border);flex-shrink:0;cursor:pointer;font-size:9px;transition:all .15s;text-align:center;line-height:13px;}
 .dv-pl-drag{color:var(--text-tertiary);font-size:10px;flex-shrink:0;}
-.dv-pl-label{flex:1;font-size:11px;color:var(--text-primary);line-height:1.3;}
-.dv-pl-label.done{color:var(--text-tertiary);text-decoration:line-through;}
+.dv-pl-label{flex:1;font-size:11px;color:var(--text-primary);line-height:1.3;position:relative;}
+.dv-pl-label.done{color:var(--text-tertiary);}
+.dv-pl-label.done::after{content:'';position:absolute;left:0;top:50%;height:1px;width:0;background:var(--gold);animation:sweep .3s ease forwards;}
+@keyframes sweep{to{width:100%;}}
 .dv-pl-add{display:flex;gap:4px;margin-top:5px;padding-top:5px;border-top:0.5px solid var(--charcoal-border);}
 .dv-pl-add-inp{flex:1;background:none;border:none;outline:none;font-size:11px;color:var(--text-primary);font-family:var(--font-body);}
 .dv-pl-add-inp::placeholder{color:var(--text-tertiary);}
@@ -1781,9 +1791,13 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 .dsp-n{font-family:'Poppins',sans-serif;font-size:9px;font-weight:300;color:var(--text-tertiary);flex-shrink:0;width:14px;line-height:24px;}
 .dsp-line-inp{flex:1;border:none;outline:none;background:transparent;font-family:'Poppins',sans-serif;font-size:11px;font-weight:300;line-height:24px;color:var(--text-primary);padding:0 2px;}
 .dsp-line-inp::placeholder{color:var(--text-tertiary);font-style:italic;font-weight:300;}
-/* Reflection prompts */
-.dsp-prompt-block{margin-bottom:6px;}
-.dsp-prompt-label{font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(196,152,59,0.7);margin-bottom:2px;}
+/* Reflection prompts — accordion */
+.dsp-prompt-block{margin-bottom:2px;}
+.dsp-prompt-label{font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(196,152,59,0.7);margin-bottom:2px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0;user-select:none;}
+.dsp-prompt-label::after{content:'▾';font-size:9px;color:rgba(196,152,59,0.4);transition:transform .2s;}
+.dsp-acc-closed .dsp-prompt-label::after{transform:rotate(-90deg);}
+.dsp-acc-body{overflow:hidden;transition:max-height .25s ease;}
+.dsp-acc-closed .dsp-acc-body{max-height:0!important;}
 .dsp-reflect-ta{
   width:100%;border:none;border-bottom:0.5px solid rgba(196,152,59,0.12);outline:none;resize:none;background:transparent;
   font-family:'Poppins',sans-serif;font-size:12px;font-weight:300;line-height:28px;
@@ -2073,13 +2087,14 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
     <div class="aff-progress-track"><div class="aff-progress-fill" id="aff-progress-fill"></div></div>
   </div>
   <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
+  <button class="theme-toggle" onclick="cycleFontSize()" title="Toggle font size (F key)">Aa</button>
 </header>
 
 <!-- SIDEBAR NAV -->
 <nav class="sidebar-nav" id="sidebar-nav">
   <div class="sidebar-logo" onclick="toggleSidebar()" title="Toggle sidebar">N</div>
   <div class="sidebar-search-wrap">
-    <span class="sidebar-search-icon">⌕</span>
+    <span class="sidebar-search-icon">🔍</span>
     <input class="sidebar-search" id="sidebar-search" placeholder="Search tasks…" oninput="sidebarSearch(this.value)" onfocus="showSearchDrop()" autocomplete="off"/>
   </div>
   <div class="search-dropdown" id="search-dropdown"></div>
@@ -2153,6 +2168,12 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
     <div class="glance-chip" id="glance-fajr"><span class="glance-chip-icon">🌙</span><span>Fajr —</span></div>
     <div class="glance-chip" id="glance-tasks"><span class="glance-chip-icon">✓</span><span id="glance-tasks-text">0/0 tasks</span></div>
     <div class="glance-chip" id="glance-hijri"><span class="glance-chip-icon">📅</span><span id="glance-hijri-text">—</span></div>
+    <div class="glance-chip" id="glance-score" style="display:none"><span class="glance-chip-icon">⬤</span><span id="glance-score-text">0%</span></div>
+  </div>
+  <!-- Smart nudge banner -->
+  <div id="nudge-banner" style="display:none;background:linear-gradient(90deg,rgba(232,184,75,0.12),rgba(232,184,75,0.05));border:0.5px solid rgba(232,184,75,0.3);border-radius:var(--radius-sm);padding:8px 16px;margin-bottom:10px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:8px;">
+    <span id="nudge-icon">✦</span><span id="nudge-text"></span>
+    <button onclick="document.getElementById('nudge-banner').style.display='none'" style="margin-left:auto;background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:13px;padding:0">✕</button>
   </div>
 
 
@@ -2658,6 +2679,18 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 
   <!-- #7 GHL REVENUE THERMOMETER -->
   <div id="ghl-thermometer-wrap"></div>
+
+  <!-- HABIT HEATMAP -->
+  <div style="margin-top:1rem">
+    <span class="section-lbl">90-Day Ritual Streak</span>
+    <div id="habit-heatmap-wrap" class="thermometer-wrap" style="margin-top:0.5rem"></div>
+  </div>
+
+  <!-- EMPIRE SCOREBOARD -->
+  <div style="margin-top:1rem">
+    <span class="section-lbl">Empire Scoreboard</span>
+    <div id="empire-scoreboard-wrap" style="margin-top:0.5rem"></div>
+  </div>
 
   <!-- TIGERFLOW PRICING -->
   <div class="emp-ref-card" style="margin-top:1rem">
@@ -3963,6 +3996,16 @@ function toggleRitualCard(session){
   if(chev)chev.textContent=isOpen?'▸':'▾';
 }
 
+function calcHabitStreak(session,idx){
+  let streak=0;
+  for(let i=0;i<90;i++){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const ds=fmt(d);
+    if(data[ds]&&data[ds][session]&&data[ds][session][idx])streak++;
+    else break;
+  }
+  return streak;
+}
 function renderRitualNew(session,ds){
   const steps=session==='am'?AM_STEPS:PM_STEPS;
   const color=session==='am'?'#1A9E8F':'var(--gold)';
@@ -4009,9 +4052,9 @@ function renderRitualNew(session,ds){
     const time=document.createElement('div');
     time.className='ritual-step-time-sm';
     time.textContent=s.time;
-    row.appendChild(badge);
-    row.appendChild(text);
-    row.appendChild(time);
+    const streak=calcHabitStreak(session,i);
+    if(streak>1){const sb=document.createElement('span');sb.className='habit-streak';sb.textContent='🔥'+streak;row.appendChild(badge);row.appendChild(text);row.appendChild(time);row.appendChild(sb);}
+    else{row.appendChild(badge);row.appendChild(text);row.appendChild(time);}
     cont.appendChild(row);
   });
 }
@@ -4502,6 +4545,8 @@ function renderEmpire(){
 
   // #7 GHL thermometer
   try{renderGHLThermometer('ghl-thermometer-wrap');}catch(e){}
+  try{renderHabitHeatmap('habit-heatmap-wrap');}catch(e){}
+  try{renderEmpireScoreboard('empire-scoreboard-wrap');}catch(e){}
 
   // pillar cards
   const grid=document.getElementById('empire-grid');
@@ -5879,8 +5924,7 @@ function selectMiniDay(dateStr) {
 function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
-  // Day detail panel is hidden
-  return;
+  panel.style.display = 'block';
   const parts = dateStr.split('-');
   const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
@@ -6082,7 +6126,7 @@ function renderMiniCalendar() {
 
 // CALENDAR
 // TOAST NOTIFICATIONS
-function showToast(msg, color='#E8B84B') {
+function showToast(msg, color='#E8B84B', duration=2200) {
   const container = document.getElementById('toast-container');
   if (!container) return;
   const t = document.createElement('div');
@@ -6093,7 +6137,7 @@ function showToast(msg, color='#E8B84B') {
   setTimeout(() => {
     t.classList.remove('show');
     setTimeout(() => t.remove(), 350);
-  }, 2200);
+  }, duration);
 }
 
 // GAUGE RENDER
@@ -6917,7 +6961,9 @@ function dvUpdateNow() {
   const line = document.createElement('div');
   line.className = 'now-line';
   line.style.top = top + 'px';
-  line.innerHTML = '<div class="now-dot"></div>';
+  const h=now.getHours(),m=now.getMinutes();
+  const t=(h%12||12)+':'+(m<10?'0':'')+m+(h<12?'am':'pm');
+  line.innerHTML = '<div class="now-dot"></div><span class="now-label">NOW '+t+'</span>';
   slotsEl.appendChild(line);
 }
 
@@ -7000,11 +7046,32 @@ async function dvRenderSolarMarkers(dateStr) {
   }
 }
 
+const Q2_SCHEDULE=[
+  {label:'Fajr + Morning Ritual',start:5*60+30,end:6*60+30,color:'#E8B84B'},
+  {label:'Deep Work — GHL / Mycelink',start:7*60,end:9*60,color:'#7C9EBF'},
+  {label:'Content & Tiger + Dragon',start:9*60+30,end:11*60,color:'#B87CE0'},
+  {label:'Admin + Comms',start:11*60,end:12*60,color:'#6BCB77'},
+  {label:'Dhuhr Break',start:12*60+30,end:13*60+30,color:'#E8733A'},
+  {label:'Deep Work — Architecture',start:13*60+30,end:15*60+30,color:'#7C9EBF'},
+  {label:'Learning + Skill Block',start:16*60,end:17*60+30,color:'#F4A261'},
+  {label:'Asr + Movement',start:17*60+30,end:18*60+30,color:'#E8733A'},
+  {label:'Wind Down + Review',start:19*60,end:20*60,color:'#6BCB77'},
+];
 function dvRenderEvents() {
   const slotsEl = document.getElementById('day-time-slots');
   if (!slotsEl) return;
   slotsEl.querySelectorAll('.day-event-block').forEach(e => e.remove());
   slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e => e.remove());
+  slotsEl.querySelectorAll('.q2-soft-block').forEach(e => e.remove());
+  // Q2 schedule soft background blocks
+  Q2_SCHEDULE.forEach(b=>{
+    const el=document.createElement('div');
+    el.className='q2-soft-block';
+    const top=b.start*(HOUR_H/60), h=(b.end-b.start)*(HOUR_H/60);
+    el.style.cssText=`position:absolute;left:0;right:0;top:${top}px;height:${h}px;background:${b.color}09;border-left:2px solid ${b.color}22;pointer-events:none;z-index:0;`;
+    el.title=b.label;
+    slotsEl.appendChild(el);
+  });
   // Always (re)draw solar markers for the current date
   dvRenderSolarMarkers(dvDate);
   // Ritual fixed blocks
@@ -7255,7 +7322,27 @@ function renderDvPillars(ds) {
 
   let totalDone = 0, totalAll = 0;
 
-  body.innerHTML = PILLARS.map(p => {
+  // Pillar donut mini-rings row
+  const donutsHtml = '<div class="dv-donut-row">' + PILLARS.map(p => {
+    const tasks = data[ds].pillars[p.id] || [];
+    const done = tasks.filter(t => t.done).length, tot = tasks.length;
+    const pct = tot ? done/tot : 0;
+    const r = 22, cx = 28, cy = 28, circ = 2*Math.PI*r;
+    const dash = pct * circ, gap = circ - dash;
+    return `<div class="dv-donut-item" title="${p.name}: ${done}/${tot}">
+      <svg width="56" height="56" viewBox="0 0 56 56">
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--charcoal-border)" stroke-width="5"/>
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${p.color}" stroke-width="5"
+          stroke-dasharray="${dash} ${gap}" stroke-linecap="round"
+          transform="rotate(-90 ${cx} ${cy})" style="transition:stroke-dasharray .4s"/>
+        <text x="${cx}" y="${cy+1}" text-anchor="middle" dominant-baseline="middle"
+          font-size="9" fill="${p.color}" font-family="var(--font-body)">${done}/${tot}</text>
+      </svg>
+      <div style="font-size:9px;color:var(--text-tertiary);text-align:center;max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name.split(' ')[0]}</div>
+    </div>`;
+  }).join('') + '</div>';
+
+  body.innerHTML = donutsHtml + PILLARS.map(p => {
     const tasks = data[ds].pillars[p.id] || [];
     const done = tasks.filter(t => t.done).length;
     totalDone += done; totalAll += tasks.length;
@@ -8259,6 +8346,28 @@ async function _dspLoadWeather() {
   } catch(e) {}
 }
 
+let _dspAccordionInit = false;
+function initDiaryAccordion() {
+  if (_dspAccordionInit) return;
+  _dspAccordionInit = true;
+  const OPEN_LABELS = ['i am grateful for', 'must do today'];
+  document.querySelectorAll('.dsp-prompt-block').forEach(block => {
+    const label = block.querySelector('.dsp-prompt-label');
+    if (!label) return;
+    const body = document.createElement('div');
+    body.className = 'dsp-acc-body';
+    Array.from(block.children).forEach(c => { if (c !== label) body.appendChild(c); });
+    block.appendChild(body);
+    const lText = label.textContent.trim().toLowerCase();
+    const isOpen = OPEN_LABELS.some(k => lText.includes(k));
+    if (!isOpen) block.classList.add('dsp-acc-closed');
+    body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0';
+    label.addEventListener('click', () => {
+      const closed = block.classList.toggle('dsp-acc-closed');
+      body.style.maxHeight = closed ? '0' : body.scrollHeight + 'px';
+    });
+  });
+}
 async function loadDiary() {
   _dspOffset = 0;
   _dspDate   = fmt(new Date());
@@ -8268,6 +8377,7 @@ async function loadDiary() {
   if (nextBtn) nextBtn.disabled = true;
   _dspLoadWeather();
   await _dspFetch();
+  setTimeout(initDiaryAccordion, 100);
 }
 
 /* ══════════════════════════════════════
@@ -8294,15 +8404,96 @@ function renderGlance(ds){
         hijriEl.textContent=h;
       }catch(e){hijriEl.textContent='Hijri date';}
     }
-    // Fajr time from existing prayer data
+    // Fajr time from solarCache
     const fajrEl=document.getElementById('glance-fajr');
     if(fajrEl){
-      const fajrTime=document.getElementById('time-fajr');
-      if(fajrTime&&fajrTime.textContent&&fajrTime.textContent!=='--:--'){
-        fajrEl.innerHTML='<span class="glance-chip-icon">🌙</span>Fajr <span class="glance-chip-em">'+fajrTime.textContent+'</span>';
+      const sol=solarCache[ds];
+      if(sol&&sol.nautiTwilightStart!=null){
+        const h=Math.floor(sol.nautiTwilightStart/60),m=sol.nautiTwilightStart%60;
+        const fajrStr=(h%12||12)+':'+(m<10?'0':'')+m+(h<12?'am':'pm');
+        // Prayer countdown to next Fajr
+        const now=new Date();
+        const nowMin=now.getHours()*60+now.getMinutes();
+        let diffMin=sol.nautiTwilightStart-nowMin;
+        if(diffMin<0)diffMin+=1440;
+        const countStr=diffMin<60?diffMin+'m':''+Math.floor(diffMin/60)+'h'+(diffMin%60?''+diffMin%60+'m':'');
+        fajrEl.innerHTML='<span class="glance-chip-icon">🌙</span>Fajr <span class="glance-chip-em">'+fajrStr+'</span><span style="font-size:10px;color:var(--text-tertiary);margin-left:4px">in '+countStr+'</span>';
       }
     }
+    try{updateCompletionScore(ds);}catch(e2){}
   }catch(e){}
+}
+
+// Smart nudge banner
+function initSmartNudge(){
+  const banner=document.getElementById('nudge-banner');
+  if(!banner)return;
+  const h=new Date().getHours(),m=new Date().getMinutes();
+  const min=h*60+m;
+  let msg='',icon='✦';
+  if(min>=300&&min<330){icon='🌙';msg='5AM ritual window — Fajr, cold wudu, and dhikr. Rise.';}
+  else if(min>=1320){icon='🌑';msg='After 10PM — wind down, RAM dump, and prep for tomorrow.';}
+  else if(min>=1260&&min<1320){icon='📖';msg='Evening review window — journal your wins and clear your mind.';}
+  if(!msg){banner.style.display='none';return;}
+  document.getElementById('nudge-icon').textContent=icon;
+  document.getElementById('nudge-text').textContent=msg;
+  banner.style.display='flex';
+}
+
+// Daily completion score chip
+function updateCompletionScore(ds){
+  try{
+    ensureDay(ds);
+    let done=0,total=0;
+    PILLARS.forEach(p=>{const t=data[ds].pillars[p.id]||[];total+=t.length;done+=t.filter(x=>x.done).length;});
+    const pct=total?Math.round(done/total*100):0;
+    const el=document.getElementById('glance-score');
+    const txt=document.getElementById('glance-score-text');
+    if(el&&txt){el.style.display='';txt.textContent=pct+'% done';el.style.borderColor=pct===100?'rgba(34,197,94,0.5)':pct>60?'rgba(232,184,75,0.3)':'var(--charcoal-border)';}
+  }catch(e){}
+}
+
+// Font size toggle (3 levels)
+let _fontLevel=parseInt(localStorage.getItem('nn_font')||'1');
+function applyFontLevel(){
+  const sizes=['small','medium','large'];
+  document.documentElement.setAttribute('data-font',sizes[_fontLevel]);
+}
+function cycleFontSize(){
+  _fontLevel=(_fontLevel+1)%3;
+  localStorage.setItem('nn_font',_fontLevel);
+  applyFontLevel();
+  showToast('Font: '+['Small','Medium','Large'][_fontLevel],'#E8B84B');
+}
+applyFontLevel();
+
+// Keyboard shortcuts
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+  const k=e.key.toLowerCase();
+  if(k==='d')showPage('daily');
+  else if(k==='p')showPage('planning');
+  else if(k==='w')showPage('review');
+  else if(k==='n')showPage('notes');
+  else if(k==='escape'){closeModal();const f=document.getElementById('focus-overlay');if(f)f.classList.remove('open');}
+  else if(k==='f'){cycleFontSize();}
+  else if(k==='?'){showToast('D=Daily P=Planning W=Review N=Notes F=Font ESC=Close','#E8B84B',4000);}
+});
+
+// Weekly wins — auto-populate on Sundays
+function checkWeeklyWins(){
+  const today=new Date();
+  if(today.getDay()!==0)return;
+  const ds=fmt(today);
+  ensureDay(ds);
+  const wins=[];
+  PILLARS.forEach(p=>{
+    const tasks=data[ds].pillars[p.id]||[];
+    tasks.filter(t=>t.done).forEach(t=>wins.push(t.text));
+  });
+  if(!wins.length)return;
+  const el=document.getElementById('dsp-wins');
+  if(el&&!el.value){el.value='✦ '+wins.slice(0,3).join('\n✦ ');if(el._dspSaved===undefined)dspOnInput();}
 }
 
 // #8 Progress bar for affirmation (8s rotation)
@@ -8551,26 +8742,130 @@ function renderRadarChart(canvasId,scores){
   }
 }
 
-// #7 GHL thermometer render
+// #7 GHL thermometer + semicircular gauge
 function renderGHLThermometer(containerId){
   const el=document.getElementById(containerId);
   if(!el)return;
   const current=parseFloat(localStorage.getItem('nn_ghl_revenue')||'0');
   const target=150000;
-  const pct=Math.min(100,Math.round(current/target*100));
+  const pct=Math.min(100,current/target*100);
+  // SVG semicircle gauge: r=60, cx=80, cy=80, arc = 180°
+  const r=60,cx=80,cy=80;
+  const toRad=deg=>deg*Math.PI/180;
+  function arcPath(startDeg,endDeg,radius){
+    const s={x:cx+radius*Math.cos(toRad(startDeg)),y:cy+radius*Math.sin(toRad(startDeg))};
+    const e={x:cx+radius*Math.cos(toRad(endDeg)),y:cy+radius*Math.sin(toRad(endDeg))};
+    const large=endDeg-startDeg>180?1:0;
+    return `M ${s.x} ${s.y} A ${radius} ${radius} 0 ${large} 1 ${e.x} ${e.y}`;
+  }
+  const startDeg=180,endDeg=0;
+  const fillEnd=180-pct*1.8; // 180deg span for 100%
+  const needleAngle=180-pct*1.8;
+  const nx=cx+(r-8)*Math.cos(toRad(needleAngle));
+  const ny=cy+(r-8)*Math.sin(toRad(needleAngle));
   el.innerHTML=`<div class="thermometer-wrap">
-    <div class="thermo-title">TigerFlow GHL Revenue — Q2 Target</div>
-    <div class="thermo-current">£${current.toLocaleString()} <span style="font-size:12px;color:var(--text-tertiary)">/ £150,000</span></div>
-    <div class="thermo-track"><div class="thermo-fill" style="width:${pct}%"></div></div>
-    <div class="thermo-labels"><span>£0</span><span>${pct}%</span><span>£150K</span></div>
+    <div class="thermo-title" style="display:flex;align-items:center;justify-content:space-between">
+      <span>TigerFlow GHL Revenue — Q2</span>
+      <button onclick="promptGHLRevenue()" style="background:none;border:0.5px solid var(--charcoal-border);border-radius:4px;color:var(--text-tertiary);cursor:pointer;font-size:10px;padding:2px 7px">Edit</button>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap">
+      <svg width="160" height="90" viewBox="0 0 160 90">
+        <path d="${arcPath(180,0,r)}" fill="none" stroke="var(--charcoal-border)" stroke-width="10" stroke-linecap="round"/>
+        ${pct>0?`<path d="${arcPath(180,fillEnd,r)}" fill="none" stroke="url(#ghlGrad)" stroke-width="10" stroke-linecap="round"/>`:''}
+        <defs><linearGradient id="ghlGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#C4983B"/><stop offset="100%" stop-color="#E8B84B"/></linearGradient></defs>
+        <line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#E8733A" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="${cx}" cy="${cy}" r="4" fill="#E8733A"/>
+        <text x="${cx}" y="${cy+16}" text-anchor="middle" font-size="12" fill="var(--gold)" font-family="var(--font-display)">${Math.round(pct)}%</text>
+      </svg>
+      <div>
+        <div class="thermo-current" style="font-size:20px">£${current.toLocaleString()}</div>
+        <div style="font-size:11px;color:var(--text-tertiary)">&nbsp;/ £150,000 target</div>
+        <div class="thermo-track" style="margin-top:8px"><div class="thermo-fill" style="width:${Math.round(pct)}%"></div></div>
+      </div>
+    </div>
   </div>`;
+}
+function promptGHLRevenue(){
+  const v=prompt('GHL Revenue (£):',localStorage.getItem('nn_ghl_revenue')||'0');
+  if(v!==null&&!isNaN(parseFloat(v))){localStorage.setItem('nn_ghl_revenue',parseFloat(v));try{renderGHLThermometer('ghl-thermometer-wrap');}catch(e){}}
+}
+
+// Habit heatmap — 90-day AM ritual completion grid
+function renderHabitHeatmap(containerId){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  const days=90, today=new Date();
+  const cells=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today);d.setDate(d.getDate()-i);
+    const ds=fmt(d);
+    const dd=data[ds];
+    let score=0;
+    if(dd&&dd.am){score=dd.am.filter(Boolean).length;}
+    cells.push({ds,score,max:5});
+  }
+  const WEEKS=Math.ceil(days/7);
+  const cols=[];
+  for(let w=0;w<WEEKS;w++){
+    const start=w*7,end=Math.min(start+7,days);
+    cols.push(cells.slice(start,end));
+  }
+  const cellHtml=cols.map(col=>`<div class="heatmap-col">${col.map(c=>{
+    const pct=c.max?c.score/c.max:0;
+    const bg=pct===0?'var(--charcoal-border)':pct<0.4?'#C4983B44':pct<0.7?'#C4983B88':'#E8B84B';
+    return `<div class="heatmap-cell" style="background:${bg}" title="${c.ds}: ${c.score}/5 habits"></div>`;
+  }).join('')}</div>`).join('');
+  el.innerHTML=`<div style="font-size:10px;color:var(--text-tertiary);margin-bottom:6px">Morning ritual habit streaks — last 90 days</div>
+    <div class="heatmap-wrap"><div class="heatmap-grid">${cellHtml}</div></div>
+    <div style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:10px;color:var(--text-tertiary)">
+      <span>Less</span>
+      <div style="width:10px;height:10px;border-radius:2px;background:var(--charcoal-border)"></div>
+      <div style="width:10px;height:10px;border-radius:2px;background:#C4983B44"></div>
+      <div style="width:10px;height:10px;border-radius:2px;background:#C4983B88"></div>
+      <div style="width:10px;height:10px;border-radius:2px;background:#E8B84B"></div>
+      <span>More</span>
+    </div>`;
+}
+
+// Empire scoreboard — editable goals tracker
+const SCOREBOARD_DEFAULTS=[
+  {label:'GHL Clients',key:'ghl_clients',target:10,unit:''},
+  {label:'Revenue MRR',key:'mrr',target:5000,unit:'£'},
+  {label:'Content Posts',key:'content',target:30,unit:''},
+  {label:'Architecture Projects',key:'arch',target:3,unit:''},
+  {label:'5AM Streak',key:'fajr_streak',target:90,unit:'d'},
+];
+function renderEmpireScoreboard(containerId){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  const rows=SCOREBOARD_DEFAULTS.map(item=>{
+    const current=parseFloat(localStorage.getItem('nn_sb_'+item.key)||'0');
+    const pct=Math.min(100,item.target?Math.round(current/item.target*100):0);
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <div style="font-size:11px;color:var(--text-secondary);width:130px;flex-shrink:0">${item.label}</div>
+      <div style="flex:1;height:6px;background:var(--charcoal-border);border-radius:3px;overflow:hidden">
+        <div style="height:100%;border-radius:3px;background:${pct===100?'#22C55E':'var(--gold)'};width:${pct}%;transition:width .5s"></div>
+      </div>
+      <div style="font-size:11px;color:var(--gold);width:60px;text-align:right">${item.unit}${current}/${item.unit}${item.target}</div>
+      <button onclick="promptScoreboardVal('${item.key}','${item.label}','${item.unit}',${item.target},'${containerId}')" style="background:none;border:0.5px solid var(--charcoal-border);color:var(--text-tertiary);border-radius:4px;cursor:pointer;font-size:10px;padding:1px 6px">✎</button>
+    </div>`;
+  }).join('');
+  el.innerHTML=`<div class="thermometer-wrap">${rows}</div>`;
+}
+function promptScoreboardVal(key,label,unit,target,containerId){
+  const v=prompt(label+' current value (target: '+unit+target+'):',localStorage.getItem('nn_sb_'+key)||'0');
+  if(v!==null&&!isNaN(parseFloat(v))){localStorage.setItem('nn_sb_'+key,parseFloat(v));try{renderEmpireScoreboard(containerId);}catch(e){}}
 }
 
 // Init all new features on page load
 window.addEventListener('load',function(){
   initTheme();
   setTimeout(initCheckin,800);
-  setTimeout(()=>renderGlance(getDateStr(typeof dayOffset!=='undefined'?dayOffset:0)),600);
+  const ds=fmt(new Date());
+  setTimeout(()=>{try{renderGlance(ds);}catch(e){}},600);
+  setTimeout(()=>{try{initSmartNudge();}catch(e){}},700);
+  setTimeout(()=>{try{updateCompletionScore(ds);}catch(e){}},800);
+  setTimeout(()=>{try{checkWeeklyWins();}catch(e){}},1000);
 });
 </script>
 <!-- NIGHT RITUAL MODAL -->
