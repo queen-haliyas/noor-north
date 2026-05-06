@@ -3693,7 +3693,7 @@ function renderAffirmationBar(){
   if(currentAffIdx>=_affPool.length)currentAffIdx=0;
   _affSetContent(_affPool[currentAffIdx]);
   if(_affTimer)clearInterval(_affTimer);
-  _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),90000);
+  _affTimer=setInterval(()=>_affFadeTo(currentAffIdx+1),30000);
 }
 function jumpToAffirmation(idx){_affFadeTo(idx);}
 function prevAffirmation(){_affFadeTo(currentAffIdx-1+(_affPool.length||1));}
@@ -6900,7 +6900,8 @@ function initDayView() {
 function dvUpdateHeader() {
   const t = document.getElementById('day-view-title');
   const s = document.getElementById('day-view-date-sub');
-  const d = new Date(dvDate + 'T12:00:00');
+  const [y,mo,dy] = dvDate.split('-').map(Number);
+  const d = new Date(y, mo-1, dy);
   if (t) t.textContent = dvDate === fmt(new Date()) ? 'Today' : d.toLocaleDateString('en-GB',{weekday:'long'});
   if (s) s.textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
 }
@@ -7567,8 +7568,8 @@ function dvRenderRitualBlocks(ds) {
   dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 4*60+30, 5*60+10,
     'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
 
-  // Evening Ritual: 11:00pm – 11:40pm
-  dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 23*60, 23*60+40,
+  // Evening Ritual: 9:30pm – 10:10pm
+  dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 21*60+30, 22*60+10,
     'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
 
   // Pillar timed events
@@ -8311,7 +8312,7 @@ function _startAffProgress(){
   if(!fill)return;
   fill.style.animation='none';
   fill.offsetHeight; // reflow
-  fill.style.animation='affDrain 8s linear forwards';
+  fill.style.animation='affDrain 30s linear forwards';
 }
 
 // Override renderAffirmationBar to use 8s and show progress
@@ -8322,7 +8323,7 @@ function renderAffirmationBar(){
   _affSetContent(_affPool[currentAffIdx]);
   _startAffProgress();
   if(_affTimer)clearInterval(_affTimer);
-  _affTimer=setInterval(()=>{_affFadeTo(currentAffIdx+1);setTimeout(_startAffProgress,1300);},8000);
+  _affTimer=setInterval(()=>{_affFadeTo(currentAffIdx+1);setTimeout(_startAffProgress,1300);},30000);
 }
 
 // #9 Page transition — handled purely by CSS .page.active animation
