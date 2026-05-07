@@ -6111,7 +6111,8 @@ function selectMiniDay(dateStr) {
 function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
-  panel.style.display = 'block';
+  panel.style.display = 'none';
+  return;
   const parts = dateStr.split('-');
   const d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
   const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
@@ -6310,10 +6311,6 @@ function renderMiniCalendar() {
     cells.appendChild(cell);
   }
   
-  // Show today's detail by default
-  if (document.getElementById('day-detail-panel').style.display === 'none') {
-    renderDayDetail(miniSelectedDate);
-  }
 }
 
 // CALENDAR
