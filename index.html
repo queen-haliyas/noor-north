@@ -3575,6 +3575,14 @@ let USER_ID = null;
 let syncTimeout = null;
 let _syncHideTimer = null;
 
+// DATA KEY CONSTANTS — never inline these strings elsewhere
+const DATA_KEYS = { main: 'main' };
+const DATA_VERSION = '1';
+
+// HOISTED — declared here so renderMiniCalendar() can read them during init
+let miniCalView = 'month';
+let miniWeekOffset = 0;
+
 // DATA
 const PILLARS=[
   {id:'life',name:'Me Life',icon:'✦',color:'#7EC8E3'},
@@ -6942,11 +6950,12 @@ async function syncToSupabase() {
   if (!MASTER_PASSWORD || !USER_ID) return;
   showSyncSaving();
   try {
-    const encrypted = encrypt(data, MASTER_PASSWORD);
-    console.log('[Supabase] syncToSupabase: posting upsert for user', USER_ID);
+    const payload = { ...data, _v: DATA_VERSION };
+    const encrypted = encrypt(payload, MASTER_PASSWORD);
+    console.log('[Supabase] syncToSupabase: posting upsert for user', USER_ID, 'key=', DATA_KEYS.main, 'version=', DATA_VERSION);
     const res = await sbRequest('POST', 'noor_north_data', {
       user_id: USER_ID,
-      data_key: 'main',
+      data_key: DATA_KEYS.main,
       encrypted_value: encrypted,
       updated_at: new Date().toISOString()
     });
@@ -6967,26 +6976,26 @@ async function loadFromSupabase() {
   if (!MASTER_PASSWORD || !USER_ID) return { ok: false, reason: 'no-creds' };
   showSyncSaving();
   try {
-    console.log('[Supabase] loadFromSupabase: fetching for user', USER_ID);
-    const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.main`);
+    console.log('[Supabase] loadFromSupabase: querying key=', DATA_KEYS.main, 'for user', USER_ID);
+    const rows = await sbRequest('GET', `noor_north_data?user_id=eq.${encodeURIComponent(USER_ID)}&data_key=eq.${DATA_KEYS.main}`);
     hideSync();
     if (!Array.isArray(rows)) {
-      console.error('[Supabase] loadFromSupabase: unexpected response (not array)', rows);
+      console.error('[Supabase] loadFromSupabase: unexpected response (not array) — keeping local data', rows);
       return { ok: false, reason: 'network' };
     }
-    console.log('[Supabase] loadFromSupabase: got', rows.length, 'row(s)');
+    console.log('[Supabase] loadFromSupabase: key=', DATA_KEYS.main, '— got', rows.length, 'row(s)');
     if (rows.length > 0) {
       const decrypted = decrypt(rows[0].encrypted_value, MASTER_PASSWORD);
       if (decrypted) {
-        console.log('[Supabase] loadFromSupabase: decrypted ok, updating data');
+        console.log('[Supabase] loadFromSupabase: decrypted ok, version=', decrypted._v || 'legacy (pre-v1)', '— applying to data');
         data = decrypted;
         return { ok: true };
       }
-      console.error('[Supabase] loadFromSupabase: decryption failed — wrong password?');
+      console.error('[Supabase] loadFromSupabase: decryption failed — wrong password? NOT overwriting local data.');
       return { ok: false, reason: 'wrong-password' };
     }
-    console.log('[Supabase] loadFromSupabase: no rows — new user');
-    return { ok: true }; // new user, no data yet
+    console.log('[Supabase] loadFromSupabase: no cloud rows for key=', DATA_KEYS.main, '— keeping local data, not overwriting');
+    return { ok: true }; // new user or key mismatch — local data preserved
   } catch(e) {
     hideSync();
     console.error('[Supabase] loadFromSupabase: exception', e);
@@ -9057,9 +9066,7 @@ function promptScoreboardVal(key,label,unit,target,containerId){
 
 // ══ FEATURES 16–40 JS ══
 
-// F16 – Week/Month calendar view toggle
-let miniCalView = 'month'; // 'month' | 'week'
-let miniWeekOffset = 0; // weeks offset from current
+// F16 – Week/Month calendar view toggle (miniCalView + miniWeekOffset hoisted to top of script)
 
 function setMiniCalView(v) {
   miniCalView = v;
