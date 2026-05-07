@@ -8535,8 +8535,6 @@ let _dspAccordionInit = false;
 function initDiaryAccordion() {
   if (_dspAccordionInit) return;
   _dspAccordionInit = true;
-  const OPEN_LABELS   = ['i am grateful for', 'must do today'];
-  const PINNED_LABELS = ['sadaqah', 'i am manifesting'];
   document.querySelectorAll('.dsp-prompt-block').forEach(block => {
     const label = block.querySelector('.dsp-prompt-label');
     if (!label) return;
@@ -8544,19 +8542,8 @@ function initDiaryAccordion() {
     body.className = 'dsp-acc-body';
     Array.from(block.children).forEach(c => { if (c !== label) body.appendChild(c); });
     block.appendChild(body);
-    const lText = label.textContent.trim().toLowerCase();
-    const isPinned = PINNED_LABELS.some(k => lText.includes(k));
-    const isOpen = isPinned || OPEN_LABELS.some(k => lText.includes(k));
-    if (!isOpen) block.classList.add('dsp-acc-closed');
-    body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0';
-    if (isPinned) {
-      label.classList.add('no-toggle');
-    } else {
-      label.addEventListener('click', () => {
-        const closed = block.classList.toggle('dsp-acc-closed');
-        body.style.maxHeight = closed ? '0' : body.scrollHeight + 'px';
-      });
-    }
+    body.style.maxHeight = 'none';
+    label.classList.add('no-toggle');
   });
 }
 async function loadDiary() {
