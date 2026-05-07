@@ -1922,11 +1922,6 @@ body{
 /* #1 Nav touch targets — ensure 44px min */
 .sidebar-btn{min-height:44px;height:auto;padding:8px 10px;}
 
-/* #2 Today at a glance */
-.glance-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
-.glance-chip{display:inline-flex;align-items:center;gap:5px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;padding:5px 13px;font-size:12px;color:var(--text-secondary);white-space:nowrap;flex-shrink:0;}
-.glance-chip-icon{font-size:13px;}
-.glance-chip-em{color:var(--text-primary);font-weight:500;}
 
 /* #3 Pillar progress bars — 8px, rounded */
 .pillar-prog-sm{height:8px !important;border-radius:4px !important;}
@@ -2279,13 +2274,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
       </div>
     </div>
     <button class="focus-now-btn" onclick="openFocusNow()" title="See your top priorities now">✦ Focus Now</button>
-  </div>
-  <!-- #2 Today at a glance -->
-  <div class="glance-row" id="glance-row">
-    <div class="glance-chip" id="glance-fajr"><span class="glance-chip-icon">🌙</span><span>Fajr —</span></div>
-    <div class="glance-chip" id="glance-tasks"><span class="glance-chip-icon">✓</span><span id="glance-tasks-text">0/0 tasks</span></div>
-    <div class="glance-chip" id="glance-hijri"><span class="glance-chip-icon">📅</span><span id="glance-hijri-text">—</span></div>
-    <div class="glance-chip" id="glance-score" style="display:none"><span class="glance-chip-icon">⬤</span><span id="glance-score-text">0%</span></div>
   </div>
   <!-- Smart nudge banner -->
   <div id="nudge-banner" style="display:none;background:linear-gradient(90deg,rgba(232,184,75,0.12),rgba(232,184,75,0.05));border:0.5px solid rgba(232,184,75,0.3);border-radius:var(--radius-sm);padding:8px 16px;margin-bottom:10px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:8px;">
@@ -4132,7 +4120,6 @@ function renderDaily(){
   renderFivePillarsPanel(ds);
   renderDvPillars(ds);
   loadDiary();
-  try{renderGlance(ds);}catch(e){}
 }
 
 function goToday(){dayOffset=0;renderDaily();}
@@ -4518,7 +4505,6 @@ function togglePillarTask(ds,pid,idx){
   if(tasks.length>0&&tasks.every(t=>t.done)){
     try{const anchor=document.getElementById('pi-'+pid)||document.getElementById('dvplrow-'+pid);fireConfetti(anchor);}catch(e){}
   }
-  try{renderGlance(ds);}catch(e){}
 }
 function editPillarTask(ds,pid,idx,text){
   data[ds].pillars[pid][idx].text=text.trim();save();
@@ -8552,45 +8538,6 @@ async function loadDiary() {
    20 UI IMPROVEMENTS — JS
 ══════════════════════════════════════ */
 
-// #2 Today at a glance
-function renderGlance(ds){
-  try{
-    ensureDay(ds);
-    let done=0,total=0;
-    PILLARS.forEach(p=>{
-      const tasks=data[ds].pillars[p.id]||[];
-      total+=tasks.length;
-      done+=tasks.filter(t=>t.done).length;
-    });
-    const tasksEl=document.getElementById('glance-tasks-text');
-    if(tasksEl)tasksEl.innerHTML='<span class="glance-chip-em">'+done+'/'+total+'</span> tasks done';
-    // Hijri date
-    const hijriEl=document.getElementById('glance-hijri-text');
-    if(hijriEl){
-      try{
-        const h=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(new Date());
-        hijriEl.textContent=h;
-      }catch(e){hijriEl.textContent='Hijri date';}
-    }
-    // Fajr time from solarCache
-    const fajrEl=document.getElementById('glance-fajr');
-    if(fajrEl){
-      const sol=solarCache[ds];
-      if(sol&&sol.nautiTwilightStart!=null){
-        const h=Math.floor(sol.nautiTwilightStart/60),m=sol.nautiTwilightStart%60;
-        const fajrStr=(h%12||12)+':'+(m<10?'0':'')+m+(h<12?'am':'pm');
-        // Prayer countdown to next Fajr
-        const now=new Date();
-        const nowMin=now.getHours()*60+now.getMinutes();
-        let diffMin=sol.nautiTwilightStart-nowMin;
-        if(diffMin<0)diffMin+=1440;
-        const countStr=diffMin<60?diffMin+'m':''+Math.floor(diffMin/60)+'h'+(diffMin%60?''+diffMin%60+'m':'');
-        fajrEl.innerHTML='<span class="glance-chip-icon">🌙</span>Fajr <span class="glance-chip-em">'+fajrStr+'</span><span style="font-size:10px;color:var(--text-tertiary);margin-left:4px">in '+countStr+'</span>';
-      }
-    }
-    try{updateCompletionScore(ds);}catch(e2){}
-  }catch(e){}
-}
 
 // Smart nudge banner
 function initSmartNudge(){
@@ -8608,18 +8555,6 @@ function initSmartNudge(){
   banner.style.display='flex';
 }
 
-// Daily completion score chip
-function updateCompletionScore(ds){
-  try{
-    ensureDay(ds);
-    let done=0,total=0;
-    PILLARS.forEach(p=>{const t=data[ds].pillars[p.id]||[];total+=t.length;done+=t.filter(x=>x.done).length;});
-    const pct=total?Math.round(done/total*100):0;
-    const el=document.getElementById('glance-score');
-    const txt=document.getElementById('glance-score-text');
-    if(el&&txt){el.style.display='';txt.textContent=pct+'% done';el.style.borderColor=pct===100?'rgba(34,197,94,0.5)':pct>60?'rgba(232,184,75,0.3)':'var(--charcoal-border)';}
-  }catch(e){}
-}
 
 // Font size toggle (3 levels)
 let _fontLevel=parseInt(localStorage.getItem('nn_font')||'1');
@@ -9455,9 +9390,7 @@ window.addEventListener('load',function(){
   initTheme();
   setTimeout(initCheckin,800);
   const ds=fmt(new Date());
-  setTimeout(()=>{try{renderGlance(ds);}catch(e){}},600);
   setTimeout(()=>{try{initSmartNudge();}catch(e){}},700);
-  setTimeout(()=>{try{updateCompletionScore(ds);}catch(e){}},800);
   setTimeout(()=>{try{checkWeeklyWins();}catch(e){}},1000);
   setTimeout(()=>{try{renderWeeklyWinsCard();}catch(e){}},600);
 });
