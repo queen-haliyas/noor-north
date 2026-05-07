@@ -577,7 +577,15 @@ body{
   transition:all .15s;
 }
 .day-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
-.day-label{font-size:14px;color:var(--text-secondary);min-width:180px;text-align:center;}
+/* 7-day week strip */
+.week-strip{display:flex;gap:5px;margin-bottom:1rem;}
+.week-strip-pill{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;cursor:pointer;transition:all .15s;user-select:none;}
+.week-strip-pill:hover{border-color:var(--gold);}
+.week-strip-pill.active{background:rgba(232,184,75,0.12);border-color:var(--gold);}
+.wsp-name{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);}
+.wsp-date{font-size:15px;font-weight:500;color:var(--text-secondary);}
+.week-strip-pill.active .wsp-name,.week-strip-pill.active .wsp-date{color:var(--gold);}
+.week-strip-pill.active .wsp-date{font-weight:700;}
 
 /* Three column layout */
 .flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:stretch;}
@@ -2264,17 +2272,12 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
   <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;flex-wrap:wrap;gap:10px">
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-      <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="day-nav-btn" onclick="changeDay(-1)">← prev</button>
-        <span class="day-label" id="daily-day-label"></span>
-        <button class="day-nav-btn" onclick="changeDay(1)">next →</button>
-      </div>
-    </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:10px">
+    <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
     <button class="focus-now-btn" onclick="openFocusNow()" title="See your top priorities now">✦ Focus Now</button>
   </div>
+  <!-- 7-day week strip -->
+  <div class="week-strip" id="week-strip"></div>
   <!-- Smart nudge banner -->
   <div id="nudge-banner" style="display:none;background:linear-gradient(90deg,rgba(232,184,75,0.12),rgba(232,184,75,0.05));border:0.5px solid rgba(232,184,75,0.3);border-radius:var(--radius-sm);padding:8px 16px;margin-bottom:10px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:8px;">
     <span id="nudge-icon">✦</span><span id="nudge-text"></span>
@@ -4112,8 +4115,7 @@ function renderDaily(){
   try{renderDailyNameBanner();}catch(e){}
   setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},100);
   ensureDay(ds);
-  if(document.getElementById('daily-day-label'))
-    document.getElementById('daily-day-label').textContent=fmtLabel(dayOffset);
+  try{renderWeekStrip();}catch(e){}
   renderRitualNew('am',ds);
   renderRitualNew('pm',ds);
   renderDailyStats();
@@ -4123,6 +4125,26 @@ function renderDaily(){
 }
 
 function goToday(){dayOffset=0;renderDaily();}
+function goDay(offset){dayOffset=offset;renderDaily();}
+function renderWeekStrip(){
+  const el=document.getElementById('week-strip');
+  if(!el)return;
+  const today=new Date();
+  const dow=(today.getDay()+6)%7; // Mon=0
+  const DAY_NAMES=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  let html='';
+  for(let i=0;i<7;i++){
+    const d=new Date(today);
+    d.setDate(today.getDate()-dow+i);
+    const offset=i-dow;
+    const isActive=offset===dayOffset;
+    html+=`<div class="week-strip-pill${isActive?' active':''}" onclick="goDay(${offset})">
+      <span class="wsp-name">${DAY_NAMES[i]}</span>
+      <span class="wsp-date">${d.getDate()}</span>
+    </div>`;
+  }
+  el.innerHTML=html;
+}
 function changeMiniMonthToToday(){miniCalYear=new Date().getFullYear();miniCalMonth=new Date().getMonth();renderMiniCalendar();}
 
 function toggleRitualCard(session){
@@ -9368,7 +9390,7 @@ function checkFullDayConfetti(ds) {
   const pmDone = dd.pm && Object.values(dd.pm).every(Boolean) && Object.values(dd.pm).length >= 5;
   if (amDone && pmDone) {
     localStorage.setItem(key, '1');
-    fireConfetti(document.getElementById('daily-day-label') || document.body);
+    fireConfetti(document.body);
     showToast('✦ Full Day Complete! Alhamdulillah!', '#E8B84B', 4000);
   }
 }
