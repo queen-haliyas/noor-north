@@ -577,13 +577,15 @@ body{
   transition:all .15s;
 }
 .day-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
-/* 7-day week strip */
-.week-strip{display:flex;gap:5px;margin-bottom:1rem;}
-.week-strip-pill{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:20px;cursor:pointer;transition:all .15s;user-select:none;}
+/* Vertical week strip sidebar */
+.daily-with-strip{display:flex;gap:10px;align-items:start;}
+.daily-with-strip .cal-planner-wrap{flex:1;min-width:0;}
+.week-strip{display:flex;flex-direction:column;gap:4px;width:84px;flex-shrink:0;}
+.week-strip-pill{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 6px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;width:100%;box-sizing:border-box;}
 .week-strip-pill:hover{border-color:var(--gold);}
 .week-strip-pill.active{background:rgba(232,184,75,0.12);border-color:var(--gold);}
 .wsp-name{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);}
-.wsp-date{font-size:15px;font-weight:500;color:var(--text-secondary);}
+.wsp-date{font-size:14px;font-weight:500;color:var(--text-secondary);}
 .week-strip-pill.active .wsp-name,.week-strip-pill.active .wsp-date{color:var(--gold);}
 .week-strip-pill.active .wsp-date{font-weight:700;}
 
@@ -2272,11 +2274,9 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
   <!-- Header -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:10px">
+  <div style="margin-bottom:0.75rem">
     <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
   </div>
-  <!-- 7-day week strip -->
-  <div class="week-strip" id="week-strip"></div>
   <!-- Smart nudge banner -->
   <div id="nudge-banner" style="display:none;background:linear-gradient(90deg,rgba(232,184,75,0.12),rgba(232,184,75,0.05));border:0.5px solid rgba(232,184,75,0.3);border-radius:var(--radius-sm);padding:8px 16px;margin-bottom:10px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:8px;">
     <span id="nudge-icon">✦</span><span id="nudge-text"></span>
@@ -2305,7 +2305,9 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
   </div>
 
   <!-- CALENDAR + DAY VIEW SIDE BY SIDE -->
-  <div class="cal-planner-wrap">
+  <div class="daily-with-strip">
+    <div class="week-strip" id="week-strip"></div>
+    <div class="cal-planner-wrap">
     <!-- LEFT: Day view (Today schedule) -->
     <div class="day-view-card">
       <div class="day-view-header">
@@ -2498,6 +2500,7 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
       }, 200);
     });
     </script>
+    </div>
   </div>
   <!-- Event add popup -->
   <div class="event-popup-overlay" id="ev-popup" style="display:none" onclick="if(event.target===this)closeEvPopup()">
