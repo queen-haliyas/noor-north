@@ -2078,8 +2078,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 .journal-save-ind{position:sticky;top:0;text-align:right;font-size:10px;color:var(--gold);padding:2px 0;opacity:0;transition:opacity .3s;pointer-events:none;z-index:10;}
 .journal-save-ind.show{opacity:1;}
 
-/* F26 – Mood/energy chart */
-.mood-chart-wrap{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px;margin-top:8px;}
 .mood-chart-title{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-tertiary);margin-bottom:8px;}
 
 /* F27 – Pillar time pie */
@@ -2111,17 +2109,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 .dv-pl-task.overdue .overdue-btn{display:inline-block;}
 .overdue-btn{display:none;font-size:9px;color:#E8733A;background:none;border:0.5px solid #E8733A44;border-radius:3px;padding:1px 5px;cursor:pointer;margin-left:4px;}
 
-/* F31 – Onboarding tour */
-.onboard-overlay{position:fixed;inset:0;z-index:9900;pointer-events:none;}
-.onboard-pulse{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--gold);pointer-events:all;cursor:pointer;z-index:9901;}
-.onboard-pulse::after{content:'';position:absolute;inset:-6px;border-radius:50%;background:rgba(232,184,75,.3);animation:obPulse 1.2s infinite;}
-@keyframes obPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.5);opacity:0}}
-.onboard-tooltip{position:absolute;background:var(--charcoal-light);border:0.5px solid var(--gold);border-radius:var(--radius-sm);padding:12px 14px;max-width:220px;z-index:9902;box-shadow:0 8px 32px rgba(0,0,0,.6);}
-.onboard-tooltip-title{font-weight:600;font-size:12px;color:var(--gold);margin-bottom:4px;}
-.onboard-tooltip-body{font-size:11px;color:var(--text-secondary);line-height:1.5;margin-bottom:8px;}
-.onboard-btns{display:flex;gap:6px;justify-content:flex-end;}
-.onboard-skip{background:none;border:none;font-size:10px;color:var(--text-tertiary);cursor:pointer;}
-.onboard-next{background:var(--gold);border:none;border-radius:4px;padding:4px 10px;font-size:10px;color:#1A1508;font-weight:600;cursor:pointer;}
 
 /* F32 – Weekly wins card */
 .weekly-wins-card{background:linear-gradient(135deg,#1A1205,#2A1E08);border:0.5px solid var(--gold);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:12px;}
@@ -2131,17 +2118,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 .weekly-wins-stat strong{color:var(--text-primary);}
 .weekly-wins-quote{font-style:italic;font-size:11px;color:var(--gold);margin-top:8px;padding-top:8px;border-top:0.5px solid rgba(232,184,75,.2);line-height:1.5;}
 
-/* F33 – Empire scorecard widget */
-.empire-scorecard-widget{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:10px;}
-.empire-scorecard-hdr{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;margin-bottom:6px;}
-.empire-scorecard-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);}
-.empire-scorecard-body{}
-.esw-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px;}
-.esw-label{flex:1;color:var(--text-secondary);}
-.esw-val{color:var(--gold);font-weight:600;min-width:40px;text-align:right;cursor:pointer;}
-.esw-val:hover{text-decoration:underline dotted;}
-.esw-bar{height:3px;background:var(--charcoal-border);border-radius:2px;margin-top:1px;overflow:hidden;}
-.esw-bar-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s;}
 
 /* F37 – Empty state illustrations */
 .pillar-empty-state{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;}
@@ -2162,10 +2138,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 .shortcut-key{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:4px;padding:2px 8px;font-family:monospace;font-size:11px;color:var(--text-primary);}
 .shortcut-desc{color:var(--text-secondary);}
 
-/* #18 Affirmation progress bar */
-.aff-progress-track{height:2px;background:rgba(196,152,59,0.12);border-radius:1px;overflow:hidden;margin-top:4px;}
-.aff-progress-fill{height:100%;background:var(--gold);border-radius:1px;width:100%;}
-@keyframes affDrain{from{width:100%}to{width:0%}}
 
 /* #19 Back to top */
 .back-to-top{position:fixed;bottom:28px;right:28px;z-index:500;width:40px;height:40px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#1A1508;box-shadow:0 4px 14px rgba(232,184,75,0.35);opacity:0;pointer-events:none;transition:opacity .25s;line-height:1;}
@@ -2230,7 +2202,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
   <div class="aff-card" id="aff-card">
     <div class="aff-card-label" id="aff-card-label"></div>
     <div class="aff-card-text" id="aff-card-text">Loading...</div>
-    <div class="aff-progress-track"><div class="aff-progress-fill" id="aff-progress-fill"></div></div>
   </div>
   <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
   <button class="theme-toggle" onclick="cycleFontSize()" title="Toggle font size (F key)">Aa</button>
@@ -2323,16 +2294,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
   </div>
   <!-- F32: Weekly wins (Sunday) -->
   <div id="weekly-wins-daily"></div>
-  <!-- F33: Empire scorecard -->
-  <div class="empire-scorecard-widget" id="empire-scorecard-daily">
-    <div class="empire-scorecard-hdr" onclick="toggleEmpireScorecard()">
-      <span class="empire-scorecard-title">EMPIRE SCORECARD ✦</span>
-      <span id="esw-chev" style="font-size:10px;color:var(--text-tertiary)">▾</span>
-    </div>
-    <div class="empire-scorecard-body" id="esw-body"></div>
-  </div>
-  <!-- F26: Mood chart (hidden until data exists) -->
-  <div id="mood-chart-daily" style="display:none"></div>
 
 
 
@@ -8703,25 +8664,14 @@ function checkWeeklyWins(){
   if(el&&!el.value){el.value='✦ '+wins.slice(0,3).join('\n✦ ');if(el._dspSaved===undefined)dspOnInput();}
 }
 
-// #8 Progress bar for affirmation (8s rotation)
-let _affProgressTimer=null;
-function _startAffProgress(){
-  const fill=document.getElementById('aff-progress-fill');
-  if(!fill)return;
-  fill.style.animation='none';
-  fill.offsetHeight; // reflow
-  fill.style.animation='affDrain 30s linear forwards';
-}
-
-// Override renderAffirmationBar to use 8s and show progress
+// Override renderAffirmationBar to use 30s rotation
 function renderAffirmationBar(){
   _affPool=_buildAffPool();
   if(!_affPool.length)return;
   if(currentAffIdx>=_affPool.length)currentAffIdx=0;
   _affSetContent(_affPool[currentAffIdx]);
-  _startAffProgress();
   if(_affTimer)clearInterval(_affTimer);
-  _affTimer=setInterval(()=>{_affFadeTo(currentAffIdx+1);setTimeout(_startAffProgress,1300);},30000);
+  _affTimer=setInterval(()=>{_affFadeTo(currentAffIdx+1);},30000);
 }
 
 // #9 Page transition — handled purely by CSS .page.active animation
@@ -9442,53 +9392,6 @@ function markOverdueTasks() {
   });
 }
 
-// F31 – Onboarding tooltip tour
-const ONBOARD_STEPS = [
-  {selector:'#sidebar-nav .sidebar-btn',title:'Sidebar Navigation',body:'Switch between Daily Flow, Planning, Empire, and more.',pos:{top:120,left:60}},
-  {selector:'#dv-pillars-section',title:'Five Pillars',body:'Your life organised into 5 key areas. Add tasks to each pillar.',pos:{top:300,left:60}},
-  {selector:'#diary-book-wrap',title:'Daily Journal',body:'Log gratitude, manifestations, and reflections every day.',pos:{top:400,left:300}},
-  {selector:'#mini-cal-cells',title:'Calendar',body:'See your schedule. Click any day to view its detail.',pos:{top:200,left:300}},
-  {selector:'#glance-fajr',title:'Glance Row',body:'Fajr time, task progress, and Hijri date at a glance.',pos:{top:180,left:60}},
-];
-let _obStep = 0;
-function startOnboarding() {
-  if (localStorage.getItem('noor_onboarded')) return;
-  const overlay = document.getElementById('onboard-overlay');
-  if (!overlay) return;
-  overlay.classList.remove('hidden');
-  showOnboardStep(0);
-}
-function showOnboardStep(n) {
-  const overlay = document.getElementById('onboard-overlay');
-  overlay.innerHTML = '';
-  if (n >= ONBOARD_STEPS.length) { finishOnboarding(); return; }
-  const step = ONBOARD_STEPS[n];
-  const tooltip = document.createElement('div');
-  tooltip.className = 'onboard-tooltip';
-  tooltip.style.cssText = `top:${step.pos.top}px;left:${step.pos.left}px;`;
-  tooltip.innerHTML = `<div class="onboard-tooltip-title">${step.title}</div>
-    <div class="onboard-tooltip-body">${step.body}</div>
-    <div class="onboard-btns">
-      <button class="onboard-skip" onclick="finishOnboarding()">Skip</button>
-      <button class="onboard-next" onclick="showOnboardStep(${n+1})">${n<ONBOARD_STEPS.length-1?'Next →':'Done ✓'}</button>
-    </div>`;
-  overlay.appendChild(tooltip);
-  // Pulse dot
-  const target = document.querySelector(step.selector);
-  if (target) {
-    const rect = target.getBoundingClientRect();
-    const dot = document.createElement('div');
-    dot.className = 'onboard-pulse';
-    dot.style.cssText = `top:${rect.top+rect.height/2-7}px;left:${rect.left+rect.width/2-7}px;`;
-    dot.onclick = () => showOnboardStep(n+1);
-    overlay.appendChild(dot);
-  }
-}
-function finishOnboarding() {
-  localStorage.setItem('noor_onboarded','1');
-  const overlay = document.getElementById('onboard-overlay');
-  if (overlay) overlay.classList.add('hidden');
-}
 
 // F32 – Weekly wins summary card (Sundays)
 function renderWeeklyWinsCard() {
@@ -9517,42 +9420,6 @@ function renderWeeklyWinsCard() {
   </div>`;
 }
 
-// F33 – Empire scorecard daily widget
-const ESW_ITEMS = [
-  {label:'💰 GHL Revenue',key:'ghl_revenue',unit:'£',target:150000},
-  {label:'👥 Active Clients',key:'clients',unit:'',target:20},
-  {label:'🎙 Podcast Episodes',key:'podcast',unit:'',target:16},
-  {label:'📖 Book Chapters',key:'book',unit:'',target:12},
-  {label:'🏛 Arch Projects',key:'arch_proj',unit:'',target:6},
-];
-let _eswOpen = true;
-function toggleEmpireScorecard() {
-  _eswOpen = !_eswOpen;
-  const body = document.getElementById('esw-body');
-  const chev = document.getElementById('esw-chev');
-  if (body) body.style.display = _eswOpen ? '' : 'none';
-  if (chev) chev.textContent = _eswOpen ? '▾' : '▸';
-}
-function renderEmpireScorecardWidget() {
-  const body = document.getElementById('esw-body');
-  if (!body) return;
-  body.innerHTML = ESW_ITEMS.map(item => {
-    const val = parseFloat(localStorage.getItem('nn_esw_'+item.key)||'0');
-    const pct = item.target ? Math.min(100, val/item.target*100) : 0;
-    return `<div class="esw-row">
-      <div class="esw-label">${item.label}</div>
-      <div class="esw-val" onclick="promptEswVal('${item.key}','${item.label}','${item.unit}',${item.target})">${item.unit}${val.toLocaleString()}</div>
-    </div>
-    <div class="esw-bar"><div class="esw-bar-fill" style="width:${pct.toFixed(1)}%"></div></div>`;
-  }).join('');
-}
-function promptEswVal(key, label, unit, target) {
-  const v = prompt(label + ' (target: '+unit+target+')', localStorage.getItem('nn_esw_'+key)||'0');
-  if (v !== null && !isNaN(parseFloat(v))) {
-    localStorage.setItem('nn_esw_'+key, parseFloat(v));
-    renderEmpireScorecardWidget();
-  }
-}
 
 // F37 – Empty state SVG in dv-pl-row (already handled in renderDvPillars patched below)
 
@@ -9592,10 +9459,7 @@ window.addEventListener('load',function(){
   setTimeout(()=>{try{initSmartNudge();}catch(e){}},700);
   setTimeout(()=>{try{updateCompletionScore(ds);}catch(e){}},800);
   setTimeout(()=>{try{checkWeeklyWins();}catch(e){}},1000);
-  setTimeout(()=>{try{renderEmpireScorecardWidget();}catch(e){}},400);
-  setTimeout(()=>{try{renderMoodChart('mood-chart-daily');}catch(e){}},500);
   setTimeout(()=>{try{renderWeeklyWinsCard();}catch(e){}},600);
-  setTimeout(()=>{try{startOnboarding();}catch(e){}},1500);
 });
 </script>
 <!-- NIGHT RITUAL MODAL -->
@@ -9883,8 +9747,6 @@ window.addEventListener('load',function(){
   </div>
 </div>
 
-<!-- Onboarding overlay -->
-<div class="onboard-overlay hidden" id="onboard-overlay"></div>
 
 </body>
 </html>
