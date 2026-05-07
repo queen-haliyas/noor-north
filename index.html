@@ -4561,12 +4561,12 @@ function movePillarTaskToTomorrow(ds,pid,idx){
   data[tmr].pillars[pid].push({text:task.text,done:false});
   data[ds].pillars[pid].splice(idx,1);
   save();
-  renderPillarsDaily(ds);renderFivePillarsPanel(ds);
+  renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);
   const pillar=PILLARS.find(p=>p.id===pid);
   showToast((pillar?pillar.name+' task':'Task')+' moved to tomorrow','#7ecfa0');
 }
 function deletePillarTask(ds,pid,idx){
-  data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);
+  data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);
 }
 
 // PLANNING
@@ -7511,7 +7511,7 @@ function renderDvPillars(ds) {
           <div class="pillar-empty-text">Nothing yet — add your first task ↓</div>
         </div>`
       : tasks.map((t, i) => `
-        <div class="dv-pl-task"
+        <div class="dv-pl-task pillar-task"
           draggable="true"
           data-text="${t.text.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}"
           data-pillar-id="${p.id}"
@@ -7523,7 +7523,14 @@ function renderDvPillars(ds) {
             onclick="event.stopPropagation();dvTogglePillarTask('${ds}','${p.id}',${i})"
             style="border-color:${t.done ? p.color : 'var(--charcoal-border)'};background:${t.done ? p.color+'30' : 'transparent'};color:${t.done ? p.color : 'transparent'}"
           >✓</span>
-          <span class="dv-pl-label${t.done ? ' done' : ''}">${t.text}</span>
+          <span class="dv-pl-label pillar-task-text${t.done ? ' done' : ''}"
+            id="ptxt-${ds}-${p.id}-${i}"
+            onclick="event.stopPropagation();focusPillarTask(this)">${t.text}</span>
+          <div class="pillar-task-actions">
+            <button class="pillar-task-edit" title="Edit" onclick="event.stopPropagation();focusPillarTask(document.getElementById('ptxt-${ds}-${p.id}-${i}'))">✎</button>
+            <button class="pillar-task-tmr" title="Move to tomorrow" onclick="event.stopPropagation();movePillarTaskToTomorrow('${ds}','${p.id}',${i})">→ tmr</button>
+            <button class="pillar-task-del" title="Delete" onclick="event.stopPropagation();deletePillarTask('${ds}','${p.id}',${i})">✕</button>
+          </div>
         </div>`).join('');
 
     return `<div class="dv-pl-row dv-pl-flip-wrap" id="dvplrow-${p.id}">
