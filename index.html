@@ -1504,15 +1504,22 @@ body{
 .pillar-ring-label{font-size:10px;color:var(--text-secondary);}
 
 
-/* ══ SIDEBAR NAV (Discord-style) ══ */
+/* ══ SIDEBAR NAV (Discord-style, hover-expand) ══ */
 .sidebar-nav{
-  position:fixed;left:0;top:0;bottom:0;width:190px;
-  transition:width .25s ease;
+  position:fixed;left:0;top:0;bottom:0;width:54px;
+  transition:width .2s ease,padding .2s ease;
   background:#110E05;border-right:0.5px solid var(--charcoal-border);
-  display:flex;flex-direction:column;align-items:flex-start;
-  padding:12px 8px;gap:2px;z-index:200;
+  display:flex;flex-direction:column;align-items:center;
+  padding:12px 4px;gap:2px;z-index:200;
   overflow-y:auto;overflow-x:hidden;
 }
+.sidebar-nav:hover,.sidebar-nav.locked{
+  width:190px;align-items:flex-start;padding:12px 8px;
+}
+.sidebar-nav:hover .sidebar-label,.sidebar-nav.locked .sidebar-label{opacity:1;width:auto;}
+.sidebar-nav:hover .sidebar-btn,.sidebar-nav.locked .sidebar-btn{width:100%;padding:0 10px;justify-content:flex-start;}
+.sidebar-nav:hover .sidebar-search-wrap,.sidebar-nav.locked .sidebar-search-wrap{display:flex;}
+.sidebar-nav:hover .sidebar-logo,.sidebar-nav.locked .sidebar-logo{margin-left:4px;}
 .sidebar-nav::-webkit-scrollbar{display:none;}
 .sidebar-logo{
   width:40px;height:40px;border-radius:12px;
@@ -1543,35 +1550,25 @@ body{
 .sidebar-btn:hover .sidebar-label,.sidebar-btn.active .sidebar-label{color:var(--text-primary);}
 .sidebar-divider{width:100%;height:0.5px;background:var(--charcoal-border);margin:6px 0;flex-shrink:0;}
 
-/* Shift main content right */
-.app-shell{margin-left:0;}
+/* Shift main content right — sidebar always 54px collapsed */
+.site-header{margin-left:54px;transition:none;}
+.affirmation-bar{margin-left:54px;}
+.app-shell{margin-left:54px;}
+.page{margin-left:54px;}
+#page-notes{margin-left:54px !important;}
 
-/* Mobile: collapse sidebar */
 .sidebar-nav.collapsed{width:54px;align-items:center;padding:12px 4px;}
-.sidebar-nav.collapsed .sidebar-label{display:none;}
+.sidebar-nav.collapsed .sidebar-label{opacity:0;width:0;overflow:hidden;}
 .sidebar-nav.collapsed .sidebar-btn{width:44px;padding:0;justify-content:center;}
-.sidebar-nav.collapsed .sidebar-logo{margin-left:0;cursor:pointer;}
-.sidebar-logo{cursor:pointer;transition:transform .2s;}
+.sidebar-logo{cursor:pointer;transition:transform .2s;flex-shrink:0;}
 .sidebar-logo:hover{transform:scale(1.08);}
-
-/* Collapsed margins */
-.sidebar-nav.collapsed ~ * .site-header,
-body.sidebar-collapsed .site-header{margin-left:54px;}
-body.sidebar-collapsed .app-shell{margin-left:54px;}
-body.sidebar-collapsed .page{margin-left:54px;}
-body.sidebar-collapsed #page-notes{margin-left:54px !important;}
-
-/* Smooth transitions on shifted elements */
-.site-header{transition:margin-left .25s ease;}
-.affirmation-bar{transition:margin-left .25s ease;}
-.app-shell{transition:margin-left .25s ease;}
+.sidebar-label{opacity:0;width:0;overflow:hidden;transition:opacity .15s,width .15s;white-space:nowrap;}
 
 @media(max-width:700px){
-  .sidebar-nav{width:54px;align-items:center;padding:12px 4px;}
-  .sidebar-label{display:none;}
-  .sidebar-btn{width:44px;padding:0;justify-content:center;}
-  .sidebar-logo{margin-left:0;}
-  .app-shell{margin-left:54px;}
+  .sidebar-nav{width:54px!important;align-items:center!important;padding:12px 4px!important;}
+  .sidebar-label{opacity:0!important;width:0!important;}
+  .sidebar-btn{width:44px!important;padding:0!important;justify-content:center!important;}
+  .site-header,.app-shell,.page,#page-notes{margin-left:54px!important;}
 }
 
 
@@ -2016,6 +2013,155 @@ body.sidebar-collapsed #page-notes{margin-left:54px !important;}
 body.light-mode{--charcoal:#F5F0E8;--charcoal-mid:#EDE8DC;--charcoal-light:#E0DAC8;--charcoal-border:#C8BEAA;--text-primary:#1a1508;--text-secondary:#4a3e28;--text-tertiary:#8a7050;}
 body.light-mode #sidebar-nav{background:#EAE4D4;}
 
+/* ══ FEATURES 16-40 ══ */
+
+/* F16 – Week/Month toggle */
+.mini-cal-toggle{display:flex;gap:3px;background:var(--charcoal-mid);border-radius:20px;padding:2px;}
+.mini-cal-toggle-btn{background:none;border:none;border-radius:16px;padding:2px 10px;font-size:10px;color:var(--text-tertiary);cursor:pointer;transition:all .15s;}
+.mini-cal-toggle-btn.active{background:var(--gold);color:#1A1508;font-weight:600;}
+.mini-week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:6px 8px;}
+.mini-week-cell{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;border-radius:6px;cursor:pointer;transition:background .12s;}
+.mini-week-cell:hover{background:var(--charcoal-light);}
+.mini-week-cell.today{background:rgba(232,184,75,.15);}
+.mini-week-cell.selected{background:var(--gold);border-radius:6px;}
+.mini-week-cell.selected .mini-week-date{color:#1A1508;}
+.mini-week-dow{font-size:9px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;}
+.mini-week-date{font-size:12px;font-weight:500;color:var(--text-primary);}
+.mini-week-dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;min-height:8px;}
+
+/* F17 – Pillar colour dots */
+.cal-pillar-dots{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:2px;}
+.cal-pillar-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
+
+/* F18 – Sidebar hover expand */
+.sidebar-nav{transition:width .2s ease;}
+.sidebar-nav:not(.locked):not(:hover){width:54px!important;align-items:center;padding:12px 4px;}
+.sidebar-nav:not(.locked):not(:hover) .sidebar-label{opacity:0;width:0;overflow:hidden;pointer-events:none;}
+.sidebar-nav:not(.locked):not(:hover) .sidebar-btn{width:44px;padding:0;justify-content:center;}
+.sidebar-nav:not(.locked):not(:hover) .sidebar-logo{margin-left:0;}
+.sidebar-nav:not(.locked):not(:hover) .sidebar-search-wrap{display:none;}
+.sidebar-nav.locked,.sidebar-nav:hover{width:190px;}
+.sidebar-label{transition:opacity .15s,width .15s;}
+
+/* F19 – Active gold border (enhanced) */
+.sidebar-btn.active{border-left:2px solid var(--gold)!important;background:rgba(232,184,75,0.08)!important;}
+.sidebar-btn.active .sidebar-label{color:var(--gold)!important;}
+
+/* F21 – Pillar card flip */
+.dv-pl-flip-wrap{perspective:800px;}
+.dv-pl-flip-inner{position:relative;transition:transform .4s ease;transform-style:preserve-3d;}
+.dv-pl-flip-inner.flipped{transform:rotateY(180deg);}
+.dv-pl-flip-front,.dv-pl-flip-back{backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.dv-pl-flip-back{position:absolute;inset:0;transform:rotateY(180deg);background:var(--charcoal-mid);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;}
+.flip-stat-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;}
+.flip-stat-label{color:var(--text-tertiary);}
+.flip-stat-val{color:var(--gold);font-weight:600;}
+.flip-back-btn{margin-top:auto;font-size:10px;color:var(--text-tertiary);background:none;border:0.5px solid var(--charcoal-border);border-radius:4px;cursor:pointer;padding:2px 8px;align-self:flex-end;}
+
+/* F22 – Number roll animation */
+@keyframes rollUp{from{transform:translateY(60%);opacity:0}to{transform:translateY(0);opacity:1}}
+.num-roll{display:inline-block;animation:rollUp .3s ease;}
+
+/* F23 – Voice to text button */
+.dsp-mic-btn{position:absolute;right:2px;bottom:2px;background:none;border:none;cursor:pointer;font-size:14px;color:var(--text-tertiary);padding:2px 4px;border-radius:4px;transition:color .15s;}
+.dsp-mic-btn:hover{color:var(--gold);}
+.dsp-mic-btn.recording{color:#ef4444;animation:pulse .8s infinite;}
+.dsp-field-wrap{position:relative;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* F24 – Journal templates */
+.dsp-templates-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;padding:6px 0;}
+.dsp-tpl-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:16px;padding:4px 12px;font-size:10px;color:var(--text-secondary);cursor:pointer;transition:all .15s;}
+.dsp-tpl-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* F25 – Auto-save indicator (enhanced) */
+.journal-save-ind{position:sticky;top:0;text-align:right;font-size:10px;color:var(--gold);padding:2px 0;opacity:0;transition:opacity .3s;pointer-events:none;z-index:10;}
+.journal-save-ind.show{opacity:1;}
+
+/* F26 – Mood/energy chart */
+.mood-chart-wrap{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px;margin-top:8px;}
+.mood-chart-title{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-tertiary);margin-bottom:8px;}
+
+/* F27 – Pillar time pie */
+.pillar-pie-wrap{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px;margin-top:8px;}
+.pillar-pie-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.pillar-pie-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-secondary);}
+.pillar-pie-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* F28 – Streak leaderboard */
+.streak-lb-wrap{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px;margin-top:8px;}
+.streak-lb-row{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;font-size:11px;}
+.streak-lb-row:nth-child(1){background:rgba(232,184,75,.12);}
+.streak-lb-row:nth-child(2){background:rgba(192,192,192,.08);}
+.streak-lb-row:nth-child(3){background:rgba(205,127,50,.08);}
+.streak-lb-rank{font-weight:700;min-width:16px;color:var(--text-tertiary);}
+.streak-lb-name{flex:1;color:var(--text-primary);}
+.streak-lb-count{color:var(--gold);font-weight:600;}
+
+/* F29 – Gantt Q2 bar */
+.gantt-wrap{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:12px;margin-top:8px;}
+.gantt-bar-track{height:12px;background:var(--charcoal-border);border-radius:6px;overflow:hidden;position:relative;margin:8px 0;}
+.gantt-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#E8B84B);border-radius:6px;transition:width .6s ease;}
+.gantt-weeks{display:flex;margin-top:4px;overflow:hidden;}
+.gantt-week-seg{flex:1;font-size:8px;color:var(--text-tertiary);text-align:center;border-left:0.5px solid var(--charcoal-border);padding:2px 0;}
+.gantt-week-seg.current{color:var(--gold);font-weight:700;}
+
+/* F30 – Overdue indicator */
+.dv-pl-task.overdue{border-left:2px solid #E8733A!important;}
+.dv-pl-task.overdue .overdue-btn{display:inline-block;}
+.overdue-btn{display:none;font-size:9px;color:#E8733A;background:none;border:0.5px solid #E8733A44;border-radius:3px;padding:1px 5px;cursor:pointer;margin-left:4px;}
+
+/* F31 – Onboarding tour */
+.onboard-overlay{position:fixed;inset:0;z-index:9900;pointer-events:none;}
+.onboard-pulse{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--gold);pointer-events:all;cursor:pointer;z-index:9901;}
+.onboard-pulse::after{content:'';position:absolute;inset:-6px;border-radius:50%;background:rgba(232,184,75,.3);animation:obPulse 1.2s infinite;}
+@keyframes obPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.5);opacity:0}}
+.onboard-tooltip{position:absolute;background:var(--charcoal-light);border:0.5px solid var(--gold);border-radius:var(--radius-sm);padding:12px 14px;max-width:220px;z-index:9902;box-shadow:0 8px 32px rgba(0,0,0,.6);}
+.onboard-tooltip-title{font-weight:600;font-size:12px;color:var(--gold);margin-bottom:4px;}
+.onboard-tooltip-body{font-size:11px;color:var(--text-secondary);line-height:1.5;margin-bottom:8px;}
+.onboard-btns{display:flex;gap:6px;justify-content:flex-end;}
+.onboard-skip{background:none;border:none;font-size:10px;color:var(--text-tertiary);cursor:pointer;}
+.onboard-next{background:var(--gold);border:none;border-radius:4px;padding:4px 10px;font-size:10px;color:#1A1508;font-weight:600;cursor:pointer;}
+
+/* F32 – Weekly wins card */
+.weekly-wins-card{background:linear-gradient(135deg,#1A1205,#2A1E08);border:0.5px solid var(--gold);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:12px;}
+.weekly-wins-title{font-family:var(--font-display);font-size:14px;color:var(--gold);margin-bottom:10px;}
+.weekly-wins-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.weekly-wins-stat{font-size:11px;color:var(--text-secondary);}
+.weekly-wins-stat strong{color:var(--text-primary);}
+.weekly-wins-quote{font-style:italic;font-size:11px;color:var(--gold);margin-top:8px;padding-top:8px;border-top:0.5px solid rgba(232,184,75,.2);line-height:1.5;}
+
+/* F33 – Empire scorecard widget */
+.empire-scorecard-widget{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:10px;}
+.empire-scorecard-hdr{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;margin-bottom:6px;}
+.empire-scorecard-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);}
+.empire-scorecard-body{}
+.esw-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px;}
+.esw-label{flex:1;color:var(--text-secondary);}
+.esw-val{color:var(--gold);font-weight:600;min-width:40px;text-align:right;cursor:pointer;}
+.esw-val:hover{text-decoration:underline dotted;}
+.esw-bar{height:3px;background:var(--charcoal-border);border-radius:2px;margin-top:1px;overflow:hidden;}
+.esw-bar-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s;}
+
+/* F37 – Empty state illustrations */
+.pillar-empty-state{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;}
+.pillar-empty-svg{opacity:.5;}
+.pillar-empty-text{font-size:10px;color:var(--text-tertiary);text-align:center;}
+
+/* F40 – Back to top */
+.back-to-top{position:fixed;bottom:80px;right:20px;width:40px;height:40px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:#1A1508;box-shadow:0 4px 16px rgba(0,0,0,.4);opacity:0;transition:opacity .2s;pointer-events:none;z-index:300;}
+.back-to-top.visible{opacity:1;pointer-events:all;}
+
+/* Shortcuts legend modal */
+.shortcuts-modal{position:fixed;inset:0;z-index:9800;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;}
+.shortcuts-modal.hidden{display:none;}
+.shortcuts-box{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:24px 28px;max-width:380px;width:90%;max-height:80vh;overflow-y:auto;}
+.shortcuts-title{font-family:var(--font-display);font-size:16px;color:var(--gold);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
+.shortcut-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--charcoal-border);font-size:12px;}
+.shortcut-row:last-child{border-bottom:none;}
+.shortcut-key{background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:4px;padding:2px 8px;font-family:monospace;font-size:11px;color:var(--text-primary);}
+.shortcut-desc{color:var(--text-secondary);}
+
 /* #18 Affirmation progress bar */
 .aff-progress-track{height:2px;background:rgba(196,152,59,0.12);border-radius:1px;overflow:hidden;margin-top:4px;}
 .aff-progress-fill{height:100%;background:var(--gold);border-radius:1px;width:100%;}
@@ -2092,7 +2238,7 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
 
 <!-- SIDEBAR NAV -->
 <nav class="sidebar-nav" id="sidebar-nav">
-  <div class="sidebar-logo" onclick="toggleSidebar()" title="Toggle sidebar">N</div>
+  <div class="sidebar-logo" id="sidebar-logo" onclick="toggleSidebar()" title="Click to lock open / collapse">N</div>
   <div class="sidebar-search-wrap">
     <span class="sidebar-search-icon">🔍</span>
     <input class="sidebar-search" id="sidebar-search" placeholder="Search tasks…" oninput="sidebarSearch(this.value)" onfocus="showSearchDrop()" autocomplete="off"/>
@@ -2175,6 +2321,18 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
     <span id="nudge-icon">✦</span><span id="nudge-text"></span>
     <button onclick="document.getElementById('nudge-banner').style.display='none'" style="margin-left:auto;background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:13px;padding:0">✕</button>
   </div>
+  <!-- F32: Weekly wins (Sunday) -->
+  <div id="weekly-wins-daily"></div>
+  <!-- F33: Empire scorecard -->
+  <div class="empire-scorecard-widget" id="empire-scorecard-daily">
+    <div class="empire-scorecard-hdr" onclick="toggleEmpireScorecard()">
+      <span class="empire-scorecard-title">EMPIRE SCORECARD ✦</span>
+      <span id="esw-chev" style="font-size:10px;color:var(--text-tertiary)">▾</span>
+    </div>
+    <div class="empire-scorecard-body" id="esw-body"></div>
+  </div>
+  <!-- F26: Mood chart (hidden until data exists) -->
+  <div id="mood-chart-daily" style="display:none"></div>
 
 
 
@@ -2228,10 +2386,14 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
     <div>
       <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
-          <button class="day-nav-btn" onclick="changeMiniMonth(-1)">‹</button>
+          <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
           <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+          <div class="mini-cal-toggle">
+            <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
+            <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
+          </div>
           <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
-          <button class="day-nav-btn" onclick="changeMiniMonth(1)">›</button>
+          <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
         </div>
         <div style="padding:6px 8px">
           <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
@@ -2248,7 +2410,14 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
       <div class="diary-wrap" id="diary-book-wrap">
         <div class="diary-frame">
           <div class="diary-single-page">
+            <div class="journal-save-ind" id="journal-save-ind"></div>
             <div class="dsp-inner">
+              <!-- Journal templates -->
+              <div class="dsp-templates-row">
+                <button class="dsp-tpl-btn" onclick="applyJournalTemplate('win')">✦ Win Day</button>
+                <button class="dsp-tpl-btn" onclick="applyJournalTemplate('hard')">◈ Hard Day</button>
+                <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
+              </div>
               <!-- Header -->
               <div class="dsp-header">
                 <button class="dsp-nav-btn" onclick="dspNavDay(-1)" id="dsp-nav-prev">‹</button>
@@ -3080,6 +3249,18 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
     </div>
 
     <div id="review-charts"></div>
+
+    <!-- F32: Weekly wins summary (Sundays only) -->
+    <div id="weekly-wins-card" style="display:none"></div>
+
+    <!-- F29: Q2 Gantt progress bar -->
+    <div id="gantt-q2-wrap"></div>
+
+    <!-- F27: Pillar time allocation donut -->
+    <div id="pillar-time-pie-wrap"></div>
+
+    <!-- F28: Habit streak leaderboard -->
+    <div id="streak-leaderboard-wrap"></div>
 
     <!-- Metrics Review -->
     <div class="rev-card">
@@ -5229,6 +5410,11 @@ function switchRevTab(tab, btn){
   document.querySelectorAll('.rev-pane').forEach(p=>p.classList.add('hidden'));
   const pane=document.getElementById('rev-pane-'+tab);
   if(pane)pane.classList.remove('hidden');
+  if(tab==='weekly'){
+    try{renderGanttQ2('gantt-q2-wrap');}catch(e){}
+    try{renderPillarTimePie('pillar-time-pie-wrap');}catch(e){}
+    try{renderStreakLeaderboard('streak-leaderboard-wrap');}catch(e){}
+  }
   if(tab==='weekly'){renderWeeklyCharts();renderWeeklyTabInputs();}
   else if(tab==='monthly')renderMonthlyTab();
   else if(tab==='quarterly')renderQuarterlyTab();
@@ -6031,6 +6217,9 @@ function addMiniEvent(dateStr) {
 function renderMiniCalendar() {
   if(!document.getElementById('mini-cal-month'))return;
   if(!document.getElementById('mini-cal-cells'))return;
+  if(miniCalView==='week'){renderMiniWeekView();return;}
+  const cells0=document.getElementById('mini-cal-cells');
+  if(cells0){cells0.style.gridTemplateColumns='repeat(7,1fr)';cells0.style.gridAutoRows='44px';}
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('mini-cal-month').textContent = monthNames[miniCalMonth] + ' ' + miniCalYear;
   const today = new Date();
@@ -6068,17 +6257,19 @@ function renderMiniCalendar() {
     dateDiv.textContent = d;
     cell.appendChild(dateDiv);
     
-    // Show pillar tasks as dots
+    // F17: Pillar colour dots
     const dd = data[ds] || {};
-    if (dd.pillars) {
-      let taskCount = 0;
-      PILLARS.forEach(p => { taskCount += (dd.pillars[p.id]||[]).length; });
-      if (taskCount > 0) {
-        const pill = document.createElement('div');
-        pill.className = 'mini-cal-pill pillar';
-        pill.textContent = taskCount + ' task' + (taskCount>1?'s':'');
-        cell.appendChild(pill);
-      }
+    const pillarsWithTasks = PILLARS.filter(p => dd.pillars && (dd.pillars[p.id]||[]).length > 0);
+    if (pillarsWithTasks.length > 0) {
+      const dotsWrap = document.createElement('div');
+      dotsWrap.className = 'cal-pillar-dots';
+      pillarsWithTasks.forEach(p => {
+        const dot = document.createElement('div');
+        dot.className = 'cal-pillar-dot';
+        dot.style.background = p.color;
+        dotsWrap.appendChild(dot);
+      });
+      cell.appendChild(dotsWrap);
     }
     
     // AM/PM ritual completions
@@ -6278,22 +6469,8 @@ function setSidebarActive(btn){
 }
 
 function toggleSidebar(){
-  const nav = document.getElementById('sidebar-nav');
-  const collapsed = nav.classList.toggle('collapsed');
-  document.body.classList.toggle('sidebar-collapsed', collapsed);
-  localStorage.setItem('nn_sidebar_collapsed', collapsed?'1':'0');
+  toggleSidebarLock();
 }
-
-// Restore sidebar state on load
-(function(){
-  const saved = localStorage.getItem('nn_sidebar_collapsed');
-  if(saved==='1'){
-    document.addEventListener('DOMContentLoaded',()=>{
-      const nav=document.getElementById('sidebar-nav');
-      if(nav){nav.classList.add('collapsed');document.body.classList.add('sidebar-collapsed');}
-    });
-  }
-})();
 
 
 // ── PLANNING TIMELINE ──
@@ -7349,7 +7526,14 @@ function renderDvPillars(ds) {
     const isOpen = dvPlOpen[p.id];
 
     const tasksHtml = tasks.length === 0
-      ? `<div style="font-size:11px;color:var(--text-tertiary);padding:3px 0 2px">No tasks yet</div>`
+      ? `<div class="pillar-empty-state">
+          <svg class="pillar-empty-svg" width="32" height="32" viewBox="0 0 32 32">
+            <circle cx="16" cy="16" r="14" fill="none" stroke="${p.color}" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <circle cx="16" cy="16" r="4" fill="${p.color}" opacity=".5"/>
+            <line x1="16" y1="6" x2="16" y2="10" stroke="${p.color}" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="pillar-empty-text">Nothing yet — add your first task ↓</div>
+        </div>`
       : tasks.map((t, i) => `
         <div class="dv-pl-task"
           draggable="true"
@@ -7366,19 +7550,27 @@ function renderDvPillars(ds) {
           <span class="dv-pl-label${t.done ? ' done' : ''}">${t.text}</span>
         </div>`).join('');
 
-    return `<div class="dv-pl-row" id="dvplrow-${p.id}">
-      <div class="dv-pl-hdr" onclick="dvTogglePl('${p.id}','${ds}')">
-        <div class="pillar-dot" style="background:${p.color}"></div>
-        <span style="font-size:12px;font-weight:500;flex:1;color:var(--text-primary)">${p.name}</span>
-        <span style="font-size:10px;color:var(--text-tertiary)">${done}/${tasks.length}</span>
-        <span id="dvplchev-${p.id}" style="font-size:10px;color:var(--text-tertiary);transition:transform .2s;display:inline-block${isOpen?';transform:rotate(180deg)':''}">▾</span>
-      </div>
-      <div class="dv-pl-body${isOpen ? ' open' : ''}" id="dvplbody-${p.id}">
-        ${tasksHtml}
-        <div class="dv-pl-add">
-          <input class="dv-pl-add-inp" id="dvpladd-${p.id}" placeholder="+ Add task…"
-            onkeydown="if(event.key==='Enter')addDvPlTask('${ds}','${p.id}')"/>
-          <button class="dv-pl-add-btn" onclick="addDvPlTask('${ds}','${p.id}')">+</button>
+    return `<div class="dv-pl-row dv-pl-flip-wrap" id="dvplrow-${p.id}">
+      <div class="dv-pl-flip-inner" id="dvplflip-${p.id}">
+        <div class="dv-pl-flip-front">
+          <div class="dv-pl-hdr" onclick="dvTogglePl('${p.id}','${ds}')" oncontextmenu="event.preventDefault();flipPillarCard('${p.id}',true)">
+            <div class="pillar-dot" style="background:${p.color}"></div>
+            <span style="font-size:12px;font-weight:500;flex:1;color:var(--text-primary)">${p.name}</span>
+            <span id="dvplcount-${p.id}" style="font-size:10px;color:var(--text-tertiary)">${done}/${tasks.length}</span>
+            <span id="dvplchev-${p.id}" style="font-size:10px;color:var(--text-tertiary);transition:transform .2s;display:inline-block${isOpen?';transform:rotate(180deg)':''}">▾</span>
+          </div>
+          <div class="dv-pl-body${isOpen ? ' open' : ''}" id="dvplbody-${p.id}">
+            ${tasksHtml}
+            <div class="dv-pl-add">
+              <input class="dv-pl-add-inp" id="dvpladd-${p.id}" placeholder="+ Add task…"
+                onkeydown="if(event.key==='Enter')addDvPlTask('${ds}','${p.id}')"/>
+              <button class="dv-pl-add-btn" onclick="addDvPlTask('${ds}','${p.id}')">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="dv-pl-flip-back">
+          <div style="font-size:11px;font-weight:600;color:${p.color};margin-bottom:4px">${p.name}</div>
+          ${buildPillarBackStats(p.id, ds)}
         </div>
       </div>
     </div>`;
@@ -7393,6 +7585,12 @@ function renderDvPillars(ds) {
   });
   // #4 Swipe actions on mobile
   body.querySelectorAll('.dv-pl-task').forEach(row => addSwipeActions(row, ds));
+  // F22: animate task count badges
+  PILLARS.forEach(p => animateCount(document.getElementById('dvplcount-'+p.id)));
+  // F30: overdue tasks
+  setTimeout(markOverdueTasks, 100);
+  // F38: full-day confetti check
+  setTimeout(() => { try{checkFullDayConfetti(ds);}catch(e){} }, 200);
 }
 
 // #4 Swipe task actions
@@ -8230,7 +8428,8 @@ function _dspUpdateWordCount() {
 function dspOnInput() {
   _dspUpdateWordCount();
   clearTimeout(_dspTimer);
-  _dspTimer = setTimeout(saveDiaryEntry, 1500);
+  showJournalSave('saving');
+  _dspTimer = setTimeout(() => { saveDiaryEntry(); showJournalSave('saved'); }, 1500);
 }
 
 async function saveDiaryEntry() {
@@ -8378,6 +8577,7 @@ async function loadDiary() {
   _dspLoadWeather();
   await _dspFetch();
   setTimeout(initDiaryAccordion, 100);
+  setTimeout(initVoiceButtons, 200);
 }
 
 /* ══════════════════════════════════════
@@ -8857,6 +9057,527 @@ function promptScoreboardVal(key,label,unit,target,containerId){
   if(v!==null&&!isNaN(parseFloat(v))){localStorage.setItem('nn_sb_'+key,parseFloat(v));try{renderEmpireScoreboard(containerId);}catch(e){}}
 }
 
+// ══ FEATURES 16–40 JS ══
+
+// F16 – Week/Month calendar view toggle
+let miniCalView = 'month'; // 'month' | 'week'
+let miniWeekOffset = 0; // weeks offset from current
+
+function setMiniCalView(v) {
+  miniCalView = v;
+  document.getElementById('mini-cal-month-btn').classList.toggle('active', v==='month');
+  document.getElementById('mini-cal-week-btn').classList.toggle('active', v==='week');
+  if (v==='month') renderMiniCalendar();
+  else renderMiniWeekView();
+}
+function miniCalPrev() {
+  if (miniCalView==='month') changeMiniMonth(-1);
+  else { miniWeekOffset--; renderMiniWeekView(); }
+}
+function miniCalNext() {
+  if (miniCalView==='month') changeMiniMonth(1);
+  else { miniWeekOffset++; renderMiniWeekView(); }
+}
+function renderMiniWeekView() {
+  const cells = document.getElementById('mini-cal-cells');
+  if (!cells) return;
+  const today = new Date();
+  const dow = (today.getDay() + 6) % 7; // Mon=0
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - dow + miniWeekOffset * 7);
+  const DOWS = ['M','T','W','T','F','S','S'];
+  const monthHdr = document.getElementById('mini-cal-month');
+  if (monthHdr) {
+    const we = new Date(monday); we.setDate(monday.getDate()+6);
+    const fmt2 = d => d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+    monthHdr.textContent = fmt2(monday) + ' – ' + fmt2(we);
+  }
+  cells.innerHTML = '';
+  cells.style.gridTemplateColumns = 'repeat(7,1fr)';
+  cells.style.gridAutoRows = 'auto';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday); d.setDate(monday.getDate() + i);
+    const ds = fmt(d);
+    const isToday = d.toDateString() === today.toDateString();
+    const isSel = ds === miniSelectedDate;
+    const cell = document.createElement('div');
+    cell.className = 'mini-week-cell' + (isToday?' today':'') + (isSel?' selected':'');
+    const dotsHtml = PILLARS.map(p => {
+      const tasks = (data[ds]?.pillars?.[p.id] || []);
+      return tasks.length ? `<div class="cal-pillar-dot" style="background:${p.color}"></div>` : '';
+    }).join('');
+    cell.innerHTML = `<div class="mini-week-dow">${DOWS[i]}</div>
+      <div class="mini-week-date">${d.getDate()}</div>
+      <div class="mini-week-dots">${dotsHtml}</div>`;
+    cell.onclick = () => selectMiniDay(ds);
+    cells.appendChild(cell);
+  }
+}
+
+// F17 – Pillar dots already integrated into renderMiniCalendar — patched below
+
+// F18/F19 – Sidebar: hover expand + lock toggle on logo click
+function toggleSidebarLock() {
+  const nav = document.getElementById('sidebar-nav');
+  nav.classList.toggle('locked');
+  localStorage.setItem('nn_sidebar_locked', nav.classList.contains('locked') ? '1' : '0');
+}
+(function(){
+  const locked = localStorage.getItem('nn_sidebar_locked') === '1';
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('sidebar-nav');
+    const logo = document.getElementById('sidebar-logo');
+    if (nav && locked) nav.classList.add('locked');
+    if (logo) logo.onclick = toggleSidebarLock;
+  });
+})();
+
+// F20 – Enhanced keyboard shortcuts (? now opens modal)
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable) return;
+  const k = e.key;
+  if (k==='?') { document.getElementById('shortcuts-modal')?.classList.remove('hidden'); return; }
+  const kl = k.toLowerCase();
+  if (kl==='d') { showPage('daily'); setSidebarActiveById('daily'); }
+  else if (kl==='p') { showPage('planning'); setSidebarActiveById('planning'); }
+  else if (kl==='w') { showPage('review'); setSidebarActiveById('review'); }
+  else if (kl==='n') { showPage('notes'); setSidebarActiveById('notes'); }
+  else if (kl==='f') { cycleFontSize(); }
+  else if (k==='Escape') {
+    document.getElementById('shortcuts-modal')?.classList.add('hidden');
+    closeModal();
+    const f = document.getElementById('focus-overlay'); if(f) f.classList.remove('open');
+    const drop = document.getElementById('search-dropdown'); if(drop) drop.style.display='none';
+  }
+}, true);
+function setSidebarActiveById(pageId) {
+  document.querySelectorAll('.sidebar-btn').forEach(b => {
+    const isMatch = b.getAttribute('onclick')?.includes("'"+pageId+"'");
+    b.classList.toggle('active', !!isMatch);
+  });
+}
+
+// F21 – Pillar card flip (right-click on header)
+function flipPillarCard(pid, show) {
+  const wrap = document.getElementById('dvplrow-'+pid);
+  if (!wrap) return;
+  const inner = wrap.querySelector('.dv-pl-flip-inner');
+  if (inner) inner.classList.toggle('flipped', show);
+}
+function buildPillarBackStats(pid, ds) {
+  // Tasks done this week
+  let weekDone = 0, weekTotal = 0;
+  getWeekDays().forEach(d => {
+    const dd = data[d] || {};
+    const tasks = dd.pillars?.[pid] || [];
+    weekTotal += tasks.length;
+    weekDone += tasks.filter(t => t.done).length;
+  });
+  const timeKey = 'nn_pillar_time_'+pid;
+  const timeVal = localStorage.getItem(timeKey) || '0';
+  return `<div class="flip-stat-row"><span class="flip-stat-label">Tasks this week</span><span class="flip-stat-val">${weekDone}/${weekTotal}</span></div>
+    <div class="flip-stat-row"><span class="flip-stat-label">Hours (est.)</span><input style="background:none;border:none;border-bottom:0.5px solid var(--charcoal-border);color:var(--gold);width:40px;font-size:11px;text-align:right" value="${timeVal}" onchange="localStorage.setItem('nn_pillar_time_${pid}',this.value)"></div>
+    <button class="flip-back-btn" onclick="event.stopPropagation();flipPillarCard('${pid}',false)">↩ Back</button>`;
+}
+
+// F22 – Number roll animation helper
+function animateCount(el) {
+  if (!el) return;
+  el.classList.remove('num-roll');
+  void el.offsetWidth;
+  el.classList.add('num-roll');
+}
+
+// F23 – Voice to text
+let _recognizing = false, _recognition = null;
+function initVoiceForField(textarea) {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'dsp-field-wrap';
+  textarea.parentNode.insertBefore(wrap, textarea);
+  wrap.appendChild(textarea);
+  const btn = document.createElement('button');
+  btn.className = 'dsp-mic-btn';
+  btn.innerHTML = '🎤';
+  btn.title = 'Voice input';
+  btn.onclick = (e) => { e.preventDefault(); toggleVoice(textarea, btn); };
+  wrap.appendChild(btn);
+}
+function toggleVoice(field, btn) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showToast('Voice not supported in this browser', '#E8733A'); return; }
+  if (_recognizing) { _recognition.stop(); return; }
+  _recognition = new SR();
+  _recognition.lang = 'en-GB';
+  _recognition.interimResults = false;
+  _recognition.onstart = () => { _recognizing = true; btn.classList.add('recording'); };
+  _recognition.onend = () => { _recognizing = false; btn.classList.remove('recording'); };
+  _recognition.onresult = (e) => {
+    const text = e.results[0][0].transcript;
+    field.value += (field.value ? ' ' : '') + text;
+    field.dispatchEvent(new Event('input'));
+  };
+  _recognition.start();
+}
+function initVoiceButtons() {
+  document.querySelectorAll('.dsp-reflect-ta, .dsp-line-inp').forEach(el => {
+    if (!el.parentElement.classList.contains('dsp-field-wrap')) initVoiceForField(el);
+  });
+}
+
+// F24 – Journal templates
+const JOURNAL_TEMPLATES = {
+  win: {
+    'dsp-grat-1': 'I am grateful for the progress I made today',
+    'dsp-grat-2': 'I am grateful for the people who support my mission',
+    'dsp-grat-3': 'I am grateful for my health and clarity',
+    'dsp-man-1': 'I am building a thriving empire with grace',
+    'dsp-man-2': 'I attract the right clients and opportunities effortlessly',
+    'dsp-man-3': 'I am creating generational wealth and impact',
+    'dsp-must-1': 'Close one deal or advance one prospect',
+    'dsp-must-2': 'Ship one valuable feature or deliverable',
+    'dsp-must-3': 'End the day with Fajr + evening ritual complete',
+  },
+  hard: {
+    'dsp-grat-1': 'I am grateful for the lesson hidden in this difficulty',
+    'dsp-grat-2': 'I am grateful that I am still moving forward',
+    'dsp-grat-3': 'I am grateful for the strength I am building today',
+    'dsp-man-1': 'I grow stronger through every challenge I face',
+    'dsp-man-2': 'Every setback is preparation for a greater comeback',
+    'dsp-man-3': 'I am resilient, resourceful, and guided by faith',
+    'dsp-must-1': 'Rest and recover with intention',
+    'dsp-must-2': 'Do one small act that moves me forward',
+    'dsp-must-3': 'Be gentle with myself while maintaining discipline',
+  },
+  plan: {
+    'dsp-grat-1': 'I am grateful for the clarity to plan with purpose',
+    'dsp-grat-2': 'I am grateful for the vision that pulls me forward',
+    'dsp-grat-3': 'I am grateful for the systems I am building',
+    'dsp-man-1': 'My plans are precise, bold, and aligned with my mission',
+    'dsp-man-2': 'I execute with speed and discipline every day',
+    'dsp-man-3': 'The empire I am building serves thousands of people',
+    'dsp-must-1': 'Map out the week\'s top 3 priorities',
+    'dsp-must-2': 'Block time for deep work on the highest-leverage task',
+    'dsp-must-3': 'Review and adjust the 90-day plan',
+  }
+};
+function applyJournalTemplate(tpl) {
+  const fields = JOURNAL_TEMPLATES[tpl];
+  if (!fields) return;
+  Object.entries(fields).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) { el.value = val; el.style.fontStyle = 'italic'; el.onfocus = function(){ if(this.style.fontStyle==='italic'){this.value='';this.style.fontStyle='normal';} }; }
+  });
+  showToast('Template applied', '#E8B84B');
+  dspOnInput();
+}
+
+// F25 – Enhanced auto-save indicator
+function showJournalSave(state) {
+  const el = document.getElementById('journal-save-ind');
+  if (!el) return;
+  el.textContent = state === 'saving' ? 'Saving…' : '✓ Saved';
+  el.classList.add('show');
+  if (state === 'saved') setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// F26 – Mood / energy line chart (30 days)
+function renderMoodChart(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const points = [];
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const key = 'nn_checkin_' + d.toISOString().slice(0,10);
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) { const parsed = JSON.parse(raw); if (parsed.mood) points.push({i: 29-i, v: parseInt(parsed.mood)||0, d}); }
+    } catch(e) {}
+  }
+  if (points.length < 2) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  const W=280, H=80, pad=10;
+  const maxV=10, minV=0;
+  const xs = i => pad + (i/(29)) * (W-pad*2);
+  const ys = v => H - pad - ((v-minV)/(maxV-minV)) * (H-pad*2);
+  const pathD = points.map((p,idx) => (idx===0?'M':'L')+xs(p.i).toFixed(1)+' '+ys(p.v).toFixed(1)).join(' ');
+  const dots = points.map(p => `<circle cx="${xs(p.i).toFixed(1)}" cy="${ys(p.v).toFixed(1)}" r="3" fill="#E8B84B"/>`).join('');
+  const labels = points.filter((_,i)=>i%7===0).map(p=>`<text x="${xs(p.i)}" y="${H-1}" font-size="8" fill="#6B5A38" text-anchor="middle">${p.d.getDate()}/${p.d.getMonth()+1}</text>`).join('');
+  el.innerHTML = `<div class="mood-chart-wrap"><div class="mood-chart-title">Mood / Energy — Last 30 Days</div>
+    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="overflow:visible;display:block">
+      <path d="${pathD}" fill="none" stroke="#E8B84B" stroke-width="1.5" stroke-linejoin="round"/>
+      ${dots}${labels}
+    </svg></div>`;
+}
+
+// F27 – Pillar time allocation donut chart
+function renderPillarTimePie(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const hours = {};
+  PILLARS.forEach(p => hours[p.id] = 0);
+  getWeekDays().forEach(ds => {
+    const evs = (data.calendar && data.calendar[ds]) || [];
+    evs.forEach(ev => {
+      const dur = (ev.durationMin || 60) / 60;
+      // Match by pillar color or best guess by title
+      const p = PILLARS.find(p => (ev.color && p.color && ev.color.toLowerCase()===p.color.toLowerCase()) ||
+        p.name.toLowerCase().split(' ').some(w=>w.length>3&&ev.title?.toLowerCase().includes(w)));
+      if (p) hours[p.id] += dur;
+      else hours[PILLARS[0].id] += dur;
+    });
+  });
+  const total = Object.values(hours).reduce((a,b)=>a+b,0);
+  if (!total) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  const cx=60,cy=60,r=48,sw=16;
+  let offset=0;
+  const circ=2*Math.PI*r;
+  const segs = PILLARS.map(p=>{
+    const pct=hours[p.id]/total;
+    const dash=pct*circ, gap=circ-dash;
+    const seg=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${p.color}" stroke-width="${sw}"
+      stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-dashoffset="${(-offset*circ).toFixed(2)}"
+      transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset+=pct; return seg;
+  }).join('');
+  const legend = PILLARS.map(p=>`<div class="pillar-pie-legend-item">
+    <div class="pillar-pie-legend-dot" style="background:${p.color}"></div>
+    <span>${p.name.split(' ')[0]} ${hours[p.id].toFixed(1)}h</span>
+  </div>`).join('');
+  el.innerHTML=`<div class="pillar-pie-wrap"><div class="mood-chart-title">Pillar Time This Week</div>
+    <svg width="120" height="120" viewBox="0 0 120 120">${segs}
+      <text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="11" fill="var(--gold)">${total.toFixed(0)}h</text>
+    </svg>
+    <div class="pillar-pie-legend">${legend}</div></div>`;
+}
+
+// F28 – Streak leaderboard
+function renderStreakLeaderboard(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const streaks = HABITS_10.map((h,i) => {
+    let s = 0;
+    for (let d = 0; d < 90; d++) {
+      const date = new Date(); date.setDate(date.getDate()-d);
+      const ds = fmt(date);
+      const wk = getWeekKey();
+      const revData = data.reviews?.weekly?.[wk];
+      if (revData && revData['habit_'+i] >= 7) s++;
+      else break;
+    }
+    return {name: h.name, streak: s};
+  }).sort((a,b) => b.streak - a.streak);
+  const MEDALS = ['🥇','🥈','🥉'];
+  const rows = streaks.map((h,i) => `<div class="streak-lb-row">
+    <span class="streak-lb-rank">${MEDALS[i]||('#'+(i+1))}</span>
+    <span class="streak-lb-name">${h.name}</span>
+    <span class="streak-lb-count">🔥${h.streak}</span>
+  </div>`).join('');
+  el.innerHTML=`<div class="streak-lb-wrap"><div class="mood-chart-title">Habit Streak Leaderboard</div>${rows}</div>`;
+}
+
+// F29 – Q2 Gantt bar
+function renderGanttQ2(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const start = new Date(2026,3,1); // Apr 1
+  const end = new Date(2026,5,30); // Jun 30
+  const now = new Date();
+  const totalDays = (end-start)/86400000;
+  const elapsed = Math.max(0,Math.min(totalDays,(now-start)/86400000));
+  const pct = Math.round(elapsed/totalDays*100);
+  // Week segments W14–W26
+  const weeks = [];
+  for(let w=0;w<13;w++){
+    const wDate = new Date(start); wDate.setDate(start.getDate()+w*7);
+    const wNum = getWeekNum(wDate);
+    const isCur = wDate <= now && new Date(wDate.getTime()+7*86400000) > now;
+    weeks.push(`<div class="gantt-week-seg${isCur?' current':''}" style="flex:${w<12?1:0.5}">W${wNum}</div>`);
+  }
+  el.innerHTML=`<div class="gantt-wrap">
+    <div class="mood-chart-title" style="display:flex;justify-content:space-between">
+      <span>Q2 2026 Progress — Apr → Jun</span><span style="color:var(--gold)">${pct}%</span>
+    </div>
+    <div class="gantt-bar-track"><div class="gantt-bar-fill" style="width:${pct}%"></div></div>
+    <div class="gantt-weeks">${weeks.join('')}</div>
+  </div>`;
+}
+
+// F30 – Overdue indicator (called from renderDvPillars)
+function markOverdueTasks() {
+  const h = new Date().getHours();
+  if (h < 22) return;
+  document.querySelectorAll('.dv-pl-task').forEach(row => {
+    const idx = parseInt(row.dataset.taskIdx);
+    const pid = row.dataset.pillarId;
+    if (pid && !isNaN(idx)) {
+      const ds = dvDate;
+      const task = data[ds]?.pillars?.[pid]?.[idx];
+      if (task && !task.done) {
+        row.classList.add('overdue');
+        if (!row.querySelector('.overdue-btn')) {
+          const btn = document.createElement('button');
+          btn.className = 'overdue-btn';
+          btn.title = 'Move to tomorrow?';
+          btn.textContent = '→ tmr';
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1);
+            const tds = fmt(tomorrow);
+            ensureDay(tds);
+            data[tds].pillars[pid].push({...task, done:false});
+            data[ds].pillars[pid].splice(idx,1);
+            save(); renderDvPillars(ds);
+          };
+          row.appendChild(btn);
+        }
+      }
+    }
+  });
+}
+
+// F31 – Onboarding tooltip tour
+const ONBOARD_STEPS = [
+  {selector:'#sidebar-nav .sidebar-btn',title:'Sidebar Navigation',body:'Switch between Daily Flow, Planning, Empire, and more.',pos:{top:120,left:60}},
+  {selector:'#dv-pillars-section',title:'Five Pillars',body:'Your life organised into 5 key areas. Add tasks to each pillar.',pos:{top:300,left:60}},
+  {selector:'#diary-book-wrap',title:'Daily Journal',body:'Log gratitude, manifestations, and reflections every day.',pos:{top:400,left:300}},
+  {selector:'#mini-cal-cells',title:'Calendar',body:'See your schedule. Click any day to view its detail.',pos:{top:200,left:300}},
+  {selector:'#glance-fajr',title:'Glance Row',body:'Fajr time, task progress, and Hijri date at a glance.',pos:{top:180,left:60}},
+];
+let _obStep = 0;
+function startOnboarding() {
+  if (localStorage.getItem('noor_onboarded')) return;
+  const overlay = document.getElementById('onboard-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('hidden');
+  showOnboardStep(0);
+}
+function showOnboardStep(n) {
+  const overlay = document.getElementById('onboard-overlay');
+  overlay.innerHTML = '';
+  if (n >= ONBOARD_STEPS.length) { finishOnboarding(); return; }
+  const step = ONBOARD_STEPS[n];
+  const tooltip = document.createElement('div');
+  tooltip.className = 'onboard-tooltip';
+  tooltip.style.cssText = `top:${step.pos.top}px;left:${step.pos.left}px;`;
+  tooltip.innerHTML = `<div class="onboard-tooltip-title">${step.title}</div>
+    <div class="onboard-tooltip-body">${step.body}</div>
+    <div class="onboard-btns">
+      <button class="onboard-skip" onclick="finishOnboarding()">Skip</button>
+      <button class="onboard-next" onclick="showOnboardStep(${n+1})">${n<ONBOARD_STEPS.length-1?'Next →':'Done ✓'}</button>
+    </div>`;
+  overlay.appendChild(tooltip);
+  // Pulse dot
+  const target = document.querySelector(step.selector);
+  if (target) {
+    const rect = target.getBoundingClientRect();
+    const dot = document.createElement('div');
+    dot.className = 'onboard-pulse';
+    dot.style.cssText = `top:${rect.top+rect.height/2-7}px;left:${rect.left+rect.width/2-7}px;`;
+    dot.onclick = () => showOnboardStep(n+1);
+    overlay.appendChild(dot);
+  }
+}
+function finishOnboarding() {
+  localStorage.setItem('noor_onboarded','1');
+  const overlay = document.getElementById('onboard-overlay');
+  if (overlay) overlay.classList.add('hidden');
+}
+
+// F32 – Weekly wins summary card (Sundays)
+function renderWeeklyWinsCard() {
+  const today = new Date();
+  const el = document.getElementById('weekly-wins-daily');
+  if (!el) return;
+  if (today.getDay() !== 0) { el.style.display = 'none'; return; }
+  let totalDone = 0, totalAll = 0, bestPillar = null, bestPct = 0, highlights = [];
+  const wDays = getWeekDays();
+  PILLARS.forEach(p => {
+    let d=0,a=0;
+    wDays.forEach(ds => { const t=data[ds]?.pillars?.[p.id]||[]; a+=t.length; const done=t.filter(x=>x.done); d+=done.length; done.forEach(x=>highlights.push(x.text)); });
+    totalDone+=d; totalAll+=a;
+    const pct=a?d/a:0;
+    if(pct>bestPct){bestPct=pct;bestPillar=p;}
+  });
+  const pick = highlights[Math.floor(Math.random()*highlights.length)] || '';
+  el.style.display = '';
+  el.innerHTML = `<div class="weekly-wins-card">
+    <div class="weekly-wins-title">✦ This Week — ${today.toLocaleDateString('en-GB',{day:'numeric',month:'long'})}</div>
+    <div class="weekly-wins-stats">
+      <div class="weekly-wins-stat"><strong>${totalDone}/${totalAll}</strong> tasks done</div>
+      <div class="weekly-wins-stat">Top pillar: <strong style="color:${bestPillar?.color||'var(--gold)'}">${bestPillar?.name||'—'}</strong></div>
+    </div>
+    ${pick?`<div class="weekly-wins-quote">"${pick}"</div>`:''}
+  </div>`;
+}
+
+// F33 – Empire scorecard daily widget
+const ESW_ITEMS = [
+  {label:'💰 GHL Revenue',key:'ghl_revenue',unit:'£',target:150000},
+  {label:'👥 Active Clients',key:'clients',unit:'',target:20},
+  {label:'🎙 Podcast Episodes',key:'podcast',unit:'',target:16},
+  {label:'📖 Book Chapters',key:'book',unit:'',target:12},
+  {label:'🏛 Arch Projects',key:'arch_proj',unit:'',target:6},
+];
+let _eswOpen = true;
+function toggleEmpireScorecard() {
+  _eswOpen = !_eswOpen;
+  const body = document.getElementById('esw-body');
+  const chev = document.getElementById('esw-chev');
+  if (body) body.style.display = _eswOpen ? '' : 'none';
+  if (chev) chev.textContent = _eswOpen ? '▾' : '▸';
+}
+function renderEmpireScorecardWidget() {
+  const body = document.getElementById('esw-body');
+  if (!body) return;
+  body.innerHTML = ESW_ITEMS.map(item => {
+    const val = parseFloat(localStorage.getItem('nn_esw_'+item.key)||'0');
+    const pct = item.target ? Math.min(100, val/item.target*100) : 0;
+    return `<div class="esw-row">
+      <div class="esw-label">${item.label}</div>
+      <div class="esw-val" onclick="promptEswVal('${item.key}','${item.label}','${item.unit}',${item.target})">${item.unit}${val.toLocaleString()}</div>
+    </div>
+    <div class="esw-bar"><div class="esw-bar-fill" style="width:${pct.toFixed(1)}%"></div></div>`;
+  }).join('');
+}
+function promptEswVal(key, label, unit, target) {
+  const v = prompt(label + ' (target: '+unit+target+')', localStorage.getItem('nn_esw_'+key)||'0');
+  if (v !== null && !isNaN(parseFloat(v))) {
+    localStorage.setItem('nn_esw_'+key, parseFloat(v));
+    renderEmpireScorecardWidget();
+  }
+}
+
+// F37 – Empty state SVG in dv-pl-row (already handled in renderDvPillars patched below)
+
+// F38 – Full-day confetti when ALL ritual habits done
+function checkFullDayConfetti(ds) {
+  const key = 'nn_full_confetti_'+ds;
+  if (localStorage.getItem(key)) return;
+  const dd = data[ds];
+  if (!dd) return;
+  const amDone = dd.am && Object.values(dd.am).every(Boolean) && Object.values(dd.am).length >= 5;
+  const pmDone = dd.pm && Object.values(dd.pm).every(Boolean) && Object.values(dd.pm).length >= 5;
+  if (amDone && pmDone) {
+    localStorage.setItem(key, '1');
+    fireConfetti(document.getElementById('daily-day-label') || document.body);
+    showToast('✦ Full Day Complete! Alhamdulillah!', '#E8B84B', 4000);
+  }
+}
+
+// F40 – Back to top
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('back-to-top');
+  if (btn) btn.classList.toggle('visible', window.scrollY > 300);
+}, {passive:true});
+document.querySelectorAll('.page,.day-view-scroll,.diary-single-page').forEach(el => {
+  el.addEventListener('scroll', function() {
+    const btn = document.getElementById('back-to-top');
+    if (btn) btn.classList.toggle('visible', el.scrollTop > 300);
+  }, {passive:true});
+});
+
 // Init all new features on page load
 window.addEventListener('load',function(){
   initTheme();
@@ -8866,6 +9587,10 @@ window.addEventListener('load',function(){
   setTimeout(()=>{try{initSmartNudge();}catch(e){}},700);
   setTimeout(()=>{try{updateCompletionScore(ds);}catch(e){}},800);
   setTimeout(()=>{try{checkWeeklyWins();}catch(e){}},1000);
+  setTimeout(()=>{try{renderEmpireScorecardWidget();}catch(e){}},400);
+  setTimeout(()=>{try{renderMoodChart('mood-chart-daily');}catch(e){}},500);
+  setTimeout(()=>{try{renderWeeklyWinsCard();}catch(e){}},600);
+  setTimeout(()=>{try{startOnboarding();}catch(e){}},1500);
 });
 </script>
 <!-- NIGHT RITUAL MODAL -->
@@ -9135,6 +9860,26 @@ window.addEventListener('load',function(){
   <button class="mob-tab-btn" onclick="showPage('review',this);setMobActive(this)" title="Reviews"><span class="mob-icon">◎</span>Review</button>
   <button class="mob-tab-btn" onclick="showPage('arabella',this);setMobActive(this)" title="Arabella AI"><span class="mob-icon">✿</span>Arabella</button>
 </div>
+
+<!-- Back to top -->
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- Keyboard shortcuts modal -->
+<div class="shortcuts-modal hidden" id="shortcuts-modal" onclick="if(event.target===this)this.classList.add('hidden')">
+  <div class="shortcuts-box">
+    <div class="shortcuts-title">Keyboard Shortcuts <button onclick="document.getElementById('shortcuts-modal').classList.add('hidden')" style="background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:16px;padding:0">✕</button></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Daily Flow</span><kbd class="shortcut-key">D</kbd></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Planning</span><kbd class="shortcut-key">P</kbd></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Weekly Review</span><kbd class="shortcut-key">W</kbd></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Notes</span><kbd class="shortcut-key">N</kbd></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle font size</span><kbd class="shortcut-key">F</kbd></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Close modal / dropdown</span><kbd class="shortcut-key">ESC</kbd></div>
+    <div class="shortcut-row"><span class="shortcut-desc">This shortcuts panel</span><kbd class="shortcut-key">?</kbd></div>
+  </div>
+</div>
+
+<!-- Onboarding overlay -->
+<div class="onboard-overlay hidden" id="onboard-overlay"></div>
 
 </body>
 </html>
