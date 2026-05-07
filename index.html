@@ -4123,7 +4123,7 @@ function renderDaily(){
   renderDailyStats();
   renderFivePillarsPanel(ds);
   renderDvPillars(ds);
-  loadDiary();
+  loadDiaryForDate(ds);
 }
 
 function goToday(){dayOffset=0;renderDaily();}
@@ -6085,6 +6085,7 @@ function selectMiniDay(dateStr) {
   dvGoToDate(dateStr);
   renderMiniCalendar();
   renderDayDetail(dateStr);
+  loadDiaryForDate(dateStr);
 }
 
 function renderDayDetail(dateStr) {
@@ -8559,12 +8560,23 @@ function initDiaryAccordion() {
   });
 }
 async function loadDiary() {
-  _dspOffset = 0;
-  _dspDate   = fmt(new Date());
+  await loadDiaryForDate(fmt(new Date()));
+}
+
+async function loadDiaryForDate(dateStr) {
+  const today = fmt(new Date());
+  const tp = today.split('-').map(Number);
+  const dp = dateStr.split('-').map(Number);
+  const diffDays = Math.round(
+    (new Date(dp[0], dp[1]-1, dp[2]) - new Date(tp[0], tp[1]-1, tp[2])) / 86400000
+  );
+  // Future dates clamp to today — diary only holds past/present entries
+  _dspOffset = Math.min(0, diffDays);
+  _dspDate   = _dspOffset < 0 ? dateStr : today;
   const heading = document.getElementById('dsp-date-heading');
   if (heading) heading.textContent = diaryFmtDate(_dspDate);
   const nextBtn = document.getElementById('dsp-nav-next');
-  if (nextBtn) nextBtn.disabled = true;
+  if (nextBtn) nextBtn.disabled = (_dspOffset >= 0);
   _dspLoadWeather();
   await _dspFetch();
   setTimeout(initDiaryAccordion, 100);
