@@ -3573,6 +3573,7 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 let MASTER_PASSWORD = null;
 let USER_ID = null;
 let syncTimeout = null;
+let _syncHideTimer = null;
 
 // DATA
 const PILLARS=[
@@ -3969,7 +3970,7 @@ async function loadDeclarations(){
 async function seedDeclarations(){
   try{
     for(const d of DECLARATIONS_DEFAULT){
-      await sbRequest('POST','declarations',{...d,id:undefined,updated_at:new Date().toISOString()});
+      await sbRequest('POST','declarations',{...d,id:String(d.number),updated_at:new Date().toISOString()});
     }
   }catch(e){console.warn('Seed failed',e);}
 }
@@ -4065,7 +4066,7 @@ async function saveDeclEdit(num){
   if(flash){flash.classList.add('show');setTimeout(()=>flash.classList.remove('show'),1500);}
   renderAffirmationBar();
   showSync();
-  try{await sbRequest('POST','declarations',{..._declData[idx]});showSyncOk();}catch(e){showSyncErr();}
+  try{const d=_declData[idx];await sbRequest('POST','declarations',{...d,id:d.id||String(d.number)});showSyncOk();}catch(e){showSyncErr();}
 }
 function confirmDeleteDecl(num){
   const btn=document.getElementById('decl-del-btn-'+num);
@@ -4094,7 +4095,7 @@ async function saveNewDecl(si,section,emoji){
   if(!text)return;
   const list=_getDeclList();
   const newNum=(list.length?Math.max(...list.map(d=>d.number)):0)+1;
-  const newDecl={number:newNum,section,section_emoji:emoji,pillar_number:null,text,updated_at:new Date().toISOString()};
+  const newDecl={id:String(newNum),number:newNum,section,section_emoji:emoji,pillar_number:null,text,updated_at:new Date().toISOString()};
   _declData.push(newDecl);
   ta.value='';
   toggleDeclAddForm(si);
@@ -6913,7 +6914,7 @@ async function sbRequest(method, path, body) {
   return res;
 }
 
-let _syncHideTimer = null;
+// _syncHideTimer declared at top of script
 function _syncEl() { return document.getElementById('sync-indicator'); }
 function _syncText(txt) { const el=_syncEl(); if(!el) return; el.querySelector('span').textContent=txt; }
 function showSync() { showSyncSaving(); }
