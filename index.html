@@ -1801,6 +1801,8 @@ body{
 .dsp-prompt-label{font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(196,152,59,0.7);margin-bottom:2px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0;user-select:none;}
 .dsp-prompt-label::after{content:'▾';font-size:9px;color:rgba(196,152,59,0.4);transition:transform .2s;}
 .dsp-acc-closed .dsp-prompt-label::after{transform:rotate(-90deg);}
+.dsp-prompt-label.no-toggle{cursor:default;}
+.dsp-prompt-label.no-toggle::after{display:none;}
 .dsp-acc-body{overflow:hidden;transition:max-height .25s ease;}
 .dsp-acc-closed .dsp-acc-body{max-height:0!important;}
 .dsp-reflect-ta{
@@ -8532,7 +8534,8 @@ let _dspAccordionInit = false;
 function initDiaryAccordion() {
   if (_dspAccordionInit) return;
   _dspAccordionInit = true;
-  const OPEN_LABELS = ['i am grateful for', 'must do today'];
+  const OPEN_LABELS   = ['i am grateful for', 'must do today'];
+  const PINNED_LABELS = ['sadaqah', 'i am manifesting'];
   document.querySelectorAll('.dsp-prompt-block').forEach(block => {
     const label = block.querySelector('.dsp-prompt-label');
     if (!label) return;
@@ -8541,13 +8544,18 @@ function initDiaryAccordion() {
     Array.from(block.children).forEach(c => { if (c !== label) body.appendChild(c); });
     block.appendChild(body);
     const lText = label.textContent.trim().toLowerCase();
-    const isOpen = OPEN_LABELS.some(k => lText.includes(k));
+    const isPinned = PINNED_LABELS.some(k => lText.includes(k));
+    const isOpen = isPinned || OPEN_LABELS.some(k => lText.includes(k));
     if (!isOpen) block.classList.add('dsp-acc-closed');
     body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0';
-    label.addEventListener('click', () => {
-      const closed = block.classList.toggle('dsp-acc-closed');
-      body.style.maxHeight = closed ? '0' : body.scrollHeight + 'px';
-    });
+    if (isPinned) {
+      label.classList.add('no-toggle');
+    } else {
+      label.addEventListener('click', () => {
+        const closed = block.classList.toggle('dsp-acc-closed');
+        body.style.maxHeight = closed ? '0' : body.scrollHeight + 'px';
+      });
+    }
   });
 }
 async function loadDiary() {
