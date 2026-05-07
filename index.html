@@ -3395,11 +3395,11 @@ let syncTimeout = null;
 
 // DATA
 const PILLARS=[
-  {id:'life',name:'Me Life',icon:'✦',color:'#5BC4C4'},
-  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#E8B84B'},
-  {id:'td',name:'Tiger + Dragon',icon:'◉',color:'#E8733A'},
-  {id:'myc',name:'Mycelink',icon:'⬡',color:'#3B5FC4'},
-  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#22C55E'}
+  {id:'life',name:'Me Life',icon:'✦',color:'#7EC8E3'},
+  {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#F97316'},
+  {id:'td',name:'Tiger & Dragon',icon:'◉',color:'#166534'},
+  {id:'myc',name:'Mycelink',icon:'⬡',color:'#1E3A5F'},
+  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#7C3AED'}
 ];
 const AM_STEPS=[
   {title:'Cold Wudu, Tahajjud, Fajr + Dhikr',time:'15 min'},
@@ -7047,15 +7047,15 @@ async function dvRenderSolarMarkers(dateStr) {
 }
 
 const Q2_SCHEDULE=[
-  {label:'Fajr + Morning Ritual',start:5*60+30,end:6*60+30,color:'#E8B84B'},
-  {label:'Deep Work — GHL / Mycelink',start:7*60,end:9*60,color:'#7C9EBF'},
-  {label:'Content & Tiger + Dragon',start:9*60+30,end:11*60,color:'#B87CE0'},
-  {label:'Admin + Comms',start:11*60,end:12*60,color:'#6BCB77'},
-  {label:'Dhuhr Break',start:12*60+30,end:13*60+30,color:'#E8733A'},
-  {label:'Deep Work — Architecture',start:13*60+30,end:15*60+30,color:'#7C9EBF'},
-  {label:'Learning + Skill Block',start:16*60,end:17*60+30,color:'#F4A261'},
-  {label:'Asr + Movement',start:17*60+30,end:18*60+30,color:'#E8733A'},
-  {label:'Wind Down + Review',start:19*60,end:20*60,color:'#6BCB77'},
+  {label:'Fajr + Morning Ritual',start:5*60+30,end:6*60+30,color:'#7EC8E3'},   // Me Life
+  {label:'Deep Work — TigerFlow AI',start:7*60,end:9*60,color:'#F97316'},       // TigerFlow
+  {label:'Content & Tiger & Dragon',start:9*60+30,end:11*60,color:'#166534'},   // Tiger & Dragon
+  {label:'Admin + Comms',start:11*60,end:12*60,color:'#7EC8E3'},                // Me Life
+  {label:'Dhuhr Break',start:12*60+30,end:13*60+30,color:'#E8B84B'},            // gold
+  {label:'Deep Work — Architecture',start:13*60+30,end:15*60+30,color:'#7C3AED'}, // Architecture
+  {label:'Mycelink / Research',start:16*60,end:17*60+30,color:'#1E3A5F'},       // Mycelink
+  {label:'Asr + Movement',start:17*60+30,end:18*60+30,color:'#E8B84B'},         // gold
+  {label:'Wind Down + Review',start:19*60,end:20*60,color:'#7EC8E3'},            // Me Life
 ];
 function dvRenderEvents() {
   const slotsEl = document.getElementById('day-time-slots');
@@ -8605,7 +8605,7 @@ function fireConfetti(anchorEl){
   const rect=anchorEl.getBoundingClientRect();
   const cx=rect.left+rect.width/2;
   const cy=rect.top+rect.height/2;
-  const colors=[getComputedStyle(document.documentElement).getPropertyValue('--gold').trim(),'#22c55e','#E8733A','#5BC4C4'];
+  const colors=['#E8B84B','#7EC8E3','#F97316','#166534','#1E3A5F','#7C3AED'];
   for(let i=0;i<18;i++){
     const p=document.createElement('div');
     p.className='confetti-p';
