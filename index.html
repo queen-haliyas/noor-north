@@ -574,17 +574,19 @@ body{
 }
 .day-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
 /* ── DAILY FLOW ACCORDION ── */
-.acc-week{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.acc-week{display:flex;flex-direction:column;gap:6px;margin-bottom:0;}
+.acc-day-item{display:flex;flex-direction:column;}
 .acc-day-header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none;}
 .acc-day-header:hover{border-color:var(--gold);}
 .acc-day-header.today{border-color:var(--gold);background:rgba(196,152,59,0.08);}
-.acc-day-header.active{border-color:var(--gold);background:rgba(196,152,59,0.14);}
+.acc-day-header.active{border-color:var(--gold);background:rgba(196,152,59,0.14);box-shadow:inset 3px 0 0 var(--gold);}
 .acc-day-name{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);width:30px;}
 .acc-day-date{font-size:18px;font-weight:500;color:var(--text-secondary);width:28px;}
 .acc-day-header.today .acc-day-name,.acc-day-header.today .acc-day-date{color:var(--gold);}
 .acc-day-header.active .acc-day-name,.acc-day-header.active .acc-day-date{color:var(--gold);font-weight:700;}
-.acc-day-panel{max-height:0;overflow:hidden;transition:max-height .4s ease;}
-.acc-day-panel.open{max-height:8000px;}
+.acc-day-panel{max-height:0;overflow:hidden;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s ease;}
+.acc-day-panel.open{max-height:3000px;opacity:1;}
+.acc-day-panel .df-main-cols{margin-top:8px;}
 /* ── DAILY FLOW TWO-COLUMN LAYOUT ── */
 .df-main-cols{display:flex;gap:16px;align-items:flex-start;}
 .df-left{flex:0 0 55%;min-width:0;}
@@ -2238,9 +2240,10 @@ body{
     <div class="fp-pillars-grid" id="fp-pillars-list"></div>
   </div>
 
-  <!-- DAILY FLOW: full-width week strip + two columns below -->
+  <!-- DAILY FLOW: accordion with inline expand panels -->
   <div id="day-accordion" class="acc-week"></div>
-  <div class="df-main-cols">
+  <!-- Content block — JS moves this into the active day panel -->
+  <div id="df-day-content" class="df-main-cols" style="display:none">
     <!-- LEFT: schedule + five pillars -->
     <div class="df-left">
       <div class="df-sched-wrap">
@@ -2392,7 +2395,7 @@ body{
     if (typeof buildAccordion === 'function') {
       if (!document.getElementById('acc-hdr-0')) buildAccordion();
       var _t = new Date(), _d = (_t.getDay() + 6) % 7;
-      if (typeof accOpenDay === 'function') accOpenDay(_d, 0);
+      if (typeof accOpenDay === 'function') accOpenDay(_d, 0, true);
     }
     // Init the 24h timeline
     var tries = 0;
@@ -3697,10 +3700,9 @@ function showPage(id,btn){
   if(btn)btn.classList.add('active');
   if(id==='daily'){
     if(!document.getElementById('acc-hdr-0'))buildAccordion();
-    // Re-highlight the active accordion pill
     var _at=new Date(),_ad=(_at.getDay()+6)%7;
     var _activeSlot=_accOpenSlot>=0?_accOpenSlot:_ad;
-    for(var _i=0;_i<7;_i++){var _h=document.getElementById('acc-hdr-'+_i);if(_h)_h.classList.toggle('active',_i===_activeSlot);}
+    accOpenDay(_activeSlot,_activeSlot-_ad,true);
     renderDaily();setTimeout(initDayView,100);
   }
   if(id==='planning'){renderPlanning();renderPlanningTimeline();}
@@ -4053,32 +4055,56 @@ function buildAccordion(){
     const ds=fmt(d);
     const isToday=ds===todayStr;
     const longDate=d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
-    html+=`<div class="acc-day-item">
+    html+=`<div class="acc-day-item" id="acc-item-${slot}">
       <div class="acc-day-header${isToday?' today':''}" id="acc-hdr-${slot}" onclick="accOpenDay(${slot},${offset})">
         <span class="acc-day-name">${DAY_SHORT[slot]}</span>
         <span class="acc-day-date">${d.getDate()}</span>
         <span style="font-size:11px;color:var(--text-tertiary);flex:1;margin-left:4px">${longDate}</span>
         ${isToday?'<span style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);background:rgba(196,152,59,0.15);border-radius:10px;padding:2px 8px">Today</span>':''}
       </div>
+      <div class="acc-day-panel" id="acc-panel-${slot}"></div>
     </div>`;
   }
   container.innerHTML=html;
 }
 
-function accOpenDay(slot,offset){
+function accOpenDay(slot,offset,skipAnim){
+  // Close previously open panel
+  if(_accOpenSlot>=0 && _accOpenSlot!==slot){
+    const oldPanel=document.getElementById('acc-panel-'+_accOpenSlot);
+    if(oldPanel)oldPanel.classList.remove('open');
+  }
+  // Update header highlights
   for(let i=0;i<7;i++){
     const h=document.getElementById('acc-hdr-'+i);
-    if(h)h.classList.remove('active');
+    if(h)h.classList.toggle('active',i===slot);
   }
-  const hdr=document.getElementById('acc-hdr-'+slot);
-  if(hdr)hdr.classList.add('active');
   _accOpenSlot=slot;
+  // Compute date
   const today=new Date();
   const dow=(today.getDay()+6)%7;
   const d=new Date(today);
   d.setDate(today.getDate()-dow+slot);
   activeDs=fmt(d);
-  dayOffset=offset;
+  dayOffset=offset!==undefined?offset:slot-dow;
+  // Move content block into this panel and open it
+  const panel=document.getElementById('acc-panel-'+slot);
+  const content=document.getElementById('df-day-content');
+  if(panel && content){
+    if(!panel.contains(content)){
+      content.style.removeProperty('display');
+      panel.appendChild(content);
+    }
+    if(skipAnim){
+      panel.style.transition='none';
+      panel.classList.add('open');
+      panel.offsetHeight; // force reflow
+      panel.style.removeProperty('transition');
+    } else {
+      panel.classList.add('open');
+    }
+  }
+  // Render content for this date
   dvGoToDate(activeDs);
   loadDiaryForDate(activeDs);
   ensureDay(activeDs);
@@ -6658,7 +6684,7 @@ renderHeader();
 renderAffirmationBar();
 renderDaily();
 buildAccordion();
-(function(){const _t=new Date();const _d=(_t.getDay()+6)%7;accOpenDay(_d,0);})();
+(function(){const _t=new Date();const _d=(_t.getDay()+6)%7;accOpenDay(_d,0,true);})();
 // KEYBOARD SHORTCUTS
 document.addEventListener('keydown', function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
