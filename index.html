@@ -589,7 +589,7 @@ body{
 .df-main-cols{display:flex;gap:16px;align-items:flex-start;}
 .df-left{flex:0 0 55%;min-width:0;}
 .df-right{flex:1;min-width:0;}
-.df-sched-wrap{margin-top:10px;}
+.df-sched-wrap{margin-top:0;}
 .df-diary-wrap{margin-top:0;}
 .df-diary-wrap .diary-wrap{margin-top:0;}
 @media(max-width:900px){.df-main-cols{flex-direction:column;}.df-left,.df-right{flex:unset;width:100%;}}
@@ -1385,24 +1385,6 @@ body{
 .voice-memo-item:hover .voice-memo-del{opacity:1;}
 .voice-center{text-align:center;padding:2rem;}
 
-/* Day detail panel */
-.day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-@media(max-width:700px){.day-detail-panel{grid-template-columns:1fr;}}
-.day-detail-title{font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--charcoal-border);grid-column:1/-1;}
-.day-detail-section{margin-bottom:8px;}
-.day-detail-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);margin-bottom:6px;}
-.day-detail-item{font-size:12px;color:var(--text-primary);padding:4px 0;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;gap:6px;}
-.day-detail-item:last-child{border-bottom:none;}
-.day-detail-item.done{color:var(--text-tertiary);text-decoration:line-through;}
-.day-detail-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-/* Add event inline */
-.mini-add-event{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-.mini-add-input{flex:1;min-width:140px;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:6px 10px;font-size:12px;color:var(--text-primary);font-family:var(--font-body);outline:none;}
-.mini-add-input:focus{border-color:var(--gold);}
-.mini-add-time{width:90px;background:var(--charcoal-mid);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:6px 10px;font-size:12px;color:var(--text-primary);font-family:var(--font-body);outline:none;}
-.mini-add-btn-sm{background:var(--gold);color:#1A1508;border:none;border-radius:var(--radius-sm);padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--font-body);font-weight:500;white-space:nowrap;}
-.mini-color-dot{transition:transform .15s,outline .15s;}
-.mini-color-dot.mcd-active{outline:2px solid #fff;outline-offset:2px;transform:scale(1.25);}
 
 
 /* ══ BATCH 1 UPGRADES ══ */
@@ -2256,11 +2238,11 @@ body{
     <div class="fp-pillars-grid" id="fp-pillars-list"></div>
   </div>
 
-  <!-- DAILY FLOW: left 55% (accordion + schedule), right 45% (calendar + diary) -->
+  <!-- DAILY FLOW: full-width week strip + two columns below -->
+  <div id="day-accordion" class="acc-week"></div>
   <div class="df-main-cols">
-    <!-- LEFT: day-selector pills + 24h schedule below -->
+    <!-- LEFT: schedule + five pillars -->
     <div class="df-left">
-      <div id="day-accordion" class="acc-week"></div>
       <div class="df-sched-wrap">
         <div class="day-view-card">
           <div class="day-view-header">
