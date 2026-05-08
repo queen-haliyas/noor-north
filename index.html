@@ -577,17 +577,18 @@ body{
   transition:all .15s;
 }
 .day-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
-/* Vertical week strip sidebar */
-.daily-with-strip{display:flex;gap:10px;align-items:start;}
-.daily-with-strip .cal-planner-wrap{flex:1;min-width:0;}
-.week-strip{display:flex;flex-direction:column;gap:4px;width:84px;flex-shrink:0;}
-.week-strip-pill{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 6px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;width:100%;box-sizing:border-box;}
-.week-strip-pill:hover{border-color:var(--gold);}
-.week-strip-pill.active{background:rgba(232,184,75,0.12);border-color:var(--gold);}
-.wsp-name{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);}
-.wsp-date{font-size:14px;font-weight:500;color:var(--text-secondary);}
-.week-strip-pill.active .wsp-name,.week-strip-pill.active .wsp-date{color:var(--gold);}
-.week-strip-pill.active .wsp-date{font-weight:700;}
+/* ── DAILY FLOW ACCORDION ── */
+.acc-week{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.acc-day-header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none;}
+.acc-day-header:hover{border-color:var(--gold);}
+.acc-day-header.today{border-color:var(--gold);background:rgba(196,152,59,0.08);}
+.acc-day-header.active{border-color:var(--gold);background:rgba(196,152,59,0.14);}
+.acc-day-name{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-tertiary);width:30px;}
+.acc-day-date{font-size:18px;font-weight:500;color:var(--text-secondary);width:28px;}
+.acc-day-header.today .acc-day-name,.acc-day-header.today .acc-day-date{color:var(--gold);}
+.acc-day-header.active .acc-day-name,.acc-day-header.active .acc-day-date{color:var(--gold);font-weight:700;}
+.acc-day-panel{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.acc-day-panel.open{max-height:8000px;}
 
 /* Three column layout */
 .flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:stretch;}
@@ -1633,9 +1634,6 @@ body{
 
 
 /* ══ GOOGLE CALENDAR DAY PLANNER ══ */
-.cal-planner-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1rem;align-items:start;}
-.cal-planner-wrap > *{min-width:0;overflow:hidden;}
-@media(max-width:768px){.cal-planner-wrap{grid-template-columns:1fr;}}
 .day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;}
 .day-view-header{padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
 .day-view-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);}
@@ -2304,12 +2302,36 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
     <div class="fp-pillars-grid" id="fp-pillars-list"></div>
   </div>
 
-  <!-- CALENDAR + DAY VIEW SIDE BY SIDE -->
-  <div class="daily-with-strip">
-    <div class="week-strip" id="week-strip"></div>
-    <div class="cal-planner-wrap">
-    <!-- LEFT: Day view (Today schedule) -->
-    <div class="day-view-card">
+  <!-- FULL WIDTH MINI CALENDAR -->
+  <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
+      <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
+      <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+      <div class="mini-cal-toggle">
+        <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
+        <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
+      </div>
+      <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
+      <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
+    </div>
+    <div style="padding:6px 8px">
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
+        <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
+        <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
+        <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
+        <div class="mini-cal-day-hdr">S</div>
+      </div>
+      <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
+    </div>
+  </div>
+
+  <!-- WEEK ACCORDION (populated by buildAccordion()) -->
+  <div id="day-accordion" class="acc-week"></div>
+
+  <!-- SHARED DAY CONTENT — JS moves this into the active accordion panel -->
+  <div id="daily-shared-content" style="display:none;padding-top:10px">
+    <!-- Schedule: 24-hour timeline + Five Pillars -->
+    <div class="day-view-card" style="margin-bottom:10px">
       <div class="day-view-header">
         <div>
           <div class="day-view-title" id="day-view-title">Today</div>
@@ -2317,7 +2339,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
         </div>
         <button class="day-nav-btn" onclick="dayViewGoToday()" style="color:var(--gold);border-color:var(--gold);font-size:11px;padding:3px 10px">Now</button>
       </div>
-      <!-- Five Pillars — expandable task groups on the timeline card -->
       <div class="dv-pillars-section" id="dv-pillars-section">
         <div class="dv-pillars-section-hdr" onclick="dvTogglePlSection()">
           <span style="color:var(--gold);font-size:13px">✦</span>
@@ -2335,173 +2356,132 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
         </div>
       </div>
     </div>
-    <!-- RIGHT: month calendar + day detail -->
-    <div>
-      <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
-          <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
-          <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
-          <div class="mini-cal-toggle">
-            <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
-            <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
-          </div>
-          <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
-          <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
-        </div>
-        <div style="padding:6px 8px">
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
-            <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
-            <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
-            <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
-            <div class="mini-cal-day-hdr">S</div>
-          </div>
-          <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
-        </div>
-      </div>
-      <div id="day-detail-panel" style="display:none"></div>
-      <!-- DIARY (single page) -->
-      <div class="diary-wrap" id="diary-book-wrap">
-        <div class="diary-frame">
-          <div class="diary-single-page">
-            <div class="journal-save-ind" id="journal-save-ind"></div>
-            <div class="dsp-inner">
-              <!-- Journal templates -->
-              <div class="dsp-templates-row">
-                <button class="dsp-tpl-btn" onclick="applyJournalTemplate('win')">✦ Win Day</button>
-                <button class="dsp-tpl-btn" onclick="applyJournalTemplate('hard')">◈ Hard Day</button>
-                <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
-              </div>
-              <!-- Header -->
-              <div class="dsp-header">
-                <button class="dsp-nav-btn" onclick="dspNavDay(-1)" id="dsp-nav-prev">‹</button>
-                <div class="dsp-date-heading" id="dsp-date-heading">Today</div>
-                <button class="dsp-nav-btn" onclick="dspNavDay(1)" id="dsp-nav-next" disabled>›</button>
-                <button class="dsp-star-btn" id="dsp-star-btn" onclick="dspToggleStar()" title="Star this entry">☆</button>
-                <div class="dsp-weather" id="dsp-weather"></div>
-              </div>
-
-              <!-- Morning intentions: stacked full-width -->
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Sadaqah</div>
-                <label class="dsp-donate-row">
-                  <input type="checkbox" class="dsp-donate-check" id="dsp-donated" onchange="dspOnInput()"/>
-                  <span class="dsp-donate-lbl">Donated today ✓</span>
-                </label>
-              </div>
-              <div class="dsp-rule"></div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">I am grateful for…</div>
-                <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput()"/></div>
-                <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-grat-2" placeholder="…" oninput="dspOnInput()"/></div>
-                <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-grat-3" placeholder="…" oninput="dspOnInput()"/></div>
-              </div>
-              <div class="dsp-rule"></div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">I am manifesting…</div>
-                <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-man-1" placeholder="…" oninput="dspOnInput()"/></div>
-                <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-man-2" placeholder="…" oninput="dspOnInput()"/></div>
-                <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-man-3" placeholder="…" oninput="dspOnInput()"/></div>
-              </div>
-              <div class="dsp-rule"></div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Must do today</div>
-                <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-must-1" placeholder="…" oninput="dspOnInput()"/></div>
-                <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-must-2" placeholder="…" oninput="dspOnInput()"/></div>
-                <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-must-3" placeholder="…" oninput="dspOnInput()"/></div>
-              </div>
-
-              <div class="dsp-rule"></div>
-
-              <!-- Daily Entry -->
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Daily Entry</div>
-                <textarea class="dsp-reflect-ta" id="dsp-entry-1" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-                <textarea class="dsp-reflect-ta" id="dsp-entry-2" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-                <textarea class="dsp-reflect-ta" id="dsp-entry-3" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-                <textarea class="dsp-reflect-ta" id="dsp-entry-4" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-                <textarea class="dsp-reflect-ta" id="dsp-entry-5" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-                <textarea class="dsp-reflect-ta" id="dsp-entry-6" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-
-              <div class="dsp-rule"></div>
-
-              <!-- 9 Reflection prompts -->
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Something good that happened today</div>
-                <textarea class="dsp-reflect-ta" id="dsp-good" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Something I want to improve</div>
-                <textarea class="dsp-reflect-ta" id="dsp-bad" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">System improvement for tomorrow</div>
-                <textarea class="dsp-reflect-ta" id="dsp-system" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Evidence of growth</div>
-                <textarea class="dsp-reflect-ta" id="dsp-evidence" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Business wins</div>
-                <textarea class="dsp-reflect-ta" id="dsp-wins" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Problems I solved</div>
-                <textarea class="dsp-reflect-ta" id="dsp-problems" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Ideas / spark</div>
-                <textarea class="dsp-reflect-ta" id="dsp-ideas" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Skills I used or learned</div>
-                <textarea class="dsp-reflect-ta" id="dsp-skills" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-              <div class="dsp-prompt-block">
-                <div class="dsp-prompt-label">Mental RAM dump</div>
-                <textarea class="dsp-reflect-ta" id="dsp-ram" rows="2" placeholder="Clear your mind…" oninput="dspGrow(this);dspOnInput()"></textarea>
-              </div>
-
-              <div class="dsp-footer" id="dsp-footer"></div>
+    <!-- Diary / Journal -->
+    <div class="diary-wrap" id="diary-book-wrap">
+      <div class="diary-frame">
+        <div class="diary-single-page">
+          <div class="journal-save-ind" id="journal-save-ind"></div>
+          <div class="dsp-inner">
+            <div class="dsp-templates-row">
+              <button class="dsp-tpl-btn" onclick="applyJournalTemplate('win')">✦ Win Day</button>
+              <button class="dsp-tpl-btn" onclick="applyJournalTemplate('hard')">◈ Hard Day</button>
+              <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
             </div>
+            <div class="dsp-header">
+              <button class="dsp-nav-btn" onclick="dspNavDay(-1)" id="dsp-nav-prev">‹</button>
+              <div class="dsp-date-heading" id="dsp-date-heading">Today</div>
+              <button class="dsp-nav-btn" onclick="dspNavDay(1)" id="dsp-nav-next" disabled>›</button>
+              <button class="dsp-star-btn" id="dsp-star-btn" onclick="dspToggleStar()" title="Star this entry">☆</button>
+              <div class="dsp-weather" id="dsp-weather"></div>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Sadaqah</div>
+              <label class="dsp-donate-row">
+                <input type="checkbox" class="dsp-donate-check" id="dsp-donated" onchange="dspOnInput()"/>
+                <span class="dsp-donate-lbl">Donated today ✓</span>
+              </label>
+            </div>
+            <div class="dsp-rule"></div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">I am grateful for…</div>
+              <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput()"/></div>
+              <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-grat-2" placeholder="…" oninput="dspOnInput()"/></div>
+              <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-grat-3" placeholder="…" oninput="dspOnInput()"/></div>
+            </div>
+            <div class="dsp-rule"></div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">I am manifesting…</div>
+              <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-man-1" placeholder="…" oninput="dspOnInput()"/></div>
+              <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-man-2" placeholder="…" oninput="dspOnInput()"/></div>
+              <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-man-3" placeholder="…" oninput="dspOnInput()"/></div>
+            </div>
+            <div class="dsp-rule"></div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Must do today</div>
+              <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-must-1" placeholder="…" oninput="dspOnInput()"/></div>
+              <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-must-2" placeholder="…" oninput="dspOnInput()"/></div>
+              <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-must-3" placeholder="…" oninput="dspOnInput()"/></div>
+            </div>
+            <div class="dsp-rule"></div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Daily Entry</div>
+              <textarea class="dsp-reflect-ta" id="dsp-entry-1" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+              <textarea class="dsp-reflect-ta" id="dsp-entry-2" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+              <textarea class="dsp-reflect-ta" id="dsp-entry-3" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+              <textarea class="dsp-reflect-ta" id="dsp-entry-4" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+              <textarea class="dsp-reflect-ta" id="dsp-entry-5" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+              <textarea class="dsp-reflect-ta" id="dsp-entry-6" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-rule"></div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Something good that happened today</div>
+              <textarea class="dsp-reflect-ta" id="dsp-good" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Something I want to improve</div>
+              <textarea class="dsp-reflect-ta" id="dsp-bad" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">System improvement for tomorrow</div>
+              <textarea class="dsp-reflect-ta" id="dsp-system" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Evidence of growth</div>
+              <textarea class="dsp-reflect-ta" id="dsp-evidence" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Business wins</div>
+              <textarea class="dsp-reflect-ta" id="dsp-wins" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Problems I solved</div>
+              <textarea class="dsp-reflect-ta" id="dsp-problems" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Ideas / spark</div>
+              <textarea class="dsp-reflect-ta" id="dsp-ideas" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Skills I used or learned</div>
+              <textarea class="dsp-reflect-ta" id="dsp-skills" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-prompt-block">
+              <div class="dsp-prompt-label">Mental RAM dump</div>
+              <textarea class="dsp-reflect-ta" id="dsp-ram" rows="2" placeholder="Clear your mind…" oninput="dspGrow(this);dspOnInput()"></textarea>
+            </div>
+            <div class="dsp-footer" id="dsp-footer"></div>
           </div>
-        </div>
-        <!-- Bottom bar -->
-        <div class="dsp-bottom-bar">
-          <span class="dsp-saved-ind" id="dsp-saved-ind">saved ✓</span>
-          <span class="dsp-wordcount" id="dsp-wordcount">0 words</span>
-          <button class="dsp-search-btn" onclick="diaryToggleSearch()" title="Search entries">⌕ Search</button>
-        </div>
-        <!-- Search panel -->
-        <div class="diary-search-panel" id="diary-search-panel" style="display:none">
-          <div class="diary-search-top">
-            <input class="diary-search-inp" id="diary-search-inp" placeholder="Search your diary…" oninput="diarySearch()"/>
-            <button class="diary-search-close" onclick="diaryToggleSearch()">✕</button>
-          </div>
-          <div id="diary-search-results"></div>
         </div>
       </div>
-    </div>
-    <script>
-    // Inline init - runs as soon as this HTML is parsed
-    document.addEventListener('DOMContentLoaded', function() {
-      // Retry loop until initDayView is available and elements exist
-      var tries = 0;
-      var dvTimer = setInterval(function() {
-        tries++;
-        var labels = document.getElementById('day-time-labels');
-        var slots = document.getElementById('day-time-slots');
-        if (labels && slots && typeof initDayView === 'function') {
-          clearInterval(dvTimer);
-          initDayView();
-        }
-        if (tries > 30) clearInterval(dvTimer);
-      }, 200);
-    });
-    </script>
+      <div class="dsp-bottom-bar">
+        <span class="dsp-saved-ind" id="dsp-saved-ind">saved ✓</span>
+        <span class="dsp-wordcount" id="dsp-wordcount">0 words</span>
+        <button class="dsp-search-btn" onclick="diaryToggleSearch()" title="Search entries">⌕ Search</button>
+      </div>
+      <div class="diary-search-panel" id="diary-search-panel" style="display:none">
+        <div class="diary-search-top">
+          <input class="diary-search-inp" id="diary-search-inp" placeholder="Search your diary…" oninput="diarySearch()"/>
+          <button class="diary-search-close" onclick="diaryToggleSearch()">✕</button>
+        </div>
+        <div id="diary-search-results"></div>
+      </div>
     </div>
   </div>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var tries = 0;
+    var dvTimer = setInterval(function() {
+      tries++;
+      var labels = document.getElementById('day-time-labels');
+      var slots = document.getElementById('day-time-slots');
+      if (labels && slots && typeof initDayView === 'function') {
+        clearInterval(dvTimer);
+        initDayView();
+      }
+      if (tries > 30) clearInterval(dvTimer);
+    }, 200);
+  });
+  </script>
   <!-- Event add popup -->
   <div class="event-popup-overlay" id="ev-popup" style="display:none" onclick="if(event.target===this)closeEvPopup()">
     <div class="event-popup">
@@ -3796,7 +3776,7 @@ function showPage(id,btn){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(id==='daily'){renderDaily();setTimeout(initDayView, 100);}
+  if(id==='daily'){if(!document.getElementById('acc-hdr-0'))buildAccordion();renderDaily();setTimeout(initDayView,100);}
   if(id==='planning'){renderPlanning();renderPlanningTimeline();}
   if(id==='empire'){renderEmpire();renderStackedBar();renderPolarGrid();}
   if(id==='notes')renderNotes();
@@ -4126,26 +4106,78 @@ function renderDaily(){
   loadDiaryForDate(ds);
 }
 
-function goToday(){dayOffset=0;renderDaily();}
-function goDay(offset){dayOffset=offset;renderDaily();}
-function renderWeekStrip(){
-  const el=document.getElementById('week-strip');
-  if(!el)return;
+let _accOpenSlot=-1;
+
+function buildAccordion(){
+  const container=document.getElementById('day-accordion');
+  if(!container)return;
   const today=new Date();
-  const dow=(today.getDay()+6)%7; // Mon=0
-  const DAY_NAMES=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const dow=(today.getDay()+6)%7;
+  const todayStr=fmt(today);
+  const DAY_SHORT=['MON','TUE','WED','THU','FRI','SAT','SUN'];
   let html='';
-  for(let i=0;i<7;i++){
+  for(let slot=0;slot<7;slot++){
     const d=new Date(today);
-    d.setDate(today.getDate()-dow+i);
-    const offset=i-dow;
-    const isActive=offset===dayOffset;
-    html+=`<div class="week-strip-pill${isActive?' active':''}" onclick="goDay(${offset})">
-      <span class="wsp-name">${DAY_NAMES[i]}</span>
-      <span class="wsp-date">${d.getDate()}</span>
+    d.setDate(today.getDate()-dow+slot);
+    const offset=slot-dow;
+    const ds=fmt(d);
+    const isToday=ds===todayStr;
+    const longDate=d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+    html+=`<div class="acc-day-item">
+      <div class="acc-day-header${isToday?' today':''}" id="acc-hdr-${slot}" onclick="accOpenDay(${slot},${offset})">
+        <span class="acc-day-name">${DAY_SHORT[slot]}</span>
+        <span class="acc-day-date">${d.getDate()}</span>
+        <span style="font-size:11px;color:var(--text-tertiary);flex:1;margin-left:4px">${longDate}</span>
+        ${isToday?'<span style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);background:rgba(196,152,59,0.15);border-radius:10px;padding:2px 8px">Today</span>':''}
+        <span class="acc-chev" id="acc-chev-${slot}" style="font-size:10px;color:var(--text-tertiary);transition:transform .2s;margin-left:8px">▾</span>
+      </div>
+      <div class="acc-day-panel" id="acc-panel-${slot}"></div>
     </div>`;
   }
-  el.innerHTML=html;
+  container.innerHTML=html;
+}
+
+function accOpenDay(slot,offset){
+  if(_accOpenSlot>=0&&_accOpenSlot!==slot){
+    const prevPanel=document.getElementById('acc-panel-'+_accOpenSlot);
+    const prevHdr=document.getElementById('acc-hdr-'+_accOpenSlot);
+    const prevChev=document.getElementById('acc-chev-'+_accOpenSlot);
+    if(prevPanel)prevPanel.classList.remove('open');
+    if(prevHdr)prevHdr.classList.remove('active');
+    if(prevChev)prevChev.style.transform='';
+  }
+  if(_accOpenSlot===slot){_accOpenSlot=-1;return;}
+  _accOpenSlot=slot;
+  const panel=document.getElementById('acc-panel-'+slot);
+  const hdr=document.getElementById('acc-hdr-'+slot);
+  const chev=document.getElementById('acc-chev-'+slot);
+  if(panel){
+    const shared=document.getElementById('daily-shared-content');
+    if(shared){panel.appendChild(shared);shared.style.display='';}
+    panel.classList.add('open');
+  }
+  if(hdr)hdr.classList.add('active');
+  if(chev)chev.style.transform='rotate(180deg)';
+  dayOffset=offset;
+  renderDaily();
+}
+
+function goToday(){
+  dayOffset=0;
+  const _t=new Date();
+  const _d=(_t.getDay()+6)%7;
+  if(document.getElementById('acc-hdr-0'))accOpenDay(_d,0);
+  else renderDaily();
+}
+function goDay(offset){dayOffset=offset;renderDaily();}
+function renderWeekStrip(){
+  for(let slot=0;slot<7;slot++){
+    const hdr=document.getElementById('acc-hdr-'+slot);
+    if(!hdr)continue;
+    hdr.classList.toggle('active',_accOpenSlot===slot);
+    const chev=document.getElementById('acc-chev-'+slot);
+    if(chev)chev.style.transform=(_accOpenSlot===slot)?'rotate(180deg)':'';
+  }
 }
 function changeMiniMonthToToday(){miniCalYear=new Date().getFullYear();miniCalMonth=new Date().getMonth();renderMiniCalendar();}
 
@@ -6086,6 +6118,14 @@ function selectMiniDay(dateStr) {
   renderMiniCalendar();
   renderDayDetail(dateStr);
   loadDiaryForDate(dateStr);
+  // If this date is in the current week, open its accordion panel
+  const _smT=new Date();
+  const _smD=(_smT.getDay()+6)%7;
+  for(let slot=0;slot<7;slot++){
+    const d=new Date(_smT);
+    d.setDate(_smT.getDate()-_smD+slot);
+    if(fmt(d)===dateStr){accOpenDay(slot,slot-_smD);break;}
+  }
 }
 
 function renderDayDetail(dateStr) {
@@ -6844,6 +6884,8 @@ renderHeader();
 renderAffirmationBar();
 renderDaily();
 renderMiniCalendar();
+buildAccordion();
+(function(){const _t=new Date();const _d=(_t.getDay()+6)%7;accOpenDay(_d,0);})();
 // KEYBOARD SHORTCUTS
 document.addEventListener('keydown', function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
