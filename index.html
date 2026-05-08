@@ -586,19 +586,18 @@ body{
 .acc-day-panel{max-height:0;overflow:hidden;transition:max-height .4s ease;}
 .acc-day-panel.open{max-height:8000px;}
 /* ── DAILY FLOW TWO-COLUMN LAYOUT ── */
+.df-top-row{display:flex;gap:12px;align-items:stretch;margin-bottom:14px;}
+.df-top-aff{flex:0 0 70%;min-width:0;}
+.df-top-cal{flex:1;min-width:0;position:relative;overflow:hidden;}
+.df-top-cal .df-cal-sticky{position:absolute;top:0;right:0;transform:scale(0.25);transform-origin:top right;width:400%;}
 .df-main-cols{display:flex;gap:16px;align-items:flex-start;}
 .df-left{flex:0 0 55%;min-width:0;}
 .df-right{flex:1;min-width:0;}
 .df-sched-wrap{margin-top:10px;}
-.df-diary-wrap{margin-top:12px;}
+.df-diary-wrap{margin-top:0;}
 .df-diary-wrap .diary-wrap{margin-top:0;}
 .df-cal-sticky{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;position:sticky;top:12px;}
-.df-right .mini-cal-cell{height:32px;}
-.df-right #mini-cal-cells{grid-auto-rows:32px!important;}
-.df-right .mini-cal-day-hdr{font-size:9px;padding:2px 0;}
-.df-right .mini-cal-date{font-size:9px;}
-.df-right .mini-cal-date.today-num{width:14px;height:14px;font-size:8px;}
-@media(max-width:900px){.df-main-cols{flex-direction:column;}.df-left,.df-right{flex:unset;width:100%;}.df-cal-sticky{position:static;}}
+@media(max-width:900px){.df-main-cols{flex-direction:column;}.df-left,.df-right{flex:unset;width:100%;}.df-top-row{flex-direction:column;}.df-top-cal{height:120px;}.df-cal-sticky{position:static;}}
 
 /* Three column layout */
 .flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:stretch;}
@@ -2274,10 +2273,37 @@ body{
   <div style="margin-bottom:0.75rem">
     <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
   </div>
-  <!-- Affirmation / cognitive reframe banner -->
-  <div class="aff-card" id="aff-card" style="margin-bottom:12px">
-    <div class="aff-card-label" id="aff-card-label"></div>
-    <div class="aff-card-text" id="aff-card-text">Loading...</div>
+  <!-- Affirmation + calendar row -->
+  <div class="df-top-row">
+    <div class="df-top-aff">
+      <div class="aff-card" id="aff-card">
+        <div class="aff-card-label" id="aff-card-label"></div>
+        <div class="aff-card-text" id="aff-card-text">Loading...</div>
+      </div>
+    </div>
+    <div class="df-top-cal">
+      <div class="df-cal-sticky">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
+          <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
+          <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+          <div class="mini-cal-toggle">
+            <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
+            <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
+          </div>
+          <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
+          <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
+        </div>
+        <div style="padding:6px 8px">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
+            <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
+            <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
+            <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
+            <div class="mini-cal-day-hdr">S</div>
+          </div>
+          <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- Smart nudge banner -->
   <div id="nudge-banner" style="display:none;background:linear-gradient(90deg,rgba(232,184,75,0.12),rgba(232,184,75,0.05));border:0.5px solid rgba(232,184,75,0.3);border-radius:var(--radius-sm);padding:8px 16px;margin-bottom:10px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:8px;">
@@ -2339,29 +2365,8 @@ body{
         </div>
       </div>
     </div>
-    <!-- RIGHT: sticky mini calendar + diary below -->
+    <!-- RIGHT: diary -->
     <div class="df-right">
-      <div class="df-cal-sticky">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
-          <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
-          <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
-          <div class="mini-cal-toggle">
-            <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
-            <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
-          </div>
-          <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
-          <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
-        </div>
-        <div style="padding:6px 8px">
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
-            <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
-            <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
-            <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
-            <div class="mini-cal-day-hdr">S</div>
-          </div>
-          <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
-        </div>
-      </div>
       <div class="df-diary-wrap">
         <div class="diary-wrap" id="diary-book-wrap">
           <div class="diary-frame">
