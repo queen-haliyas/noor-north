@@ -586,18 +586,13 @@ body{
 .acc-day-panel{max-height:0;overflow:hidden;transition:max-height .4s ease;}
 .acc-day-panel.open{max-height:8000px;}
 /* ── DAILY FLOW TWO-COLUMN LAYOUT ── */
-.df-top-row{display:flex;gap:12px;align-items:stretch;margin-bottom:14px;}
-.df-top-aff{flex:0 0 70%;min-width:0;}
-.df-top-cal{flex:1;min-width:0;position:relative;overflow:hidden;}
-.df-top-cal .df-cal-sticky{position:absolute;top:0;right:0;transform:scale(0.25);transform-origin:top right;width:400%;}
 .df-main-cols{display:flex;gap:16px;align-items:flex-start;}
 .df-left{flex:0 0 55%;min-width:0;}
 .df-right{flex:1;min-width:0;}
 .df-sched-wrap{margin-top:10px;}
 .df-diary-wrap{margin-top:0;}
 .df-diary-wrap .diary-wrap{margin-top:0;}
-.df-cal-sticky{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;position:sticky;top:12px;}
-@media(max-width:900px){.df-main-cols{flex-direction:column;}.df-left,.df-right{flex:unset;width:100%;}.df-top-row{flex-direction:column;}.df-top-cal{height:120px;}.df-cal-sticky{position:static;}}
+@media(max-width:900px){.df-main-cols{flex-direction:column;}.df-left,.df-right{flex:unset;width:100%;}}
 
 /* Three column layout */
 .flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:stretch;}
@@ -1390,27 +1385,6 @@ body{
 .voice-memo-item:hover .voice-memo-del{opacity:1;}
 .voice-center{text-align:center;padding:2rem;}
 
-
-/* ── MINI CALENDAR (below daily flow) ── */
-.mini-cal-wrap{margin-top:1.5rem;}
-.mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
-.mini-cal-title{font-family:var(--font-display);font-size:20px;font-weight:300;color:var(--text-primary);}
-.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1rem;}
-.mini-cal-day-hdr{text-align:center;font-size:10px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;padding:4px 0;}
-.mini-cal-cell{min-height:0;height:44px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:3px 4px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden;}
-.mini-cal-cell:hover{border-color:var(--gold);}
-.mini-cal-cell.today{border-color:var(--gold);background:#C4983B08;}
-.mini-cal-cell.selected{background:#C4983B12;border-color:var(--gold);}
-.mini-cal-cell.other-month{opacity:.4;}
-.mini-cal-date{font-size:10px;font-weight:500;color:var(--text-primary);margin-bottom:1px;}
-.mini-cal-date.today-num{width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1A1508;display:flex;align-items:center;justify-content:center;font-size:9px;}
-.mini-cal-pill{font-size:7px;background:var(--gold-dim);color:var(--gold);border-radius:2px;padding:0px 3px;margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-.mini-cal-pill.ritual{background:#1A9E8F15;color:#1A9E8F;}
-.mini-cal-pill.coral{background:#E8733A20;color:#E8733A;}
-.mini-cal-pill.blue{background:#3B8FC420;color:#3B8FC4;}
-.mini-cal-pill.purple{background:#7F77DD20;color:#7F77DD;}
-.mini-cal-pill.green{background:#22C55E20;color:#22C55E;}
-.mini-cal-pill.pillar{background:#D4A84320;color:#D4A843;}
 /* Day detail panel */
 .day-detail-panel{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 @media(max-width:700px){.day-detail-panel{grid-template-columns:1fr;}}
@@ -1964,8 +1938,7 @@ body{
 
 /* #8 Card hover glow */
 .flow-col:hover,.pillar-item:hover,.plan-card:hover{box-shadow:0 0 0 1px rgba(196,152,59,0.3),0 4px 20px rgba(196,152,59,0.08);}
-.mini-cal-cell:hover{box-shadow:0 0 0 1px rgba(196,152,59,0.25),0 2px 10px rgba(196,152,59,0.06);}
-.flow-col,.pillar-item,.plan-card,.mini-cal-cell{transition:box-shadow .2s,border-color .15s;}
+.flow-col,.pillar-item,.plan-card{transition:box-shadow .2s,border-color .15s;}
 
 /* #9 Page entrance animation */
 @keyframes pageEnter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
@@ -2022,23 +1995,6 @@ body{
 
 /* ══ FEATURES 16-40 ══ */
 
-/* F16 – Week/Month toggle */
-.mini-cal-toggle{display:flex;gap:3px;background:var(--charcoal-mid);border-radius:20px;padding:2px;}
-.mini-cal-toggle-btn{background:none;border:none;border-radius:16px;padding:2px 10px;font-size:10px;color:var(--text-tertiary);cursor:pointer;transition:all .15s;}
-.mini-cal-toggle-btn.active{background:var(--gold);color:#1A1508;font-weight:600;}
-.mini-week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:6px 8px;}
-.mini-week-cell{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;border-radius:6px;cursor:pointer;transition:background .12s;}
-.mini-week-cell:hover{background:var(--charcoal-light);}
-.mini-week-cell.today{background:rgba(232,184,75,.15);}
-.mini-week-cell.selected{background:var(--gold);border-radius:6px;}
-.mini-week-cell.selected .mini-week-date{color:#1A1508;}
-.mini-week-dow{font-size:9px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;}
-.mini-week-date{font-size:12px;font-weight:500;color:var(--text-primary);}
-.mini-week-dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;min-height:8px;}
-
-/* F17 – Pillar colour dots */
-.cal-pillar-dots{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:2px;}
-.cal-pillar-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
 
 /* F18 – Sidebar hover expand */
 .sidebar-nav{transition:width .2s ease;}
@@ -2273,42 +2229,10 @@ body{
   <div style="margin-bottom:0.75rem">
     <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
   </div>
-  <!-- Affirmation + calendar row -->
-  <div class="df-top-row">
-    <div class="df-top-aff">
-      <div class="aff-card" id="aff-card">
-        <div class="aff-card-label" id="aff-card-label"></div>
-        <div class="aff-card-text" id="aff-card-text">Loading...</div>
-      </div>
-    </div>
-    <div class="df-top-cal">
-      <div class="df-cal-sticky">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
-          <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
-          <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
-          <div class="mini-cal-toggle">
-            <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
-            <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
-          </div>
-          <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
-          <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
-        </div>
-        <div style="padding:6px 8px">
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
-            <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
-            <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
-            <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
-            <div class="mini-cal-day-hdr">S</div>
-          </div>
-          <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Smart nudge banner -->
-  <div id="nudge-banner" style="display:none;background:linear-gradient(90deg,rgba(232,184,75,0.12),rgba(232,184,75,0.05));border:0.5px solid rgba(232,184,75,0.3);border-radius:var(--radius-sm);padding:8px 16px;margin-bottom:10px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:8px;">
-    <span id="nudge-icon">✦</span><span id="nudge-text"></span>
-    <button onclick="document.getElementById('nudge-banner').style.display='none'" style="margin-left:auto;background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:13px;padding:0">✕</button>
+  <!-- Affirmation banner -->
+  <div class="aff-card" id="aff-card" style="margin-bottom:12px">
+    <div class="aff-card-label" id="aff-card-label"></div>
+    <div class="aff-card-text" id="aff-card-text">Loading...</div>
   </div>
   <!-- F32: Weekly wins (Sunday) -->
   <div id="weekly-wins-daily"></div>
@@ -3533,10 +3457,6 @@ let _syncHideTimer = null;
 const DATA_KEYS = { main: 'main' };
 const DATA_VERSION = '1';
 
-// HOISTED — declared here so renderMiniCalendar() can read them during init
-let miniCalView = 'month';
-let miniWeekOffset = 0;
-
 // DATA
 const PILLARS=[
   {id:'life',name:'Me Life',icon:'✦',color:'#7EC8E3'},
@@ -3716,10 +3636,6 @@ let isRecording = false;
 let currentNameIdx = 0;
 let reviewScore = 7;
 let _revSaveTimer = null;
-let miniCalYear = new Date().getFullYear();
-let miniCalMonth = new Date().getMonth();
-let miniSelectedDate = fmt(new Date());
-let miniSelectedColor = 'gold';
 let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth();
 let calSelectedDate = fmt(new Date());
@@ -4128,7 +4044,6 @@ function changeDay(d){
 function renderDaily(){
   const ds=activeDs||getDateStr(dayOffset);
   try{renderDailyNameBanner();}catch(e){}
-  setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},100);
   try{ensureDay(ds);}catch(e){}
   try{renderRitualNew('am',ds);}catch(e){}
   try{renderRitualNew('pm',ds);}catch(e){}
@@ -4182,7 +4097,6 @@ function accOpenDay(slot,offset){
   d.setDate(today.getDate()-dow+slot);
   activeDs=fmt(d);
   dayOffset=offset;
-  miniSelectedDate=activeDs;
   dvGoToDate(activeDs);
   loadDiaryForDate(activeDs);
   ensureDay(activeDs);
@@ -4191,13 +4105,10 @@ function accOpenDay(slot,offset){
   try{renderRitualNew('am',activeDs);}catch(e){}
   try{renderRitualNew('pm',activeDs);}catch(e){}
   try{renderDailyStats();}catch(e){}
-  setTimeout(()=>{try{renderMiniCalendar();}catch(e){}},50);
 }
 
 function goToday(){
   dayOffset=0;
-  miniCalYear=new Date().getFullYear();
-  miniCalMonth=new Date().getMonth();
   const _t=new Date();
   const _d=(_t.getDay()+6)%7;
   accOpenDay(_d,0);
@@ -4215,8 +4126,6 @@ function renderWeekStrip(){
     hdr.classList.toggle('active',_accOpenSlot===slot);
   }
 }
-function changeMiniMonthToToday(){miniCalYear=new Date().getFullYear();miniCalMonth=new Date().getMonth();renderMiniCalendar();}
-
 function toggleRitualCard(session){
   const body=document.getElementById(session+'-body');
   const chev=document.getElementById(session+'-chevron');
@@ -4337,7 +4246,6 @@ function quickAddTask(){
   input.value='';
   save();
   renderPillarsCompact(ds);
-  renderMiniCalendar();
 }
 
 function getWeekDays(){
@@ -4522,7 +4430,6 @@ function toggleRitual(ds,session,idx){
     renderRitualNew('am',todayDs);
     renderRitualNew('pm',todayDs);
   }
-  try{renderMiniCalendar();}catch(e){}
 }
 function renderPillarsDaily(ds){
   let totalDone=0,totalAll=0;
@@ -4586,11 +4493,11 @@ function addPillarTask(ds,pid){
   data[ds].pillars[pid].push({text,done:false});
   const pillar=PILLARS.find(p=>p.id===pid);
   if(pillar)showToast('Task added to '+pillar.name, pillar.color);
-  inp.value='';save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
+  inp.value='';save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);
 }
 function togglePillarTask(ds,pid,idx){
   data[ds].pillars[pid][idx].done=!data[ds].pillars[pid][idx].done;
-  save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);renderMiniCalendar();if(miniSelectedDate===ds)renderDayDetail(ds);
+  save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);
   syncPillarTasksToSupabase(ds);
   // #15 confetti when all tasks in pillar done
   const tasks=data[ds].pillars[pid]||[];
@@ -6140,47 +6047,6 @@ function renderDailyNameBanner() {
   }
 }
 
-// MINI CALENDAR
-function changeMiniMonth(dir) {
-  miniCalMonth += dir;
-  if (miniCalMonth > 11) { miniCalMonth = 0; miniCalYear++; }
-  if (miniCalMonth < 0) { miniCalMonth = 11; miniCalYear--; }
-  renderMiniCalendar();
-}
-
-function selectMiniDay(dateStr) {
-  miniSelectedDate = dateStr;
-  activeDs = dateStr;
-  // Sync accordion highlight
-  const _smT=new Date();
-  const _smD=(_smT.getDay()+6)%7;
-  let matched=false;
-  for(let slot=0;slot<7;slot++){
-    const d=new Date(_smT);
-    d.setDate(_smT.getDate()-_smD+slot);
-    const h=document.getElementById('acc-hdr-'+slot);
-    if(h)h.classList.remove('active');
-    if(fmt(d)===dateStr){
-      if(h)h.classList.add('active');
-      _accOpenSlot=slot;
-      dayOffset=slot-_smD;
-      matched=true;
-    }
-  }
-  if(!matched)_accOpenSlot=-1;
-  // Sync schedule + diary + calendar
-  dvGoToDate(dateStr);
-  loadDiaryForDate(dateStr);
-  renderMiniCalendar();
-  ensureDay(dateStr);
-  try{renderFivePillarsPanel(dateStr);}catch(e){}
-  try{renderDvPillars(dateStr);}catch(e){}
-  try{renderRitualNew('am',dateStr);}catch(e){}
-  try{renderRitualNew('pm',dateStr);}catch(e){}
-  try{renderDailyStats();}catch(e){}
-  renderDayDetail(dateStr);
-}
-
 function renderDayDetail(dateStr) {
   const panel = document.getElementById('day-detail-panel');
   if (!panel) return;
@@ -6254,139 +6120,12 @@ function renderDayDetail(dateStr) {
   `;
 }
 
-function selectMiniColor(el, dateStr) {
-  document.querySelectorAll('.mini-color-dot').forEach(d => {
-    d.style.outline = '2px solid transparent';
-    d.style.transform = 'scale(1)';
-  });
-  el.style.outline = '2px solid #fff';
-  el.style.transform = 'scale(1.25)';
-  miniSelectedColor = el.getAttribute('data-color');
-}
-
-function deleteMiniEvent(dateStr, id) {
-  if (!data.calendar || !data.calendar[dateStr]) return;
-  data.calendar[dateStr] = data.calendar[dateStr].filter(e => e.id !== id);
-  save(); renderMiniCalendar(); renderDayDetail(dateStr);
-}
-
 function saveDiary(dateStr, text) {
   if (!data[dateStr]) data[dateStr] = {};
   data[dateStr].diary = text;
   save();
 }
 
-function addMiniEvent(dateStr) {
-  const title = document.getElementById('mini-event-title').value.trim();
-  if (!title) return;
-  const time = document.getElementById('mini-event-time').value.trim();
-  if (!data.calendar) data.calendar = {};
-  if (!data.calendar[dateStr]) data.calendar[dateStr] = [];
-  const color = miniSelectedColor || 'gold';
-  data.calendar[dateStr].push({id: Date.now()+'', title, time, color});
-  save();
-  renderMiniCalendar();
-  renderDayDetail(dateStr);
-}
-
-function renderMiniCalendar() {
-  if(!document.getElementById('mini-cal-month'))return;
-  if(!document.getElementById('mini-cal-cells'))return;
-  if(miniCalView==='week'){renderMiniWeekView();return;}
-  const cells0=document.getElementById('mini-cal-cells');
-  if(cells0){cells0.style.gridTemplateColumns='repeat(7,1fr)';cells0.style.gridAutoRows='44px';}
-  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('mini-cal-month').textContent = monthNames[miniCalMonth] + ' ' + miniCalYear;
-  const today = new Date();
-  const firstDay = new Date(miniCalYear, miniCalMonth, 1);
-  const lastDay = new Date(miniCalYear, miniCalMonth + 1, 0);
-  let startDow = firstDay.getDay();
-  if (startDow === 0) startDow = 7;
-  
-  const cells = document.getElementById('mini-cal-cells');
-  cells.innerHTML = '';
-  
-  // prev month
-  for (let i = 1; i < startDow; i++) {
-    const d = new Date(miniCalYear, miniCalMonth, 1 - startDow + i);
-    const ds = fmt(d);
-    const cell = document.createElement('div');
-    cell.className = 'mini-cal-cell other-month';
-    cell.innerHTML = '<div class="mini-cal-date">' + d.getDate() + '</div>';
-    cell.onclick = () => selectMiniDay(ds);
-    cells.appendChild(cell);
-  }
-  
-  // this month
-  for (let d = 1; d <= lastDay.getDate(); d++) {
-    const date = new Date(miniCalYear, miniCalMonth, d);
-    const ds = fmt(date);
-    const isToday = date.toDateString() === today.toDateString();
-    const isSelected = ds === miniSelectedDate;
-    const cell = document.createElement('div');
-    cell.className = 'mini-cal-cell' + (isToday?' today':'') + (isSelected?' selected':'');
-    
-    
-    const dateDiv = document.createElement('div');
-    dateDiv.className = 'mini-cal-date' + (isToday?' today-num':'');
-    dateDiv.textContent = d;
-    cell.appendChild(dateDiv);
-    
-    // F17: Pillar colour dots
-    const dd = data[ds] || {};
-    const pillarsWithTasks = PILLARS.filter(p => dd.pillars && (dd.pillars[p.id]||[]).length > 0);
-    if (pillarsWithTasks.length > 0) {
-      const dotsWrap = document.createElement('div');
-      dotsWrap.className = 'cal-pillar-dots';
-      pillarsWithTasks.forEach(p => {
-        const dot = document.createElement('div');
-        dot.className = 'cal-pillar-dot';
-        dot.style.background = p.color;
-        dotsWrap.appendChild(dot);
-      });
-      cell.appendChild(dotsWrap);
-    }
-    
-    // AM/PM ritual completions
-    if (dd.am) {
-      const amDone = Object.values(dd.am).filter(Boolean).length;
-      if (amDone > 0) {
-        const pill = document.createElement('div');
-        pill.className = 'mini-cal-pill ritual';
-        pill.textContent = 'AM ' + amDone + '/5';
-        cell.appendChild(pill);
-      }
-    }
-    
-    // Calendar events
-    const events = (data.calendar && data.calendar[ds]) || [];
-    events.slice(0,1).forEach(e => {
-      const pill = document.createElement('div');
-      pill.className = 'mini-cal-pill ' + (e.color||'');
-      pill.textContent = e.title;
-      cell.appendChild(pill);
-    });
-    
-    cell.onclick = () => selectMiniDay(ds);
-    cells.appendChild(cell);
-  }
-  
-  // next month padding
-  const totalCells = cells.children.length;
-  const remaining = (7 - totalCells % 7) % 7;
-  for (let i = 1; i <= remaining; i++) {
-    const d = new Date(miniCalYear, miniCalMonth + 1, i);
-    const ds = fmt(d);
-    const cell = document.createElement('div');
-    cell.className = 'mini-cal-cell other-month';
-    cell.innerHTML = '<div class="mini-cal-date">' + i + '</div>';
-    cell.onclick = () => selectMiniDay(ds);
-    cells.appendChild(cell);
-  }
-  
-}
-
-// CALENDAR
 // TOAST NOTIFICATIONS
 function showToast(msg, color='#E8B84B', duration=2200) {
   const container = document.getElementById('toast-container');
@@ -6936,7 +6675,6 @@ loadDeclarations();
 renderHeader();
 renderAffirmationBar();
 renderDaily();
-renderMiniCalendar();
 buildAccordion();
 (function(){const _t=new Date();const _d=(_t.getDay()+6)%7;accOpenDay(_d,0);})();
 // KEYBOARD SHORTCUTS
@@ -7101,7 +6839,6 @@ async function attemptLogin() {
     try { renderDaily(); } catch(e) {}
     try { loadTwenty(); } catch(e) {}
     setTimeout(() => {
-      try { renderMiniCalendar(); } catch(e) {}
       try { renderDayDetail(fmt(new Date())); } catch(e) {}
       setTimeout(initDayView, 500);
     }, 300);
@@ -7145,7 +6882,6 @@ function logout() {
     try{renderAffirmationBar();}catch(e){}
     try{renderDaily();}catch(e){}
     setTimeout(()=>{
-      try{renderMiniCalendar();}catch(e){}
       try{renderDayDetail(fmt(new Date()));}catch(e){}
     },300);
     // Then sync from Supabase in background — update if newer data exists
@@ -7156,7 +6892,6 @@ function logout() {
         try{renderAffirmationBar();}catch(e){}
         try{renderDaily();}catch(e){}
         setTimeout(()=>{
-          try{renderMiniCalendar();}catch(e){}
           try{renderDayDetail(fmt(new Date()));}catch(e){}
         },300);
       }
@@ -7417,7 +7152,7 @@ function dvUpdateEventTime(id, newStart, newEnd) {
   ev.endMin = newEnd || newStart + dur;
   ev.time = dvMinToTime(newStart);
   ev.durationMin = ev.endMin - ev.startMin;
-  save(); dvRenderEvents(); renderDayDetail(dvDate); renderMiniCalendar();
+  save(); dvRenderEvents();
 }
 
 function dvUpdateEventDur(id, dur) {
@@ -7431,7 +7166,7 @@ function dvUpdateEventDur(id, dur) {
 function dvDeleteEvent(id) {
   if (!data.calendar?.[dvDate]) return;
   data.calendar[dvDate] = data.calendar[dvDate].filter(e => e.id !== id);
-  save(); dvRenderEvents(); renderDayDetail(dvDate); renderMiniCalendar();
+  save(); dvRenderEvents();
   showToast('Event deleted', '#E8733A');
 }
 
@@ -7474,7 +7209,7 @@ function saveEvPopup() {
   if (!data.calendar[dvDate]) data.calendar[dvDate] = [];
   const ev = {id:Date.now()+'', title, color, time:dvMinToTime(startMin), startMin, endMin, durationMin:endMin-startMin};
   data.calendar[dvDate].push(ev);
-  save(); closeEvPopup(); dvRenderEvents(); renderDayDetail(dvDate); renderMiniCalendar();
+  save(); closeEvPopup(); dvRenderEvents();
   showToast('✦ '+title+' added', COLOR_MAP[color]?.hex||'#E8B84B');
 }
 
@@ -7722,8 +7457,6 @@ function dvTogglePillarTask(ds, pid, idx) {
   save();
   renderDvPillars(ds);
   renderFivePillarsPanel(ds);
-  renderMiniCalendar();
-  if (typeof miniSelectedDate !== 'undefined' && miniSelectedDate === ds) renderDayDetail(ds);
   syncPillarTasksToSupabase(ds);
 }
 
@@ -7739,7 +7472,6 @@ function addDvPlTask(ds, pid) {
   save();
   renderDvPillars(ds);
   renderFivePillarsPanel(ds);
-  renderMiniCalendar();
   syncPillarTasksToSupabase(ds);
 }
 
@@ -7799,7 +7531,6 @@ function addFpTask(ds, pid) {
   save();
   renderFivePillarsPanel(ds);
   renderDvPillars(ds);
-  renderMiniCalendar();
   syncPillarTasksToSupabase(ds);
 }
 
@@ -8670,24 +8401,6 @@ async function loadDiaryForDate(dateStr) {
 ══════════════════════════════════════ */
 
 
-// Smart nudge banner
-function initSmartNudge(){
-  const banner=document.getElementById('nudge-banner');
-  if(!banner)return;
-  const h=new Date().getHours(),m=new Date().getMinutes();
-  const min=h*60+m;
-  let msg='',icon='✦';
-  if(min>=300&&min<330){icon='🌙';msg='5AM ritual window — Fajr, cold wudu, and dhikr. Rise.';}
-  else if(min>=1320){icon='🌑';msg='After 10PM — wind down, RAM dump, and prep for tomorrow.';}
-  else if(min>=1260&&min<1320){icon='📖';msg='Evening review window — journal your wins and clear your mind.';}
-  if(!msg){banner.style.display='none';return;}
-  document.getElementById('nudge-icon').textContent=icon;
-  document.getElementById('nudge-text').textContent=msg;
-  banner.style.display='flex';
-}
-
-
-
 // Keyboard shortcuts
 document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
@@ -9057,61 +8770,6 @@ function promptScoreboardVal(key,label,unit,target,containerId){
 }
 
 // ══ FEATURES 16–40 JS ══
-
-// F16 – Week/Month calendar view toggle (miniCalView + miniWeekOffset hoisted to top of script)
-
-function setMiniCalView(v) {
-  miniCalView = v;
-  document.getElementById('mini-cal-month-btn').classList.toggle('active', v==='month');
-  document.getElementById('mini-cal-week-btn').classList.toggle('active', v==='week');
-  if (v==='month') renderMiniCalendar();
-  else renderMiniWeekView();
-}
-function miniCalPrev() {
-  if (miniCalView==='month') changeMiniMonth(-1);
-  else { miniWeekOffset--; renderMiniWeekView(); }
-}
-function miniCalNext() {
-  if (miniCalView==='month') changeMiniMonth(1);
-  else { miniWeekOffset++; renderMiniWeekView(); }
-}
-function renderMiniWeekView() {
-  const cells = document.getElementById('mini-cal-cells');
-  if (!cells) return;
-  const today = new Date();
-  const dow = (today.getDay() + 6) % 7; // Mon=0
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - dow + miniWeekOffset * 7);
-  const DOWS = ['M','T','W','T','F','S','S'];
-  const monthHdr = document.getElementById('mini-cal-month');
-  if (monthHdr) {
-    const we = new Date(monday); we.setDate(monday.getDate()+6);
-    const fmt2 = d => d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
-    monthHdr.textContent = fmt2(monday) + ' – ' + fmt2(we);
-  }
-  cells.innerHTML = '';
-  cells.style.gridTemplateColumns = 'repeat(7,1fr)';
-  cells.style.gridAutoRows = 'auto';
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(monday); d.setDate(monday.getDate() + i);
-    const ds = fmt(d);
-    const isToday = d.toDateString() === today.toDateString();
-    const isSel = ds === miniSelectedDate;
-    const cell = document.createElement('div');
-    cell.className = 'mini-week-cell' + (isToday?' today':'') + (isSel?' selected':'');
-    const dotsHtml = PILLARS.map(p => {
-      const tasks = (data[ds]?.pillars?.[p.id] || []);
-      return tasks.length ? `<div class="cal-pillar-dot" style="background:${p.color}"></div>` : '';
-    }).join('');
-    cell.innerHTML = `<div class="mini-week-dow">${DOWS[i]}</div>
-      <div class="mini-week-date">${d.getDate()}</div>
-      <div class="mini-week-dots">${dotsHtml}</div>`;
-    cell.onclick = () => selectMiniDay(ds);
-    cells.appendChild(cell);
-  }
-}
-
-// F17 – Pillar dots already integrated into renderMiniCalendar — patched below
 
 // F18/F19 – Sidebar: hover expand + lock toggle on logo click
 function toggleSidebarLock() {
@@ -9495,7 +9153,6 @@ document.querySelectorAll('.page,.day-view-scroll,.diary-single-page').forEach(e
 window.addEventListener('load',function(){
   setTimeout(initCheckin,800);
   const ds=fmt(new Date());
-  setTimeout(()=>{try{initSmartNudge();}catch(e){}},700);
   setTimeout(()=>{try{checkWeeklyWins();}catch(e){}},1000);
   setTimeout(()=>{try{renderWeeklyWinsCard();}catch(e){}},600);
 });
