@@ -589,6 +589,12 @@ body{
 .acc-day-header.active .acc-day-name,.acc-day-header.active .acc-day-date{color:var(--gold);font-weight:700;}
 .acc-day-panel{max-height:0;overflow:hidden;transition:max-height .4s ease;}
 .acc-day-panel.open{max-height:8000px;}
+/* ── ACCORDION PANEL TWO-COLUMN LAYOUT ── */
+.acc-panel-cols{display:flex;gap:14px;padding-top:10px;align-items:flex-start;}
+.acc-panel-sched{flex:0 0 55%;min-width:0;}
+.acc-panel-diary{flex:1;min-width:0;max-height:calc(100vh - 120px);overflow-y:auto;border-left:0.5px solid var(--charcoal-border);padding-left:14px;}
+.acc-panel-diary .diary-wrap{margin-top:0;}
+@media(max-width:900px){.acc-panel-cols{flex-direction:column;}.acc-panel-sched,.acc-panel-diary{flex:unset;width:100%;max-height:none;border-left:none;padding-left:0;}}
 
 /* Three column layout */
 .flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:stretch;}
@@ -2329,9 +2335,11 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
   <div id="day-accordion" class="acc-week"></div>
 
   <!-- SHARED DAY CONTENT — JS moves this into the active accordion panel -->
-  <div id="daily-shared-content" style="display:none;padding-top:10px">
-    <!-- Schedule: 24-hour timeline + Five Pillars -->
-    <div class="day-view-card" style="margin-bottom:10px">
+  <div id="daily-shared-content" style="display:none">
+    <div class="acc-panel-cols">
+    <!-- LEFT: Schedule + Five Pillars -->
+    <div class="acc-panel-sched">
+    <div class="day-view-card">
       <div class="day-view-header">
         <div>
           <div class="day-view-title" id="day-view-title">Today</div>
@@ -2356,7 +2364,9 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
         </div>
       </div>
     </div>
-    <!-- Diary / Journal -->
+    </div><!-- /acc-panel-sched -->
+    <!-- RIGHT: Diary / Journal -->
+    <div class="acc-panel-diary">
     <div class="diary-wrap" id="diary-book-wrap">
       <div class="diary-frame">
         <div class="diary-single-page">
@@ -2466,6 +2476,8 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
         <div id="diary-search-results"></div>
       </div>
     </div>
+    </div><!-- /acc-panel-diary -->
+    </div><!-- /acc-panel-cols -->
   </div>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
