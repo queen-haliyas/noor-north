@@ -595,6 +595,17 @@ body{
 .acc-panel-diary{flex:1;min-width:0;max-height:calc(100vh - 120px);overflow-y:auto;border-left:0.5px solid var(--charcoal-border);padding-left:14px;}
 .acc-panel-diary .diary-wrap{margin-top:0;}
 @media(max-width:900px){.acc-panel-cols{flex-direction:column;}.acc-panel-sched,.acc-panel-diary{flex:unset;width:100%;max-height:none;border-left:none;padding-left:0;}}
+/* ── DAILY FLOW TOP-LEVEL TWO-COLUMN ── */
+.df-main-cols{display:flex;gap:16px;align-items:flex-start;}
+.df-left{flex:0 0 63%;min-width:0;}
+.df-right{flex:1;min-width:0;}
+.df-cal-sticky{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;position:sticky;top:12px;}
+.df-right .mini-cal-cell{height:32px;}
+.df-right #mini-cal-cells{grid-auto-rows:32px!important;}
+.df-right .mini-cal-day-hdr{font-size:9px;padding:2px 0;}
+.df-right .mini-cal-date{font-size:9px;}
+.df-right .mini-cal-date.today-num{width:14px;height:14px;font-size:8px;}
+@media(max-width:900px){.df-main-cols{flex-direction:column-reverse;}.df-left,.df-right{flex:unset;width:100%;}.df-cal-sticky{position:static;}}
 
 /* Three column layout */
 .flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:stretch;}
@@ -2308,31 +2319,37 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
     <div class="fp-pillars-grid" id="fp-pillars-list"></div>
   </div>
 
-  <!-- FULL WIDTH MINI CALENDAR -->
-  <div style="background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
-      <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
-      <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
-      <div class="mini-cal-toggle">
-        <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
-        <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
-      </div>
-      <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
-      <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
+  <!-- DAILY FLOW: two-column (accordion left ~63%, calendar right ~37%) -->
+  <div class="df-main-cols">
+    <!-- LEFT: 7-day accordion -->
+    <div class="df-left">
+      <div id="day-accordion" class="acc-week"></div>
     </div>
-    <div style="padding:6px 8px">
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
-        <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
-        <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
-        <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
-        <div class="mini-cal-day-hdr">S</div>
+    <!-- RIGHT: sticky mini calendar -->
+    <div class="df-right">
+      <div class="df-cal-sticky">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:0.5px solid var(--charcoal-border);flex-wrap:wrap;gap:4px">
+          <button class="day-nav-btn" id="mini-cal-prev" onclick="miniCalPrev()">‹</button>
+          <div style="font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary)" id="mini-cal-month">Loading...</div>
+          <div class="mini-cal-toggle">
+            <button class="mini-cal-toggle-btn active" id="mini-cal-month-btn" onclick="setMiniCalView('month')">Mo</button>
+            <button class="mini-cal-toggle-btn" id="mini-cal-week-btn" onclick="setMiniCalView('week')">Wk</button>
+          </div>
+          <button class="day-nav-btn" onclick="goToday();changeMiniMonthToToday()" style="color:var(--gold);border-color:var(--gold);font-size:10px;padding:2px 7px">Today</button>
+          <button class="day-nav-btn" id="mini-cal-next" onclick="miniCalNext()">›</button>
+        </div>
+        <div style="padding:6px 8px">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2px">
+            <div class="mini-cal-day-hdr">M</div><div class="mini-cal-day-hdr">T</div>
+            <div class="mini-cal-day-hdr">W</div><div class="mini-cal-day-hdr">T</div>
+            <div class="mini-cal-day-hdr">F</div><div class="mini-cal-day-hdr">S</div>
+            <div class="mini-cal-day-hdr">S</div>
+          </div>
+          <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
+        </div>
       </div>
-      <div id="mini-cal-cells" style="display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:44px;gap:2px"></div>
     </div>
   </div>
-
-  <!-- WEEK ACCORDION (populated by buildAccordion()) -->
-  <div id="day-accordion" class="acc-week"></div>
 
   <!-- SHARED DAY CONTENT — JS moves this into the active accordion panel -->
   <div id="daily-shared-content" style="display:none">
