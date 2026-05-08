@@ -34,10 +34,6 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-/* Font size levels */
-[data-font="small"] body{font-size:12px;}
-[data-font="medium"] body{font-size:14px;}
-[data-font="large"] body{font-size:16px;}
 body{
   font-family:var(--font-body);
   background:var(--charcoal);
@@ -446,6 +442,7 @@ body{
   transition:opacity 1.2s ease;
 }
 .aff-card-text.aff-fading{opacity:0;}
+#page-daily .aff-card-text{-webkit-line-clamp:unset;overflow:visible;font-size:14px;}
 .aff-card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .aff-dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
 .aff-dot{
@@ -524,7 +521,6 @@ body{
 .decl-modal-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
 .decl-modal-edit-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:var(--radius-sm);padding:7px 14px;font-size:12px;color:var(--text-tertiary);cursor:pointer;font-family:var(--font-body);transition:all .15s;}
 .decl-modal-edit-btn:hover{border-color:var(--gold);color:var(--gold);}
-@media(max-width:700px){.aff-card{display:none;}}
 @media(max-width:700px){.site-header{margin-left:54px;}}
 .logo{display:flex;align-items:baseline;gap:10px;}
 .logo-noor{font-family:var(--font-display);font-size:22px;font-weight:300;color:var(--emerald);letter-spacing:.05em;}
@@ -2024,11 +2020,6 @@ body{
 .checkin-submit{width:100%;background:linear-gradient(135deg,#C4983B,#E8B84B);border:none;border-radius:var(--radius-sm);padding:14px;font-size:15px;font-weight:600;color:#1A1508;cursor:pointer;transition:all .2s;margin-top:8px;min-height:44px;}
 .checkin-submit:hover{box-shadow:0 0 24px rgba(232,184,75,0.3);}
 
-/* #17 Dark/light mode toggle */
-.theme-toggle{background:none;border:0.5px solid var(--charcoal-border);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:12px;color:var(--text-secondary);transition:all .15s;flex-shrink:0;min-height:28px;}
-.theme-toggle:hover{border-color:var(--gold);color:var(--gold);}
-body.light-mode{--charcoal:#F5F0E8;--charcoal-mid:#EDE8DC;--charcoal-light:#E0DAC8;--charcoal-border:#C8BEAA;--text-primary:#1a1508;--text-secondary:#4a3e28;--text-tertiary:#8a7050;}
-body.light-mode #sidebar-nav{background:#EAE4D4;}
 
 /* ══ FEATURES 16-40 ══ */
 
@@ -2216,12 +2207,6 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
       <div class="logo-sub">Personal Operating System</div>
     </div>
   </div>
-  <div class="aff-card" id="aff-card">
-    <div class="aff-card-label" id="aff-card-label"></div>
-    <div class="aff-card-text" id="aff-card-text">Loading...</div>
-  </div>
-  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
-  <button class="theme-toggle" onclick="cycleFontSize()" title="Toggle font size (F key)">Aa</button>
 </header>
 
 <!-- SIDEBAR NAV -->
@@ -2288,6 +2273,11 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
   <!-- Header -->
   <div style="margin-bottom:0.75rem">
     <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary)">Daily Flow</h2>
+  </div>
+  <!-- Affirmation / cognitive reframe banner -->
+  <div class="aff-card" id="aff-card" style="margin-bottom:12px">
+    <div class="aff-card-label" id="aff-card-label"></div>
+    <div class="aff-card-text" id="aff-card-text">Loading...</div>
   </div>
   <!-- Smart nudge banner -->
   <div id="nudge-banner" style="display:none;background:linear-gradient(90deg,rgba(232,184,75,0.12),rgba(232,184,75,0.05));border:0.5px solid rgba(232,184,75,0.3);border-radius:var(--radius-sm);padding:8px 16px;margin-bottom:10px;font-size:12px;color:var(--gold);display:flex;align-items:center;gap:8px;">
@@ -8692,19 +8682,6 @@ function initSmartNudge(){
 }
 
 
-// Font size toggle (3 levels)
-let _fontLevel=parseInt(localStorage.getItem('nn_font')||'1');
-function applyFontLevel(){
-  const sizes=['small','medium','large'];
-  document.documentElement.setAttribute('data-font',sizes[_fontLevel]);
-}
-function cycleFontSize(){
-  _fontLevel=(_fontLevel+1)%3;
-  localStorage.setItem('nn_font',_fontLevel);
-  applyFontLevel();
-  showToast('Font: '+['Small','Medium','Large'][_fontLevel],'#E8B84B');
-}
-applyFontLevel();
 
 // Keyboard shortcuts
 document.addEventListener('keydown',function(e){
@@ -8715,8 +8692,7 @@ document.addEventListener('keydown',function(e){
   else if(k==='w')showPage('review');
   else if(k==='n')showPage('notes');
   else if(k==='escape'){closeModal();const f=document.getElementById('focus-overlay');if(f)f.classList.remove('open');}
-  else if(k==='f'){cycleFontSize();}
-  else if(k==='?'){showToast('D=Daily P=Planning W=Review N=Notes F=Font ESC=Close','#E8B84B',4000);}
+  else if(k==='?'){showToast('D=Daily P=Planning W=Review N=Notes ESC=Close','#E8B84B',4000);}
 });
 
 // Weekly wins — auto-populate on Sundays
@@ -8871,16 +8847,6 @@ function submitCheckin(){
 }
 
 // #17 Dark/light mode toggle
-function toggleTheme(){
-  const isLight=document.body.classList.toggle('light-mode');
-  localStorage.setItem('nn_theme',isLight?'light':'dark');
-  const btn=document.getElementById('theme-toggle');
-  if(btn)btn.textContent=isLight?'☀️':'🌙';
-}
-function initTheme(){
-  const saved=localStorage.getItem('nn_theme');
-  if(saved==='light'){document.body.classList.add('light-mode');const btn=document.getElementById('theme-toggle');if(btn)btn.textContent='☀️';}
-}
 
 // #19 Back to top
 (function(){
@@ -9168,7 +9134,6 @@ document.addEventListener('keydown', function(e) {
   else if (kl==='p') { showPage('planning'); setSidebarActiveById('planning'); }
   else if (kl==='w') { showPage('review'); setSidebarActiveById('review'); }
   else if (kl==='n') { showPage('notes'); setSidebarActiveById('notes'); }
-  else if (kl==='f') { cycleFontSize(); }
   else if (k==='Escape') {
     document.getElementById('shortcuts-modal')?.classList.add('hidden');
     closeModal();
@@ -9523,7 +9488,6 @@ document.querySelectorAll('.page,.day-view-scroll,.diary-single-page').forEach(e
 
 // Init all new features on page load
 window.addEventListener('load',function(){
-  initTheme();
   setTimeout(initCheckin,800);
   const ds=fmt(new Date());
   setTimeout(()=>{try{initSmartNudge();}catch(e){}},700);
