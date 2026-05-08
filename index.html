@@ -2487,6 +2487,13 @@ body.light-mode #sidebar-nav{background:#EAE4D4;}
   </div>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Ensure the week strip is always built and today highlighted
+    if (typeof buildAccordion === 'function') {
+      if (!document.getElementById('acc-hdr-0')) buildAccordion();
+      var _t = new Date(), _d = (_t.getDay() + 6) % 7;
+      if (typeof accOpenDay === 'function') accOpenDay(_d, 0);
+    }
+    // Init the 24h timeline
     var tries = 0;
     var dvTimer = setInterval(function() {
       tries++;
@@ -3795,7 +3802,14 @@ function showPage(id,btn){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(id==='daily'){if(!document.getElementById('acc-hdr-0'))buildAccordion();renderDaily();setTimeout(initDayView,100);}
+  if(id==='daily'){
+    if(!document.getElementById('acc-hdr-0'))buildAccordion();
+    // Re-highlight the active accordion pill
+    var _at=new Date(),_ad=(_at.getDay()+6)%7;
+    var _activeSlot=_accOpenSlot>=0?_accOpenSlot:_ad;
+    for(var _i=0;_i<7;_i++){var _h=document.getElementById('acc-hdr-'+_i);if(_h)_h.classList.toggle('active',_i===_activeSlot);}
+    renderDaily();setTimeout(initDayView,100);
+  }
   if(id==='planning'){renderPlanning();renderPlanningTimeline();}
   if(id==='empire'){renderEmpire();renderStackedBar();renderPolarGrid();}
   if(id==='notes')renderNotes();
@@ -4120,14 +4134,14 @@ function renderDaily(){
   const ds=activeDs||getDateStr(dayOffset);
   try{renderDailyNameBanner();}catch(e){}
   setTimeout(()=>{try{if(document.getElementById('mini-cal-cells'))renderMiniCalendar();}catch(e){}},100);
-  ensureDay(ds);
-  renderRitualNew('am',ds);
-  renderRitualNew('pm',ds);
-  renderDailyStats();
-  renderFivePillarsPanel(ds);
-  renderDvPillars(ds);
-  loadDiaryForDate(ds);
-  dvGoToDate(ds);
+  try{ensureDay(ds);}catch(e){}
+  try{renderRitualNew('am',ds);}catch(e){}
+  try{renderRitualNew('pm',ds);}catch(e){}
+  try{renderDailyStats();}catch(e){}
+  try{renderFivePillarsPanel(ds);}catch(e){}
+  try{renderDvPillars(ds);}catch(e){}
+  try{loadDiaryForDate(ds);}catch(e){}
+  try{dvGoToDate(ds);}catch(e){}
 }
 
 let _accOpenSlot=-1;
