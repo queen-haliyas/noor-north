@@ -577,10 +577,10 @@ body{
 /* ── DAILY FLOW ACCORDION ── */
 .acc-week{display:flex;flex-direction:column;gap:6px;margin-bottom:0;}
 /* Weekly layout: accordion + calendar side by side */
-.weekly-layout{display:flex;gap:16px;align-items:flex-start;}
+.weekly-layout{display:flex;gap:16px;align-items:stretch;}
 .weekly-layout .acc-week{flex:1;min-width:0;}
 /* Mini calendar panel */
-.mini-cal{width:220px;flex-shrink:0;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:12px;padding:16px 14px;position:sticky;top:16px;}
+.mini-cal{width:220px;flex-shrink:0;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;box-sizing:border-box;}
 .mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .mini-cal-title{font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary);letter-spacing:.04em;}
 .mini-cal-nav{display:flex;gap:4px;}
@@ -588,13 +588,13 @@ body{
 .mini-cal-nav button:hover{color:var(--gold);}
 .mini-cal-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px;}
 .mini-cal-dow span{text-align:center;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-tertiary);padding:2px 0;}
-.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
-.mini-cal-cell{text-align:center;font-size:11px;color:var(--text-secondary);padding:5px 2px;border-radius:6px;cursor:pointer;transition:all .15s;line-height:1;}
+.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0;flex:1;align-content:space-between;}
+.mini-cal-cell{text-align:center;font-size:11px;color:var(--text-secondary);padding:0;border-radius:6px;cursor:pointer;transition:all .15s;line-height:1;display:flex;align-items:center;justify-content:center;}
 .mini-cal-cell:hover{background:rgba(196,152,59,0.12);color:var(--gold);}
 .mini-cal-cell.empty{cursor:default;}
 .mini-cal-cell.empty:hover{background:none;}
 .mini-cal-cell.in-week{background:rgba(196,152,59,0.08);color:var(--text-primary);}
-.mini-cal-cell.today{background:var(--gold);color:#1a1608;font-weight:700;border-radius:50%;}
+.mini-cal-cell.today{background:var(--gold);color:#1a1608;font-weight:700;border-radius:50%;width:26px;height:26px;margin:auto;}
 .mini-cal-cell.other-month{color:var(--charcoal-border);}
 .acc-day-item{display:flex;flex-direction:column;}
 .acc-day-header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none;}
@@ -2273,10 +2273,12 @@ body{
           <button onclick="miniCalNav(1)" title="Next month">›</button>
         </div>
       </div>
-      <div class="mini-cal-dow">
-        <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+      <div style="display:flex;flex-direction:column;flex:1;">
+        <div class="mini-cal-dow">
+          <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+        </div>
+        <div class="mini-cal-grid" id="mini-cal-grid"></div>
       </div>
-      <div class="mini-cal-grid" id="mini-cal-grid"></div>
     </div>
   </div>
   <!-- Content block — JS moves this into the active day panel -->
