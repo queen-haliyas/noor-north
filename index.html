@@ -577,10 +577,10 @@ body{
 /* ── DAILY FLOW ACCORDION ── */
 .acc-week{display:flex;flex-direction:column;gap:6px;margin-bottom:0;}
 /* Weekly layout: accordion + calendar side by side */
-.weekly-layout{display:flex;gap:16px;align-items:stretch;}
+.weekly-layout{display:flex;gap:16px;align-items:flex-start;}
 .weekly-layout .acc-week{flex:1;min-width:0;}
 /* Mini calendar panel */
-.mini-cal{width:220px;flex-shrink:0;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;box-sizing:border-box;}
+.mini-cal{width:220px;flex-shrink:0;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;box-sizing:border-box;position:sticky;top:16px;}
 .mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .mini-cal-title{font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary);letter-spacing:.04em;}
 .mini-cal-nav{display:flex;gap:4px;}
@@ -588,8 +588,8 @@ body{
 .mini-cal-nav button:hover{color:var(--gold);}
 .mini-cal-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px;}
 .mini-cal-dow span{text-align:center;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-tertiary);padding:2px 0;}
-.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0;flex:1;align-content:space-between;}
-.mini-cal-cell{text-align:center;font-size:11px;color:var(--text-secondary);padding:0;border-radius:6px;cursor:pointer;transition:all .15s;line-height:1;display:flex;align-items:center;justify-content:center;}
+.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:28px;gap:0;}
+.mini-cal-cell{text-align:center;font-size:11px;color:var(--text-secondary);border-radius:6px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
 .mini-cal-cell:hover{background:rgba(196,152,59,0.12);color:var(--gold);}
 .mini-cal-cell.empty{cursor:default;}
 .mini-cal-cell.empty:hover{background:none;}
