@@ -1777,8 +1777,8 @@ body{
   background-size:100% 28px;
 }
 .dsp-inner{padding:14px 16px 16px;position:relative;z-index:2;}
-/* Page header */
-.dsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:10px 0 10px;border-bottom:0.5px solid rgba(196,152,59,0.15);}
+/* Page header — matches schedule header exactly */
+.dsp-header{display:flex;align-items:center;justify-content:space-between;margin:0 -16px 10px;padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);background:#1C1507;position:relative;z-index:3;flex-shrink:0;}
 .dsp-date-heading{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);text-align:left;letter-spacing:.01em;}
 .dsp-star-btn{background:none;border:none;cursor:pointer;font-size:15px;color:var(--text-tertiary);padding:0;line-height:1;transition:color .15s,transform .15s;flex-shrink:0;}
 .dsp-star-btn:hover{transform:scale(1.2);}
@@ -1826,7 +1826,6 @@ body{
 .dsp-date-heading{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);text-align:left;letter-spacing:.01em;}
 .dsp-date-day-name{display:none;}
 .dsp-date-sub{font-size:10px;color:var(--text-tertiary);margin-top:2px;letter-spacing:.02em;}
-.dsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:10px 0;border-bottom:0.5px solid rgba(196,152,59,0.15);position:relative;}
 .dsp-header::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:0.5px;background:linear-gradient(90deg,transparent,rgba(196,152,59,0.4),transparent);}
 /* 6. Mood energy tags */
 .dsp-mood-row{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 8px;}
@@ -2098,7 +2097,7 @@ body{
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* F24 – Journal templates */
-.dsp-templates-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;padding:6px 0;}
+.dsp-templates-row{display:flex;gap:6px;flex-wrap:wrap;padding:8px 16px;margin:0 -16px;background:#1C1507;border-bottom:0.5px solid var(--charcoal-border);}
 .dsp-tpl-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:16px;padding:4px 12px;font-size:10px;color:var(--text-secondary);cursor:pointer;transition:all .15s;}
 .dsp-tpl-btn:hover{border-color:var(--gold);color:var(--gold);}
 
