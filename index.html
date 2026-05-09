@@ -9488,7 +9488,7 @@ function renderWeeklyWinsCard() {
   const pick = highlights[Math.floor(Math.random()*highlights.length)] || '';
   el.style.display = '';
   el.innerHTML = `<div class="weekly-wins-card">
-    <div class="weekly-wins-title">✦ This Week — ${today.toLocaleDateString('en-GB',{day:'numeric',month:'long'})}</div>
+    <div class="weekly-wins-title">✦ This Week — ${today.toLocaleDateString('en-GB',{day:'numeric',month:'long'})} &nbsp;·&nbsp; Week ${getWeekNum(today)} &nbsp;·&nbsp; Q${getQ(today)}</div>
     <div class="weekly-wins-stats">
       <div class="weekly-wins-stat"><strong>${totalDone}/${totalAll}</strong> tasks done</div>
       <div class="weekly-wins-stat">Top pillar: <strong style="color:${bestPillar?.color||'var(--gold)'}">${bestPillar?.name||'—'}</strong></div>
