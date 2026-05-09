@@ -577,10 +577,10 @@ body{
 /* ── DAILY FLOW ACCORDION ── */
 .acc-week{display:flex;flex-direction:column;gap:6px;margin-bottom:0;}
 /* Weekly layout: accordion + calendar side by side */
-.weekly-layout{display:flex;gap:16px;align-items:stretch;}
+.weekly-layout{display:flex;gap:16px;align-items:flex-start;}
 .weekly-layout .acc-week{flex:1;min-width:0;}
 /* Mini calendar panel */
-.mini-cal{width:220px;flex-shrink:0;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;box-sizing:border-box;position:sticky;top:16px;align-self:stretch;}
+.mini-cal{width:220px;flex-shrink:0;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;box-sizing:border-box;position:sticky;top:16px;align-self:flex-start;}
 .mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .mini-cal-title{font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary);letter-spacing:.04em;}
 .mini-cal-nav{display:flex;gap:4px;}
@@ -1625,7 +1625,7 @@ body{
 
 
 /* ══ GOOGLE CALENDAR DAY PLANNER ══ */
-.day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;}
+.day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:visible;display:flex;flex-direction:column;}
 .day-view-header{padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
 .day-view-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);}
 .day-view-date-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px;}
@@ -1721,7 +1721,8 @@ body{
 .timeline-drop-active{box-shadow:inset 0 0 0 2px var(--gold);}
 
 /* ── RITUAL TIMELINE BLOCKS ── */
-.ritual-timeline-block{position:absolute;left:4px;right:4px;border-radius:8px;overflow:hidden;z-index:8;border-left:3px solid var(--gold);box-shadow:0 2px 12px #00000030;transition:box-shadow .2s,border-color .2s;}
+.ritual-timeline-block{position:absolute;left:4px;right:4px;border-radius:8px;overflow:hidden;z-index:8;border-left:3px solid var(--gold);box-shadow:0 2px 12px #00000030;transition:box-shadow .2s,border-color .2s;background:#1A1810;}
+.ritual-timeline-block.expanded{overflow:visible;z-index:20;}
 .ritual-timeline-block:hover{box-shadow:0 4px 20px #00000050;}
 /* Next-up chip */
 .dv-next-chip{position:absolute;left:50%;transform:translateX(-50%);background:rgba(26,16,8,0.92);border:0.5px solid rgba(196,152,59,0.4);border-radius:20px;padding:3px 12px;font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.04em;white-space:nowrap;z-index:12;pointer-events:none;backdrop-filter:blur(4px);}
@@ -7966,7 +7967,7 @@ function dvMakeRitualBlock(slotsEl, ds, key, startMin, endMin, label, icon, colo
   const el = document.createElement('div');
   el.className = 'ritual-timeline-block';
   el.id = 'rtb-' + key;
-  el.style.cssText = `top:${top}px;height:${isExpanded ? 'auto' : baseH + 'px'};background:${color}08;border-left:3px solid ${color};box-shadow:inset 0 0 0 0.5px ${color}15, 0 0 8px ${color}15;overflow:${isExpanded ? 'visible' : 'hidden'};`;
+  el.style.cssText = `top:${top}px;height:${isExpanded ? 'auto' : baseH + 'px'};background:#1A1810;border-left:3px solid ${color};box-shadow:inset 0 0 0 0.5px ${color}15, 0 0 8px ${color}15;overflow:${isExpanded ? 'visible' : 'hidden'};`;
 
   const tasksHtml = steps.map((s, i) => {
     const checked = state[i] || false;
@@ -8025,16 +8026,32 @@ function toggleRitualTimelineBlock(key, ds, startMin, endMin) {
   if (rtbExpanded[key]) {
     tasks.style.display = 'block';
     if (chev) chev.textContent = '▾';
+    el.classList.add('expanded');
     el.style.height = 'auto';
     el.style.overflow = 'visible';
-    el.style.zIndex = '15';
+    el.style.zIndex = '20';
+    el.style.background = '#1A1810';
+    el.style.boxShadow = '0 4px 24px rgba(0,0,0,0.6)';
+    // Evening ritual: anchor to bottom so it grows upward
+    if (key === 'eveningRitual') {
+      el.style.top = 'auto';
+      el.style.bottom = (24 * HOUR_H - endMin * (HOUR_H/60)) + 'px';
+    }
   } else {
     tasks.style.display = 'none';
     if (chev) chev.textContent = '▸';
+    el.classList.remove('expanded');
     const baseH = (endMin - startMin) * (HOUR_H / 60);
     el.style.height = baseH + 'px';
     el.style.overflow = 'hidden';
     el.style.zIndex = '8';
+    el.style.background = '';
+    el.style.boxShadow = '';
+    // Reset evening ritual position
+    if (key === 'eveningRitual') {
+      el.style.top = startMin * (HOUR_H/60) + 'px';
+      el.style.bottom = '';
+    }
   }
 }
 
