@@ -7139,41 +7139,12 @@ function dvUpdateHeader() {
   } else if (s) {
     s.textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   }
-  // Completion arc
-  dvUpdateCompletionArc();
+  // Completion arc removed
 }
 
 function dvUpdateCompletionArc() {
-  const ds = dvDate;
-  if (!ds) return;
-  try { ensureDay(ds); } catch(e) { return; }
-  const amTotal = AM_STEPS.length, pmTotal = PM_STEPS.length;
-  const amDone = (data[ds].morningRitual||[]).filter(Boolean).length;
-  const pmDone = (data[ds].eveningRitual||[]).filter(Boolean).length;
-  let pDone=0, pAll=0;
-  PILLARS.forEach(p=>{const t=(data[ds].pillars[p.id]||[]);pAll+=t.length;pDone+=t.filter(x=>x.done).length;});
-  const total = amTotal + pmTotal + (pAll||0);
-  const done = amDone + pmDone + pDone;
-  const pct = total ? Math.round(done/total*100) : 0;
-  let arc = document.getElementById('dv-completion-arc');
-  if (!arc) {
-    const hdr = document.querySelector('.day-view-header');
-    if (!hdr) return;
-    arc = document.createElement('div');
-    arc.id = 'dv-completion-arc';
-    arc.className = 'dv-completion-arc';
-    const btn = hdr.querySelector('button');
-    if (btn) hdr.insertBefore(arc, btn); else hdr.appendChild(arc);
-  }
-  const r=14, circ=2*Math.PI*r, dash=pct/100*circ, gap=circ-dash;
-  arc.innerHTML=`<svg width="36" height="36" viewBox="0 0 36 36" title="${pct}% complete">
-    <circle cx="18" cy="18" r="${r}" fill="none" stroke="rgba(196,152,59,0.12)" stroke-width="2.5"/>
-    <circle cx="18" cy="18" r="${r}" fill="none" stroke="#C4983B" stroke-width="2.5"
-      stroke-dasharray="${dash} ${gap}" stroke-linecap="round"
-      transform="rotate(-90 18 18)" style="transition:stroke-dasharray .5s"/>
-    <text x="18" y="18" text-anchor="middle" dominant-baseline="middle"
-      font-size="7.5" fill="#C4983B" font-family="Poppins,sans-serif" font-weight="600">${pct}%</text>
-  </svg>`;
+  const arc = document.getElementById('dv-completion-arc');
+  if (arc) arc.remove();
 }
 
 function dvUpdateNow() {
