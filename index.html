@@ -1634,9 +1634,10 @@ body{
 .time-slot-line:hover{background:#E8B84B08;}
 .time-slot-line.hour{border-top:0.5px solid var(--charcoal-border);}
 .time-slot-line.half{border-top:0.5px dashed #2E2510;}
-.now-line{position:absolute;left:0;right:0;border-top:2px solid #E8733A;z-index:10;pointer-events:none;}
-.now-dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#E8733A;}
-.now-label{position:absolute;right:6px;top:-9px;font-size:9px;color:#E8733A;font-weight:600;letter-spacing:.04em;background:var(--charcoal);padding:0 3px;border-radius:3px;}
+.now-line{position:absolute;left:0;right:0;border-top:1px solid var(--gold);z-index:10;pointer-events:none;}
+.now-dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--gold);animation:nowPulse 2s ease-in-out infinite;}
+@keyframes nowPulse{0%,100%{box-shadow:0 0 0 0 rgba(196,152,59,0.6);}50%{box-shadow:0 0 0 5px rgba(196,152,59,0);}}
+.now-label{position:absolute;right:6px;top:-9px;font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.06em;background:var(--charcoal);padding:0 4px;border-radius:3px;}
 .day-event-block{position:absolute;left:4px;right:4px;border-radius:6px;padding:4px 8px;font-size:11px;cursor:grab;user-select:none;overflow:hidden;box-shadow:0 2px 8px #00000030;border-left:3px solid rgba(255,255,255,0.3);z-index:5;transition:box-shadow .15s;}
 .day-event-block:hover{box-shadow:0 4px 16px #00000050;}
 .day-event-block.dragging{cursor:grabbing;opacity:.8;z-index:20;box-shadow:0 8px 24px #00000060;}
@@ -1717,8 +1718,22 @@ body{
 .timeline-drop-active{box-shadow:inset 0 0 0 2px var(--gold);}
 
 /* ── RITUAL TIMELINE BLOCKS ── */
-.ritual-timeline-block{position:absolute;left:4px;right:4px;border-radius:8px;overflow:hidden;z-index:8;border-left:3px solid var(--gold);box-shadow:0 2px 12px #00000030;transition:box-shadow .2s;}
+.ritual-timeline-block{position:absolute;left:4px;right:4px;border-radius:8px;overflow:hidden;z-index:8;border-left:3px solid var(--gold);box-shadow:0 2px 12px #00000030;transition:box-shadow .2s,border-color .2s;}
 .ritual-timeline-block:hover{box-shadow:0 4px 20px #00000050;}
+/* Next-up chip */
+.dv-next-chip{position:absolute;left:50%;transform:translateX(-50%);background:rgba(26,16,8,0.92);border:0.5px solid rgba(196,152,59,0.4);border-radius:20px;padding:3px 12px;font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.04em;white-space:nowrap;z-index:12;pointer-events:none;backdrop-filter:blur(4px);}
+/* Hour label states */
+.time-label.past{opacity:0.22;}
+.time-label.current{color:var(--gold)!important;font-weight:600;}
+.time-label.future{opacity:0.55;}
+/* Current hour slot highlight */
+.time-slot-line.current-hour{background:rgba(196,152,59,0.04);}
+/* Completion arc in header */
+.dv-completion-arc{flex-shrink:0;margin-right:8px;}
+/* Contextual day sub-header */
+.day-view-date-sub{font-size:10px;color:var(--text-tertiary);margin-top:2px;letter-spacing:.02em;}
+/* Q2 zone pillar icon */
+.q2-zone-icon{position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:9px;opacity:0.5;pointer-events:none;}
 .rtb-header{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;cursor:pointer;user-select:none;}
 .rtb-tasks{padding:2px 6px 4px;}
 .rtb-task-row{display:flex;align-items:center;gap:6px;padding:3px 2px;cursor:pointer;border-radius:4px;transition:background .1s;}
@@ -7082,7 +7097,7 @@ function initDayView() {
   for (let h = 0; h < 24; h++) {
     const top = h * HOUR_H;
     const lbl = h === 0 ? '' : h < 12 ? h+'am' : h === 12 ? '12pm' : (h-12)+'pm';
-    lHtml += `<div class="time-label" style="top:${top}px">${lbl}</div>`;
+    lHtml += `<div class="time-label future" style="top:${top}px">${lbl}</div>`;
     sHtml += `<div class="time-slot-line hour" style="top:${top}px;height:${HOUR_H}px" onclick="dvSlotClick(event,${h},0)"></div>`;
     sHtml += `<div class="time-slot-line half" style="top:${top+30}px;height:0" onclick="dvSlotClick(event,${h},30)"></div>`;
   }
@@ -7102,18 +7117,75 @@ function dvUpdateHeader() {
   const s = document.getElementById('day-view-date-sub');
   const [y,mo,dy] = dvDate.split('-').map(Number);
   const d = new Date(y, mo-1, dy);
-  if (t) t.textContent = dvDate === fmt(new Date()) ? 'Today' : d.toLocaleDateString('en-GB',{weekday:'long'});
-  if (s) s.textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  const isToday = dvDate === fmt(new Date());
+  if (t) t.textContent = isToday ? 'Today' : d.toLocaleDateString('en-GB',{weekday:'long'});
+  if (s && isToday) {
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(),0,0);
+    const dayOfYear = Math.floor((now - startOfYear) / 86400000);
+    const weekNum = getWeekNum(now);
+    const quarter = getQ(now);
+    s.textContent = `Day ${dayOfYear} of ${now.getFullYear()} · Week ${weekNum} · Q${quarter}`;
+  } else if (s) {
+    s.textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  }
+  // Completion arc
+  dvUpdateCompletionArc();
+}
+
+function dvUpdateCompletionArc() {
+  const ds = dvDate;
+  if (!ds) return;
+  try { ensureDay(ds); } catch(e) { return; }
+  const amTotal = AM_STEPS.length, pmTotal = PM_STEPS.length;
+  const amDone = (data[ds].morningRitual||[]).filter(Boolean).length;
+  const pmDone = (data[ds].eveningRitual||[]).filter(Boolean).length;
+  let pDone=0, pAll=0;
+  PILLARS.forEach(p=>{const t=(data[ds].pillars[p.id]||[]);pAll+=t.length;pDone+=t.filter(x=>x.done).length;});
+  const total = amTotal + pmTotal + (pAll||0);
+  const done = amDone + pmDone + pDone;
+  const pct = total ? Math.round(done/total*100) : 0;
+  let arc = document.getElementById('dv-completion-arc');
+  if (!arc) {
+    const hdr = document.querySelector('.day-view-header');
+    if (!hdr) return;
+    arc = document.createElement('div');
+    arc.id = 'dv-completion-arc';
+    arc.className = 'dv-completion-arc';
+    const btn = hdr.querySelector('button');
+    if (btn) hdr.insertBefore(arc, btn); else hdr.appendChild(arc);
+  }
+  const r=14, circ=2*Math.PI*r, dash=pct/100*circ, gap=circ-dash;
+  arc.innerHTML=`<svg width="36" height="36" viewBox="0 0 36 36" title="${pct}% complete">
+    <circle cx="18" cy="18" r="${r}" fill="none" stroke="rgba(196,152,59,0.12)" stroke-width="2.5"/>
+    <circle cx="18" cy="18" r="${r}" fill="none" stroke="#C4983B" stroke-width="2.5"
+      stroke-dasharray="${dash} ${gap}" stroke-linecap="round"
+      transform="rotate(-90 18 18)" style="transition:stroke-dasharray .5s"/>
+    <text x="18" y="18" text-anchor="middle" dominant-baseline="middle"
+      font-size="7.5" fill="#C4983B" font-family="Poppins,sans-serif" font-weight="600">${pct}%</text>
+  </svg>`;
 }
 
 function dvUpdateNow() {
   const slotsEl = document.getElementById('day-time-slots');
+  const labelsEl = document.getElementById('day-time-labels');
   if (!slotsEl) return;
+  // Remove old
   const old = slotsEl.querySelector('.now-line');
   if (old) old.remove();
-  if (dvDate !== fmt(new Date())) return;
+  slotsEl.querySelectorAll('.dv-next-chip').forEach(e=>e.remove());
+
+  if (dvDate !== fmt(new Date())) {
+    // Still update hour label states for non-today (all normal)
+    if (labelsEl) labelsEl.querySelectorAll('.time-label').forEach(el=>{el.classList.remove('past','current','future');el.classList.add('future');});
+    return;
+  }
+
   const now = new Date();
-  const top = (now.getHours()*60 + now.getMinutes()) * (HOUR_H/60);
+  const nowMin = now.getHours()*60 + now.getMinutes();
+  const top = nowMin * (HOUR_H/60);
+
+  // 1. Gold NOW line
   const line = document.createElement('div');
   line.className = 'now-line';
   line.style.top = top + 'px';
@@ -7121,6 +7193,43 @@ function dvUpdateNow() {
   const t=(h%12||12)+':'+(m<10?'0':'')+m+(h<12?'am':'pm');
   line.innerHTML = '<div class="now-dot"></div><span class="now-label">NOW '+t+'</span>';
   slotsEl.appendChild(line);
+
+  // 8. Hour label states — past/current/future
+  if (labelsEl) {
+    labelsEl.querySelectorAll('.time-label').forEach((el,i) => {
+      el.classList.remove('past','current','future');
+      if (i < now.getHours()) el.classList.add('past');
+      else if (i === now.getHours()) el.classList.add('current');
+      else el.classList.add('future');
+    });
+    // Current hour slot highlight
+    slotsEl.querySelectorAll('.time-slot-line.hour').forEach((el,i)=>{
+      el.classList.toggle('current-hour', i===now.getHours());
+    });
+  }
+
+  // 5. Next-up prayer chip
+  const cached = solarCache[dvDate];
+  if (cached) {
+    const prayers = [
+      {label:'✦ Fajr', min: cached.nautiTwilightStart},
+      {label:'◎ Dhuhr', min: cached.solarNoon},
+      {label:'◑ Asr', min: Math.round((cached.solarNoon + cached.sunset)/2)},
+      {label:'◑ Maghrib', min: cached.sunset},
+      {label:'☾ Isha', min: cached.nautiTwilightEnd},
+    ];
+    const next = prayers.find(p => p.min > nowMin);
+    if (next) {
+      const diffMin = next.min - nowMin;
+      const hh = Math.floor(diffMin/60), mm = diffMin%60;
+      const label = hh > 0 ? `${next.label} · in ${hh}h ${mm}m` : `${next.label} · in ${mm}m`;
+      const chip = document.createElement('div');
+      chip.className = 'dv-next-chip';
+      chip.style.top = (top - 18) + 'px';
+      chip.textContent = label;
+      slotsEl.appendChild(chip);
+    }
+  }
 }
 
 // ══ SOLAR PRAYER RHYTHM ══
@@ -7203,15 +7312,15 @@ async function dvRenderSolarMarkers(dateStr) {
 }
 
 var Q2_SCHEDULE=[
-  {label:'Fajr + Morning Ritual',start:5*60+30,end:6*60+30,color:'#7EC8E3'},   // Me Life
-  {label:'Deep Work — TigerFlow AI',start:7*60,end:9*60,color:'#F97316'},       // TigerFlow
-  {label:'Content & Tiger & Dragon',start:9*60+30,end:11*60,color:'#166534'},   // Tiger & Dragon
-  {label:'Admin + Comms',start:11*60,end:12*60,color:'#7EC8E3'},                // Me Life
-  {label:'Dhuhr Break',start:12*60+30,end:13*60+30,color:'#E8B84B'},            // gold
-  {label:'Deep Work — Architecture',start:13*60+30,end:15*60+30,color:'#7C3AED'}, // Architecture
-  {label:'Mycelink / Research',start:16*60,end:17*60+30,color:'#1E3A5F'},       // Mycelink
-  {label:'Asr + Movement',start:17*60+30,end:18*60+30,color:'#E8B84B'},         // gold
-  {label:'Wind Down + Review',start:19*60,end:20*60,color:'#7EC8E3'},            // Me Life
+  {label:'Fajr + Morning Ritual',icon:'✦',start:5*60+30,end:6*60+30,color:'#7EC8E3'},
+  {label:'Deep Work — TigerFlow AI',icon:'◈',start:7*60,end:9*60,color:'#F97316'},
+  {label:'Content & Tiger & Dragon',icon:'◉',start:9*60+30,end:11*60,color:'#166534'},
+  {label:'Admin + Comms',icon:'◻',start:11*60,end:12*60,color:'#7EC8E3'},
+  {label:'Dhuhr Break',icon:'◎',start:12*60+30,end:13*60+30,color:'#E8B84B'},
+  {label:'Deep Work — Architecture',icon:'◻',start:13*60+30,end:15*60+30,color:'#7C3AED'},
+  {label:'Mycelink / Research',icon:'⬡',start:16*60,end:17*60+30,color:'#1E3A5F'},
+  {label:'Asr + Movement',icon:'◎',start:17*60+30,end:18*60+30,color:'#E8B84B'},
+  {label:'Wind Down + Review',icon:'◑',start:19*60,end:20*60,color:'#7EC8E3'},
 ];
 function dvRenderEvents() {
   const slotsEl = document.getElementById('day-time-slots');
@@ -7225,8 +7334,15 @@ function dvRenderEvents() {
     const el=document.createElement('div');
     el.className='q2-soft-block';
     const top=b.start*(HOUR_H/60), h=(b.end-b.start)*(HOUR_H/60);
-    el.style.cssText=`position:absolute;left:0;right:0;top:${top}px;height:${h}px;background:${b.color}09;border-left:2px solid ${b.color}22;pointer-events:none;z-index:0;`;
+    el.style.cssText=`position:absolute;left:0;right:0;top:${top}px;height:${h}px;background:${b.color}12;border-left:2px solid ${b.color}35;pointer-events:none;z-index:0;`;
     el.title=b.label;
+    // Icon + label overlay
+    if(h>=20){
+      const lbl=document.createElement('div');
+      lbl.style.cssText=`position:absolute;left:6px;top:50%;transform:translateY(-50%);font-size:9px;color:${b.color};opacity:0.55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:85%;pointer-events:none;letter-spacing:.04em;`;
+      lbl.textContent=`${b.icon} ${b.label}`;
+      el.appendChild(lbl);
+    }
     slotsEl.appendChild(el);
   });
   // Always (re)draw solar markers for the current date
@@ -7862,7 +7978,7 @@ function dvMakeRitualBlock(slotsEl, ds, key, startMin, endMin, label, icon, colo
   const el = document.createElement('div');
   el.className = 'ritual-timeline-block';
   el.id = 'rtb-' + key;
-  el.style.cssText = `top:${top}px;height:${isExpanded ? 'auto' : baseH + 'px'};background:${color}10;border-left-color:${color};overflow:${isExpanded ? 'visible' : 'hidden'};`;
+  el.style.cssText = `top:${top}px;height:${isExpanded ? 'auto' : baseH + 'px'};background:${color}08;border-left:3px solid ${color};box-shadow:inset 0 0 0 0.5px ${color}15, 0 0 8px ${color}15;overflow:${isExpanded ? 'visible' : 'hidden'};`;
 
   const tasksHtml = steps.map((s, i) => {
     const checked = state[i] || false;
@@ -7894,18 +8010,18 @@ function dvMakeRitualBlock(slotsEl, ds, key, startMin, endMin, label, icon, colo
   }).join('');
 
   el.innerHTML = `
-    <div class="rtb-header" style="background:${color}22" onclick="toggleRitualTimelineBlock('${key}','${ds}',${startMin},${endMin})">
+    <div class="rtb-header" style="background:${color}10" onclick="toggleRitualTimelineBlock('${key}','${ds}',${startMin},${endMin})">
       <div style="display:flex;align-items:center;gap:5px">
         <span style="color:${color};font-size:13px">${icon}</span>
-        <span style="color:${color};font-size:12px;font-weight:600">${label}</span>
+        <span style="color:${color};font-size:12px;font-weight:500;letter-spacing:.02em">${label}</span>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
-        <span style="font-size:10px;color:${color};background:${color}20;border-radius:10px;padding:1px 7px">${done}/${total}</span>
-        <span id="rtbchev-${key}" style="font-size:10px;color:${color}99">${isExpanded ? '▾' : '▸'}</span>
+        <span style="font-size:10px;color:${color};background:${color}15;border-radius:10px;padding:1px 7px;border:0.5px solid ${color}30">${done}/${total}</span>
+        <span id="rtbchev-${key}" style="font-size:10px;color:${color}80">${isExpanded ? '▾' : '▸'}</span>
       </div>
     </div>
     <div id="rtbtasks-${key}" style="display:${isExpanded ? 'block' : 'none'}" class="rtb-tasks">${tasksHtml}</div>
-    <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:${color}20"><div style="height:100%;width:${pct}%;background:${color};border-radius:2px;transition:width .3s"></div></div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:${color}15"><div style="height:100%;width:${pct}%;background:${color};border-radius:2px;transition:width .3s"></div></div>
   `;
 
   slotsEl.appendChild(el);
