@@ -1784,13 +1784,53 @@ body{
 .dsp-n{font-family:'Poppins',sans-serif;font-size:9px;font-weight:300;color:var(--text-tertiary);flex-shrink:0;width:14px;line-height:24px;}
 .dsp-line-inp{flex:1;border:none;outline:none;background:transparent;font-family:'Poppins',sans-serif;font-size:11px;font-weight:300;line-height:24px;color:var(--text-primary);padding:0 2px;}
 .dsp-line-inp::placeholder{color:var(--text-tertiary);font-style:italic;font-weight:300;}
-/* Reflection prompts — accordion */
-.dsp-prompt-block{margin-bottom:2px;}
-.dsp-prompt-label{font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(196,152,59,0.7);margin-bottom:2px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0;user-select:none;}
-.dsp-prompt-label::after{content:'▾';font-size:9px;color:rgba(196,152,59,0.4);transition:transform .2s;}
+/* ── DIARY SOPHISTICATION UPGRADES ── */
+/* 1. Gold divider lines with section icons */
+.dsp-rule{height:0;margin:10px 0;border:none;border-top:0.5px solid rgba(196,152,59,0.22);position:relative;}
+.dsp-rule::before{content:'◆';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:7px;color:rgba(196,152,59,0.35);background:#1A1810;padding:0 6px;}
+/* Section icons on labels */
+.dsp-prompt-label{font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:rgba(196,152,59,0.75);margin-bottom:4px;display:flex;align-items:center;gap:6px;cursor:pointer;padding:5px 0;user-select:none;transition:color .2s;}
+.dsp-prompt-label::after{content:'▾';font-size:9px;color:rgba(196,152,59,0.4);transition:transform .2s;margin-left:auto;}
 .dsp-acc-closed .dsp-prompt-label::after{transform:rotate(-90deg);}
 .dsp-prompt-label.no-toggle{cursor:default;}
 .dsp-prompt-label.no-toggle::after{display:none;}
+.dsp-prompt-label .dsp-lbl-icon{font-size:10px;opacity:0.7;}
+/* 2. Animated entry appearance */
+.dsp-line-inp,.dsp-reflect-ta{transition:border-color .2s,opacity .15s;}
+.dsp-line-inp:focus,.dsp-reflect-ta:focus{border-bottom-color:rgba(196,152,59,0.4)!important;outline:none;}
+/* 3. Completion glow on section */
+.dsp-prompt-block.complete .dsp-prompt-label{color:rgba(196,152,59,1);text-shadow:0 0 12px rgba(196,152,59,0.3);}
+.dsp-prompt-block.complete{border-left:2px solid rgba(196,152,59,0.4);padding-left:8px;border-radius:0 4px 4px 0;transition:all .3s;}
+/* 4. Word count whisper */
+.dsp-word-count{font-size:8px;color:rgba(196,152,59,0.25);text-align:right;margin-top:2px;font-style:italic;letter-spacing:.04em;transition:opacity .2s;}
+/* 5. Date header as calligraphic banner */
+.dsp-date-heading{font-family:'Poppins',sans-serif;font-size:15px;font-weight:300;color:var(--gold);text-align:center;flex:1;letter-spacing:0.08em;line-height:1.2;text-transform:uppercase;}
+.dsp-date-day-name{display:block;font-size:8px;font-weight:600;letter-spacing:.2em;color:rgba(196,152,59,0.5);text-transform:uppercase;margin-bottom:1px;}
+.dsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:10px;border-bottom:none;position:relative;}
+.dsp-header::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:0.5px;background:linear-gradient(90deg,transparent,rgba(196,152,59,0.4),transparent);}
+/* 6. Mood energy tags */
+.dsp-mood-row{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 8px;}
+.dsp-mood-pill{background:none;border:0.5px solid rgba(196,152,59,0.2);border-radius:20px;padding:3px 10px;font-size:9px;font-weight:500;color:var(--text-tertiary);cursor:pointer;transition:all .15s;font-family:'Poppins',sans-serif;letter-spacing:.04em;}
+.dsp-mood-pill:hover{border-color:rgba(196,152,59,0.5);color:var(--text-secondary);}
+.dsp-mood-pill.active{background:rgba(196,152,59,0.15);border-color:var(--gold);color:var(--gold);}
+/* 7. Paper texture on diary */
+.diary-single-page{background:#1A1810;border-radius:calc(var(--radius) - 1px);position:relative;overflow:hidden;
+  background-image:repeating-linear-gradient(to bottom,transparent,transparent 27px,rgba(196,152,59,0.08) 27px,rgba(196,152,59,0.08) 28px);}
+.diary-single-page::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:0.6;mix-blend-mode:overlay;}
+/* 8. Star entry highlight */
+.diary-single-page.starred-day{box-shadow:inset 3px 0 0 rgba(196,152,59,0.5);}
+/* 9. Seal the Day button and stamp */
+.dsp-seal-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;padding:9px;background:none;border:0.5px solid rgba(196,152,59,0.25);border-radius:8px;font-family:'Poppins',sans-serif;font-size:10px;font-weight:500;letter-spacing:.08em;color:rgba(196,152,59,0.6);cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.dsp-seal-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(196,152,59,0.05);}
+.dsp-seal-btn.sealed{background:rgba(196,152,59,0.08);border-color:var(--gold);color:var(--gold);}
+.dsp-sealed-stamp{text-align:center;margin-top:12px;padding:12px;border-top:0.5px solid rgba(196,152,59,0.2);}
+.dsp-sealed-stamp .stamp-text{font-family:'Poppins',sans-serif;font-size:16px;font-weight:300;color:var(--gold);letter-spacing:.12em;}
+.dsp-sealed-stamp .stamp-sub{font-size:9px;color:rgba(196,152,59,0.4);letter-spacing:.15em;text-transform:uppercase;margin-top:4px;}
+/* Sealed state — inputs read-only look */
+.diary-single-page.sealed .dsp-line-inp,.diary-single-page.sealed .dsp-reflect-ta{pointer-events:none;color:var(--text-secondary);opacity:0.75;}
+.diary-single-page.sealed .dsp-donate-check{pointer-events:none;}
 .dsp-acc-body{overflow:hidden;transition:max-height .25s ease;}
 .dsp-acc-closed .dsp-acc-body{max-height:0!important;}
 .dsp-reflect-ta{
@@ -2333,80 +2373,100 @@ body{
                   <button class="dsp-star-btn" id="dsp-star-btn" onclick="dspToggleStar()" title="Star this entry">☆</button>
                   <div class="dsp-weather" id="dsp-weather"></div>
                 </div>
+                <!-- 6. Mood / energy tags -->
+                <div class="dsp-mood-row" id="dsp-mood-row">
+                  <button class="dsp-mood-pill" data-mood="clear" onclick="dspToggleMood('clear')">☀ Clear</button>
+                  <button class="dsp-mood-pill" data-mood="heavy" onclick="dspToggleMood('heavy')">◑ Heavy</button>
+                  <button class="dsp-mood-pill" data-mood="focused" onclick="dspToggleMood('focused')">◎ Focused</button>
+                  <button class="dsp-mood-pill" data-mood="tired" onclick="dspToggleMood('tired')">◐ Tired</button>
+                  <button class="dsp-mood-pill" data-mood="energised" onclick="dspToggleMood('energised')">✦ Energised</button>
+                </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Sadaqah</div>
+                  <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">✦</span>Sadaqah</div>
                   <label class="dsp-donate-row">
                     <input type="checkbox" class="dsp-donate-check" id="dsp-donated" onchange="dspOnInput()"/>
                     <span class="dsp-donate-lbl">Donated today ✓</span>
                   </label>
                 </div>
                 <div class="dsp-rule"></div>
-                <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">I am grateful for…</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-grat-2" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-grat-3" placeholder="…" oninput="dspOnInput()"/></div>
+                <div class="dsp-prompt-block" id="dsp-block-grat">
+                  <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">◈</span>I am grateful for…</div>
+                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-grat-2" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-grat-3" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"/></div>
+                  <div class="dsp-word-count" id="dsp-wc-grat"></div>
+                </div>
+                <div class="dsp-rule"></div>
+                <div class="dsp-prompt-block" id="dsp-block-man">
+                  <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">◉</span>I am manifesting…</div>
+                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-man-1" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-man-2" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-man-3" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"/></div>
+                  <div class="dsp-word-count" id="dsp-wc-man"></div>
+                </div>
+                <div class="dsp-rule"></div>
+                <div class="dsp-prompt-block" id="dsp-block-must">
+                  <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">◻</span>Must do today</div>
+                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-must-1" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-must-2" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-must-3" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"/></div>
                 </div>
                 <div class="dsp-rule"></div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">I am manifesting…</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-man-1" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-man-2" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-man-3" placeholder="…" oninput="dspOnInput()"/></div>
-                </div>
-                <div class="dsp-rule"></div>
-                <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Must do today</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-must-1" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-must-2" placeholder="…" oninput="dspOnInput()"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-must-3" placeholder="…" oninput="dspOnInput()"/></div>
-                </div>
-                <div class="dsp-rule"></div>
-                <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Daily Entry</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">✎</span>Daily Entry</div>
                   <textarea class="dsp-reflect-ta" id="dsp-entry-1" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                   <textarea class="dsp-reflect-ta" id="dsp-entry-2" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                   <textarea class="dsp-reflect-ta" id="dsp-entry-3" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                   <textarea class="dsp-reflect-ta" id="dsp-entry-4" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                   <textarea class="dsp-reflect-ta" id="dsp-entry-5" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                   <textarea class="dsp-reflect-ta" id="dsp-entry-6" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
+                  <div class="dsp-word-count" id="dsp-wc-entry"></div>
                 </div>
                 <div class="dsp-rule"></div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Something good that happened today</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">☀</span>Something good that happened today</div>
                   <textarea class="dsp-reflect-ta" id="dsp-good" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Something I want to improve</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">◐</span>Something I want to improve</div>
                   <textarea class="dsp-reflect-ta" id="dsp-bad" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">System improvement for tomorrow</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">⟳</span>System improvement for tomorrow</div>
                   <textarea class="dsp-reflect-ta" id="dsp-system" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Evidence of growth</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">◈</span>Evidence of growth</div>
                   <textarea class="dsp-reflect-ta" id="dsp-evidence" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Business wins</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">◉</span>Business wins</div>
                   <textarea class="dsp-reflect-ta" id="dsp-wins" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Problems I solved</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">✦</span>Problems I solved</div>
                   <textarea class="dsp-reflect-ta" id="dsp-problems" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Ideas / spark</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">⬡</span>Ideas / spark</div>
                   <textarea class="dsp-reflect-ta" id="dsp-ideas" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Skills I used or learned</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">◻</span>Skills I used or learned</div>
                   <textarea class="dsp-reflect-ta" id="dsp-skills" rows="1" placeholder="…" oninput="dspGrow(this);dspOnInput()"></textarea>
                 </div>
                 <div class="dsp-prompt-block">
-                  <div class="dsp-prompt-label">Mental RAM dump</div>
+                  <div class="dsp-prompt-label"><span class="dsp-lbl-icon">◑</span>Mental RAM dump</div>
                   <textarea class="dsp-reflect-ta" id="dsp-ram" rows="2" placeholder="Clear your mind…" oninput="dspGrow(this);dspOnInput()"></textarea>
+                </div>
+                <!-- 9. Seal the Day -->
+                <button class="dsp-seal-btn" id="dsp-seal-btn" onclick="dspToggleSeal()">
+                  <span id="dsp-seal-icon">🔓</span>
+                  <span id="dsp-seal-label">Seal the Day</span>
+                </button>
+                <div class="dsp-sealed-stamp" id="dsp-sealed-stamp" style="display:none">
+                  <div class="stamp-text">الحمد لله</div>
+                  <div class="stamp-sub">Alhamdulillah · This day is complete</div>
                 </div>
                 <div class="dsp-footer" id="dsp-footer"></div>
               </div>
@@ -8305,6 +8365,16 @@ function _dspApply(row) {
   const starBtn = document.getElementById('dsp-star-btn');
   if (starBtn) { starBtn.textContent = _dspStarred ? '★' : '☆'; starBtn.classList.toggle('starred', _dspStarred); }
 
+  // Load moods and sealed
+  _dspSealed = !!(row && row.sealed);
+  dspSetMoods(row && row.moods ? row.moods : []);
+
+  // Render calligraphic date heading
+  dspRenderDateHeading(_dspDate);
+
+  // Run all visual checks
+  dspRunAllChecks();
+
   const QUOTES = [
     '"Write it on your heart that every day is the best day in the year." — Emerson',
     '"One day or day one. You decide."',
@@ -8326,10 +8396,106 @@ function _dspApply(row) {
   _dspUpdateWordCount();
 }
 
+/* ── DIARY UPGRADE JS ── */
+
+// 3. Completion glow
+function dspCheckComplete(blockId, inputIds) {
+  const block = document.getElementById(blockId);
+  if (!block) return;
+  const allFilled = inputIds.every(id => {
+    const el = document.getElementById(id);
+    return el && el.value.trim().length > 0;
+  });
+  block.classList.toggle('complete', allFilled);
+}
+
+// 4. Word count whisper
+function dspUpdateSectionWordCounts() {
+  const sections = [
+    { wcId: 'dsp-wc-grat',  ids: ['dsp-grat-1','dsp-grat-2','dsp-grat-3'] },
+    { wcId: 'dsp-wc-man',   ids: ['dsp-man-1','dsp-man-2','dsp-man-3'] },
+    { wcId: 'dsp-wc-entry', ids: ['dsp-entry-1','dsp-entry-2','dsp-entry-3','dsp-entry-4','dsp-entry-5','dsp-entry-6'] },
+  ];
+  sections.forEach(s => {
+    const el = document.getElementById(s.wcId);
+    if (!el) return;
+    const words = s.ids.reduce((acc, id) => {
+      const inp = document.getElementById(id);
+      if (!inp || !inp.value.trim()) return acc;
+      return acc + inp.value.trim().split(/\s+/).length;
+    }, 0);
+    el.textContent = words > 0 ? words + (words === 1 ? ' word' : ' words') : '';
+  });
+}
+
+// 5. Calligraphic date heading
+function dspRenderDateHeading(dateStr) {
+  const heading = document.getElementById('dsp-date-heading');
+  if (!heading) return;
+  const parts = dateStr ? dateStr.split('-') : null;
+  const d = parts ? new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2])) : new Date();
+  const dayName = d.toLocaleDateString('en-GB', {weekday:'long'});
+  const rest = d.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+  heading.innerHTML = `<span class="dsp-date-day-name">${dayName}</span>${rest}`;
+}
+
+// 6. Mood pills
+let _dspMoods = new Set();
+function dspToggleMood(mood) {
+  if (_dspMoods.has(mood)) _dspMoods.delete(mood); else _dspMoods.add(mood);
+  dspRenderMoods();
+  dspOnInput();
+}
+function dspRenderMoods() {
+  document.querySelectorAll('.dsp-mood-pill').forEach(btn => {
+    btn.classList.toggle('active', _dspMoods.has(btn.dataset.mood));
+  });
+}
+function dspSetMoods(moodsArr) {
+  _dspMoods = new Set(Array.isArray(moodsArr) ? moodsArr : []);
+  dspRenderMoods();
+}
+
+// 8. Star highlights diary page
+function dspApplyStarHighlight() {
+  const page = document.querySelector('.diary-single-page');
+  if (page) page.classList.toggle('starred-day', _dspStarred);
+}
+
+// 9. Seal the Day
+let _dspSealed = false;
+function dspToggleSeal() {
+  _dspSealed = !_dspSealed;
+  dspApplySealState();
+  dspOnInput();
+}
+function dspApplySealState() {
+  const btn = document.getElementById('dsp-seal-btn');
+  const stamp = document.getElementById('dsp-sealed-stamp');
+  const page = document.querySelector('.diary-single-page');
+  const icon = document.getElementById('dsp-seal-icon');
+  const label = document.getElementById('dsp-seal-label');
+  if (btn) btn.classList.toggle('sealed', _dspSealed);
+  if (stamp) stamp.style.display = _dspSealed ? '' : 'none';
+  if (page) page.classList.toggle('sealed', _dspSealed);
+  if (icon) icon.textContent = _dspSealed ? '🔒' : '🔓';
+  if (label) label.textContent = _dspSealed ? 'Unseal this Day' : 'Seal the Day';
+}
+
+function dspRunAllChecks() {
+  dspCheckComplete('dsp-block-grat', ['dsp-grat-1','dsp-grat-2','dsp-grat-3']);
+  dspCheckComplete('dsp-block-man',  ['dsp-man-1','dsp-man-2','dsp-man-3']);
+  dspCheckComplete('dsp-block-must', ['dsp-must-1','dsp-must-2','dsp-must-3']);
+  dspUpdateSectionWordCounts();
+  dspApplyStarHighlight();
+  dspApplySealState();
+}
+
 function dspToggleStar() {
   _dspStarred = !_dspStarred;
   const btn = document.getElementById('dsp-star-btn');
   if (btn) { btn.textContent = _dspStarred ? '★' : '☆'; btn.classList.toggle('starred', _dspStarred); }
+  dspApplyStarHighlight();
   dspOnInput();
 }
 
@@ -8350,6 +8516,7 @@ function _dspUpdateWordCount() {
 
 function dspOnInput() {
   _dspUpdateWordCount();
+  dspUpdateSectionWordCounts();
   clearTimeout(_dspTimer);
   showJournalSave('saving');
   _dspTimer = setTimeout(() => { saveDiaryEntry(); showJournalSave('saved'); }, 1500);
@@ -8378,6 +8545,8 @@ async function saveDiaryEntry() {
     ideas:              gv('dsp-ideas')    || '',
     skills:             gv('dsp-skills')   || '',
     mental_ram:         gv('dsp-ram')      || '',
+    moods:              Array.from(_dspMoods),
+    sealed:             _dspSealed,
     updated_at: new Date().toISOString(),
   };
   try {
