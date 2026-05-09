@@ -2380,11 +2380,6 @@ body{
             <div class="diary-single-page">
               <div class="journal-save-ind" id="journal-save-ind"></div>
               <div class="dsp-inner">
-                <div class="dsp-templates-row">
-                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('win')">✦ Win Day</button>
-                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('hard')">◈ Hard Day</button>
-                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
-                </div>
                 <div class="dsp-header">
                   <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
                     <button class="dsp-nav-btn" onclick="dspNavDay(-1)" id="dsp-nav-prev" style="font-size:14px;opacity:0.5;padding:0 2px;">‹</button>
@@ -2398,6 +2393,11 @@ body{
                     <button class="dsp-star-btn" id="dsp-star-btn" onclick="dspToggleStar()" title="Star this entry">☆</button>
                     <button class="dsp-nav-btn" onclick="dspNavDay(1)" id="dsp-nav-next" disabled style="font-size:14px;opacity:0.5;padding:0 2px;">›</button>
                   </div>
+                </div>
+                <div class="dsp-templates-row">
+                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('win')">✦ Win Day</button>
+                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('hard')">◈ Hard Day</button>
+                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
                 </div>
                 <!-- 6. Mood / energy tags -->
                 <div class="dsp-mood-row" id="dsp-mood-row">
