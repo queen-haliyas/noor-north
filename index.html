@@ -609,12 +609,15 @@ body{
 .acc-day-panel.open{max-height:3000px;opacity:1;}
 .acc-day-panel .df-main-cols{margin-top:8px;}
 /* ── DAILY FLOW TWO-COLUMN LAYOUT ── */
-.df-main-cols{display:flex;gap:16px;align-items:flex-start;}
-.df-left{flex:0 0 41%;min-width:0;}
-.df-right{flex:1;min-width:0;}
-.df-sched-wrap{margin-top:0;}
-.df-diary-wrap{margin-top:0;}
-.df-diary-wrap .diary-wrap{margin-top:0;}
+.df-main-cols{display:flex;gap:16px;align-items:stretch;}
+.df-left{flex:0 0 41%;min-width:0;display:flex;flex-direction:column;}
+.df-right{flex:1;min-width:0;display:flex;flex-direction:column;}
+.df-sched-wrap{margin-top:0;flex:1;display:flex;flex-direction:column;}
+.df-diary-wrap{margin-top:0;flex:1;display:flex;flex-direction:column;}
+.df-diary-wrap .diary-wrap{margin-top:0;flex:1;display:flex;flex-direction:column;}
+.df-diary-wrap .diary-frame{flex:1;display:flex;flex-direction:column;}
+.df-diary-wrap .diary-single-page{flex:1;display:flex;flex-direction:column;}
+.df-sched-wrap .day-view-card{flex:1;}
 @media(max-width:900px){.df-main-cols{flex-direction:column;}.df-left,.df-right{flex:unset;width:100%;}}
 
 /* Three column layout */
