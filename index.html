@@ -576,6 +576,26 @@ body{
 .day-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
 /* ── DAILY FLOW ACCORDION ── */
 .acc-week{display:flex;flex-direction:column;gap:6px;margin-bottom:0;}
+/* Weekly layout: accordion + calendar side by side */
+.weekly-layout{display:flex;gap:16px;align-items:flex-start;}
+.weekly-layout .acc-week{flex:1;min-width:0;}
+/* Mini calendar panel */
+.mini-cal{width:220px;flex-shrink:0;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:12px;padding:16px 14px;position:sticky;top:16px;}
+.mini-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.mini-cal-title{font-family:var(--font-display);font-size:13px;font-weight:400;color:var(--text-primary);letter-spacing:.04em;}
+.mini-cal-nav{display:flex;gap:4px;}
+.mini-cal-nav button{background:none;border:none;color:var(--text-tertiary);cursor:pointer;font-size:14px;padding:2px 5px;border-radius:4px;transition:color .15s;}
+.mini-cal-nav button:hover{color:var(--gold);}
+.mini-cal-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px;}
+.mini-cal-dow span{text-align:center;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-tertiary);padding:2px 0;}
+.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.mini-cal-cell{text-align:center;font-size:11px;color:var(--text-secondary);padding:5px 2px;border-radius:6px;cursor:pointer;transition:all .15s;line-height:1;}
+.mini-cal-cell:hover{background:rgba(196,152,59,0.12);color:var(--gold);}
+.mini-cal-cell.empty{cursor:default;}
+.mini-cal-cell.empty:hover{background:none;}
+.mini-cal-cell.in-week{background:rgba(196,152,59,0.08);color:var(--text-primary);}
+.mini-cal-cell.today{background:var(--gold);color:#1a1608;font-weight:700;border-radius:50%;}
+.mini-cal-cell.other-month{color:var(--charcoal-border);}
 .acc-day-item{display:flex;flex-direction:column;}
 .acc-day-header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none;}
 .acc-day-header:hover{border-color:var(--gold);}
@@ -2241,8 +2261,24 @@ body{
     <div class="fp-pillars-grid" id="fp-pillars-list"></div>
   </div>
 
-  <!-- DAILY FLOW: accordion with inline expand panels -->
-  <div id="day-accordion" class="acc-week"></div>
+  <!-- DAILY FLOW: accordion + mini calendar side by side -->
+  <div class="weekly-layout">
+    <div id="day-accordion" class="acc-week"></div>
+    <!-- Mini Month Calendar -->
+    <div class="mini-cal" id="mini-cal">
+      <div class="mini-cal-header">
+        <span class="mini-cal-title" id="mini-cal-title"></span>
+        <div class="mini-cal-nav">
+          <button onclick="miniCalNav(-1)" title="Previous month">‹</button>
+          <button onclick="miniCalNav(1)" title="Next month">›</button>
+        </div>
+      </div>
+      <div class="mini-cal-dow">
+        <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+      </div>
+      <div class="mini-cal-grid" id="mini-cal-grid"></div>
+    </div>
+  </div>
   <!-- Content block — JS moves this into the active day panel -->
   <div id="df-day-content" class="df-main-cols" style="display:none">
     <!-- LEFT: schedule + five pillars -->
@@ -2398,6 +2434,7 @@ body{
       var _t = new Date(), _d = (_t.getDay() + 6) % 7;
       if (typeof accOpenDay === 'function') accOpenDay(_d, 0, true);
     }
+    if (typeof miniCalInit === 'function') miniCalInit();
     // Init the 24h timeline
     var tries = 0;
     var dvTimer = setInterval(function() {
@@ -4035,6 +4072,60 @@ function renderDaily(){
   try{renderDvPillars(ds);}catch(e){}
   try{loadDiaryForDate(ds);}catch(e){}
   try{dvGoToDate(ds);}catch(e){}
+}
+
+/* ── Mini Calendar ── */
+let _miniCalYear, _miniCalMonth;
+function miniCalInit(){
+  const now=new Date();
+  _miniCalYear=now.getFullYear();
+  _miniCalMonth=now.getMonth();
+  miniCalRender();
+}
+function miniCalNav(dir){
+  _miniCalMonth+=dir;
+  if(_miniCalMonth>11){_miniCalMonth=0;_miniCalYear++;}
+  if(_miniCalMonth<0){_miniCalMonth=11;_miniCalYear--;}
+  miniCalRender();
+}
+function miniCalRender(){
+  const today=new Date();
+  const todayY=today.getFullYear(),todayM=today.getMonth(),todayD=today.getDate();
+  // Current week Mon–Sun
+  const dow=(today.getDay()+6)%7;
+  const weekStart=new Date(today); weekStart.setDate(today.getDate()-dow);
+  const weekEnd=new Date(weekStart); weekEnd.setDate(weekStart.getDate()+6);
+  const title=new Date(_miniCalYear,_miniCalMonth,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  document.getElementById('mini-cal-title').textContent=title;
+  const firstDay=new Date(_miniCalYear,_miniCalMonth,1);
+  const startDow=(firstDay.getDay()+6)%7; // 0=Mon
+  const daysInMonth=new Date(_miniCalYear,_miniCalMonth+1,0).getDate();
+  const daysInPrev=new Date(_miniCalYear,_miniCalMonth,0).getDate();
+  let cells='';
+  let total=startDow+daysInMonth;
+  const rows=Math.ceil(total/7)*7;
+  for(let i=0;i<rows;i++){
+    let day,cls='mini-cal-cell',yr=_miniCalYear,mo=_miniCalMonth;
+    if(i<startDow){day=daysInPrev-startDow+i+1;cls+=' other-month';mo--; if(mo<0){mo=11;yr--;}}
+    else if(i>=startDow+daysInMonth){day=i-startDow-daysInMonth+1;cls+=' other-month';mo++;if(mo>11){mo=0;yr++;}}
+    else{day=i-startDow+1;}
+    const cellDate=new Date(yr,mo,day);
+    const isToday=yr===todayY&&mo===todayM&&day===todayD;
+    const inWeek=cellDate>=weekStart&&cellDate<=weekEnd&&!cls.includes('other-month');
+    if(isToday) cls+=' today';
+    else if(inWeek) cls+=' in-week';
+    cells+=`<div class="${cls}" onclick="miniCalClick(${yr},${mo},${day})">${day}</div>`;
+  }
+  document.getElementById('mini-cal-grid').innerHTML=cells;
+}
+function miniCalClick(y,m,d){
+  // Jump the accordion to that day if it's the current week
+  const today=new Date();
+  const dow=(today.getDay()+6)%7;
+  const weekStart=new Date(today); weekStart.setDate(today.getDate()-dow);
+  const clicked=new Date(y,m,d);
+  const diff=Math.round((clicked-weekStart)/(86400000));
+  if(diff>=0&&diff<=6){accOpenDay(diff,diff-dow);}
 }
 
 let _accOpenSlot=-1;
@@ -6686,13 +6777,14 @@ function initPlanningData() {
 
 // INIT
 load();
-initPlanningData();
-loadDeclarations();
-renderHeader();
-renderAffirmationBar();
-renderDaily();
-buildAccordion();
-(function(){const _t=new Date();const _d=(_t.getDay()+6)%7;accOpenDay(_d,0,true);})();
+try{initPlanningData();}catch(e){}
+try{loadDeclarations();}catch(e){}
+try{renderHeader();}catch(e){}
+try{renderAffirmationBar();}catch(e){}
+try{renderDaily();}catch(e){}
+try{buildAccordion();}catch(e){}
+try{miniCalInit();}catch(e){}
+try{(function(){const _t=new Date();const _d=(_t.getDay()+6)%7;accOpenDay(_d,0,true);})();}catch(e){}
 // KEYBOARD SHORTCUTS
 document.addEventListener('keydown', function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
@@ -6705,7 +6797,7 @@ document.addEventListener('keydown', function(e){
   }
 });
 
-renderDayDetail(fmt(new Date()));
+try{renderDayDetail(fmt(new Date()));}catch(e){}
 
 // SUPABASE VARS MOVED TO TOP
 
@@ -7048,7 +7140,7 @@ async function dvRenderSolarMarkers(dateStr) {
   }
 }
 
-const Q2_SCHEDULE=[
+var Q2_SCHEDULE=[
   {label:'Fajr + Morning Ritual',start:5*60+30,end:6*60+30,color:'#7EC8E3'},   // Me Life
   {label:'Deep Work — TigerFlow AI',start:7*60,end:9*60,color:'#F97316'},       // TigerFlow
   {label:'Content & Tiger & Dragon',start:9*60+30,end:11*60,color:'#166534'},   // Tiger & Dragon
@@ -7062,6 +7154,7 @@ const Q2_SCHEDULE=[
 function dvRenderEvents() {
   const slotsEl = document.getElementById('day-time-slots');
   if (!slotsEl) return;
+  if (!Q2_SCHEDULE || !Q2_SCHEDULE.length) return;
   slotsEl.querySelectorAll('.day-event-block').forEach(e => e.remove());
   slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e => e.remove());
   slotsEl.querySelectorAll('.q2-soft-block').forEach(e => e.remove());
