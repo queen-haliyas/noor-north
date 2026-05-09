@@ -4723,19 +4723,26 @@ function focusPillarTask(el){
   el.onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();el.blur();}};
 }
 function movePillarTaskToTomorrow(ds,pid,idx){
-  const task=data[ds].pillars[pid][idx];
+  const task=data[ds]&&data[ds].pillars&&data[ds].pillars[pid]&&data[ds].pillars[pid][idx];
   if(!task)return;
   // calculate tomorrow's date string
-  const d=new Date(ds+'T12:00:00');d.setDate(d.getDate()+1);
-  const tmr=d.toISOString().slice(0,10);
-  if(!data[tmr])data[tmr]={pillars:{},timeline:[],habits:{},gratitude:[],manifestations:[],mit:'',brainDump:'',eveningDone:false};
+  const parts=ds.split('-').map(Number);
+  const d=new Date(parts[0],parts[1]-1,parts[2]);
+  d.setDate(d.getDate()+1);
+  const tmr=fmt(d);
+  ensureDay(tmr);
   if(!data[tmr].pillars[pid])data[tmr].pillars[pid]=[];
-  data[tmr].pillars[pid].push({text:task.text,done:false});
+  data[tmr].pillars[pid].push({text:task.text,done:false,id:task.id||Date.now()});
   data[ds].pillars[pid].splice(idx,1);
   save();
-  renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);
+  // Re-render current day view
+  const activDs=activeDs||ds;
+  try{renderFivePillarsPanel(activDs);}catch(e){}
+  try{renderDvPillars(activDs);}catch(e){}
+  try{renderPillarsDaily(activDs);}catch(e){}
+  try{dvUpdateCompletionArc();}catch(e){}
   const pillar=PILLARS.find(p=>p.id===pid);
-  showToast((pillar?pillar.name+' task':'Task')+' moved to tomorrow','#7ecfa0');
+  showToast((pillar?pillar.name+' task':'Task')+' moved to tomorrow ✓','#7ecfa0');
 }
 function deletePillarTask(ds,pid,idx){
   data[ds].pillars[pid].splice(idx,1);save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);renderDvPillars(ds);
