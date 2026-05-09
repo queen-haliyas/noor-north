@@ -1778,8 +1778,8 @@ body{
 }
 .dsp-inner{padding:14px 16px 16px;position:relative;z-index:2;}
 /* Page header */
-.dsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:8px;border-bottom:0.5px solid rgba(196,152,59,0.15);}
-.dsp-date-heading{font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:var(--gold);text-align:center;flex:1;letter-spacing:0.03em;}
+.dsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:10px 0 10px;border-bottom:0.5px solid rgba(196,152,59,0.15);}
+.dsp-date-heading{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);text-align:left;letter-spacing:.01em;}
 .dsp-star-btn{background:none;border:none;cursor:pointer;font-size:15px;color:var(--text-tertiary);padding:0;line-height:1;transition:color .15s,transform .15s;flex-shrink:0;}
 .dsp-star-btn:hover{transform:scale(1.2);}
 .dsp-star-btn.starred{color:var(--gold);}
@@ -1822,10 +1822,11 @@ body{
 .dsp-prompt-block.complete{border-left:2px solid rgba(196,152,59,0.4);padding-left:8px;border-radius:0 4px 4px 0;transition:all .3s;}
 /* 4. Word count whisper */
 .dsp-word-count{font-size:8px;color:rgba(196,152,59,0.25);text-align:right;margin-top:2px;font-style:italic;letter-spacing:.04em;transition:opacity .2s;}
-/* 5. Date header as calligraphic banner */
-.dsp-date-heading{font-family:'Poppins',sans-serif;font-size:15px;font-weight:300;color:var(--gold);text-align:center;flex:1;letter-spacing:0.08em;line-height:1.2;text-transform:uppercase;}
-.dsp-date-day-name{display:block;font-size:8px;font-weight:600;letter-spacing:.2em;color:rgba(196,152,59,0.5);text-transform:uppercase;margin-bottom:1px;}
-.dsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:10px;border-bottom:none;position:relative;}
+/* 5. Date sub-line matching schedule header */
+.dsp-date-heading{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);text-align:left;letter-spacing:.01em;}
+.dsp-date-day-name{display:none;}
+.dsp-date-sub{font-size:10px;color:var(--text-tertiary);margin-top:2px;letter-spacing:.02em;}
+.dsp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:10px 0;border-bottom:0.5px solid rgba(196,152,59,0.15);position:relative;}
 .dsp-header::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:0.5px;background:linear-gradient(90deg,transparent,rgba(196,152,59,0.4),transparent);}
 /* 6. Mood energy tags */
 .dsp-mood-row{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 8px;}
@@ -2386,11 +2387,18 @@ body{
                   <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
                 </div>
                 <div class="dsp-header">
-                  <button class="dsp-nav-btn" onclick="dspNavDay(-1)" id="dsp-nav-prev">‹</button>
-                  <div class="dsp-date-heading" id="dsp-date-heading">Today</div>
-                  <button class="dsp-nav-btn" onclick="dspNavDay(1)" id="dsp-nav-next" disabled>›</button>
-                  <button class="dsp-star-btn" id="dsp-star-btn" onclick="dspToggleStar()" title="Star this entry">☆</button>
-                  <div class="dsp-weather" id="dsp-weather"></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
+                    <button class="dsp-nav-btn" onclick="dspNavDay(-1)" id="dsp-nav-prev" style="font-size:14px;opacity:0.5;padding:0 2px;">‹</button>
+                    <div style="min-width:0;flex:1;">
+                      <div class="dsp-date-heading" id="dsp-date-heading">Today</div>
+                      <div class="dsp-date-sub" id="dsp-date-sub"></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+                    <div class="dsp-weather" id="dsp-weather"></div>
+                    <button class="dsp-star-btn" id="dsp-star-btn" onclick="dspToggleStar()" title="Star this entry">☆</button>
+                    <button class="dsp-nav-btn" onclick="dspNavDay(1)" id="dsp-nav-next" disabled style="font-size:14px;opacity:0.5;padding:0 2px;">›</button>
+                  </div>
                 </div>
                 <!-- 6. Mood / energy tags -->
                 <div class="dsp-mood-row" id="dsp-mood-row">
@@ -8549,15 +8557,15 @@ function dspUpdateSectionWordCounts() {
   });
 }
 
-// 5. Calligraphic date heading
+// 5. Schedule-style date heading
 function dspRenderDateHeading(dateStr) {
   const heading = document.getElementById('dsp-date-heading');
-  if (!heading) return;
+  const sub = document.getElementById('dsp-date-sub');
   const parts = dateStr ? dateStr.split('-') : null;
   const d = parts ? new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2])) : new Date();
-  const dayName = d.toLocaleDateString('en-GB', {weekday:'long'});
-  const rest = d.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
-  heading.innerHTML = `<span class="dsp-date-day-name">${dayName}</span>${rest}`;
+  const isToday = dateStr === fmt(new Date());
+  if (heading) heading.textContent = isToday ? 'Today' : d.toLocaleDateString('en-GB',{weekday:'long'});
+  if (sub) sub.textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
 }
 
 // 6. Mood pills
