@@ -7934,11 +7934,11 @@ function dvRenderRitualBlocks(ds) {
   if (!slotsEl) return;
 
   // Morning Ritual: 4:30am – 5:10am
-  dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 4*60+30, 5*60+10,
+  dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 3*60, 3*60+40,
     'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
 
   // Evening Ritual: 9:30pm – 10:10pm
-  dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 21*60+30, 22*60+10,
+  dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 22*60, 22*60+40,
     'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
 
   // Pillar timed events
@@ -8051,8 +8051,8 @@ function toggleRitualTask(ds, key, idx, e) {
   const slotsEl = document.getElementById('day-time-slots');
   if (slotsEl) {
     slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e2 => e2.remove());
-    dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 4*60, 5*60, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
-    dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 21*60, 22*60, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
+    dvMakeRitualBlock(slotsEl, ds, 'morningRitual', 3*60, 3*60+40, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
+    dvMakeRitualBlock(slotsEl, ds, 'eveningRitual', 22*60, 22*60+40, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
     (data[ds].timedEvents || []).forEach(ev => dvMakeTimedEventBlock(slotsEl, ev, ds));
     // Restore expanded state
     ['morningRitual', 'eveningRitual'].forEach(k => {
@@ -8127,8 +8127,8 @@ function completeMorningRitual() {
   const slotsEl = document.getElementById('day-time-slots');
   if (slotsEl) {
     slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e => e.remove());
-    dvMakeRitualBlock(slotsEl, _mrmDs, 'morningRitual', 4*60, 5*60, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
-    dvMakeRitualBlock(slotsEl, _mrmDs, 'eveningRitual', 21*60, 22*60, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
+    dvMakeRitualBlock(slotsEl, _mrmDs, 'morningRitual', 3*60, 3*60+40, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
+    dvMakeRitualBlock(slotsEl, _mrmDs, 'eveningRitual', 22*60, 22*60+40, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
     (data[_mrmDs].timedEvents || []).forEach(ev => dvMakeTimedEventBlock(slotsEl, ev, _mrmDs));
     ['morningRitual','eveningRitual'].forEach(k => {
       if (rtbExpanded[k]) requestAnimationFrame(() => {
@@ -8249,8 +8249,8 @@ function completeNightRitual() {
   const slotsEl = document.getElementById('day-time-slots');
   if (slotsEl) {
     slotsEl.querySelectorAll('.ritual-timeline-block').forEach(e => e.remove());
-    dvMakeRitualBlock(slotsEl, _nrmDs, 'morningRitual', 4*60, 5*60, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
-    dvMakeRitualBlock(slotsEl, _nrmDs, 'eveningRitual', 21*60, 22*60, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
+    dvMakeRitualBlock(slotsEl, _nrmDs, 'morningRitual', 3*60, 3*60+40, 'Morning Ritual', '☽', '#1A9E8F', AM_STEPS);
+    dvMakeRitualBlock(slotsEl, _nrmDs, 'eveningRitual', 22*60, 22*60+40, 'Evening Ritual', '◑', '#7F77DD', PM_STEPS);
     (data[_nrmDs].timedEvents || []).forEach(ev => dvMakeTimedEventBlock(slotsEl, ev, _nrmDs));
     ['morningRitual','eveningRitual'].forEach(k => {
       if (rtbExpanded[k]) requestAnimationFrame(() => {
