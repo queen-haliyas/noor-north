@@ -2303,11 +2303,6 @@ body{
   <div style="margin-bottom:0.75rem">
     <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary);text-align:center">Weekly Flow</h2>
   </div>
-  <!-- Affirmation banner -->
-  <div class="aff-card" id="aff-card" style="margin-bottom:12px">
-    <div class="aff-card-label" id="aff-card-label"></div>
-    <div class="aff-card-text" id="aff-card-text">Loading...</div>
-  </div>
   <!-- F32: Weekly wins (Sunday) -->
   <div id="weekly-wins-daily"></div>
 
@@ -9520,29 +9515,56 @@ function markOverdueTasks() {
 
 
 // F32 – Weekly wins summary card (Sundays)
+const WEEKLY_CARD_AFFIRMATIONS = [
+  "I honour my time and the time of others. Being early is an act of respect and self-discipline that reflects the leader I am becoming.",
+  "I nourish my body with intention. Food is fuel for my mission, and I eat in a way that keeps my energy aligned with my ambitions.",
+  "Other people are mirrors, not enemies. When I notice a negative thought about someone, it is information about what I need to heal within myself.",
+  "True wealth is built through discipline, not display. Every pound I steward wisely is a seed for the empire I am building and the charity I want to give.",
+  "My body communicates what my mind has not yet processed. I listen to its signals and respond with care, not compulsion.",
+  "I have a capable mind that works best with strong systems. I do not need to remember everything; I need to capture everything.",
+  "My word is my bond. I commit only to what I can deliver, and I deliver everything I commit to. Quality of commitment matters more than quantity.",
+  "I am intelligent, resourceful, and building something extraordinary. The voice that tells me otherwise is an echo of someone else's pain, not a reflection of my reality.",
+  "I am the master of my attention, not a passenger. Every minute I reclaim from scrolling is a minute invested in my legacy.",
+  "True wisdom is knowing what I do not know. My willingness to learn is my greatest competitive advantage."
+];
+let _weeklyCardAffIdx = 0;
+let _weeklyCardAffTimer = null;
+
 function renderWeeklyWinsCard() {
   const today = new Date();
   const el = document.getElementById('weekly-wins-daily');
   if (!el) return;
   if (today.getDay() !== 0) { el.style.display = 'none'; return; }
-  let totalDone = 0, totalAll = 0, bestPillar = null, bestPct = 0, highlights = [];
-  const wDays = getWeekDays();
-  PILLARS.forEach(p => {
-    let d=0,a=0;
-    wDays.forEach(ds => { const t=data[ds]?.pillars?.[p.id]||[]; a+=t.length; const done=t.filter(x=>x.done); d+=done.length; done.forEach(x=>highlights.push(x.text)); });
-    totalDone+=d; totalAll+=a;
-    const pct=a?d/a:0;
-    if(pct>bestPct){bestPct=pct;bestPillar=p;}
-  });
-  const pick = highlights[Math.floor(Math.random()*highlights.length)] || '';
-  const affText = (_affPool && _affPool[currentAffIdx]) ? _affPool[currentAffIdx].text : '';
+
+  // Build the card shell once
   el.style.display = '';
+  _weeklyCardAffIdx = Math.floor(Math.random() * WEEKLY_CARD_AFFIRMATIONS.length);
+  _renderWeeklyCardContent(today);
+
+  // Rotate affirmation every 30s
+  if (_weeklyCardAffTimer) clearInterval(_weeklyCardAffTimer);
+  _weeklyCardAffTimer = setInterval(() => {
+    _weeklyCardAffIdx = (_weeklyCardAffIdx + 1) % WEEKLY_CARD_AFFIRMATIONS.length;
+    const affEl = document.getElementById('weekly-card-aff');
+    if (affEl) {
+      affEl.style.opacity = '0';
+      setTimeout(() => {
+        affEl.textContent = WEEKLY_CARD_AFFIRMATIONS[_weeklyCardAffIdx];
+        affEl.style.opacity = '1';
+      }, 400);
+    }
+  }, 30000);
+}
+
+function _renderWeeklyCardContent(today) {
+  const el = document.getElementById('weekly-wins-daily');
+  if (!el) return;
+  const aff = WEEKLY_CARD_AFFIRMATIONS[_weeklyCardAffIdx];
   el.innerHTML = `<div class="weekly-wins-card" style="display:flex;align-items:center;gap:16px;">
     <div style="flex-shrink:0;">
       <div class="weekly-wins-title">✦ This Week — ${today.toLocaleDateString('en-GB',{day:'numeric',month:'long'})} &nbsp;·&nbsp; Week ${getWeekNum(today)} &nbsp;·&nbsp; Q${getQ(today)}</div>
-      ${pick?`<div class="weekly-wins-quote">"${pick}"</div>`:''}
     </div>
-    ${affText?`<div style="flex:1;border-left:0.5px solid rgba(196,152,59,0.2);padding-left:16px;font-size:11px;font-style:italic;color:var(--text-secondary);line-height:1.5;">${affText}</div>`:''}
+    <div id="weekly-card-aff" style="flex:1;border-left:0.5px solid rgba(196,152,59,0.2);padding-left:16px;font-size:11px;font-style:italic;color:var(--text-secondary);line-height:1.5;transition:opacity .4s;">${aff}</div>
   </div>`;
 }
 
