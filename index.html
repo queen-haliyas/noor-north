@@ -4213,15 +4213,13 @@ function miniCalRender(){
 
 function miniCalClick(y,m,d){
   const clicked = new Date(y,m,d);
-  // Find Monday of the clicked date's week
   const dow = (clicked.getDay()+6)%7;
   const weekMon = new Date(clicked);
   weekMon.setDate(clicked.getDate()-dow);
-  // Rebuild accordion for that week
   _accordionWeekStart = weekMon;
+  _accOpenSlot = -1; // reset so clicking a day always opens, never toggles closed
   buildAccordion();
-  miniCalRender(); // re-render to highlight new week
-  // Open the clicked day (slot = diff from Monday)
+  miniCalRender();
   const slot = Math.round((clicked - weekMon) / 86400000);
   const today = new Date();
   const todayMon = new Date(today); todayMon.setDate(today.getDate()-((today.getDay()+6)%7));
