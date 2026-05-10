@@ -3564,13 +3564,16 @@ const DATA_KEYS = { main: 'main' };
 const DATA_VERSION = '1';
 
 // DATA
-const PILLARS=[
+var PILLARS=[
   {id:'life',name:'Journey To Billions',icon:'✦',color:'#C00015'},
   {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#E58927'},
   {id:'td',name:'Tiger & Dragon',icon:'◉',color:'#4A8C52'},
   {id:'myc',name:'Mycelink',icon:'⬡',color:'#007ACC'},
-  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#8E69B8'}
+  {id:'arch',name:'Architecture Portfolio',icon:'◻',color:'#8E69B8'},
+  {id:'errands',name:'Errands',icon:'◎',color:'#DDD6FE'}
 ];
+// Core Five Pillars only (excludes Errands) — used in donuts, stats, planning
+var FIVE_PILLARS = PILLARS.filter(p => p.id !== 'errands');
 const AM_STEPS=[
   {title:'Cold Wudu, Tahajjud, Fajr + Dhikr',time:'15 min'},
   {title:'Breathing Meditation',time:'5 min'},
@@ -4154,7 +4157,7 @@ function renderDaily(){
 
 /* ── Mini Calendar ── */
 let _miniCalYear, _miniCalMonth;
-let _accordionWeekStart = null;
+var _accordionWeekStart = null;
 function miniCalInit(){
   const now=new Date();
   _miniCalYear=now.getFullYear();
@@ -4416,7 +4419,7 @@ function renderPillarsCompact(ds){
   const list=document.getElementById('pillars-compact-list');
   if(!list)return;
   list.innerHTML='';
-  PILLARS.forEach(p=>{
+  FIVE_PILLARS.forEach(p=>{
     const tasks=data[ds].pillars[p.id]||[];
     const done=tasks.filter(t=>t.done).length;
     const all=tasks.length;
@@ -4437,7 +4440,7 @@ function renderPillarsCompact(ds){
   // overall bar
   const bar=document.getElementById('pillars-overall-bar');
   if(bar){
-    bar.innerHTML=PILLARS.map(p=>{
+    bar.innerHTML=FIVE_PILLARS.map(p=>{
       const tasks=(data[ds].pillars[p.id]||[]);
       const d=tasks.filter(t=>t.done).length,a=tasks.length;
       const pct=a?Math.round(d/a*100):0;
@@ -4513,7 +4516,7 @@ function renderDailyStats(){
   const amDoneToday=AM_STEPS.filter((_,i)=>data[ds].am&&data[ds].am[i]).length;
   const pmDoneToday=PM_STEPS.filter((_,i)=>data[ds].pm&&data[ds].pm[i]).length;
   let pillarDone=0,pillarAll=0;
-  PILLARS.forEach(p=>{const t=(data[ds].pillars[p.id]||[]);pillarDone+=t.filter(x=>x.done).length;pillarAll+=t.length;});
+  FIVE_PILLARS.forEach(p=>{const t=(data[ds].pillars[p.id]||[]);pillarDone+=t.filter(x=>x.done).length;pillarAll+=t.length;});
   const totalDone=amDoneToday+pmDoneToday+pillarDone;
   const totalAll=amTotal+pmTotal+(pillarAll||1);
   const pct=Math.round(totalDone/totalAll*100);
@@ -4647,7 +4650,7 @@ function renderPillarsDaily(ds){
   let totalDone=0,totalAll=0;
   // overall bar (legacy element — may not exist after card removal)
   const barCont=document.getElementById('pillars-overall-bar');
-  if(barCont)barCont.innerHTML=PILLARS.map(p=>{
+  if(barCont)barCont.innerHTML=FIVE_PILLARS.map(p=>{
     const tasks=data[ds].pillars[p.id]||[];
     const d=tasks.filter(t=>t.done).length;
     const a=tasks.length;
@@ -4659,7 +4662,7 @@ function renderPillarsDaily(ds){
   if(badgeEl)badgeEl.textContent=totalDone+'/'+totalAll;
   const cont=document.getElementById('pillars-list');
   if(!cont)return;
-  cont.innerHTML=PILLARS.map(p=>{
+  cont.innerHTML=FIVE_PILLARS.map(p=>{
     const tasks=data[ds].pillars[p.id]||[];
     const done=tasks.filter(t=>t.done).length;
     const isOpen=p._open;
@@ -4703,7 +4706,7 @@ function addPillarTask(ds,pid){
   const inp=document.getElementById('padd-'+pid);
   const text=inp?inp.value.trim():'';if(!text)return;
   data[ds].pillars[pid].push({text,done:false});
-  const pillar=PILLARS.find(p=>p.id===pid);
+  const pillar=FIVE_PILLARS.find(p=>p.id===pid);
   if(pillar)showToast('Task added to '+pillar.name, pillar.color);
   inp.value='';save();renderPillarsDaily(ds);renderFivePillarsPanel(ds);
 }
@@ -4758,7 +4761,7 @@ function movePillarTaskToTomorrow(ds,pid,idx){
   try{renderDvPillars(activDs);}catch(e){}
   try{renderPillarsDaily(activDs);}catch(e){}
   try{dvUpdateCompletionArc();}catch(e){}
-  const pillar=PILLARS.find(p=>p.id===pid);
+  const pillar=FIVE_PILLARS.find(p=>p.id===pid);
   showToast((pillar?pillar.name+' task':'Task')+' moved to tomorrow ✓','#7ecfa0');
 }
 function deletePillarTask(ds,pid,idx){
@@ -4836,7 +4839,7 @@ function renderEmpire(){
     const amDone=AM_STEPS.filter((_,i)=>data[ds].am&&data[ds].am[i]).length;
     const pmDone=PM_STEPS.filter((_,i)=>data[ds].pm&&data[ds].pm[i]).length;
     let pillarDone=0;
-    PILLARS.forEach(p=>{pillarDone+=(data[ds].pillars&&data[ds].pillars[p.id]||[]).filter(t=>t.done).length;});
+    FIVE_PILLARS.forEach(p=>{pillarDone+=(data[ds].pillars&&data[ds].pillars[p.id]||[]).filter(t=>t.done).length;});
     if(amDone>0||pmDone>0||pillarDone>0)streak++;else break;
   }
   document.getElementById('emp-streak').textContent=streak;
@@ -4845,7 +4848,7 @@ function renderEmpire(){
 
   // tasks today
   let tasks=0;
-  PILLARS.forEach(p=>{tasks+=(data[today].pillars[p.id]||[]).filter(t=>t.done).length;});
+  FIVE_PILLARS.forEach(p=>{tasks+=(data[today].pillars[p.id]||[]).filter(t=>t.done).length;});
   document.getElementById('emp-tasks').textContent=tasks;
   // ritual rate this week
   const now=new Date();const day=now.getDay();
@@ -4872,14 +4875,14 @@ function renderEmpire(){
   const amDoneT=AM_STEPS.filter((_,i)=>data[ds]&&data[ds].am&&data[ds].am[i]).length;
   const pmDoneT=PM_STEPS.filter((_,i)=>data[ds]&&data[ds].pm&&data[ds].pm[i]).length;
   let pillarDoneT=0,pillarAllT=0;
-  PILLARS.forEach(p=>{const t=(data[ds]&&data[ds].pillars&&data[ds].pillars[p.id])||[];pillarDoneT+=t.filter(x=>x.done).length;pillarAllT+=t.length;});
+  FIVE_PILLARS.forEach(p=>{const t=(data[ds]&&data[ds].pillars&&data[ds].pillars[p.id])||[];pillarDoneT+=t.filter(x=>x.done).length;pillarAllT+=t.length;});
   const totalDoneT=amDoneT+pmDoneT+pillarDoneT;
   const totalAllT=AM_STEPS.length+PM_STEPS.length+(pillarAllT||1);
   const dayPct=Math.round(totalDoneT/totalAllT*100);
   renderGauge(dayPct);
 
   // RADAR
-  const pillarPcts=PILLARS.map(p=>{
+  const pillarPcts=FIVE_PILLARS.map(p=>{
     const t=(data[ds]&&data[ds].pillars&&data[ds].pillars[p.id])||[];
     const d=t.filter(x=>x.done).length,a=t.length;
     return a?Math.round(d/a*100):0;
@@ -4905,7 +4908,7 @@ function renderEmpire(){
 
   // pillar cards
   const grid=document.getElementById('empire-grid');
-  grid.innerHTML=PILLARS.map(p=>{
+  grid.innerHTML=FIVE_PILLARS.map(p=>{
     const tasks=(data[today].pillars[p.id]||[]);
     const done=tasks.filter(t=>t.done).length;
     const all=tasks.length;
@@ -5524,7 +5527,7 @@ function renderWeeklyCharts(){
     const amDone=dd?AM_STEPS.filter((_,j)=>dd.am&&dd.am[j]).length:0;
     const pmDone=dd?PM_STEPS.filter((_,j)=>dd.pm&&dd.pm[j]).length:0;
     let pillarDone=0,pillarAll=0;
-    if(dd&&dd.pillars)PILLARS.forEach(p=>{const t=dd.pillars[p.id]||[];pillarDone+=t.filter(x=>x.done).length;pillarAll+=t.length;});
+    if(dd&&dd.pillars)FIVE_PILLARS.forEach(p=>{const t=dd.pillars[p.id]||[];pillarDone+=t.filter(x=>x.done).length;pillarAll+=t.length;});
     const total=amDone+pmDone+pillarDone;
     const max=AM_STEPS.length+PM_STEPS.length+(pillarAll||1);
     const pct=isFuture?0:Math.round(total/max*100);
@@ -5539,7 +5542,7 @@ function renderWeeklyCharts(){
     if(!data[ds2])break;
     const a=AM_STEPS.filter((_,i)=>data[ds2].am&&data[ds2].am[i]).length;
     const p2=PM_STEPS.filter((_,i)=>data[ds2].pm&&data[ds2].pm[i]).length;
-    let pl=0;PILLARS.forEach(p=>{pl+=(data[ds2].pillars&&data[ds2].pillars[p.id]||[]).filter(t=>t.done).length;});
+    let pl=0;FIVE_PILLARS.forEach(p=>{pl+=(data[ds2].pillars&&data[ds2].pillars[p.id]||[]).filter(t=>t.done).length;});
     if(a>0||p2>0||pl>0)streak++;else break;
   }
   const chartHTML=`
@@ -5558,7 +5561,7 @@ function renderWeeklyCharts(){
     <div class="weekly-chart-wrap">
       <div class="weekly-chart-title">🕸 Pillar Performance This Week</div>
       <div class="pillar-week-row">
-        ${PILLARS.map(p=>{let done=0,all=0;weekDays.forEach(d=>{const ds=fmt(d);if(data[ds]&&data[ds].pillars){const t=data[ds].pillars[p.id]||[];done+=t.filter(x=>x.done).length;all+=t.length;}});const pct=all?Math.round(done/all*100):0;const r=28,stroke=6,circ=2*Math.PI*r;const dash=pct/100*circ;return`<div class="pillar-ring-item"><svg width="72" height="72" viewBox="-36 -36 72 72"><circle cx="0" cy="0" r="${r}" fill="none" stroke="#2E2510" stroke-width="${stroke}"/><circle cx="0" cy="0" r="${r}" fill="none" stroke="${p.color}" stroke-width="${stroke}" stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"/><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="11" fill="${p.color}">${pct}%</text></svg><div class="pillar-ring-label">${p.name.split(' ')[0]}</div><div class="pillar-ring-label" style="color:var(--text-tertiary)">${done}/${all}</div></div>`;}).join('')}
+        ${FIVE_PILLARS.map(p=>{let done=0,all=0;weekDays.forEach(d=>{const ds=fmt(d);if(data[ds]&&data[ds].pillars){const t=data[ds].pillars[p.id]||[];done+=t.filter(x=>x.done).length;all+=t.length;}});const pct=all?Math.round(done/all*100):0;const r=28,stroke=6,circ=2*Math.PI*r;const dash=pct/100*circ;return`<div class="pillar-ring-item"><svg width="72" height="72" viewBox="-36 -36 72 72"><circle cx="0" cy="0" r="${r}" fill="none" stroke="#2E2510" stroke-width="${stroke}"/><circle cx="0" cy="0" r="${r}" fill="none" stroke="${p.color}" stroke-width="${stroke}" stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ*0.25}" stroke-linecap="round"/><text x="0" y="0" text-anchor="middle" dominant-baseline="middle" font-family="Figtree" font-size="11" fill="${p.color}">${pct}%</text></svg><div class="pillar-ring-label">${p.name.split(' ')[0]}</div><div class="pillar-ring-label" style="color:var(--text-tertiary)">${done}/${all}</div></div>`;}).join('')}
       </div>
     </div>
     <div class="weekly-chart-wrap">
@@ -5569,7 +5572,7 @@ function renderWeeklyCharts(){
   if(chartEl){
     chartEl.innerHTML=chartHTML;
     // Compute scores for radar
-    const radarScores=PILLARS.map(p=>{
+    const radarScores=FIVE_PILLARS.map(p=>{
       let done=0,all=0;
       weekDays.forEach(d=>{const ds2=fmt(d);if(data[ds2]&&data[ds2].pillars){const t=data[ds2].pillars[p.id]||[];done+=t.filter(x=>x.done).length;all+=t.length;}});
       return all?Math.round(done/all*100):0;
@@ -6283,7 +6286,7 @@ function renderDayDetail(dateStr) {
   // Pillar tasks
   const pillarItems = [];
   if (dd.pillars) {
-    PILLARS.forEach(p => {
+    FIVE_PILLARS.forEach(p => {
       (dd.pillars[p.id] || []).forEach(t => {
         pillarItems.push({...t, pillarName: p.name, color: p.color});
       });
@@ -6382,8 +6385,8 @@ function renderRadar(pillarPcts) {
   svg.setAttribute('viewBox', '-95 -95 190 190');
   const n = pillarPcts.length;
   const r = 62;
-  const labels = PILLARS.map(p => p.name.split(' ')[0]);
-  const colors = PILLARS.map(p => p.color);
+  const labels = FIVE_PILLARS.map(p => p.name.split(' ')[0]);
+  const colors = FIVE_PILLARS.map(p => p.color);
   
   let html = '';
   // background fill per segment (alternating)
@@ -6564,7 +6567,7 @@ function renderStackedBar(){
     const dd = data[ds];
     const amDone = dd ? AM_STEPS.filter((_,j)=>dd.am&&dd.am[j]).length : 0;
     const pmDone = dd ? PM_STEPS.filter((_,j)=>dd.pm&&dd.pm[j]).length : 0;
-    let pDone=0; if(dd&&dd.pillars)PILLARS.forEach(p=>{pDone+=(dd.pillars[p.id]||[]).filter(t=>t.done).length;});
+    let pDone=0; if(dd&&dd.pillars)FIVE_PILLARS.forEach(p=>{pDone+=(dd.pillars[p.id]||[]).filter(t=>t.done).length;});
     const total = amDone+pmDone+pDone;
     const max = AM_STEPS.length+PM_STEPS.length+5;
     const amW = Math.round(amDone/max*100);
@@ -6591,10 +6594,10 @@ function renderStackedBar(){
 function renderPolarGrid(){
   const svg = document.getElementById('polar-svg');
   if(!svg) return;
-  const axes = PILLARS.map(p => p.name.split(' ')[0]);
-  const colors = PILLARS.map(p => p.color);
+  const axes = FIVE_PILLARS.map(p => p.name.split(' ')[0]);
+  const colors = FIVE_PILLARS.map(p => p.color);
   const today = fmt(new Date());
-  const values = PILLARS.map(p => {
+  const values = FIVE_PILLARS.map(p => {
     const tasks=(data[today]&&data[today].pillars&&data[today].pillars[p.id])||[];
     const done=tasks.filter(t=>t.done).length,all=tasks.length;
     return all?Math.round(done/all*100):0;
@@ -7572,7 +7575,7 @@ function renderFivePillarsPanel(ds) {
 
   let totalDone = 0, totalAll = 0;
 
-  cont.innerHTML = PILLARS.map(p => {
+  cont.innerHTML = FIVE_PILLARS.map(p => {
     const tasks = data[ds].pillars[p.id] || [];
     const done = tasks.filter(t => t.done).length;
     totalDone += done; totalAll += tasks.length;
@@ -7684,7 +7687,7 @@ function renderDvPillars(ds) {
   let totalDone = 0, totalAll = 0;
 
   // Pillar donut mini-rings row
-  const donutsHtml = '<div class="dv-donut-row">' + PILLARS.map(p => {
+  const donutsHtml = '<div class="dv-donut-row">' + FIVE_PILLARS.map(p => {
     const tasks = data[ds].pillars[p.id] || [];
     const done = tasks.filter(t => t.done).length, tot = tasks.length;
     const pct = tot ? done/tot : 0;
@@ -7703,7 +7706,7 @@ function renderDvPillars(ds) {
     </div>`;
   }).join('') + '</div>';
 
-  body.innerHTML = donutsHtml + PILLARS.map(p => {
+  body.innerHTML = donutsHtml + FIVE_PILLARS.map(p => {
     const tasks = data[ds].pillars[p.id] || [];
     const done = tasks.filter(t => t.done).length;
     totalDone += done; totalAll += tasks.length;
@@ -7777,7 +7780,7 @@ function renderDvPillars(ds) {
   // #4 Swipe actions on mobile
   body.querySelectorAll('.dv-pl-task').forEach(row => addSwipeActions(row, ds));
   // F22: animate task count badges
-  PILLARS.forEach(p => animateCount(document.getElementById('dvplcount-'+p.id)));
+  FIVE_PILLARS.forEach(p => animateCount(document.getElementById('dvplcount-'+p.id)));
   // F30: overdue tasks
   setTimeout(markOverdueTasks, 100);
   // F38: full-day confetti check
@@ -7841,7 +7844,7 @@ function addDvPlTask(ds, pid) {
   if (!text) return;
   data[ds].pillars[pid].push({text, done: false});
   if (inp) inp.value = '';
-  const pillar = PILLARS.find(p => p.id === pid);
+  const pillar = FIVE_PILLARS.find(p => p.id === pid);
   if (pillar) showToast('Task added to ' + pillar.name, pillar.color);
   dvPlOpen[pid] = true;
   save();
@@ -7854,7 +7857,7 @@ async function syncPillarTasksToSupabase(ds) {
   if (!USER_ID) return;
   ensureDay(ds);
   const rows = [];
-  PILLARS.forEach(p => {
+  FIVE_PILLARS.forEach(p => {
     (data[ds].pillars[p.id] || []).forEach((t, i) => {
       rows.push({
         id: USER_ID + '_' + ds + '_' + p.id + '_' + i,
@@ -7868,7 +7871,7 @@ async function syncPillarTasksToSupabase(ds) {
     });
   });
   (data[ds].timedEvents || []).forEach(ev => {
-    const pillar = PILLARS.find(p => p.id === ev.pillarId);
+    const pillar = FIVE_PILLARS.find(p => p.id === ev.pillarId);
     rows.push({
       id: USER_ID + '_ev_' + ev.id,
       user_id: USER_ID,
@@ -7900,7 +7903,7 @@ function addFpTask(ds, pid) {
   if (!text) return;
   data[ds].pillars[pid].push({text, done: false});
   if (inp) inp.value = '';
-  const pillar = PILLARS.find(p => p.id === pid);
+  const pillar = FIVE_PILLARS.find(p => p.id === pid);
   if (pillar) showToast('Task added to ' + pillar.name, pillar.color);
   fpPillarOpen[pid] = true;
   save();
@@ -8019,7 +8022,7 @@ function selectDuration(mins) {
   closeDurPopup();
   dvRenderEvents();
   syncPillarTasksToSupabase(ds);
-  const pillar = PILLARS.find(p => p.id === dragData.pillarId);
+  const pillar = FIVE_PILLARS.find(p => p.id === dragData.pillarId);
   showToast('✦ ' + dragData.text + ' → timeline', pillar ? pillar.color : '#E8B84B');
 }
 
@@ -8417,7 +8420,7 @@ function _nrmStopBreathing() {
 // ══ TIMED PILLAR EVENTS ══
 
 function dvMakeTimedEventBlock(slotsEl, ev, ds) {
-  const pillar = PILLARS.find(p => p.id === ev.pillarId) || { color: '#E8B84B', name: '' };
+  const pillar = FIVE_PILLARS.find(p => p.id === ev.pillarId) || { color: '#E8B84B', name: '' };
   const startMin = ev.startTime;
   const endMin = ev.startTime + (ev.duration || 60);
   const top = startMin * (HOUR_H / 60);
@@ -8991,7 +8994,7 @@ function checkWeeklyWins(){
   const ds=fmt(today);
   ensureDay(ds);
   const wins=[];
-  PILLARS.forEach(p=>{
+  FIVE_PILLARS.forEach(p=>{
     const tasks=data[ds].pillars[p.id]||[];
     tasks.filter(t=>t.done).forEach(t=>wins.push(t.text));
   });
@@ -9019,7 +9022,7 @@ function openFocusNow(){
   ensureDay(ds);
   // Top tasks — first undone task per pillar (up to 3)
   const topTasks=[];
-  PILLARS.forEach(p=>{
+  FIVE_PILLARS.forEach(p=>{
     if(topTasks.length>=3)return;
     const task=(data[ds].pillars[p.id]||[]).find(t=>!t.done);
     if(task)topTasks.push({text:task.text,color:p.color,pillar:p.name});
@@ -9063,7 +9066,7 @@ function sidebarSearch(q){
   if(!q||q.length<2){drop.style.display='none';return;}
   const ds=getDateStr(typeof dayOffset!=='undefined'?dayOffset:0);
   const results=[];
-  PILLARS.forEach(p=>{
+  FIVE_PILLARS.forEach(p=>{
     (data[ds]&&data[ds].pillars[p.id]||[]).forEach((t,i)=>{
       if(t.text.toLowerCase().includes(q.toLowerCase())){
         results.push({text:t.text,meta:p.name+(t.done?' · done':''),color:p.color});
@@ -9190,7 +9193,7 @@ function renderRadarChart(canvasId,scores){
     ctx.stroke();
   }
   // Axes + labels
-  const labels=PILLARS.map(p=>p.name.split(' ')[0]);
+  const labels=FIVE_PILLARS.map(p=>p.name.split(' ')[0]);
   for(let i=0;i<n;i++){
     const a=(i/n)*Math.PI*2-Math.PI/2;
     ctx.beginPath();
@@ -9540,13 +9543,13 @@ function renderPillarTimePie(containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
   const hours = {};
-  PILLARS.forEach(p => hours[p.id] = 0);
+  FIVE_PILLARS.forEach(p => hours[p.id] = 0);
   getWeekDays().forEach(ds => {
     const evs = (data.calendar && data.calendar[ds]) || [];
     evs.forEach(ev => {
       const dur = (ev.durationMin || 60) / 60;
       // Match by pillar color or best guess by title
-      const p = PILLARS.find(p => (ev.color && p.color && ev.color.toLowerCase()===p.color.toLowerCase()) ||
+      const p = FIVE_PILLARS.find(p => (ev.color && p.color && ev.color.toLowerCase()===p.color.toLowerCase()) ||
         p.name.toLowerCase().split(' ').some(w=>w.length>3&&ev.title?.toLowerCase().includes(w)));
       if (p) hours[p.id] += dur;
       else hours[PILLARS[0].id] += dur;
@@ -9558,7 +9561,7 @@ function renderPillarTimePie(containerId) {
   const cx=60,cy=60,r=48,sw=16;
   let offset=0;
   const circ=2*Math.PI*r;
-  const segs = PILLARS.map(p=>{
+  const segs = FIVE_PILLARS.map(p=>{
     const pct=hours[p.id]/total;
     const dash=pct*circ, gap=circ-dash;
     const seg=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${p.color}" stroke-width="${sw}"
@@ -9566,7 +9569,7 @@ function renderPillarTimePie(containerId) {
       transform="rotate(-90 ${cx} ${cy})"/>`;
     offset+=pct; return seg;
   }).join('');
-  const legend = PILLARS.map(p=>`<div class="pillar-pie-legend-item">
+  const legend = FIVE_PILLARS.map(p=>`<div class="pillar-pie-legend-item">
     <div class="pillar-pie-legend-dot" style="background:${p.color}"></div>
     <span>${p.name.split(' ')[0]} ${hours[p.id].toFixed(1)}h</span>
   </div>`).join('');
