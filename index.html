@@ -1781,13 +1781,11 @@ body{
   padding:1px;
   box-shadow:0 4px 24px rgba(0,0,0,0.32);
 }
-/* Single page — dark ruled paper */
+/* Single page — clean dark */
 .diary-single-page{
   background:#1A1810;
   border-radius:calc(var(--radius) - 1px);
   position:relative;overflow:hidden;
-  background-image:repeating-linear-gradient(to bottom,transparent,transparent 27px,rgba(196,152,59,0.08) 27px,rgba(196,152,59,0.08) 28px);
-  background-size:100% 28px;
 }
 .dsp-inner{padding:0 16px 16px;position:relative;z-index:2;}
 /* Page header — matches schedule header exactly */
@@ -1846,8 +1844,7 @@ body{
 .dsp-mood-pill:hover{border-color:rgba(196,152,59,0.5);color:var(--text-secondary);}
 .dsp-mood-pill.active{background:rgba(196,152,59,0.15);border-color:var(--gold);color:var(--gold);}
 /* 7. Paper texture on diary */
-.diary-single-page{background:#1A1810;border-radius:calc(var(--radius) - 1px);position:relative;overflow:hidden;
-  background-image:repeating-linear-gradient(to bottom,transparent,transparent 27px,rgba(196,152,59,0.08) 27px,rgba(196,152,59,0.08) 28px);}
+.diary-single-page{background:#1A1810;border-radius:calc(var(--radius) - 1px);position:relative;overflow:hidden;}
 .diary-single-page::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   opacity:0.6;mix-blend-mode:overlay;}
@@ -2110,7 +2107,7 @@ body{
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* F24 – Journal templates */
-.dsp-templates-row{display:flex;gap:6px;flex-wrap:wrap;padding:8px 16px;margin:0 -16px 12px;background:#1C1507;border-bottom:0.5px solid var(--charcoal-border);}
+.dsp-templates-row{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0;margin:0 0 4px;}
 .dsp-tpl-btn{background:none;border:0.5px solid var(--charcoal-border);border-radius:16px;padding:4px 12px;font-size:10px;color:var(--text-secondary);cursor:pointer;transition:all .15s;}
 .dsp-tpl-btn:hover{border-color:var(--gold);color:var(--gold);}
 
@@ -2397,11 +2394,6 @@ body{
                     <button class="dsp-nav-btn" onclick="dspNavDay(1)" id="dsp-nav-next" disabled style="font-size:14px;opacity:0.5;padding:0 2px;">›</button>
                   </div>
                 </div>
-                <div class="dsp-templates-row">
-                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('win')">✦ Win Day</button>
-                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('hard')">◈ Hard Day</button>
-                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
-                </div>
                 <!-- Five Pillars in diary -->
                 <div id="diary-pillars-wrap" style="margin:0 -16px;border-bottom:0.5px solid var(--charcoal-border);"></div>
                 <div class="dsp-prompt-block">
@@ -2412,6 +2404,11 @@ body{
                   </label>
                 </div>
                 <div class="dsp-rule"></div>
+                <div class="dsp-templates-row">
+                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('win')">✦ Win Day</button>
+                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('hard')">◈ Hard Day</button>
+                  <button class="dsp-tpl-btn" onclick="applyJournalTemplate('plan')">◎ Planning Day</button>
+                </div>
                 <div class="dsp-prompt-block" id="dsp-block-grat">
                   <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">◈</span>I am grateful for…</div>
                   <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"/></div>
