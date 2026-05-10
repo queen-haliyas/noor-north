@@ -4278,13 +4278,18 @@ function accOpenDay(slot,offset,skipAnim){
     if(h)h.classList.toggle('active',i===slot);
   }
   _accOpenSlot=slot;
-  // Compute date
+  // Compute date from the currently displayed week, not always today
   const today=new Date();
   const dow=(today.getDay()+6)%7;
-  const d=new Date(today);
-  d.setDate(today.getDate()-dow+slot);
+  let weekMon;
+  if(_accordionWeekStart){
+    weekMon=new Date(_accordionWeekStart);
+  } else {
+    weekMon=new Date(today); weekMon.setDate(today.getDate()-dow);
+  }
+  const d=new Date(weekMon); d.setDate(weekMon.getDate()+slot);
   activeDs=fmt(d);
-  dayOffset=offset!==undefined?offset:slot-dow;
+  dayOffset=Math.round((d-today)/86400000);
   // Move content block into this panel and open it
   const panel=document.getElementById('acc-panel-'+slot);
   const content=document.getElementById('df-day-content');
