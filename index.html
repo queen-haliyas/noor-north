@@ -1659,10 +1659,10 @@ body{
 .ep-input:focus{border-color:var(--gold);}
 .ep-field{margin-bottom:12px;}
 .ep-colors{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;}
-.ep-cdot-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
-.ep-cdot{width:28px;height:28px;border-radius:50%;transition:transform .15s,outline .15s;outline:2px solid transparent;outline-offset:3px;flex-shrink:0;}
-.ep-cdot.sel{outline-color:#fff;transform:scale(1.2);}
-.ep-cdot-label{font-size:8px;font-weight:600;letter-spacing:.06em;color:var(--text-tertiary);text-transform:uppercase;font-family:var(--font-body);}
+.ep-cdot-wrap{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;}
+.ep-cdot{width:26px;height:26px;border-radius:50%;transition:transform .15s,outline .15s;outline:2px solid transparent;outline-offset:3px;flex-shrink:0;}
+.ep-cdot.sel{outline-color:#fff;transform:scale(1.15);}
+.ep-cdot-label{font-size:8px;font-weight:600;letter-spacing:.04em;color:var(--text-tertiary);text-transform:uppercase;font-family:var(--font-body);white-space:nowrap;}
 .ep-btns{display:flex;gap:8px;margin-top:18px;}
 .ep-btn{flex:1;padding:9px;border-radius:8px;border:none;font-size:13px;cursor:pointer;font-family:var(--font-body);font-weight:500;}
 .ep-btn.ok{background:var(--gold);color:#1A1508;}
@@ -3564,7 +3564,7 @@ const DATA_VERSION = '1';
 
 // DATA
 const PILLARS=[
-  {id:'life',name:'Journey To Billions',icon:'✦',color:'#EF4444'},
+  {id:'life',name:'Journey To Billions',icon:'✦',color:'#E56734'},
   {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#F97316'},
   {id:'td',name:'Tiger & Dragon',icon:'◉',color:'#166534'},
   {id:'myc',name:'Mycelink',icon:'⬡',color:'#1E3A5F'},
@@ -3746,13 +3746,13 @@ let calMonth = new Date().getMonth();
 let calSelectedDate = fmt(new Date());
 let selectedEventColor = 'gold';
 const COLOR_MAP={
-  melife:       {bg:'#EF444420',text:'#EF4444',hex:'#EF4444',label:'JB'},
-  tigerflow:    {bg:'#F9731620',text:'#F97316',hex:'#F97316',label:'TF'},
-  tigerdragon:  {bg:'#16653420',text:'#4ade80',hex:'#166534',label:'TD'},
-  mycelink:     {bg:'#1E3A5F20',text:'#4A7CB5',hex:'#1E3A5F',label:'M'},
-  architecture: {bg:'#7C3AED20',text:'#A78BFA',hex:'#7C3AED',label:'A'},
-  lavender:     {bg:'#E9D5FF20',text:'#C4B5FD',hex:'#DDD6FE',label:'E'},
-  yellow:       {bg:'#FDE04720',text:'#FBBF24',hex:'#FDE047',label:'S'},
+  melife:       {bg:'#E5673420',text:'#E56734',hex:'#E56734',label:'JB'},
+  tigerflow:    {bg:'#E5892720',text:'#E58927',hex:'#E58927',label:'TF'},
+  socials:      {bg:'#D4AC3A20',text:'#D4AC3A',hex:'#D4AC3A',label:'S'},
+  tigerdragon:  {bg:'#4A8C5220',text:'#4A8C52',hex:'#4A8C52',label:'TD'},
+  mycelink:     {bg:'#5B9BD520',text:'#5B9BD5',hex:'#5B9BD5',label:'M'},
+  architecture: {bg:'#8E69B820',text:'#8E69B8',hex:'#8E69B8',label:'A'},
+  lavender:     {bg:'#9FB8D820',text:'#9FB8D8',hex:'#B8CCE4',label:'E'},
 };
 const originalSave = save;
 const HOUR_H = 60;
