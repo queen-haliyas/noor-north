@@ -7333,14 +7333,14 @@ function dvMakeBlock(ev, slotsEl) {
   el.className = 'day-event-block';
   el.id = 'dvev-' + ev.id;
   el.style.cssText = `top:${top}px;height:${height}px;background:${hex}28;border-left-color:${hex};color:${hex};`;
-  el.innerHTML = `<button class="day-event-del" onclick="dvDeleteEvent('${ev.id}')">✕</button>
-    <button class="day-event-edit" onclick="dvOpenEditPopup('${ev.id}')">✎</button>
+  el.innerHTML = `<button class="day-event-del" onclick="event.stopPropagation();dvDeleteEvent('${ev.id}')">✕</button>
+    <button class="day-event-edit" onclick="event.stopPropagation();dvOpenEditPopup('${ev.id}')">✎</button>
     <div class="day-event-title">${ev.title}</div>
     <div class="day-event-time-label">${dvMinToTime(ev.startMin)} – ${dvMinToTime(ev.endMin)}</div>
     <div class="day-event-resize-handle" data-id="${ev.id}"></div>`;
   // Drag
   el.addEventListener('mousedown', e => {
-    if (e.target.classList.contains('day-event-resize-handle') || e.target.classList.contains('day-event-del')) return;
+    if (e.target.classList.contains('day-event-resize-handle') || e.target.classList.contains('day-event-del') || e.target.classList.contains('day-event-edit')) return;
     e.preventDefault();
     dvDragState = {id:ev.id, startY:e.clientY, origTop:parseInt(el.style.top), el};
     el.classList.add('dragging');
@@ -8509,8 +8509,18 @@ async function _dspFetch() {
     const rows = await sbRequest('GET',
       `diary_entries?user_id=eq.${encodeURIComponent(userId)}&date=eq.${_dspDate}&select=*`
     );
-    _dspApply(Array.isArray(rows) ? rows[0] : null);
-  } catch(e) { _dspApply(null); }
+    if (Array.isArray(rows) && rows.length > 0) {
+      _dspApply(rows[0]);
+      return;
+    }
+  } catch(e) {}
+  // Fallback: try localStorage
+  try {
+    const localKey = 'diary_' + userId + '_' + _dspDate;
+    const local = localStorage.getItem(localKey);
+    if (local) { _dspApply(JSON.parse(local)); return; }
+  } catch(e) {}
+  _dspApply(null);
 }
 
 function _dspApply(row) {
@@ -8739,20 +8749,80 @@ async function saveDiaryEntry() {
     sealed:             _dspSealed,
     updated_at: new Date().toISOString(),
   };
+
+  // Always save to localStorage as fallback
+  try {
+    const localKey = 'diary_' + userId + '_' + _dspDate;
+    localStorage.setItem(localKey, JSON.stringify(body));
+  } catch(e) {}
+
+  const ind = document.getElementById('dsp-saved-ind');
   try {
     const res = await sbRequest('POST', 'diary_entries', body);
-    const ind = document.getElementById('dsp-saved-ind');
     if (res && res.ok) {
       if (ind) { ind.textContent = 'saved ✓'; ind.style.color = 'rgba(196,152,59,0.7)'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 2200); }
     } else {
-      console.error('[Diary] Save failed — diary_entries table may not exist in Supabase. Status:', res && res.status);
-      if (ind) { ind.textContent = 'save failed ✗'; ind.style.color = '#E8733A'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 4000); }
+      const errText = await res.text().catch(() => '');
+      console.error('[Diary] Save failed:', res.status, errText);
+      // Table may not exist — show SQL hint in console
+      if (res.status === 404 || res.status === 400 || errText.includes('does not exist')) {
+        console.warn('[Diary] Create the diary_entries table in Supabase:\n' + _diaryTableSQL());
+      }
+      if (ind) { ind.textContent = 'saved locally ✓'; ind.style.color = 'rgba(196,152,59,0.5)'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 3000); }
     }
   } catch(e) {
     console.error('[Diary] Save exception:', e);
-    const ind = document.getElementById('dsp-saved-ind');
-    if (ind) { ind.textContent = 'save failed ✗'; ind.style.color = '#E8733A'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 4000); }
+    if (ind) { ind.textContent = 'saved locally ✓'; ind.style.color = 'rgba(196,152,59,0.5)'; ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 3000); }
   }
+}
+
+function _diaryTableSQL() {
+  return `CREATE TABLE diary_entries (
+  id text PRIMARY KEY,
+  user_id text NOT NULL,
+  date text NOT NULL,
+  starred boolean DEFAULT false,
+  donated boolean DEFAULT false,
+  gratitude jsonb DEFAULT '{}',
+  manifest jsonb DEFAULT '{}',
+  must_do jsonb DEFAULT '{}',
+  daily_entry text DEFAULT '',
+  good_today text DEFAULT '',
+  bad_today text DEFAULT '',
+  system_improvement text DEFAULT '',
+  evidence text DEFAULT '',
+  business_wins text DEFAULT '',
+  problems_solved text DEFAULT '',
+  ideas text DEFAULT '',
+  skills text DEFAULT '',
+  mental_ram text DEFAULT '',
+  moods jsonb DEFAULT '[]',
+  sealed boolean DEFAULT false,
+  updated_at timestamptz DEFAULT now()
+);
+ALTER TABLE diary_entries ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "anon_all" ON diary_entries FOR ALL TO anon USING (true) WITH CHECK (true);`;
+}
+
+// Also patch _dspFetch to fall back to localStorage when Supabase fails
+async function _dspFetchWithFallback() {
+  const userId = USER_ID || 'anon';
+  try {
+    const rows = await sbRequest('GET',
+      `diary_entries?user_id=eq.${encodeURIComponent(userId)}&date=eq.${_dspDate}&select=*`
+    );
+    if (Array.isArray(rows) && rows.length > 0) {
+      _dspApply(rows[0]);
+      return;
+    }
+  } catch(e) {}
+  // Fallback: try localStorage
+  try {
+    const localKey = 'diary_' + userId + '_' + _dspDate;
+    const local = localStorage.getItem(localKey);
+    if (local) { _dspApply(JSON.parse(local)); return; }
+  } catch(e) {}
+  _dspApply(null);
 }
 
 function diaryToggleSearch() {
