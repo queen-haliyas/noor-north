@@ -4232,6 +4232,12 @@ let _accOpenSlot=-1;
 function buildAccordion(){
   const container=document.getElementById('day-accordion');
   if(!container)return;
+  // Rescue df-day-content before wiping innerHTML (it may have been moved inside)
+  const savedContent=document.getElementById('df-day-content');
+  if(savedContent && container.contains(savedContent)){
+    document.body.appendChild(savedContent);
+    savedContent.style.display='none';
+  }
   const today=new Date();
   const todayStr=fmt(today);
   // Use _accordionWeekStart if set, else current week's Monday
