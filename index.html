@@ -4152,6 +4152,7 @@ function renderDaily(){
 
 /* ── Mini Calendar ── */
 let _miniCalYear, _miniCalMonth;
+let _accordionWeekStart = null;
 function miniCalInit(){
   const now=new Date();
   _miniCalYear=now.getFullYear();
@@ -4167,14 +4168,19 @@ function miniCalNav(dir){
 function miniCalRender(){
   const today=new Date();
   const todayY=today.getFullYear(),todayM=today.getMonth(),todayD=today.getDate();
-  // Current week Mon–Sun
-  const dow=(today.getDay()+6)%7;
-  const weekStart=new Date(today); weekStart.setDate(today.getDate()-dow);
-  const weekEnd=new Date(weekStart); weekEnd.setDate(weekStart.getDate()+6);
+  // Use accordion week if set, else today's week
+  let weekStart, weekEnd;
+  if(_accordionWeekStart){
+    weekStart=new Date(_accordionWeekStart);
+  } else {
+    const dow=(today.getDay()+6)%7;
+    weekStart=new Date(today); weekStart.setDate(today.getDate()-dow);
+  }
+  weekEnd=new Date(weekStart); weekEnd.setDate(weekStart.getDate()+6);
   const title=new Date(_miniCalYear,_miniCalMonth,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
   document.getElementById('mini-cal-title').textContent=title;
   const firstDay=new Date(_miniCalYear,_miniCalMonth,1);
-  const startDow=(firstDay.getDay()+6)%7; // 0=Mon
+  const startDow=(firstDay.getDay()+6)%7;
   const daysInMonth=new Date(_miniCalYear,_miniCalMonth+1,0).getDate();
   const daysInPrev=new Date(_miniCalYear,_miniCalMonth,0).getDate();
   let cells='';
@@ -4194,14 +4200,23 @@ function miniCalRender(){
   }
   document.getElementById('mini-cal-grid').innerHTML=cells;
 }
+
 function miniCalClick(y,m,d){
-  // Jump the accordion to that day if it's the current week
-  const today=new Date();
-  const dow=(today.getDay()+6)%7;
-  const weekStart=new Date(today); weekStart.setDate(today.getDate()-dow);
-  const clicked=new Date(y,m,d);
-  const diff=Math.round((clicked-weekStart)/(86400000));
-  if(diff>=0&&diff<=6){accOpenDay(diff,diff-dow);}
+  const clicked = new Date(y,m,d);
+  // Find Monday of the clicked date's week
+  const dow = (clicked.getDay()+6)%7;
+  const weekMon = new Date(clicked);
+  weekMon.setDate(clicked.getDate()-dow);
+  // Rebuild accordion for that week
+  _accordionWeekStart = weekMon;
+  buildAccordion();
+  miniCalRender(); // re-render to highlight new week
+  // Open the clicked day (slot = diff from Monday)
+  const slot = Math.round((clicked - weekMon) / 86400000);
+  const today = new Date();
+  const todayMon = new Date(today); todayMon.setDate(today.getDate()-((today.getDay()+6)%7));
+  const weekOffsetDays = Math.round((weekMon - todayMon) / 86400000);
+  accOpenDay(slot, weekOffsetDays + slot - ((today.getDay()+6)%7));
 }
 
 let _accOpenSlot=-1;
@@ -4210,16 +4225,23 @@ function buildAccordion(){
   const container=document.getElementById('day-accordion');
   if(!container)return;
   const today=new Date();
-  const dow=(today.getDay()+6)%7;
   const todayStr=fmt(today);
+  // Use _accordionWeekStart if set, else current week's Monday
+  let weekMon;
+  if(_accordionWeekStart){
+    weekMon=new Date(_accordionWeekStart);
+  } else {
+    const dow=(today.getDay()+6)%7;
+    weekMon=new Date(today); weekMon.setDate(today.getDate()-dow);
+  }
   const DAY_SHORT=['MON','TUE','WED','THU','FRI','SAT','SUN'];
   let html='';
   for(let slot=0;slot<7;slot++){
-    const d=new Date(today);
-    d.setDate(today.getDate()-dow+slot);
-    const offset=slot-dow;
+    const d=new Date(weekMon); d.setDate(weekMon.getDate()+slot);
     const ds=fmt(d);
     const isToday=ds===todayStr;
+    // offset = days from today
+    const offset=Math.round((d-today)/86400000);
     const longDate=d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
     html+=`<div class="acc-day-item" id="acc-item-${slot}">
       <div class="acc-day-header${isToday?' today':''}" id="acc-hdr-${slot}" onclick="accOpenDay(${slot},${offset})">
