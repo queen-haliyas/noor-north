@@ -1627,32 +1627,47 @@ body{
 
 /* ══ GOOGLE CALENDAR DAY PLANNER ══ */
 .day-view-card{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);overflow:visible;display:flex;flex-direction:column;}
-.day-view-header{padding:10px 16px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
-.day-view-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--text-primary);}
-.day-view-date-sub{font-size:11px;color:var(--text-tertiary);margin-top:1px;}
+.day-view-header{padding:8px 14px;border-bottom:0.5px solid var(--charcoal-border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#1C1507;}
+/* 17. Smaller header title */
+.day-view-title{font-family:var(--font-display);font-size:14px;font-weight:400;color:var(--text-primary);}
+.day-view-date-sub{font-size:10px;color:var(--text-tertiary);margin-top:1px;letter-spacing:.02em;}
 .day-view-scroll{position:relative;}
-.day-time-grid{display:grid;grid-template-columns:48px 1fr;min-height:1440px;position:relative;}
-#day-time-labels{background:transparent;}
-#day-time-slots{background:#000;}
-.time-label{position:absolute;right:6px;font-size:9px;color:#fff;transform:translateY(-50%);white-space:nowrap;}
-.time-slots-col{position:relative;border-left:0.5px solid var(--charcoal-border);}
+/* 4+16+20. Tighter label col, column divider, gradient background */
+.day-time-grid{display:grid;grid-template-columns:40px 1fr;min-height:1440px;position:relative;background:linear-gradient(to right,#1A1507 40px,#0D0D0F 40px);}
+#day-time-labels{background:transparent;border-right:0.5px solid rgba(196,152,59,0.1);}
+/* 1. Deep charcoal not harsh black */
+#day-time-slots{background:#0D0D0F;}
+/* 3. Warm off-white labels */
+.time-label{position:absolute;right:5px;font-size:9px;color:#C4B99A;transform:translateY(-50%);white-space:nowrap;letter-spacing:.02em;}
+.time-slots-col{position:relative;}
 .time-slot-line{position:absolute;left:0;right:0;cursor:pointer;transition:background .1s;}
-.time-slot-line:hover{background:#E8B84B08;}
-.time-slot-line.hour{border-top:0.5px solid var(--charcoal-border);}
-.time-slot-line.half{border-top:0.5px dashed #2E2510;}
-.now-line{position:absolute;left:0;right:0;border-top:1px solid var(--gold);z-index:10;pointer-events:none;}
-.now-dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--gold);animation:nowPulse 2s ease-in-out infinite;}
+.time-slot-line:hover{background:rgba(196,152,59,0.04);}
+/* 5. Fainter hour lines */
+.time-slot-line.hour{border-top:0.5px solid rgba(255,255,255,0.05);}
+/* 2. Subtle solid half-hour mark */
+.time-slot-line.half{border-top:0.5px solid rgba(255,255,255,0.02);}
+/* 9. NOW line with glow */
+.now-line{position:absolute;left:0;right:0;border-top:1.5px solid rgba(196,152,59,0.85);z-index:10;pointer-events:none;filter:drop-shadow(0 0 4px rgba(196,152,59,0.5));}
+.now-dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--gold);animation:nowPulse 2s ease-in-out infinite;box-shadow:0 0 8px rgba(196,152,59,0.8);}
 @keyframes nowPulse{0%,100%{box-shadow:0 0 0 0 rgba(196,152,59,0.6);}50%{box-shadow:0 0 0 5px rgba(196,152,59,0);}}
-.now-label{position:absolute;right:6px;top:-9px;font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.06em;background:var(--charcoal);padding:0 4px;border-radius:3px;}
-.day-event-block{position:absolute;left:4px;right:4px;border-radius:6px;padding:4px 8px;font-size:11px;cursor:grab;user-select:none;overflow:hidden;box-shadow:0 2px 8px #00000030;border-left:3px solid rgba(255,255,255,0.3);z-index:5;transition:box-shadow .15s;}
-.day-event-block:hover{box-shadow:0 4px 16px #00000050;}
-.day-event-block.dragging{cursor:grabbing;opacity:.8;z-index:20;box-shadow:0 8px 24px #00000060;}
-.day-event-title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.day-event-time-label{font-size:10px;opacity:.8;margin-top:1px;}
+.now-label{position:absolute;right:6px;top:-9px;font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.06em;background:#0D0D0F;padding:0 4px;border-radius:3px;}
+/* 14. Event block padding, softer shadows */
+.day-event-block{position:absolute;left:4px;right:4px;border-radius:6px;padding:5px 10px 6px;font-size:11px;cursor:grab;user-select:none;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.6);border-left:3px solid rgba(255,255,255,0.3);z-index:5;transition:box-shadow .15s;}
+.day-event-block:hover{box-shadow:0 4px 20px rgba(0,0,0,0.75);}
+.day-event-block.dragging{cursor:grabbing;opacity:.85;z-index:20;box-shadow:0 8px 28px rgba(0,0,0,0.8);}
+.day-event-title{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.day-event-time-label{font-size:10px;opacity:.7;margin-top:2px;}
 .day-event-del{position:absolute;top:2px;right:4px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);font-size:10px;opacity:0;transition:opacity .15s;padding:0;}
 .day-event-edit{position:absolute;top:2px;right:18px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);font-size:10px;opacity:0;transition:opacity .15s;padding:0;}
 .day-event-block:hover .day-event-del,.day-event-block:hover .day-event-edit{opacity:1;}
-.day-event-resize-handle{position:absolute;bottom:0;left:0;right:0;height:8px;cursor:ns-resize;border-radius:0 0 6px 6px;}
+/* 19. Visible drag handle */
+.day-event-resize-handle{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:20px;height:3px;border-radius:2px;background:rgba(255,255,255,0.18);cursor:ns-resize;}
+/* 10. Current hour gold wash */
+.time-slot-line.current-hour{background:rgba(196,152,59,0.04);}
+/* 11. Past/future label states */
+.time-label.past{opacity:0.15;color:#8A7E6A;}
+.time-label.current{color:var(--gold)!important;font-weight:600;opacity:1!important;}
+.time-label.future{opacity:0.45;}
 .event-popup-overlay{position:fixed;inset:0;z-index:2000;background:#00000070;backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;}
 .event-popup{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:24px;width:320px;box-shadow:0 20px 60px #00000080;animation:popIn .2s ease;}
 @keyframes popIn{from{opacity:0;transform:scale(.94) translateY(8px);}to{opacity:1;transform:scale(1) translateY(0);}}
@@ -1744,18 +1759,8 @@ body{
 .ritual-timeline-block.expanded{overflow:visible;z-index:20;}
 .ritual-timeline-block:hover{box-shadow:0 4px 20px #00000050;}
 /* Next-up chip */
-.dv-next-chip{position:absolute;left:50%;transform:translateX(-50%);background:rgba(26,16,8,0.92);border:0.5px solid rgba(196,152,59,0.4);border-radius:20px;padding:3px 12px;font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.04em;white-space:nowrap;z-index:12;pointer-events:none;backdrop-filter:blur(4px);}
-/* Hour label states */
-.time-label.past{opacity:0.22;}
-.time-label.current{color:var(--gold)!important;font-weight:600;}
-.time-label.future{opacity:0.55;}
-/* Current hour slot highlight */
-.time-slot-line.current-hour{background:rgba(196,152,59,0.04);}
-/* Completion arc in header */
+.dv-next-chip{position:absolute;left:50%;transform:translateX(-50%);background:rgba(13,13,15,0.92);border:0.5px solid rgba(196,152,59,0.4);border-radius:20px;padding:3px 12px;font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.04em;white-space:nowrap;z-index:12;pointer-events:none;backdrop-filter:blur(4px);}
 .dv-completion-arc{flex-shrink:0;margin-right:8px;}
-/* Contextual day sub-header */
-.day-view-date-sub{font-size:10px;color:var(--text-tertiary);margin-top:2px;letter-spacing:.02em;}
-/* Q2 zone pillar icon */
 .q2-zone-icon{position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:9px;opacity:0.5;pointer-events:none;}
 .rtb-header{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;cursor:pointer;user-select:none;}
 .rtb-tasks{padding:2px 6px 4px;}
