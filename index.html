@@ -1647,7 +1647,8 @@ body{
 .day-event-title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .day-event-time-label{font-size:10px;opacity:.8;margin-top:1px;}
 .day-event-del{position:absolute;top:2px;right:4px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);font-size:10px;opacity:0;transition:opacity .15s;padding:0;}
-.day-event-block:hover .day-event-del{opacity:1;}
+.day-event-edit{position:absolute;top:2px;right:18px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.7);font-size:10px;opacity:0;transition:opacity .15s;padding:0;}
+.day-event-block:hover .day-event-del,.day-event-block:hover .day-event-edit{opacity:1;}
 .day-event-resize-handle{position:absolute;bottom:0;left:0;right:0;height:8px;cursor:ns-resize;border-radius:0 0 6px 6px;}
 .event-popup-overlay{position:fixed;inset:0;z-index:2000;background:#00000070;backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;}
 .event-popup{background:var(--charcoal-light);border:0.5px solid var(--charcoal-border);border-radius:var(--radius);padding:24px;width:320px;box-shadow:0 20px 60px #00000080;animation:popIn .2s ease;}
@@ -2531,7 +2532,8 @@ body{
   <!-- Event add popup -->
   <div class="event-popup-overlay" id="ev-popup" style="display:none" onclick="if(event.target===this)closeEvPopup()">
     <div class="event-popup">
-      <div class="ep-title">✦ Add Event</div>
+      <div class="ep-title" id="ep-title">✦ Add Event</div>
+      <input type="hidden" id="ep-edit-id" value=""/>
       <div class="ep-field"><div class="ep-label">Name</div><input class="ep-input" id="ep-name" placeholder="e.g. Prayer, Meeting, Gym..." onkeydown="if(event.key==='Enter')saveEvPopup()"/></div>
       <div class="ep-field"><div class="ep-label">Time</div>
         <div style="display:flex;gap:8px">
@@ -2543,7 +2545,8 @@ body{
       <div class="ep-field"><div class="ep-label">Colour</div><div class="ep-colors" id="ep-colors"></div></div>
       <div class="ep-btns">
         <button class="ep-btn cancel" onclick="closeEvPopup()">Cancel</button>
-        <button class="ep-btn ok" onclick="saveEvPopup()">Add ✦</button>
+        <button class="ep-btn cancel" id="ep-tmr-btn" onclick="dvMoveEventToTomorrow()" style="display:none">→ Tomorrow</button>
+        <button class="ep-btn ok" id="ep-save-btn" onclick="saveEvPopup()">Add ✦</button>
       </div>
     </div>
   </div>
@@ -7331,6 +7334,7 @@ function dvMakeBlock(ev, slotsEl) {
   el.id = 'dvev-' + ev.id;
   el.style.cssText = `top:${top}px;height:${height}px;background:${hex}28;border-left-color:${hex};color:${hex};`;
   el.innerHTML = `<button class="day-event-del" onclick="dvDeleteEvent('${ev.id}')">✕</button>
+    <button class="day-event-edit" onclick="dvOpenEditPopup('${ev.id}')">✎</button>
     <div class="day-event-title">${ev.title}</div>
     <div class="day-event-time-label">${dvMinToTime(ev.startMin)} – ${dvMinToTime(ev.endMin)}</div>
     <div class="day-event-resize-handle" data-id="${ev.id}"></div>`;
@@ -7423,6 +7427,10 @@ function dvSlotClick(e, h, m) {
 }
 
 function openEvPopup(startMin) {
+  document.getElementById('ep-edit-id').value = '';
+  document.getElementById('ep-title').textContent = '✦ Add Event';
+  document.getElementById('ep-save-btn').textContent = 'Add ✦';
+  document.getElementById('ep-tmr-btn').style.display = 'none';
   document.getElementById('ep-name').value = '';
   document.getElementById('ep-start').value = dvMinToTime(startMin);
   document.getElementById('ep-end').value = dvMinToTime(startMin + 60);
@@ -7432,6 +7440,41 @@ function openEvPopup(startMin) {
   ).join('');
   document.getElementById('ev-popup').style.display = 'flex';
   setTimeout(() => document.getElementById('ep-name').focus(), 50);
+}
+
+function dvOpenEditPopup(id) {
+  const ev = (data.calendar?.[dvDate] || []).find(e => e.id === id);
+  if (!ev) return;
+  document.getElementById('ep-edit-id').value = id;
+  document.getElementById('ep-title').textContent = '✎ Edit Event';
+  document.getElementById('ep-save-btn').textContent = 'Save ✦';
+  document.getElementById('ep-tmr-btn').style.display = '';
+  document.getElementById('ep-name').value = ev.title;
+  document.getElementById('ep-start').value = dvMinToTime(ev.startMin);
+  document.getElementById('ep-end').value = dvMinToTime(ev.endMin);
+  const ce = document.getElementById('ep-colors');
+  if (ce) ce.innerHTML = Object.entries(COLOR_MAP).map(([k,v]) =>
+    `<div class="ep-cdot-wrap" onclick="dvPickColor(this.querySelector('.ep-cdot'))"><div class="ep-cdot${k===ev.color?' sel':''}" data-color="${k}" style="background:${v.hex}"></div><span class="ep-cdot-label">${v.label}</span></div>`
+  ).join('');
+  document.getElementById('ev-popup').style.display = 'flex';
+  setTimeout(() => document.getElementById('ep-name').focus(), 50);
+}
+
+function dvMoveEventToTomorrow() {
+  const id = document.getElementById('ep-edit-id').value;
+  if (!id || !data.calendar?.[dvDate]) return;
+  const ev = data.calendar[dvDate].find(e => e.id === id);
+  if (!ev) return;
+  const parts = dvDate.split('-').map(Number);
+  const d = new Date(parts[0], parts[1]-1, parts[2]);
+  d.setDate(d.getDate()+1);
+  const tmr = fmt(d);
+  if (!data.calendar) data.calendar = {};
+  if (!data.calendar[tmr]) data.calendar[tmr] = [];
+  data.calendar[tmr].push({...ev, id: Date.now()+''});
+  data.calendar[dvDate] = data.calendar[dvDate].filter(e => e.id !== id);
+  save(); closeEvPopup(); dvRenderEvents();
+  showToast('Event moved to tomorrow ✓', '#7ecfa0');
 }
 
 function dvPickColor(el) {
@@ -7449,13 +7492,25 @@ function saveEvPopup() {
   const startMin = dvTimeToMin(document.getElementById('ep-start').value) ?? dvPopupMin;
   const endMin = dvTimeToMin(document.getElementById('ep-end').value) ?? startMin + 60;
   const sel = document.querySelector('.ep-cdot.sel');
-  const color = sel ? sel.getAttribute('data-color') : 'gold';
+  const color = sel ? sel.getAttribute('data-color') : 'melife';
   if (!data.calendar) data.calendar = {};
   if (!data.calendar[dvDate]) data.calendar[dvDate] = [];
-  const ev = {id:Date.now()+'', title, color, time:dvMinToTime(startMin), startMin, endMin, durationMin:endMin-startMin};
-  data.calendar[dvDate].push(ev);
-  save(); closeEvPopup(); dvRenderEvents();
-  showToast('✦ '+title+' added', COLOR_MAP[color]?.hex||'#E8B84B');
+  const editId = document.getElementById('ep-edit-id').value;
+  if (editId) {
+    // Edit existing
+    const idx = data.calendar[dvDate].findIndex(e => e.id === editId);
+    if (idx >= 0) {
+      data.calendar[dvDate][idx] = {...data.calendar[dvDate][idx], title, color, startMin, endMin, durationMin:endMin-startMin, time:dvMinToTime(startMin)};
+    }
+    save(); closeEvPopup(); dvRenderEvents();
+    showToast('✦ '+title+' updated', COLOR_MAP[color]?.hex||'#E8B84B');
+  } else {
+    // New event
+    const ev = {id:Date.now()+'', title, color, time:dvMinToTime(startMin), startMin, endMin, durationMin:endMin-startMin};
+    data.calendar[dvDate].push(ev);
+    save(); closeEvPopup(); dvRenderEvents();
+    showToast('✦ '+title+' added', COLOR_MAP[color]?.hex||'#E8B84B');
+  }
 }
 
 function dvMinToTime(min) {
