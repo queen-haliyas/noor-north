@@ -619,6 +619,7 @@ body{
 .df-diary-wrap .diary-single-page{flex:1;display:flex;flex-direction:column;}
 .df-sched-wrap .day-view-card{flex:1;}
 @media(max-width:900px){.df-main-cols{flex-direction:column;}.df-left,.df-right{flex:unset;width:100%;}}
+@media(max-width:700px){.weekly-wins-card{flex-direction:column;align-items:flex-start;}.weekly-wins-divider{width:100%;height:0.5px;background:linear-gradient(to right,transparent,rgba(196,152,59,0.35),transparent);margin:12px 0;}}
 
 /* Three column layout */
 .flow-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:16px;align-items:stretch;}
@@ -2151,12 +2152,14 @@ body{
 
 
 /* F32 – Weekly wins card */
-.weekly-wins-card{background:linear-gradient(135deg,#1A1205,#2A1E08);border:0.5px solid var(--gold);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:12px;}
-.weekly-wins-title{font-family:var(--font-display);font-size:14px;color:var(--gold);margin-bottom:10px;}
-.weekly-wins-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.weekly-wins-stat{font-size:11px;color:var(--text-secondary);}
-.weekly-wins-stat strong{color:var(--text-primary);}
-.weekly-wins-quote{font-style:italic;font-size:11px;color:var(--gold);margin-top:8px;padding-top:8px;border-top:0.5px solid rgba(232,184,75,.2);line-height:1.5;}
+.weekly-wins-card{background:#1A1507;border:0.5px solid rgba(196,152,59,0.25);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:0;transition:box-shadow .2s;}
+.weekly-wins-card:hover{box-shadow:0 0 0 1px rgba(196,152,59,0.2),0 4px 20px rgba(0,0,0,0.3);}
+.weekly-wins-title{font-family:var(--font-display);font-size:15px;font-weight:400;color:var(--text-primary);line-height:1.2;}
+.weekly-wins-sub{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-top:4px;}
+.weekly-wins-divider{width:0.5px;background:linear-gradient(to bottom,transparent,rgba(196,152,59,0.35),transparent);align-self:stretch;margin:0 20px;flex-shrink:0;}
+.weekly-wins-reframe-label{font-size:8px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:rgba(196,152,59,0.45);margin-bottom:5px;}
+.weekly-wins-aff{font-size:12px;font-style:italic;color:var(--text-secondary);line-height:1.6;transition:opacity .5s;}
+.weekly-wins-aff.fading{opacity:0;}
 
 
 /* F37 – Empty state illustrations */
@@ -2302,10 +2305,6 @@ body{
      DAILY FLOW PAGE
 ══════════════════════════════════════ -->
 <div class="page active" id="page-daily">
-  <!-- Header -->
-  <div style="margin-bottom:0.75rem">
-    <h2 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:var(--text-primary);text-align:center">Weekly Flow</h2>
-  </div>
   <!-- F32: Weekly wins (Sunday) -->
   <div id="weekly-wins-daily"></div>
 
@@ -3564,7 +3563,7 @@ const DATA_VERSION = '1';
 
 // DATA
 const PILLARS=[
-  {id:'life',name:'Journey To Billions',icon:'✦',color:'#E56734'},
+  {id:'life',name:'Journey To Billions',icon:'✦',color:'#C00015'},
   {id:'tiger',name:'TigerFlow AI',icon:'◈',color:'#F97316'},
   {id:'td',name:'Tiger & Dragon',icon:'◉',color:'#166534'},
   {id:'myc',name:'Mycelink',icon:'⬡',color:'#1E3A5F'},
@@ -3746,11 +3745,11 @@ let calMonth = new Date().getMonth();
 let calSelectedDate = fmt(new Date());
 let selectedEventColor = 'gold';
 const COLOR_MAP={
-  melife:       {bg:'#E5673420',text:'#E56734',hex:'#E56734',label:'JB'},
+  melife:       {bg:'#C0001520',text:'#C00015',hex:'#C00015',label:'JB'},
   tigerflow:    {bg:'#E5892720',text:'#E58927',hex:'#E58927',label:'TF'},
   socials:      {bg:'#D4AC3A20',text:'#D4AC3A',hex:'#D4AC3A',label:'S'},
   tigerdragon:  {bg:'#4A8C5220',text:'#4A8C52',hex:'#4A8C52',label:'TD'},
-  mycelink:     {bg:'#5B9BD520',text:'#5B9BD5',hex:'#5B9BD5',label:'M'},
+  mycelink:     {bg:'#007ACC20',text:'#007ACC',hex:'#007ACC',label:'M'},
   architecture: {bg:'#8E69B820',text:'#8E69B8',hex:'#8E69B8',label:'A'},
   lavender:     {bg:'#9FB8D820',text:'#9FB8D8',hex:'#B8CCE4',label:'E'},
 };
@@ -9668,11 +9667,11 @@ function renderWeeklyWinsCard() {
     _weeklyCardAffIdx = (_weeklyCardAffIdx + 1) % WEEKLY_CARD_AFFIRMATIONS.length;
     const affEl = document.getElementById('weekly-card-aff');
     if (affEl) {
-      affEl.style.opacity = '0';
+      affEl.classList.add('fading');
       setTimeout(() => {
         affEl.textContent = WEEKLY_CARD_AFFIRMATIONS[_weeklyCardAffIdx];
-        affEl.style.opacity = '1';
-      }, 400);
+        affEl.classList.remove('fading');
+      }, 500);
     }
   }, 30000);
 }
@@ -9681,11 +9680,19 @@ function _renderWeeklyCardContent(today) {
   const el = document.getElementById('weekly-wins-daily');
   if (!el) return;
   const aff = WEEKLY_CARD_AFFIRMATIONS[_weeklyCardAffIdx];
-  el.innerHTML = `<div class="weekly-wins-card" style="display:flex;align-items:center;gap:16px;">
+  const dateStr = today.toLocaleDateString('en-GB',{day:'numeric',month:'long'});
+  const weekNum = getWeekNum(today);
+  const quarter = getQ(today);
+  el.innerHTML = `<div class="weekly-wins-card">
     <div style="flex-shrink:0;">
-      <div class="weekly-wins-title">✦ This Week — ${today.toLocaleDateString('en-GB',{day:'numeric',month:'long'})} &nbsp;·&nbsp; Week ${getWeekNum(today)} &nbsp;·&nbsp; Q${getQ(today)}</div>
+      <div class="weekly-wins-title">✦ &nbsp;${dateStr}</div>
+      <div class="weekly-wins-sub">Week <span style="color:var(--gold)">${weekNum}</span> &nbsp;·&nbsp; Q<span style="color:var(--gold)">${quarter}</span></div>
     </div>
-    <div id="weekly-card-aff" style="flex:1;border-left:0.5px solid rgba(196,152,59,0.2);padding-left:16px;font-size:11px;font-style:italic;color:var(--text-secondary);line-height:1.5;transition:opacity .4s;">${aff}</div>
+    <div class="weekly-wins-divider"></div>
+    <div style="flex:1;min-width:0;">
+      <div class="weekly-wins-reframe-label">Cognitive Reframe</div>
+      <div class="weekly-wins-aff" id="weekly-card-aff">${aff}</div>
+    </div>
   </div>`;
 }
 
