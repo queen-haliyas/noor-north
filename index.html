@@ -4193,7 +4193,7 @@ function miniCalRender(){
     else{day=i-startDow+1;}
     const cellDate=new Date(yr,mo,day);
     const isToday=yr===todayY&&mo===todayM&&day===todayD;
-    const inWeek=cellDate>=weekStart&&cellDate<=weekEnd&&!cls.includes('other-month');
+    const inWeek=cellDate>=weekStart&&cellDate<=weekEnd;
     if(isToday) cls+=' today';
     else if(inWeek) cls+=' in-week';
     cells+=`<div class="${cls}" onclick="miniCalClick(${yr},${mo},${day})">${day}</div>`;
