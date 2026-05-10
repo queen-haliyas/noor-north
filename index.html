@@ -1818,7 +1818,7 @@ body{
 .dsp-donate-lbl{font-family:'Poppins',sans-serif;font-size:11px;font-weight:300;color:var(--text-secondary);cursor:pointer;}
 .dsp-num-line{display:flex;align-items:baseline;gap:4px;border-bottom:0.5px solid rgba(196,152,59,0.1);}
 .dsp-n{font-family:'Poppins',sans-serif;font-size:9px;font-weight:300;color:var(--text-tertiary);flex-shrink:0;width:14px;line-height:24px;}
-.dsp-line-inp{flex:1;border:none;outline:none;background:transparent;font-family:'Poppins',sans-serif;font-size:11px;font-weight:300;line-height:24px;color:var(--text-primary);padding:0 2px;}
+.dsp-line-inp{flex:1;border:none;outline:none;background:transparent;font-family:'Poppins',sans-serif;font-size:11px;font-weight:300;line-height:24px;color:var(--text-primary);padding:0 2px;resize:none;overflow:hidden;display:block;width:100%;box-sizing:border-box;}
 .dsp-line-inp::placeholder{color:var(--text-tertiary);font-style:italic;font-weight:300;}
 /* ── DIARY SOPHISTICATION UPGRADES ── */
 /* 1. Gold divider lines with section icons */
@@ -2410,25 +2410,25 @@ body{
                 </div>
                 <div class="dsp-prompt-block" id="dsp-block-grat">
                   <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">◈</span>I am grateful for…</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-grat-1" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-grat-2" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-grat-3" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">1</span><textarea class="dsp-line-inp" id="dsp-grat-1" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"></textarea></div>
+                  <div class="dsp-num-line"><span class="dsp-n">2</span><textarea class="dsp-line-inp" id="dsp-grat-2" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"></textarea></div>
+                  <div class="dsp-num-line"><span class="dsp-n">3</span><textarea class="dsp-line-inp" id="dsp-grat-3" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-grat',['dsp-grat-1','dsp-grat-2','dsp-grat-3'])"></textarea></div>
                   <div class="dsp-word-count" id="dsp-wc-grat"></div>
                 </div>
                 <div class="dsp-rule"></div>
                 <div class="dsp-prompt-block" id="dsp-block-man">
                   <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">◉</span>I am manifesting…</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-man-1" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-man-2" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-man-3" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">1</span><textarea class="dsp-line-inp" id="dsp-man-1" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"></textarea></div>
+                  <div class="dsp-num-line"><span class="dsp-n">2</span><textarea class="dsp-line-inp" id="dsp-man-2" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"></textarea></div>
+                  <div class="dsp-num-line"><span class="dsp-n">3</span><textarea class="dsp-line-inp" id="dsp-man-3" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-man',['dsp-man-1','dsp-man-2','dsp-man-3'])"></textarea></div>
                   <div class="dsp-word-count" id="dsp-wc-man"></div>
                 </div>
                 <div class="dsp-rule"></div>
                 <div class="dsp-prompt-block" id="dsp-block-must">
                   <div class="dsp-prompt-label no-toggle"><span class="dsp-lbl-icon">◻</span>Must do today</div>
-                  <div class="dsp-num-line"><span class="dsp-n">1</span><input class="dsp-line-inp" id="dsp-must-1" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">2</span><input class="dsp-line-inp" id="dsp-must-2" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"/></div>
-                  <div class="dsp-num-line"><span class="dsp-n">3</span><input class="dsp-line-inp" id="dsp-must-3" placeholder="…" oninput="dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"/></div>
+                  <div class="dsp-num-line"><span class="dsp-n">1</span><textarea class="dsp-line-inp" id="dsp-must-1" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"></textarea></div>
+                  <div class="dsp-num-line"><span class="dsp-n">2</span><textarea class="dsp-line-inp" id="dsp-must-2" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"></textarea></div>
+                  <div class="dsp-num-line"><span class="dsp-n">3</span><textarea class="dsp-line-inp" id="dsp-must-3" placeholder="…" rows="1" oninput="dspGrow(this);dspOnInput();dspCheckComplete('dsp-block-must',['dsp-must-1','dsp-must-2','dsp-must-3'])"></textarea></div>
                 </div>
                 <div class="dsp-rule"></div>
                 <div class="dsp-prompt-block">
