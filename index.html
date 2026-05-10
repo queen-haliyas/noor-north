@@ -4265,10 +4265,11 @@ function buildAccordion(){
 }
 
 function accOpenDay(slot,offset,skipAnim){
-  // Toggle: clicking the already-open day collapses it
-  if(!skipAnim && _accOpenSlot===slot){
-    const panel=document.getElementById('acc-panel-'+slot);
-    if(panel)panel.classList.remove('open');
+  // Toggle: clicking the already-open day on the SAME week/date collapses it
+  const panel=document.getElementById('acc-panel-'+slot);
+  const alreadyOpen = panel && panel.classList.contains('open') && _accOpenSlot===slot;
+  if(!skipAnim && alreadyOpen){
+    panel.classList.remove('open');
     const hdr=document.getElementById('acc-hdr-'+slot);
     if(hdr)hdr.classList.remove('active');
     _accOpenSlot=-1;
@@ -4298,7 +4299,6 @@ function accOpenDay(slot,offset,skipAnim){
   activeDs=fmt(d);
   dayOffset=Math.round((d-today)/86400000);
   // Move content block into this panel and open it
-  const panel=document.getElementById('acc-panel-'+slot);
   const content=document.getElementById('df-day-content');
   if(panel && content){
     if(!panel.contains(content)){
